@@ -246,7 +246,7 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 			}
 		}
 
-	oo->nni = 2*dim*(dim+1);	
+	oo->nni = 2*dim*(dim+1);
 	if(is_int){
 		return strengthning_int_dense_scalar(oo, temp1, n);
 	}

@@ -23,7 +23,7 @@
 
 
 bool strengthning_int_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
-	
+
 	double *m = oo->mat;
 	/*****
 		Store strengthening operands in an array
@@ -32,7 +32,7 @@ bool strengthning_int_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 		int ind1 = opt_matpos2(i^1, i);
 		temp[i] = ceil(m[ind1]/2);
 	}
-	
+
 	/******
 		Apply scalar strengthening
 	*******/
@@ -68,7 +68,7 @@ bool strengthning_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 		int ind1 = opt_matpos2(i^1,i);
 		temp[i] = m[ind1];
 	}
-	
+
 	/******
 		Apply scalar strengthening
 	*******/
@@ -79,7 +79,7 @@ bool strengthning_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 		}
 			
 	}
-	
+
 	/******
 		Check for negative cycle
 	*******/
@@ -99,7 +99,7 @@ bool strengthning_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2, int dim, bool is_int){
     double *m = oo->mat;
     int size = 4 * dim * dim;
-    int n = 2*dim; 
+    int n = 2*dim;
     double count = 0;
     /******
 		Floyd Warshall step
@@ -110,10 +110,10 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 	int pos1 = ((2*k)^1) + ((((2*k) + 1)*((2*k) + 1))/2);
 	//int pos2 = matpos2((2*k)^1, 2*k);
 	int pos2 = (2*k) + (((((2*k)^1) + 1)*(((2*k)^1) + 1))/2);
-	
+
 	/******
 		For k-th iteration update 2k and (2k+1)-th
-		row and column first. 
+		row and column first.
 	*******/
 	for(int i = 2*k + 2; i < n;i++){
 		//int ind1 = matpos2(i,((2*k)^1));
@@ -128,7 +128,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 	}
 
 
-	
+
 	for(int i = 2*k + 2; i < n; i++){
 		//int ind1 = matpos2(i,((2*k)^1));
 		int ind1 = ((2*k)^1) + (((i+1)*(i+1))/2);
@@ -252,7 +252,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 			}
 		//}
 	}
-	
+
     }
 }
 

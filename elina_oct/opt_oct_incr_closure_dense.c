@@ -25,7 +25,7 @@
 #include "opt_oct_incr_closure_dense.h"
 #include "opt_oct_closure_dense.h"
 
-
+#if defined (VECTORIZED)
 double incremental_closure_calc_perf_dense(double cycles, int dim){
   int n = 2*dim;
   return  (7*n*n)/cycles;
@@ -378,5 +378,5 @@ bool incremental_closure_opt_dense(opt_oct_mat_t *oo, int dim, int v, bool is_in
 	return res;
 }
 
-
+#endif
 
