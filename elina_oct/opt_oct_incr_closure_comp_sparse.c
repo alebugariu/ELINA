@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -23,6 +23,9 @@
 #include "opt_oct_incr_closure_comp_sparse.h"
 
 bool incremental_closure_comp_sparse(opt_oct_mat_t *oo,int dim, int v, bool is_int){
+	if(oo == NULL){
+		printf("NULL dereferencing");
+	}
 	double *m = oo->mat;
 	array_comp_list_t *acl = oo->acl;
 	int n = 2*dim;

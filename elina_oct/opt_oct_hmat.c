@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -2016,14 +2016,14 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	Measure sparsity to decide on whether to use dense or decomposed type incremental closure.
 	We do not recalculate sparsity here (if estimate of nni is too imprecise) as it increases overhead.
   ******/
-  if(sparsity >=sparse_threshold){
+  /*if(sparsity >=sparse_threshold){
 	if(oo->is_dense){
 		oo->is_dense = false;
 		oo->acl = extract(oo->mat,dim);
 	}
 	incr_closure = &incremental_closure_comp_sparse;
   }
-  else{ 
+  else{*/
 	if(!oo->is_dense){
 		if(!oo->ti){
 			oo->ti = true;
@@ -2031,13 +2031,14 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		}
 		oo->is_dense = true;
 		free_array_comp_list(oo->acl);
-	}
+	/*}
   	#if defined(VECTOR)
 		incr_closure = &incremental_closure_opt_dense;
   //}
   	#else
 		incr_closure = &incremental_closure_opt_dense_scalar;
   	#endif
+  	*/
   }
   
   for (i=0;i<ar->size;i++) {
@@ -2100,7 +2101,8 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	
       /* can we delay incremental closure further? */
       if (*respect_closure && closure_pending && var_pending!=u.i) {
-          if (incr_closure(oo,dim,var_pending, is_int_flag)){
+    	  if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
+          //if (incr_closure(oo,dim,var_pending, is_int_flag)){
                 return true;
           }
       }
@@ -2155,8 +2157,8 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
       /* can we delay incremental closure further? */
       if (*respect_closure && closure_pending &&
 	  var_pending!=u.i && var_pending!=u.j) {
-	
-          if (incr_closure(oo,dim,var_pending, is_int_flag)) {
+    	 if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
+         // if (incr_closure(oo,dim,var_pending, is_int_flag)) {
               return true;
           }
       }
@@ -2798,7 +2800,8 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
   /* apply pending incremental closure now */
   
   if (*respect_closure && closure_pending)
-      if (incr_closure(oo,dim,var_pending,is_int_flag)) {
+     // if (incr_closure(oo,dim,var_pending,is_int_flag)) {
+     if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
           return true;
       }
   
