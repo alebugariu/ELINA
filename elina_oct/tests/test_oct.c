@@ -29,36 +29,6 @@ elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
 	return linexpr0;
 }
 
-bool areEqual(int line1[5], int line2[5]) {
-	bool direct = (line1[0] == line2[0]) & (line1[1] == line2[1]) & (line1[2] == line2[2])
-					& (line1[3] == line2[3]);
-	bool commutative = (line1[0] == line2[1]) & (line1[1] == line2[0]) & (line1[2] == line2[3])
-					& (line1[3] == line2[2]);
-	return  direct | commutative;
-}
-
-bool areDifferent(int nbcons, int symbolicValues[nbcons][5]) {
-	int i, j;
-	for (i = 0; i < nbcons - 1; i++) {
-		for (j = i + 1; j < nbcons; j++) {
-			if (areEqual(symbolicValues[i], symbolicValues[j])) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool isDifferent(int nbcons, int symbolicValues[nbcons][5], int index, int currentValue) {
-	int i, j;
-	for (i = 0; i < index; i++) {
-			if (symbolicValues[i][4] == currentValue){
-				return false;
-			}
-		}
-	return true;
-}
-
 elina_lincons0_array_t create_constraints(unsigned short int dim, size_t nbcons,
 		char * octagonNumber) {
 	size_t i;
@@ -84,13 +54,11 @@ elina_lincons0_array_t create_constraints(unsigned short int dim, size_t nbcons,
 		klee_assume(symbolicValues[i][2] == 1 | symbolicValues[i][2] == -1);
 		klee_assume(symbolicValues[i][3] == 1 | symbolicValues[i][3] == -1);
         klee_assume(symbolicValues[i][4] > 0);
-		//klee_assume((symbolicValues[i][4] > 0) & (symbolicValues[i][4] < 10) & isDifferent(nbcons, symbolicValues, i, symbolicValues[i][4]));
 		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, symbolicValues[i][0],
 				symbolicValues[i][1], symbolicValues[i][2],
 				symbolicValues[i][3], symbolicValues[i][4]);
 		lincons0.p[i].linexpr0 = linexpr0;
 	}
-	//klee_assume(areDifferent(nbcons, symbolicValues));
 	return lincons0;
 }
 
@@ -182,11 +150,8 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 		char * octagonNumber, unsigned short int dim, size_t nbcons) {
 	elina_lincons0_array_t constraints = create_constraints(dim, nbcons,
 			octagonNumber);
-	//print_constraints(&constraints);
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 			&constraints);
-	//klee_assume(!opt_oct_is_bottom(man, octagon));
-	printf("Created non bottom octagon %s!\n", octagonNumber);
-	//print_constraints(&constraints);
+	printf("Created octagon %s!\n", octagonNumber);
 	return octagon;
 }
