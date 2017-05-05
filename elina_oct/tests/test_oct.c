@@ -5,6 +5,7 @@
 #include "opt_oct_hmat.h"
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
 		int coeff1, int coeff2, int scalar_value) {

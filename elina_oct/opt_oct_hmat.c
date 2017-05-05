@@ -690,6 +690,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#else
 			for(int i = 0; i < (size/v_length)*v_length;i++){
 				if(m1[i] != m2[i]){
+					printf("%d %g %g\n",i,m1[i],m2[i]);
 					#if defined(TIMING)
 						record_timing(is_equal_time);
 					#endif
@@ -699,6 +700,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#endif
 		for(int i = (size/v_length)*v_length; i < size; i++){
 			if(m1[i] != m2[i]){
+				printf("%d %g %g\n",i,m1[i],m2[i]);
 				#if defined(TIMING)
 					record_timing(is_equal_time);
 				#endif
