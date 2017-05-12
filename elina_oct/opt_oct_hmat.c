@@ -939,7 +939,12 @@ void meet_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 					}
 					
 					int ind = j1 + (((i1 + 1)*(i1 + 1))/2);	
-					m[ind] = min(m1[ind],m2[ind]);
+					//m[ind] = min(m1[ind],m2[ind]);
+					if(m1[ind] < m2[ind]){
+						m[ind] = m1[ind];
+					} else {
+						m[ind] = m2[ind];
+					}
 				}
 			}
 			free(ca);
@@ -996,11 +1001,21 @@ void meet_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 			
 		#else
 			for(int i = 0; i < (size/v_length)*v_length;i++){
-				m[i] = min(m1[i],m2[i]);
+				//m[i] = min(m1[i],m2[i]);
+				if(m1[i] < m2[i]){
+				   m[i] = m1[i];
+				} else {
+				  m[i] = m2[i];
+			    }
 			}
 		#endif
 			for(int i = (size/v_length)*v_length; i < size; i++){
-				m[i] = min(m1[i],m2[i]);
+				//m[i] = min(m1[i],m2[i]);
+				if(m1[i] < m2[i]){
+				   m[i] = m1[i];
+				} else {
+				  m[i] = m2[i];
+				}
 			}
 	}
 	
@@ -1198,7 +1213,12 @@ void join_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 				m[i] = max(m1[i],m2[i]);
 			}
 	}
-	oo->nni = min(oo1->nni,oo2->nni);
+	//oo->nni = min(oo1->nni,oo2->nni);
+	if(oo1->nni < oo2->nni){
+		oo->nni = oo1->nni;
+	}else{
+		oo->nni = oo2->nni;
+	}
 	#if defined(TIMING)
 		record_timing(join_time);
 	#endif
@@ -2137,7 +2157,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	count++;
       }
       else{
-	m[opt_matpos(ui,ui^1)] = min(m[opt_matpos(ui,ui^1)], pr->tmp[1]);
+	//m[opt_matpos(ui,ui^1)] = min(m[opt_matpos(ui,ui^1)], pr->tmp[1]);
+    	  if(m[opt_matpos(ui,ui^1)] > pr->tmp[1]){
+    		  m[opt_matpos(ui,ui^1)] = pr->tmp[1];
+    	  }
       }
       /*  c_i X_i + [-a,b] >= 0 <=> -c_i X_i <= b */
       if (c==ELINA_CONS_EQ) {
@@ -2146,7 +2169,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	}
         else{
-		m[opt_matpos(ui^1,ui)] = min(m[opt_matpos(ui^1,ui)], pr->tmp[0]);
+		//m[opt_matpos(ui^1,ui)] = min(m[opt_matpos(ui^1,ui)], pr->tmp[0]);
+        if(m[opt_matpos(ui,ui^1)] > pr->tmp[0]){
+           m[opt_matpos(ui,ui^1)] = pr->tmp[0];
+        }
 	}
       }
       /*  c_i X_i + [-a,b] <= 0 <=>  c_i X_i <= a */
@@ -2249,7 +2275,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
       }
       else{
-      	m[opt_matpos2(uj,ui^1)] = min(m[opt_matpos2(uj,ui^1)], pr->tmp[1]);
+      	//m[opt_matpos2(uj,ui^1)] = min(m[opt_matpos2(uj,ui^1)], pr->tmp[1]);
+    	 if(m[opt_matpos2(uj,ui^1)] > pr->tmp[1]){
+    	    m[opt_matpos(uj,ui^1)] = pr->tmp[1];
+    	 }
       }
       /*  c_i X_i + c_j X_j + [-a,b] >= 0 <=> -c_i X_i - c_j X_j <= b */
       if (c==ELINA_CONS_EQ){
@@ -2258,13 +2287,21 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	}
         else{
-		m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], pr->tmp[0]); 
+		//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], pr->tmp[0]);
+        if(m[opt_matpos2(uj,ui^1)] > pr->tmp[0]){
+           m[opt_matpos2(uj,ui^1)] = pr->tmp[0];
+        }
 	}
       }
      
       /*  c_i X_i + c_j X_j + [-a,b] <= 0 <=>  c_i X_i + c_j X_j <= a */
       if (c==ELINA_CONS_SUP) *exact = 0; /* not exact for strict constraints */
-      oo->nni = min(max_nni,count);
+      //oo->nni = min(max_nni,count);
+      if(max_nni < count){
+    	  oo->nni = max_nni;
+      }else {
+    	  oo->nni = count;
+      }
       break;
 
     case OPT_OTHER:
@@ -2413,7 +2450,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			m[opt_matpos(2*k,uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
+			//m[opt_matpos(2*k,uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
+			if(m[opt_matpos(2*k,uj)] > tmpb){
+			   m[opt_matpos(2*k,uj)] = tmpb;
+			}
 		}
 	      }
 	      else if ((pr->tmp[2*k+3] <=-1) &&
@@ -2426,7 +2466,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			m[opt_matpos(2*k + 1,uj)] = min(m[opt_matpos(2*k + 1,uj)],tmpb);
+			//m[opt_matpos(2*k + 1,uj)] = min(m[opt_matpos(2*k + 1,uj)],tmpb);
+			if(m[opt_matpos(2*k + 1,uj)] > tmpb){
+			   m[opt_matpos(2*k + 1,uj)] = tmpb;
+			}
 		}
 	      }
 	       /******
@@ -2436,7 +2479,12 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	    }
 		
 	  }
-	  oo->nni = min(max_nni,count);
+	  //oo->nni = min(max_nni,count);
+	  if(max_nni < count){
+		  oo->nni = max_nni;
+	  }else{
+		oo->nni = count;
+	  }
 	}
 
 	else if (Cinf==1) {
@@ -2477,7 +2525,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
 	      else{
-	      	m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
+	      	//m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
+	    	if(m[opt_matpos(2*k,uj)] > tmpb){
+	    	   m[opt_matpos(2*k,uj)] = tmpb;
+	    	}
 	      }
 		
 	    }
@@ -2491,7 +2542,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	      }
 	      else{
-	      	m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
+	      	//m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
+	    	if(m[opt_matpos(2*k + 1,uj)] > tmpb){
+	    	   m[opt_matpos(2*k + 1,uj)] = tmpb;
+	    	}
 	      }
 	 	
 	    }
@@ -2502,7 +2556,12 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	  }
 	   
 	   
-          oo->nni = min(max_nni,count);
+          //oo->nni = min(max_nni,count);
+	      if(max_nni < count){
+	    	  oo->nni = max;
+	      }else{
+	    	  oo->nni = count;
+	      }
 	}
 
 	else if (Cinf==2) {
@@ -2576,9 +2635,17 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	  }
 	  else{
-	  	m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)],tmpa);
+	  	//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)],tmpa);
+		if(m[opt_matpos2(uj^1,ui)] > tmpa){
+		   m[opt_matpos2(uj^1,ui)] = tmpa;
+		}
 	  }
-	  oo->nni = min(max_nni,count);
+	  //oo->nni = min(max_nni,count);
+	  if(max_nni < count){
+		  oo->nni = max_nni;
+	  }else{
+		  oo->nni = count;
+	  }
 	  
 	}
 	
@@ -2631,7 +2698,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			m[opt_matpos(2*k, uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
+			//m[opt_matpos(2*k, uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
+			if(m[opt_matpos(2*k,uj)] > tmpb){
+			   m[opt_matpos(2*k,uj)] = tmpb;
+		    }
 		}
 	      }
 	      else if ((pr->tmp[2*k+2] <=-1) &&
@@ -2643,7 +2713,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			m[opt_matpos(2*k + 1, uj)] = min(m[opt_matpos(2*k + 1, uj)], tmpb);
+			//m[opt_matpos(2*k + 1, uj)] = min(m[opt_matpos(2*k + 1, uj)], tmpb);
+			if(m[opt_matpos(2*k + 1,uj)] > tmpb){
+			   m[opt_matpos(2*k + 1,uj)] = tmpb;
+			}
 		}
 	      }
 		
@@ -2651,7 +2724,12 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	    }
 		
 	  }
-	  oo->nni = min(max_nni,count);
+	  //oo->nni = min(max_nni,count);
+	  if(max_nni < count){
+		 oo->nni = max_nni;
+	  }else {
+		 oo->nni = count;
+	  }
 	}
 	else if (cinf==1) {
 	  
@@ -2689,7 +2767,10 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
               else{	
-	      	m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
+	      	//m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
+            if(m[opt_matpos(2*k,uj)] > tmpb){
+               m[opt_matpos(2*k,uj)] = tmpb;
+            }
 	      }
 		
 	    }
@@ -2704,14 +2785,22 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
 	      else{
-	      	m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
+	      	//m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
+	    	if(m[opt_matpos2(2*k + 1,uj)] > tmpb){
+	    	   m[opt_matpos2(2*k + 1,uj)] = tmpb;
+	    	}
 	      }
 		
 	    }
 	       
 		
 	  }
-	   oo->nni = min(max_nni,count);
+	   //oo->nni = min(max_nni,count);
+	   if(max_nni < count){
+		   oo->nni = max_nni;
+	   }else {
+		   oo->nni = count;
+	   }
 	}
 	else if (cinf==2) {
 	  if ((pr->tmp[2*cj1+2]==-1) &&
@@ -2783,11 +2872,18 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	  }
 	  else{
-	  	m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], tmpa);
+	  	//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], tmpa);
+		if(m[opt_matpos2(uj^1,ui)] > tmpa){
+		   m[opt_matpos2(uj^1,ui)] = tmpa;
+		}
 	  }
 	}
-	 oo->nni = min(max_nni,count);
-	 
+	 //oo->nni = min(max_nni,count);
+	 if(max_nni < count){
+		 oo->nni = max_nni;
+	 }else {
+		oo->nni = count;
+	 }
 	}
 
       cbrk:

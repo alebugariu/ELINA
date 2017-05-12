@@ -92,8 +92,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				//double jk = m[ind_jk];
 				//m[n*i + j] = min(m[n*i + j], ik + kj);
 				int ind_ij = j + (((i + 1)*(i + 1))/2);
-				m[ind_ij] = min(m[ind_ij], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				//m[ind_ij] = min(m[ind_ij], ik + kj);
+				if(m[ind_ij] > ik + kj){
+				   m[ind_ij] = ik + kj;
+				}
+				//m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				if(m[ind_ij] > ikk + kkj){
+				   m[ind_ij] = ikk + kkj;
+				}
 				//m[n*j + i] = min(m[n*j + i], jk + ki);
 			}
 			for(; j < v1; j++){
@@ -105,8 +111,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				//double jk = m[n*j + k];
 				int ind_ij = j + (((i + 1)*(i + 1))/2);
 				//m[n*i + j] = min(m[n*i + j], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				//m[ind_ij] = min(m[ind_ij], ik + kj);
+				if(m[ind_ij] > ik + kj){
+				   m[ind_ij] = ik + kj;
+				}
+				//m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				if(m[ind_ij] > ikk + kkj){
+				   m[ind_ij] = ikk + kkj;
+				}
 				//m[n*j + i] = min(m[n*j + i], jk + ki);
 			}
 			
@@ -117,8 +129,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				int ind_jkk = (j^1) + ((((kk^1) + 1)*((kk^1) + 1))/2);
 				double jkk = m[ind_jkk];
 				int ind_ji = i + (((j + 1)*(j + 1))/2);
-				m[ind_ji] = min(m[ind_ji], jk + ki);
-				m[ind_ji] = min(m[ind_ji], jkk + kki);
+				//m[ind_ji] = min(m[ind_ji], jk + ki);
+				if(m[ind_ji] > jk + ki){
+				   m[ind_ji] = jk + ki;
+				}
+				//m[ind_ji] = min(m[ind_ji], jkk + kki);
+				if(m[ind_ji] > jkk + kki){
+				   m[ind_ji] = jkk + kki;
+				}
 			}
 			
 			for(; j < 2*dim; j++){
@@ -127,16 +145,33 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				int ind_jkk = kk + (((j + 1)*(j + 1))/2);
 				double jkk = m[ind_jkk];
 				int ind_ji = i + (((j + 1)*(j + 1))/2);
-				m[ind_ji] = min(m[ind_ji], jk + ki);
-				m[ind_ji] = min(m[ind_ji], jkk + kki);
+				//m[ind_ji] = min(m[ind_ji], jk + ki);
+				if(m[ind_ji] > jk + ki){
+				   m[ind_ji] = jk + ki;
+				}
+				//m[ind_ji] = min(m[ind_ji], jkk + kki);
+				if(m[ind_ji] > jkk + kki){
+				   m[ind_ji] = jkk + kki;
+				}
 			}
 			
 		}
-		m[v1v2] = min(m[v1v2],m[opt_matpos2(v1,k)] + m[opt_matpos2(k,v2)]);
-		m[v1v2] = min(m[v1v2],m[opt_matpos2(v1,kk)] + m[opt_matpos2(kk,v2)]);
-		m[v2v1] = min(m[v2v1],m[opt_matpos2(v2,k)] + m[opt_matpos2(k,v1)]);
-		m[v2v1] = min(m[v2v1],m[opt_matpos2(v2,kk)] + m[opt_matpos2(kk,v1)]);
-		
+		//m[v1v2] = min(m[v1v2],m[opt_matpos2(v1,k)] + m[opt_matpos2(k,v2)]);
+		if(m[v1v2] > m[opt_matpos2(v1,k)] + m[opt_matpos2(k,v2)]){
+		   m[v1v2] = m[opt_matpos2(v1,k)] + m[opt_matpos2(k,v2)];
+		}
+		//m[v1v2] = min(m[v1v2],m[opt_matpos2(v1,kk)] + m[opt_matpos2(kk,v2)]);
+		if(m[v1v2] > m[opt_matpos2(v1,kk)] + m[opt_matpos2(kk,v2)]){
+		   m[v1v2] = m[opt_matpos2(v1,kk)] + m[opt_matpos2(kk,v2)];
+		}
+		//m[v2v1] = min(m[v2v1],m[opt_matpos2(v2,k)] + m[opt_matpos2(k,v1)]);
+		if(m[v2v1] > m[opt_matpos2(v2,k)] + m[opt_matpos2(k,v1)]){
+		   m[v2v1] = m[opt_matpos2(v2,k)] + m[opt_matpos2(k,v1)];
+		}
+		//m[v2v1] = min(m[v2v1],m[opt_matpos2(v2,kk)] + m[opt_matpos2(kk,v1)]);
+		if(m[v2v1] > m[opt_matpos2(v2,kk)] + m[opt_matpos2(kk,v1)]){
+		   m[v2v1] = m[opt_matpos2(v2,kk)] + m[opt_matpos2(kk,v1)];
+		}
 	}
 
 	int v1 = (2*v);
@@ -150,13 +185,19 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 	for(int i = v1 + 2; i < n;i++){
 		int ind1 = v2 + (((i+1)*(i+1))/2);
 		int ind2 = v1 + (((i+1)*(i+1))/2);
-		m[ind1] = min(m[ind1], m[ind2] + m[pos1] );
+		//m[ind1] = min(m[ind1], m[ind2] + m[pos1] );
+		if(m[ind1] > m[ind2] + m[pos1]){
+		   m[ind1] = m[ind2] + m[pos1];
+		}
 		temp2[i^1] = m[ind1];
 	}
 	for(int i = v1 + 2; i < n; i++){
 		int ind1 = v2 + (((i+1)*(i+1))/2);
 		int ind2 = v1 + (((i+1)*(i+1))/2);
-		m[ind2] = min(m[ind2], m[ind1] + m[pos2] );
+		//m[ind2] = min(m[ind2], m[ind1] + m[pos2] );
+		if(m[ind2] > m[ind1] + m[pos2]){
+		   m[ind2] = m[ind1] + m[pos2];
+		}
 		temp1[i^1] = m[ind2];
 	}
 
@@ -166,7 +207,10 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 		//int ind4 = matpos2( 2*k,j);
 		int ind4 = j + vi;
 		//result[n*((2*k)^1) + j] = std::min(result[n*((2*k)^1) + j], result[n*((2*k)^1) + 2*k] + result[n*(2*k) + j]);
-		m[ind3] = min(m[ind3], m[pos2] + m[ind4]);
+		//m[ind3] = min(m[ind3], m[pos2] + m[ind4]);
+		if(m[ind3] > m[pos2] + m[ind4]){
+		   m[ind3] = m[pos2] + m[ind4];
+		}
 	}
 	for(int j = 0; j < v1; j++){
 		//int ind3 = matpos2((2*k)^1,j);
@@ -174,7 +218,10 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 		//int ind4 = matpos2(2*k,j);
 		int ind4 = j + vi;
 		//result[n*2*k + j] = std::min(result[n*2*k + j], result[n*2*k + ((2*k)^1)] + result[n*((2*k)^1) + j]);
-		m[ind4] = min(m[ind4], m[pos1] + m[ind3]);
+		//m[ind4] = min(m[ind4], m[pos1] + m[ind3]);
+		if(m[ind4] > m[pos1] + m[ind3]){
+		   m[ind4] = m[pos1] + m[ind3];
+	    }
 	}
 
 
@@ -202,8 +249,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				double kkj = m[ind_kkj];
 				int ind_ij = j + (((i + 1)*(i + 1))/2);
 				//m[n*i + j] = min(m[n*i + j], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				//m[ind_ij] = min(m[ind_ij], ik + kj);
+				if(m[ind_ij] > ik + kj){
+				   m[ind_ij] = ik + kj;
+			    }
+				//m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				if(m[ind_ij] > ikk + kkj){
+				   m[ind_ij] = ikk + kkj;
+				}
 			}
 		}
 
@@ -228,8 +281,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				double kkj = m[ind_kkj];
 				int ind_ij = j + (((i + 1)*(i + 1))/2);
 				//m[n*i + j] = min(m[n*i + j], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				//m[ind_ij] = min(m[ind_ij], ik + kj);
+				if(m[ind_ij] > ik + kj){
+				   m[ind_ij] = ik + kj;
+				}
+				//m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				if(m[ind_ij] > ikk + kkj){
+				   m[ind_ij] = ikk + kkj;
+				}
 			}
 			for(; j <=i2; j++){
 				//int ind_kj = (k^1) + ((((j^1) + 1)*((j^1) + 1))/2);
@@ -241,8 +300,14 @@ bool incremental_closure_opt_dense_scalar(opt_oct_mat_t *oo,int dim, int v, bool
 				double kkj = m[ind_kkj];
 				//m[n*i + j] = min(m[n*i + j], ik + kj);
 				int ind_ij = j + (((i + 1)*(i + 1))/2);
-				m[ind_ij] = min(m[ind_ij], ik + kj);
-				m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				//m[ind_ij] = min(m[ind_ij], ik + kj);
+				if(m[ind_ij] > ik + kj){
+				   m[ind_ij] = ik + kj;
+			    }
+				//m[ind_ij] = min(m[ind_ij], ikk + kkj);
+				if(m[ind_ij] > ikk + kkj){
+				   m[ind_ij] = ikk + kkj;
+				}
 			}
 		}
 
