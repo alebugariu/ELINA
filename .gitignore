@@ -1,3 +1,4 @@
 *.bc
 *.o
-octagons/tests/klee-out-*
+elina_oct/tests/klee-*
+elina_oct/tests/failing_tests/klee-*
