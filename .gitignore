@@ -1,0 +1,3 @@
+*.bc
+*.o
+octagons/tests/klee-out-*
