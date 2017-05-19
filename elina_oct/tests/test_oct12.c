@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 	size_t nbcons;
 	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
 	klee_make_symbolic(&nbcons, sizeof(nbcons), "number of constraints");
-	klee_assume(dim > 0);
+	klee_assume(dim > 1);
 	klee_assume(nbcons > 0);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
