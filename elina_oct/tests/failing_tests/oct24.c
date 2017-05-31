@@ -5,13 +5,6 @@
 #include <string.h>
 #include <stdio.h>
 
-bool is_meet_compatible_direct(elina_manager_t * man, opt_oct_t * x, opt_oct_t * y) {
-	if (opt_oct_is_leq(man, x, y)) {
-		return opt_oct_is_eq(man, opt_oct_meet(man, false, x, y), x);
-	}
-	return true;
-}
-
 char * linexpr0_toString(elina_linexpr0_t* a) {
 	size_t i;
 	elina_scalar_t* pscalar = 0;

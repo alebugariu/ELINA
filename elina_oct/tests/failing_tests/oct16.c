@@ -124,8 +124,13 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 				&lincons0);
 	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
+	printf("First: %d\n",oo==octagon->closed);
 	print_opt_hmat(oo->mat,2);
+	opt_oct_t* result =  opt_oct_meet(man, false, top, octagon);
+	opt_oct_mat_t *ooResult = result->closed ? result->closed : result->m;
+	printf("Second: %d\n",ooResult==result->closed);
+	print_opt_hmat(ooResult->mat,2);
 	printf("top meet octagon == octagon: ");
-	printf("%d\n", (opt_oct_is_eq(man, opt_oct_meet(man, false, top, octagon),octagon)));
+	printf("%d\n", (opt_oct_is_eq(man, result, octagon)));
 	return 0;
 }

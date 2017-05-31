@@ -1004,6 +1004,10 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			return 1;
 		}
     }
-    //return strengthning_dense_scalar(m,temp1,n);
+    /*Original code with the bug: because there is no return statement,
+      the behavior is undefined and gcc and clang return different values
+      //return strengthning_dense_scalar(m,temp1,n);
+     */
+    return strengthning_comp_sparse(oo,index1,temp1,n);
 }
 
