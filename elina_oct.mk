@@ -3,13 +3,16 @@ start ?= 0
 
 all: compile test
 compile: 
-	clang -I /home/klee/klee_src/include -emit-llvm -c -g elina_auxiliary/*.c; \
-	clang -I /home/klee/klee_src/include -emit-llvm -c -g elina_linearize/*.c; \
-	clang -I /home/klee/klee_src/include -emit-llvm -c -g partitions_api/*.c; \
-	clang -I /home/klee/klee_src/include -emit-llvm -c -g elina_oct/*.c; \
-
+	cd elina_auxiliary ; \
+	clang -I /home/klee/klee_src/include -emit-llvm -c -g *.c ; \
+	cd ../elina_linearize ; \
+	clang -I /home/klee/klee_src/include -emit-llvm -c -g *.c ; \
+	cd ../partitions_api ; \
+	clang -I /home/klee/klee_src/include -emit-llvm -c -g *.c ; \
+	cd ../elina_oct ; \
+	clang -I /home/klee/klee_src/include -emit-llvm -c -g *.c ; \
+	cd ..       
  
-
 test:
 	cd elina_oct/tests; \
         rm -rf klee-*; \
