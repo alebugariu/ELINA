@@ -17,14 +17,17 @@ int main(int argc, char **argv) {
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
+	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
 	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim, nbcons);
-	opt_oct_t* octagon2 = create_octagon(man, top, "2", dim, nbcons);
 
-	//meet == glb, join == lub
-	//y <= x join y
-	klee_assert(opt_oct_is_leq(man, octagon2 , opt_oct_join(man, false, octagon1, octagon2)));
+    //meet == glb, join == lub
+	//x widening bottom == x
+    klee_assert(opt_oct_is_eq(man, opt_oct_widening(man, octagon1, bottom), octagon1));
 	return 0;
 }
+
+
+
 
 

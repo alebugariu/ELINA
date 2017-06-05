@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim, nbcons);
 
 	//meet == glb, join == lub
+	//bottom join x == x
 	klee_assert(opt_oct_is_eq(man, opt_oct_join(man, false, bottom, octagon1),octagon1));
 	return 0;
 }
