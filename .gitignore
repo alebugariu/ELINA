@@ -1,4 +1,8 @@
 *.bc
 *.o
+*.so
+.project
+.cproject
+.settings
 elina_oct/tests/klee-*
 elina_oct/tests/failing_tests/klee-*
