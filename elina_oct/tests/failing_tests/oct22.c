@@ -131,6 +131,7 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon1 = opt_oct_meet_lincons_array(man, false, top,
 				&lincons0);
 	opt_oct_mat_t *oo1 = octagon1->closed ? octagon1->closed : octagon1->m;
+	printf("First: %d\n",oo1==octagon1->closed);
 	print_opt_hmat(oo1->mat,2);
 
 	elina_lincons0_array_t lincons1 = elina_lincons0_array_make(1);
@@ -141,10 +142,16 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon2 = opt_oct_meet_lincons_array(man, false, top,
 					&lincons1);
 	opt_oct_mat_t *oo2 = octagon2->closed ? octagon2->closed : octagon2->m;
+	printf("Second: %d\n",oo2==octagon2->closed);
 	print_opt_hmat(oo2->mat,2);
 
+	opt_oct_t* result = opt_oct_meet(man, false, octagon1, octagon2);
+	opt_oct_mat_t *ooResult = result->closed ? result->closed : result->m;
+	printf("Second: %d\n",ooResult==result->closed);
+	print_opt_hmat(ooResult->mat,2);
+
 	printf("meet is compatible direct: ");
-	printf("%d\n", is_meet_compatible_direct(man, octagon1, octagon2));
+	printf("%d\n", opt_oct_is_leq(man, octagon1, octagon2) && opt_oct_is_eq(man, result, octagon1));
 	return 0;
 }
 

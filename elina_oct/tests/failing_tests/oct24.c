@@ -124,6 +124,7 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon1 = opt_oct_meet_lincons_array(man, false, top,
 				&lincons0);
 	opt_oct_mat_t *oo1 = octagon1->closed ? octagon1->closed : octagon1->m;
+	printf("First: %d\n",oo1==octagon1->closed);
 	print_opt_hmat(oo1->mat,2);
 
 	elina_lincons0_array_t lincons1 = elina_lincons0_array_make(1);
@@ -134,10 +135,21 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon2 = opt_oct_meet_lincons_array(man, false, top,
 					&lincons1);
 	opt_oct_mat_t *oo2 = octagon2->closed ? octagon2->closed : octagon2->m;
+	printf("Second: %d\n",oo2==octagon2->closed);
 	print_opt_hmat(oo2->mat,2);
 
+	opt_oct_t* resultJoin = opt_oct_join(man, false, octagon1, octagon2);
+	opt_oct_mat_t *ooResultJoin = resultJoin->closed ? resultJoin->closed : resultJoin->m;
+	printf("Result of join: %d\n",ooResultJoin==resultJoin->closed);
+	print_opt_hmat(ooResultJoin->mat,2);
+
+	opt_oct_t* resultMeet = opt_oct_meet(man, false, octagon1, resultJoin);
+	opt_oct_mat_t *ooResultMeet = resultMeet->closed ? resultMeet->closed : resultMeet->m;
+	printf("Result of meet: %d\n",ooResultMeet==resultMeet->closed);
+	print_opt_hmat(ooResultMeet->mat,2);
+
 	printf("meet-join absorption: ");
-	printf("%d\n", opt_oct_is_eq(man, opt_oct_meet(man, false, octagon1, opt_oct_join(man, false, octagon1, octagon2)), octagon1));
+	printf("%d\n", opt_oct_is_eq(man, resultMeet, octagon1));
 	return 0;
 }
 

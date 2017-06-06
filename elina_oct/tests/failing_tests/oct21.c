@@ -117,16 +117,20 @@ int main(int argc, char **argv) {
 	opt_oct_t * top = opt_oct_top(man, 2, 0);
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(1);
     lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
-    elina_linexpr0_t * linexpr0 = create_linexpr0(2, 0, 1, 1, 1, 2);
-	//elina_linexpr0_t * linexpr0 = create_linexpr0(2, 1, 0, 1, 1, 4294967167);
+	elina_linexpr0_t * linexpr0 = create_linexpr0(2, 1, 0, 1, 1, 4294967167);
 	lincons0.p[0].linexpr0 = linexpr0;
     print_constraints(&lincons0);
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 				&lincons0);
 	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
+	printf("First: %d\n",oo==octagon->closed);
 	print_opt_hmat(oo->mat,2);
+	opt_oct_t* result = opt_oct_meet(man, false, octagon, octagon);
+	opt_oct_mat_t *ooResult = result->closed ? result->closed : result->m;
+	printf("Second: %d\n",ooResult==result->closed);
+	print_opt_hmat(ooResult->mat,2);
 	printf("octagon meet octagon == octagon: ");
-	printf("%d\n", opt_oct_is_eq(man, opt_oct_meet(man, false, octagon, octagon), octagon));
+	printf("%d\n", opt_oct_is_eq(man, result, octagon));
 	return 0;
 }
 
