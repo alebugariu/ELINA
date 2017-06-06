@@ -17,7 +17,7 @@ bool is_leq_transitive(elina_manager_t * man, opt_oct_t * x, opt_oct_t * y,
 
 int main(int argc, char **argv) {
 	unsigned short int dim;
-	make_symbolic_dimension(dim);
+	make_symbolic_dimension(&dim);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);

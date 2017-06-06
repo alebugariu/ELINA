@@ -169,7 +169,7 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 	return octagon;
 }
 
-void make_symbolic_dimension(unsigned short int dim) {
-	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
-	klee_assume(dim > MIN_DIM & dim < MAX_DIM);
+void make_symbolic_dimension(unsigned short int *dim) {
+	klee_make_symbolic(dim, sizeof(*dim), "number of variables");
+	klee_assume(*dim > MIN_DIM & *dim < MAX_DIM);
 }
