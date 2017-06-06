@@ -7,8 +7,8 @@
 #include <string.h>
 #include <stdio.h>
 
-
-bool is_join_compatible_direct(elina_manager_t * man, opt_oct_t * x, opt_oct_t * y) {
+bool is_join_compatible_direct(elina_manager_t * man, opt_oct_t * x,
+		opt_oct_t * y) {
 	if (opt_oct_is_leq(man, x, y)) {
 		return opt_oct_is_eq(man, opt_oct_join(man, false, x, y), y);
 	}
@@ -17,8 +17,7 @@ bool is_join_compatible_direct(elina_manager_t * man, opt_oct_t * x, opt_oct_t *
 
 int main(int argc, char **argv) {
 	unsigned short int dim;
-	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
-	klee_assume(dim > 1);
+	make_symbolic_dimension(dim);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
@@ -32,7 +31,4 @@ int main(int argc, char **argv) {
 	klee_assert(is_join_compatible_direct(man, octagon1, octagon2));
 	return 0;
 }
-
-
-
 

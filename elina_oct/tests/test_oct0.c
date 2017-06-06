@@ -9,9 +9,7 @@
 
 int main(int argc, char **argv) {
 	unsigned short int dim;
-	size_t nbcons;
-	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
-	klee_assume(dim > 1);
+	make_symbolic_dimension(dim);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);

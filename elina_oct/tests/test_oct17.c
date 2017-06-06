@@ -9,8 +9,7 @@
 
 int main(int argc, char **argv) {
 	unsigned short int dim;
-	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
-	klee_assume(dim > 1);
+	make_symbolic_dimension(dim);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
@@ -20,10 +19,9 @@ int main(int argc, char **argv) {
 
 	//meet == glb, join == lub
 	//x meet y <= x
-	klee_assert(opt_oct_is_leq(man, opt_oct_meet(man, false, octagon1, octagon2), octagon1));
+	klee_assert(
+			opt_oct_is_leq(man, opt_oct_meet(man, false, octagon1, octagon2),
+					octagon1));
 	return 0;
 }
-
-
-
 

@@ -7,6 +7,9 @@
 #include <string.h>
 #include <stdio.h>
 
+#define K 3
+#define R(i) i < K
+
 int main(int argc, char **argv) {
 	unsigned short int dim;
 	make_symbolic_dimension(dim);
@@ -15,13 +18,21 @@ int main(int argc, char **argv) {
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
 	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
-	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim);
-
 	//meet == glb, join == lub
-	//top meet x == x
-	klee_assert(
-			opt_oct_is_eq(man, opt_oct_meet(man, false, top, octagon1),
-					octagon1));
+	//widening reaches a fixed point
+	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim);
+	opt_oct_t* wideningResult;
+	int i = 0;
+	while (true) {
+		opt_oct_t* octagon2 = create_octagon(man, top, "2", dim);
+		wideningResult = opt_oct_widening(man, octagon1, octagon2);
+		if (opt_oct_is_leq(man, wideningResult, octagon1)) {
+			break; // we reached a fixed point
+		}
+		octagon1 = wideningResult;
+		i++;
+		klee_assert(R(i));
+	}
 	return 0;
 }
 

@@ -3,6 +3,7 @@
 #include "opt_oct.h"
 #include "opt_oct_internal.h"
 #include "opt_oct_hmat.h"
+#include "test_oct.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -40,8 +41,9 @@ elina_lincons0_array_t create_constraints(unsigned short int dim,
 	char buffer_sym[80] = "symbolic variables for octagon ";
 	char buffer_scalar[80] = "scalar value for octagon ";
 
-	klee_make_symbolic(&nbcons, sizeof(nbcons), strcat(buffer_nbcons, octagonNumber));
-	klee_assume(nbcons >= 0);
+	klee_make_symbolic(&nbcons, sizeof(nbcons),
+			strcat(buffer_nbcons, octagonNumber));
+	klee_assume(nbcons >= MIN_NBCONS & nbcons <= MAX_NBCONS);
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
 
 	int symbolicValues[nbcons][5];
@@ -59,9 +61,13 @@ elina_lincons0_array_t create_constraints(unsigned short int dim,
 						& symbolicValues[i][0] >= 0
 						& symbolicValues[i][1] >= 0);
 
-		klee_assume(symbolicValues[i][2] == 1 | symbolicValues[i][2] == -1 | symbolicValues[i][2] == 0);
-		klee_assume(symbolicValues[i][3] == 1 | symbolicValues[i][3] == -1 | symbolicValues[i][3] == 0);
-        klee_assume(symbolicValues[i][4] > 0);
+		klee_assume(
+				symbolicValues[i][2] == 1 | symbolicValues[i][2] == -1
+						| symbolicValues[i][2] == 0);
+		klee_assume(
+				symbolicValues[i][3] == 1 | symbolicValues[i][3] == -1
+						| symbolicValues[i][3] == 0);
+		klee_assume(symbolicValues[i][4] > 0);
 		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, symbolicValues[i][0],
 				symbolicValues[i][1], symbolicValues[i][2],
 				symbolicValues[i][3], symbolicValues[i][4]);
@@ -161,4 +167,9 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 			&constraints);
 	printf("Created octagon %s!\n", octagonNumber);
 	return octagon;
+}
+
+void make_symbolic_dimension(unsigned short int dim) {
+	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
+	klee_assume(dim > MIN_DIM & dim < MAX_DIM);
 }

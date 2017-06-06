@@ -9,24 +9,22 @@
 
 int main(int argc, char **argv) {
 	unsigned short int dim;
-	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
-	klee_assume(dim > 1);
+	make_symbolic_dimension(dim);
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
 	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
 	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim);
-    opt_oct_t* octagon2 = create_octagon(man, top, "2", dim);
-    opt_oct_t* glb = opt_oct_meet(man, false, octagon1, octagon2);
+	opt_oct_t* octagon2 = create_octagon(man, top, "2", dim);
+	opt_oct_t* glb = opt_oct_meet(man, false, octagon1, octagon2);
 
-    opt_oct_t* bound = create_octagon(man, top, "possible bound", dim);
+	opt_oct_t* bound = create_octagon(man, top, "possible bound", dim);
 
-    //meet == glb, join == lub
+	//meet == glb, join == lub
 	//meet is the greatest lower bound
-    klee_assume(opt_oct_is_leq(man, bound, octagon1));
-    klee_assume(opt_oct_is_leq(man, bound, octagon2));
-    klee_assume(opt_oct_is_leq(man, glb, bound));
-	klee_assert(opt_oct_is_eq(man, bound, glb));
+	klee_assume(opt_oct_is_leq(man, bound, octagon1));
+	klee_assume(opt_oct_is_leq(man, bound, octagon2));
+	klee_assert(opt_oct_is_leq(man, bound, glb));
 	return 0;
 }
