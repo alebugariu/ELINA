@@ -8,7 +8,11 @@
 #define MIN_DIM 1
 #define MAX_DIM 10
 #define MIN_NBCONS 1
-#define MAX_NBCONS 3
+#define MAX_NBCONS 10
+
+//for widening
+#define K 3
+#define R(i) i < K
 
 opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 		char * octagonNumber, unsigned short int dim);

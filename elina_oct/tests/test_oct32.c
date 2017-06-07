@@ -7,9 +7,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#define K 3
-#define R(i) i < K
-
 int main(int argc, char **argv) {
 	unsigned short int dim;
 	make_symbolic_dimension(&dim);
