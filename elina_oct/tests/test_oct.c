@@ -43,7 +43,7 @@ elina_lincons0_array_t create_constraints(unsigned short int dim,
 
 	klee_make_symbolic(&nbcons, sizeof(nbcons),
 			strcat(buffer_nbcons, octagonNumber));
-	klee_assume(nbcons >= MIN_NBCONS & nbcons <= MAX_NBCONS);
+	klee_assume(nbcons >= MIN_NBCONS & nbcons <= MAX_NBCONS & nbcons >= dim);
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
 
 	int symbolicValues[nbcons][5];
