@@ -53,7 +53,7 @@ elina_lincons0_array_t create_constraints(unsigned short int dim,
 		elina_constyp_t type;
 		klee_make_symbolic(&type, sizeof(type),
 				strcat(buffer_type, octagonNumber));
-		klee_assume(type == ELINA_CONS_SUPEQ);
+		klee_assume(type == ELINA_CONS_SUPEQ | type == ELINA_CONS_EQ);
 		lincons0.p[i].constyp = type;
 		klee_assume(
 				symbolicValues[i][0] < dim & symbolicValues[i][1] < dim
@@ -165,11 +165,13 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 	elina_lincons0_array_t constraints = create_constraints(dim, octagonNumber);
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 			&constraints);
-	printf("Created octagon %s!\n", octagonNumber);
+	//printf("Created octagon %s!\n", octagonNumber);
 	return octagon;
 }
 
-void make_symbolic_dimension(unsigned short int *dim) {
-	klee_make_symbolic(dim, sizeof(*dim), "number of variables");
-	klee_assume(*dim > MIN_DIM & *dim < MAX_DIM);
+unsigned short int make_symbolic_dimension() {
+	unsigned short int dim;
+	klee_make_symbolic(&dim, sizeof(dim), "number of variables");
+	klee_assume(dim > MIN_DIM & dim < MAX_DIM);
+	return dim;
 }
