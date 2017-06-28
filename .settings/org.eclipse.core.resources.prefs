@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//elina_auxiliary/elina_linexpr0.c=UTF-8
+encoding//elina_oct/elina_test_oct.c=UTF-8
+encoding//elina_oct/opt_oct_closure_comp_sparse.c=UTF-8
+encoding//elina_oct/opt_oct_closure_dense.c=UTF-8
+encoding//elina_oct/opt_oct_closure_dense_scalar.c=UTF-8
+encoding//elina_oct/opt_oct_hmat.c=UTF-8
+encoding//elina_oct/opt_oct_incr_closure_comp_sparse.c=UTF-8
+encoding//elina_oct/opt_oct_incr_closure_dense.c=UTF-8
+encoding//elina_oct/opt_oct_incr_closure_dense_scalar.c=UTF-8
+encoding//elina_oct/opt_oct_predicate.c=UTF-8
+encoding//elina_oct/opt_oct_representation.c=UTF-8
+encoding//elina_oct/tests/test_oct19.c=UTF-8
