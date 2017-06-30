@@ -1,8 +1,5 @@
 #include <time.h>
 #include <klee/klee.h>
-#include "opt_oct.h"
-#include "opt_oct_internal.h"
-#include "opt_oct_hmat.h"
 #include "test_poly.h"
 #include <string.h>
 #include <stdio.h>
