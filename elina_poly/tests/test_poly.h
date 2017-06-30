@@ -2,9 +2,9 @@
 #define TEST_POLY_H_
 
 #define MIN_DIM 1
-#define MAX_DIM 10
+#define MAX_DIM 20
 #define MIN_NBCONS 1
-#define MAX_NBCONS 15
+#define MAX_NBCONS 50
 
 #include "opt_pk.h"
 
