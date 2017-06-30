@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon2 = create_octagon(man, top, "2", dim);
 
 	// <= is anti symmetric
-	klee_assume(opt_oct_is_leq(man, octagon1, octagon2) && opt_oct_is_leq(man, octagon2, octagon1));
+	klee_assume(opt_oct_is_leq(man, octagon1, octagon2) & opt_oct_is_leq(man, octagon2, octagon1));
 	klee_assert(opt_oct_is_eq(man, octagon1, octagon2));
 	return 0;
 }

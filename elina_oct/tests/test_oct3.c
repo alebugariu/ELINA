@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 	opt_oct_t* octagon3 = create_octagon(man, top, "3", dim);
 
 	// <= is transitive
-	klee_assume(opt_oct_is_leq(man, octagon1, octagon2) && opt_oct_is_leq(man, octagon2, octagon3));
+	klee_assume(opt_oct_is_leq(man, octagon1, octagon2) & opt_oct_is_leq(man, octagon2, octagon3));
 	klee_assert(opt_oct_is_leq(man, octagon1, octagon3));
 	return 0;
 }

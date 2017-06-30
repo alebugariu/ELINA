@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -280,7 +280,9 @@ opt_pk_array_t* opt_pk_remove_dimensions(elina_manager_t* man,
 		opt_pk_array_t * op = destructive ? oa : opt_pk_array_alloc(NULL,NULL,oa->maxcols);
 		op->maxcols -= dimsup;
 		opt_poly_set_top(opk,op);
-		record_timing(remove_dimension_time);
+        #if defined(TIMING)
+	 	     record_timing(remove_dimension_time);
+	        #endif
 		return op;
 	   }
 	}
