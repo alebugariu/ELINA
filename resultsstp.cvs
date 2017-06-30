@@ -1,0 +1,41 @@
+test case,execution time (seconds),execution time (minutes),completed paths,generated tests,total instructions,status,error message,output directory
+test_oct0,8,0.13333333333333333,18,18,362457,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-40
+test_oct1,8,0.13333333333333333,18,18,367764,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-42
+test_oct2,8,0.13333333333333333,18,18,364120,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-43
+test_oct3,2831,47.18333333333333,301,211,2948241,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct3.c:21: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-46
+test_oct4,584,9.733333333333333,301,202,1237023,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct4.c:20: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-51
+test_oct5,9,0.15,18,18,370119,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-59
+test_oct6,9,0.15,18,18,373438,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-60
+test_oct7,576,9.6,301,301,1289494,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-61
+test_oct8,571,9.516666666666667,301,301,1288718,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-65
+test_oct9,592,9.866666666666667,301,301,1424969,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-69
+test_oct10,3063,51.05,301,301,3348943,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-41
+test_oct11,9,0.15,18,18,371539,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-53
+test_oct12,569,9.483333333333333,301,252,1302431,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct12.c:22: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-55
+test_oct13,575,9.583333333333334,301,253,1336772,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct13.c:22: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-62
+test_oct14,602,10.033333333333333,301,301,1366344,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-66
+test_oct15,10,0.16666666666666666,18,18,366129,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-70
+test_oct16,10,0.16666666666666666,18,15,381307,FAIL,"KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct16.c:21: ASSERTION FAIL: opt_oct_is_eq(man, opt_oct_meet(man, false, top, octagon1), octagon1)",/home/klee/elina/elina_oct/tests/klee-out-71
+test_oct17,574,9.566666666666666,301,301,1234217,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-72
+test_oct18,548,9.133333333333333,301,301,1249419,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-74
+test_oct19,521,8.683333333333334,301,301,1332234,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-75
+test_oct20,3048,50.8,301,301,3165541,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-44
+test_oct21,10,0.16666666666666666,18,15,377573,FAIL,"KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct21.c:21: ASSERTION FAIL: opt_oct_is_eq(man, opt_oct_meet(man, false, octagon1, octagon1), octagon1)",/home/klee/elina/elina_oct/tests/klee-out-52
+test_oct22,593,9.883333333333333,301,242,1278568,FAIL,"KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct22.c:23: ASSERTION FAIL: opt_oct_is_eq(man, opt_oct_meet(man, false, octagon1, octagon2), octagon1)",/home/klee/elina/elina_oct/tests/klee-out-54
+test_oct23,583,9.716666666666667,301,241,1277737,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct23.c:22: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-63
+test_oct24,651,10.85,301,243,1482944,FAIL,"KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct24.c:22: ASSERTION FAIL: opt_oct_is_eq(man, opt_oct_meet(man, false, octagon1, opt_oct_join(man, false, octagon1, octagon2)), octagon1)",/home/klee/elina/elina_oct/tests/klee-out-67
+test_oct25,2513,41.88333333333333,301,209,2884770,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct25.c:26: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-73
+test_oct26,2344,39.06666666666667,301,268,2878253,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct26.c:26: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-76
+test_oct27,515,8.583333333333334,301,301,1280945,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-77
+test_oct28,525,8.75,301,301,1292731,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-78
+test_oct29,10,0.16666666666666666,18,18,370157,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-79
+test_oct30,9,0.15,18,18,370117,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-45
+test_oct31,584,9.733333333333333,301,301,1416438,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-47
+test_oct32,1596,26.6,301,301,1991274,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-48
+test_oct33,571,9.516666666666667,301,253,1246751,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct33.c:22: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-49
+test_oct34,602,10.033333333333333,301,254,1269707,FAIL,KLEE: ERROR: /home/klee/elina/elina_oct/tests/test_oct34.c:22: invalid klee_assume call (provably false),/home/klee/elina/elina_oct/tests/klee-out-50
+test_oct35,9,0.15,18,18,365067,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-56
+test_oct36,8,0.13333333333333333,18,18,365047,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-57
+test_oct37,598,9.966666666666667,301,301,1307932,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-58
+test_oct38,597,9.95,301,301,1240006,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-64
+test_oct39,1471,24.516666666666666,301,301,1712737,PASS,-,/home/klee/elina/elina_oct/tests/klee-out-68

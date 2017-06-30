@@ -6,9 +6,9 @@
 #include "opt_oct_hmat.h"
 
 #define MIN_DIM 1
-#define MAX_DIM 10
+#define MAX_DIM 20
 #define MIN_NBCONS 1
-#define MAX_NBCONS 15
+#define MAX_NBCONS 50
 
 //for widening
 #define K 3
