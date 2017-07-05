@@ -8,6 +8,7 @@ compile:
 	clang -I /home/klee/klee_src/include -emit-llvm -O0 -c -g *.c ; \
 	cd ../elina_poly ; \
 	clang -I /home/klee/klee_src/include -emit-llvm -O0 -c -g *.c ; \
+	rm -f elina_test_poly.bc ; \
 	cd ..       
  
 test:
