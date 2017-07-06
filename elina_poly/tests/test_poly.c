@@ -5,62 +5,51 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
-		int coeff1, int coeff2, int scalar_value) {
+elina_linexpr0_t * create_linexpr0(unsigned short int dim, int *values) {
 	elina_coeff_t *cst, *coeff;
-	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
+	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, dim);
 	cst = &linexpr0->cst;
+    elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_MPQ);
 
-	elina_scalar_reinit(cst->val.scalar, ELINA_SCALAR_DOUBLE);
-	cst->val.scalar->val.dbl = (double) scalar_value;
-
-	elina_linterm_t * linterm = &linexpr0->p.linterm[0];
-	linterm->dim = v1;
-	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff1;
-
-	linterm = &linexpr0->p.linterm[1];
-	linterm->dim = v2;
-	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff2;
+	size_t i;
+	for(i = 0; i < dim; i ++){
+		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
+		linterm->dim = i;
+		coeff = &linterm->coeff;
+		elina_scalar_set_to_int(coeff->val.scalar, values[i], ELINA_SCALAR_MPQ);
+	}
+	elina_linexpr0_reinit(linexpr0, i);
 	return linexpr0;
 }
 
 elina_lincons0_array_t create_constraints(unsigned short int dim,
 		char * polyhedronNumber) {
-	size_t i;
+	size_t i, j;
 	size_t nbcons;
 
 	char buffer_nbcons[80] = "number of constraints for polyhedron ";
 	char buffer_type[80] = "type for polyhedron ";
-	char buffer_sym[80] = "symbolic variables for polyhedron ";
-	char buffer_scalar[80] = "scalar value for polyhedron ";
+	char buffer_sym[80] = "symbolic coefficients for polyhedron ";
 
 	klee_make_symbolic(&nbcons, sizeof(nbcons),
 			strcat(buffer_nbcons, polyhedronNumber));
 	klee_assume(nbcons >= MIN_NBCONS & nbcons <= MAX_NBCONS & nbcons >= dim);
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
 
-	int symbolicValues[nbcons][5];
-	klee_make_symbolic(symbolicValues, sizeof(symbolicValues),
-			strcat(buffer_sym, polyhedronNumber));
 	for (i = 0; i < nbcons; i++) {
 		elina_constyp_t type;
 		klee_make_symbolic(&type, sizeof(type),
 				strcat(buffer_type, polyhedronNumber));
 		klee_assume(type == ELINA_CONS_SUPEQ | type == ELINA_CONS_EQ);
 		lincons0.p[i].constyp = type;
-		klee_assume(
-				symbolicValues[i][0] < dim & symbolicValues[i][1] < dim
-						& symbolicValues[i][0] != symbolicValues[i][1]
-						& symbolicValues[i][0] >= 0
-						& symbolicValues[i][1] >= 0);
-		klee_assume(symbolicValues[i][4] > 0);
-		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, symbolicValues[i][0],
-				symbolicValues[i][1], symbolicValues[i][2],
-				symbolicValues[i][3], symbolicValues[i][4]);
+
+		int symbolicValues[MAX_DIM + 1];
+		klee_make_symbolic(symbolicValues, sizeof(symbolicValues),
+									strcat(buffer_sym, polyhedronNumber));
+		for(j=0; j <= dim; j++) {
+		    klee_assume(symbolicValues[j] != 0);
+		}
+		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, symbolicValues);
 		lincons0.p[i].linexpr0 = linexpr0;
 	}
 	return lincons0;
