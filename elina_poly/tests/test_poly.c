@@ -9,16 +9,15 @@ elina_linexpr0_t * create_linexpr0(unsigned short int dim, int *values) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, dim);
 	cst = &linexpr0->cst;
-    elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_MPQ);
+    elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_DOUBLE);
 
 	size_t i;
 	for(i = 0; i < dim; i ++){
 		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
 		linterm->dim = i;
 		coeff = &linterm->coeff;
-		elina_scalar_set_to_int(coeff->val.scalar, values[i], ELINA_SCALAR_MPQ);
+		elina_scalar_set_to_int(coeff->val.scalar, values[i], ELINA_SCALAR_DOUBLE);
 	}
-	elina_linexpr0_reinit(linexpr0, i);
 	return linexpr0;
 }
 
