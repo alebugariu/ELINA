@@ -4,16 +4,15 @@ cd elina_poly/tests; \
         number=20 ; while [ ${number} -le 29 ] ; do \
 		llvm-link ../../elina_auxiliary/*.bc ../../partitions_api/*.bc ../../elina_linearize/*.bc ../*.bc test_poly.bc test_poly${number}.bc -o test${number}.bc ; \
                 startTime=`date +%s` ; \
-                klee -allow-external-sym-calls -max-forks=300 -solver-backend=stp -sym-malloc-bound=512 test${number}.bc ; \
+                klee -load=/usr/local/lib/libgmp.so.10.3.2 -allow-external-sym-calls -max-forks=100 -check-overshift=false -solver-backend=stp -sym-malloc-bound=1024 test${number}.bc ; \
                 endTime=`date +%s` ; \
                 runtime=`expr $endTime - $startTime` ; \
                 echo "Execution time: $runtime sec for test_poly$number\n" ; \
 		number=`expr $number + 1` ; \
     	done; \
         true
-KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-4"
+KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-2"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -112,392 +111,241 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(95373280, 95157488)
+KLEE: WARNING ONCE: calling external: strcat(68913536, 68679344)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(95104032)
-KLEE: WARNING ONCE: calling external: fflush(47023609517056)
-.1
-.1
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
 1
-1
-1
-1
-.1
-.1
-.1
-..1
-..1
-1
-1
-1
-.1
-...1
-.1
-.1
-..1
-1
-1
-1
-1
-.1
-1
-..1
-1
-1
-.1
-1
+KLEE: WARNING ONCE: calling external: printf(68628608)
+KLEE: WARNING ONCE: calling external: fflush(47080730620928)
 .1
 KLEE: WARNING ONCE: skipping fork (max-forks reached)
 1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(69964128)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(69964128, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(74227728, 70399712, 1, 8, 0, 0, 69964128)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(69964128)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(74594960, 2, 1, 8, 0, 0, 70999600)
 1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(74962448, 74962448, 72278912)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
+1
+1
+.1
 ..1
-...1
-..1
 1
 1
-.1
-1
-1
-1
-1
-1
-.1
-1
-1
-..1
-...1
-..1
-.1
-...1
-...1
-1
-1
-.1
-.1
-1
-.1
-1
-1
-1
-..1
-....1
-1
-1
-1
-..............1
-.1
+.....1
+............................1
 ..........1
-....1
-.1
-..1
+........................1
 ...1
-.1
-1
-.......1
-......1
-1
-1
-1
-1
-...1
-1
-..1
-....1
-1
-1
-.1
-..1
-..1
-..1
-.1
-...1
-....1
-..........1
-.1
-.1
-1
-.1
-..1
-1
-1
-.1
-1
+.....1
 ...........1
-1
-............1
-...........1
-.1
-.1
-....1
-....1
-..1
 .....1
-..1
-...1
-1
-1
 .1
 ...1
-...1
-..1
-...1
-.1
-1
-..1
-1
-.1
-......1
-.1
-1
-..1
-1
-....1
-...1
-.1
-..1
-1
-.1
-....1
-.1
-.1
-.1
-....1
-..............1
-...1
-....1
-1
-....1
-.1
-.1
-1
-.........1
-..1
-.1
-..1
-.......1
-.1
-..1
-..1
-...1
-1
-...1
-1
-1
-..1
-1
-..1
-..1
-.1
-.1
-..1
-.1
-.1
-...1
-.1
-.1
-1
-1
-...1
-.1
-..1
-1
-1
-1
-1
-1
-....1
-1
-.....1
-...1
-1
-1
-.1
-.1
-1
-.1
-......1
-.1
-..1
-1
-...1
-1
-1
-1
-.1
-....1
-.1
-..1
-.....1
-...1
-............1
-..1
-....1
-......1
-1
-1
-...1
-..1
-1
-..1
-1
-1
-.1
-.1
-...1
-1
-1
-.1
-.1
-..1
-....1
-...1
-.1
-1
-..1
-1
-.1
-1
-..1
-..1
-..1
-.....1
-1
-1
-...1
-.1
-...............1
-.1
-.....1
-1
-1
-.....1
-..1
-.1
-1
-1
-1
-1
-...1
-.1
-..1
-1
-.1
-1
-1
-1
-1
-.1
-.1
-1
-1
-1
-.1
-1
-..1
-1
-..1
-.1
-.1
-.1
-.1
-1
-.1
-1
-1
-1
-.1
-1
-.1
-.1
-1
-1
-1
-1
-...1
-1
-.1
-1
-1
-1
-1
-.....1
-..1
-.....1
-1
-.1
-.1
-.....1
-1
-1
-1
-...1
-1
-1
-..1
-1
-1
-..1
-1
 ......1
 .1
 .1
+.1
+...1
+.1
+.1
+.1
+...1
 1
 .1
+..1
+.1
+.1
+.1
+.1
+1
+.1
+.1
+..1
+.1
+1
+..1
+1
+1
+1
+.1
+.1
+....1
+.1
+.1
+.1
+.1
+.1
+1
+1
+.1
+.1
+...1
+.1
+.1
+.1
+.1
+1
+.1
+1
+...1
+.1
+1
+.1
+..1
+1
+.1
+.1
+.1
+1
+...1
+.1
+1
+.1
+1
+1
+.1
+.1
+.1
+.1
+.1
+....1
+1
+.1
+.1
+.1
+.1
+1
+1
 ....1
 1
 1
 1
-.......1
+.1
 .1
 ..1
-1
-..1
-1
-1
-.1
-.1
-1
-..............1
-....1
 ...1
 1
 .1
-.1
-.1
-.......1
-..1
 1
-...1
-...1
+.1
+..1
+.1
+1
+1
+1
+.1
 .....1
-....1
+.1
 1
+1
+...1
+1
+1
+1
+..1
+.1
 ...1
 .1
 1
-1
-1
-..1
-1
+.1
+.1
+.1
 1
 ..1
 1
 1
 .1
+...1
+..1
 1
 ..1
 .1
 1
-.................
-KLEE: done: total instructions = 4616178
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 301
-Execution time: 794 sec for test_poly20
+1
+..1
+1
+..1
+.1
+.1
+.1
+.1
+1
+...1
+1
+..1
+1
+..1
+.1
+.1
+.1
+1
+1
+..1
+1
+...1
+1
+1
+...1
+1
+1
+.1
+1
+1
+.....1
+1
+1
+.1
+...1
+1
+.1
+.1
+.1
+1
+.1
+..1
+..1
+1
+..1
+.1
+1
+.1
+.1
+1
+..1
+.1
+.1
+..1
+1
+.1
+.1
+..1
+.1
+.1
+.1
+.1
+1
+..1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+.
+KLEE: done: total instructions = 111810538
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 5000 sec for test_poly20
 
 KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-9"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -596,42 +444,39 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(95168144, 95012144)
+KLEE: WARNING ONCE: calling external: strcat(85428480, 85196800)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(94958688)
-KLEE: WARNING ONCE: calling external: fflush(47532694619136)
-.1
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
 1
-.1
-.1
+KLEE: WARNING ONCE: calling external: printf(85146064)
+.KLEE: WARNING ONCE: calling external: fflush(47482112361472)
+1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(90516144)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(90516144, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(86228624, 86594816, 1, 8, 0, 0, 90516144)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(90516144)
+1
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(89457920, 2, 1, 8, 0, 0, 90037872)
+KLEE: WARNING ONCE: calling external: __gmpq_mul(91242672, 91242672, 90709376)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
+1
 1
 ..1
-1
-1
-.1
-1
-1
-.1
-...1
-.1
-.1
-...1
-...1
 ..1
-..1
-....1
-..1
-.....KLEE: WARNING ONCE: skipping fork (max-forks reached)
-..................................................
-KLEE: done: total instructions = 1047794
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 301
-Execution time: 71 sec for test_poly21
+1
+.............................................................................................
+KLEE: done: total instructions = 44378320
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 937 sec for test_poly21
 
 KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-11"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -730,140 +575,142 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(85761376, 85539968)
+KLEE: WARNING ONCE: calling external: strcat(81261664, 81028624)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(85486512)
-KLEE: WARNING ONCE: calling external: fflush(47311524979712)
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(80977888)
+KLEE: WARNING ONCE: calling external: fflush(47060550280192)
 .1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(85746080)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(85746080, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(85126992, 86689184, 1, 8, 0, 0, 85746080)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(85746080)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(86966512, 2, 1, 8, 0, 0, 84423104)
+1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(82240816, 82240816, 86674144)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
 1
 .1
-1
-1
 1
 ..1
 1
-....1
-.1
 1
-1
-.1
-1
-KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly22.c:20: invalid klee_assume call (provably false)
-KLEE: NOTE: now ignoring this error at this location
-..1
-1
-..1
-1
-.1
-.1
-1
-...1
-1
-..1
-1
-...KLEE: WARNING ONCE: skipping fork (max-forks reached)
-1
-...1
-1
-..1
-...1
-.1
-..1
-.....1
-...1
-.1
-.1
-.1
-1
-.....1
-...........1
-.1
-.............1
-1
-.1
-1
-1
-.....1
-.......1
-..........1
-.....1
-.............1
-.......1
-..1
-..........1
-..........1
-..............1
-.1
-..1
-1
-...1
-.............1
-......1
-...1
+..................1
 .........1
+..............................1
+..........................1
+.1
 .....1
-.................1
-1
-..............1
-......1
-..1
-1
-...1
-.............1
-......1
 .....1
 ..1
 ....1
-1
-........1
-.1
-.1
-1
-...1
-.......1
 ..1
-...............1
 1
-1
-1
-1
-.1
-1
+..1
 1
 ...1
 1
+...1
+.1
+.KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly22.c:20: invalid klee_assume call (provably false)
+KLEE: NOTE: now ignoring this error at this location
+1
+.1
+.1
+.1
 .1
 1
 .1
 ..1
 1
-1
-..1
-1
-1
-1
+.1
 ..1
 .1
 1
 ..1
+1
+.1
+..1
 .1
 1
+1
+.1
+.1
 ...1
 1
+..1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+1
+.1
+..1
+.1
+1
+1
+..1
+.1
+.1
+1
+1
+....1
+1
+..1
+.1
 1
 1
 ..1
 1
-..............................
-KLEE: done: total instructions = 2933511
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 271
-Execution time: 358 sec for test_poly22
+.1
+...1
+.1
+.1
+1
+..1
+1
+..1
+1
+..1
+1
+1
+.1
+...1
+1
+..1
+1
+..1
+1
+..1
+.1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+.1
+.1
+.1
+.1
+.
+KLEE: done: total instructions = 71341562
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 2622 sec for test_poly22
 
 KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-14"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -962,553 +809,543 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(77302560, 77081216)
+KLEE: WARNING ONCE: calling external: strcat(67883952, 67650976)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(77027760)
-KLEE: WARNING ONCE: calling external: fflush(47650405147648)
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(67600240)
+KLEE: WARNING ONCE: calling external: fflush(47027304481792)
 .1
-1
-.1
-1
-1
-1
-..1
-1
-....1
-.1
-1
-1
-.1
-1
-KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly23.c:20: invalid klee_assume call (provably false)
-KLEE: NOTE: now ignoring this error at this location
-..1
-1
-..1
-1
-.1
-.1
-1
-..1
-1
-...1
-1
-...1
 KLEE: WARNING ONCE: skipping fork (max-forks reached)
-..1
-..1
 1
-...1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(72846096)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(72846096, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(68530352, 73168416, 1, 8, 0, 0, 72846096)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(72846096)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(68304864, 2, 1, 8, 0, 0, 72857472)
+1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(74045312, 74045312, 73470064)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
 1
 .1
 1
-1
-....1
-....1
 .1
-....1
-...1
-........1
+.1
 1
-1
-..1
+...................1
+.........1
+...............................1
+........................1
+.1
+.....1
 ......1
+..1
+...1
+.1
+.1
+1
+1
+......1
+1
+..1
+.1
+.1
+.1
+.1
+.1
+.1
+.1
+1
+..1
+1
+1
+...1
+.1
+1
+..1
+1
+..1
+1
+..1
+.1
+.1
+1
+.1
+..1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+1
+.1
+.1
+1
+...1
+1
+.1
+1
+...1
+.1
+1
+..1
+.1
+.1
+1
+..1
+1
+1
+1
+.1
+..1
+..1
+..1
+1
+1
+.1
+...1
+1
+..1
+1
+..1
+.1
+1
+.1
+1
+1
+....1
+.1
+.1
+.1
+.1
+.1
+.1
+1
+.1
+.1
+..1
+.1
+.1
+.1
+.1
+.1
+.1
+.
+KLEE: done: total instructions = 70561509
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 2285 sec for test_poly23
+
+KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-18"
+Using STP solver backend
+KLEE: WARNING: undefined reference to function: __finite
+KLEE: WARNING: undefined reference to function: __gmpfr_out_str
+KLEE: WARNING: undefined reference to function: __gmpq_add
+KLEE: WARNING: undefined reference to function: __gmpq_canonicalize
+KLEE: WARNING: undefined reference to function: __gmpq_clear
+KLEE: WARNING: undefined reference to function: __gmpq_cmp
+KLEE: WARNING: undefined reference to function: __gmpq_cmp_si
+KLEE: WARNING: undefined reference to function: __gmpq_div
+KLEE: WARNING: undefined reference to function: __gmpq_div_2exp
+KLEE: WARNING: undefined reference to function: __gmpq_equal
+KLEE: WARNING: undefined reference to function: __gmpq_init
+KLEE: WARNING: undefined reference to function: __gmpq_inv
+KLEE: WARNING: undefined reference to function: __gmpq_mul
+KLEE: WARNING: undefined reference to function: __gmpq_mul_2exp
+KLEE: WARNING: undefined reference to function: __gmpq_neg
+KLEE: WARNING: undefined reference to function: __gmpq_out_str
+KLEE: WARNING: undefined reference to function: __gmpq_set
+KLEE: WARNING: undefined reference to function: __gmpq_set_d
+KLEE: WARNING: undefined reference to function: __gmpq_set_si
+KLEE: WARNING: undefined reference to function: __gmpq_set_ui
+KLEE: WARNING: undefined reference to function: __gmpq_sub
+KLEE: WARNING: undefined reference to function: __gmpz_add_ui
+KLEE: WARNING: undefined reference to function: __gmpz_cdiv_q
+KLEE: WARNING: undefined reference to function: __gmpz_cdiv_qr
+KLEE: WARNING: undefined reference to function: __gmpz_clear
+KLEE: WARNING: undefined reference to function: __gmpz_cmp_ui
+KLEE: WARNING: undefined reference to function: __gmpz_export
+KLEE: WARNING: undefined reference to function: __gmpz_fdiv_q
+KLEE: WARNING: undefined reference to function: __gmpz_get_si
+KLEE: WARNING: undefined reference to function: __gmpz_get_ui
+KLEE: WARNING: undefined reference to function: __gmpz_import
+KLEE: WARNING: undefined reference to function: __gmpz_init
+KLEE: WARNING: undefined reference to function: __gmpz_mul
+KLEE: WARNING: undefined reference to function: __gmpz_neg
+KLEE: WARNING: undefined reference to function: __gmpz_perfect_square_p
+KLEE: WARNING: undefined reference to function: __gmpz_pow_ui
+KLEE: WARNING: undefined reference to function: __gmpz_set
+KLEE: WARNING: undefined reference to function: __gmpz_set_si
+KLEE: WARNING: undefined reference to function: __gmpz_set_ui
+KLEE: WARNING: undefined reference to function: __gmpz_sizeinbase
+KLEE: WARNING: undefined reference to function: __gmpz_sqrt
+KLEE: WARNING: undefined reference to function: __gmpz_tdiv_q
+KLEE: WARNING: undefined reference to function: ceil
+KLEE: WARNING: undefined reference to function: fesetround
+KLEE: WARNING: undefined reference to function: fflush
+KLEE: WARNING: undefined reference to function: floor
+KLEE: WARNING: undefined reference to function: fprintf
+KLEE: WARNING: undefined reference to function: llabs
+KLEE: WARNING: undefined reference to function: mpfr_add
+KLEE: WARNING: undefined reference to function: mpfr_add_ui
+KLEE: WARNING: undefined reference to function: mpfr_clear
+KLEE: WARNING: undefined reference to function: mpfr_cmp3
+KLEE: WARNING: undefined reference to function: mpfr_cmp_d
+KLEE: WARNING: undefined reference to function: mpfr_cmp_q
+KLEE: WARNING: undefined reference to function: mpfr_cmp_si_2exp
+KLEE: WARNING: undefined reference to function: mpfr_div
+KLEE: WARNING: undefined reference to function: mpfr_div_2ui
+KLEE: WARNING: undefined reference to function: mpfr_equal_p
+KLEE: WARNING: undefined reference to function: mpfr_get_d
+KLEE: WARNING: undefined reference to function: mpfr_get_si
+KLEE: WARNING: undefined reference to function: mpfr_get_z_2exp
+KLEE: WARNING: undefined reference to function: mpfr_init
+KLEE: WARNING: undefined reference to function: mpfr_init2
+KLEE: WARNING: undefined reference to function: mpfr_integer_p
+KLEE: WARNING: undefined reference to function: mpfr_mul
+KLEE: WARNING: undefined reference to function: mpfr_mul_2si
+KLEE: WARNING: undefined reference to function: mpfr_neg
+KLEE: WARNING: undefined reference to function: mpfr_number_p
+KLEE: WARNING: undefined reference to function: mpfr_pow_ui
+KLEE: WARNING: undefined reference to function: mpfr_rint_ceil
+KLEE: WARNING: undefined reference to function: mpfr_rint_floor
+KLEE: WARNING: undefined reference to function: mpfr_rint_trunc
+KLEE: WARNING: undefined reference to function: mpfr_set4
+KLEE: WARNING: undefined reference to function: mpfr_set_d
+KLEE: WARNING: undefined reference to function: mpfr_set_erangeflag
+KLEE: WARNING: undefined reference to function: mpfr_set_inf
+KLEE: WARNING: undefined reference to function: mpfr_set_prec
+KLEE: WARNING: undefined reference to function: mpfr_set_q
+KLEE: WARNING: undefined reference to function: mpfr_set_si_2exp
+KLEE: WARNING: undefined reference to function: mpfr_set_ui_2exp
+KLEE: WARNING: undefined reference to function: mpfr_sqrt
+KLEE: WARNING: undefined reference to function: mpfr_sub_ui
+KLEE: WARNING: undefined reference to function: mpfr_ui_div
+KLEE: WARNING: undefined reference to function: nextafter
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to function: qsort
+KLEE: WARNING: undefined reference to function: snprintf
+KLEE: WARNING: undefined reference to function: sprintf
+KLEE: WARNING: undefined reference to function: sqrt
+KLEE: WARNING: undefined reference to variable: stderr
+KLEE: WARNING: undefined reference to variable: stdout
+KLEE: WARNING: undefined reference to function: strcat
+KLEE: WARNING: undefined reference to function: strcpy
+KLEE: WARNING: undefined reference to function: strdup
+KLEE: WARNING: undefined reference to function: trunc
+KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
+KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
+1
+KLEE: WARNING ONCE: calling external: strcat(82091904, 81858976)
+1
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(81808240)
+KLEE: WARNING ONCE: calling external: fflush(47404071109632)
+.1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(87404064)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(87404064, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(87480016, 86799184, 1, 8, 0, 0, 87404064)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(87404064)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(88036112, 2, 1, 8, 0, 0, 82604112)
+1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(87514736, 87514736, 87909008)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
+1
+.1
+1
+.1
+.1
+1
+...................1
+.........1
+.............................1
+.......................1
+...1
+.....1
+.....1
+...1
+....1
+1
+.1
+.1
+..1
+....1
+.1
+.1
+.1
+.1
+1
+..1
+.1
+.1
+1
+..1
+1
+..1
+1
+..1
+.1
+1
+.1
+..1
+.1
+.1
+1
+..1
+1
+..1
+.1
+.1
+1
+..1
+1
+..1
+.1
+.1
+.1
+1
+.1
+1
+...1
+1
+..1
+1
+1
+..1
+..1
+1
+1
+...1
+.1
+.1
+.1
+.1
+1
+..1
+.1
+.1
+1
+..1
+1
+..1
+1
+..1
+1
+..1
+1
+..1
+.1
+1
+..1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+.1
+.1
+.1
+.1
+.1
+.1
+.
+KLEE: done: total instructions = 74882542
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 2329 sec for test_poly24
+
+KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-21"
+Using STP solver backend
+KLEE: WARNING: undefined reference to function: __finite
+KLEE: WARNING: undefined reference to function: __gmpfr_out_str
+KLEE: WARNING: undefined reference to function: __gmpq_add
+KLEE: WARNING: undefined reference to function: __gmpq_canonicalize
+KLEE: WARNING: undefined reference to function: __gmpq_clear
+KLEE: WARNING: undefined reference to function: __gmpq_cmp
+KLEE: WARNING: undefined reference to function: __gmpq_cmp_si
+KLEE: WARNING: undefined reference to function: __gmpq_div
+KLEE: WARNING: undefined reference to function: __gmpq_div_2exp
+KLEE: WARNING: undefined reference to function: __gmpq_equal
+KLEE: WARNING: undefined reference to function: __gmpq_init
+KLEE: WARNING: undefined reference to function: __gmpq_inv
+KLEE: WARNING: undefined reference to function: __gmpq_mul
+KLEE: WARNING: undefined reference to function: __gmpq_mul_2exp
+KLEE: WARNING: undefined reference to function: __gmpq_neg
+KLEE: WARNING: undefined reference to function: __gmpq_out_str
+KLEE: WARNING: undefined reference to function: __gmpq_set
+KLEE: WARNING: undefined reference to function: __gmpq_set_d
+KLEE: WARNING: undefined reference to function: __gmpq_set_si
+KLEE: WARNING: undefined reference to function: __gmpq_set_ui
+KLEE: WARNING: undefined reference to function: __gmpq_sub
+KLEE: WARNING: undefined reference to function: __gmpz_add_ui
+KLEE: WARNING: undefined reference to function: __gmpz_cdiv_q
+KLEE: WARNING: undefined reference to function: __gmpz_cdiv_qr
+KLEE: WARNING: undefined reference to function: __gmpz_clear
+KLEE: WARNING: undefined reference to function: __gmpz_cmp_ui
+KLEE: WARNING: undefined reference to function: __gmpz_export
+KLEE: WARNING: undefined reference to function: __gmpz_fdiv_q
+KLEE: WARNING: undefined reference to function: __gmpz_get_si
+KLEE: WARNING: undefined reference to function: __gmpz_get_ui
+KLEE: WARNING: undefined reference to function: __gmpz_import
+KLEE: WARNING: undefined reference to function: __gmpz_init
+KLEE: WARNING: undefined reference to function: __gmpz_mul
+KLEE: WARNING: undefined reference to function: __gmpz_neg
+KLEE: WARNING: undefined reference to function: __gmpz_perfect_square_p
+KLEE: WARNING: undefined reference to function: __gmpz_pow_ui
+KLEE: WARNING: undefined reference to function: __gmpz_set
+KLEE: WARNING: undefined reference to function: __gmpz_set_si
+KLEE: WARNING: undefined reference to function: __gmpz_set_ui
+KLEE: WARNING: undefined reference to function: __gmpz_sizeinbase
+KLEE: WARNING: undefined reference to function: __gmpz_sqrt
+KLEE: WARNING: undefined reference to function: __gmpz_tdiv_q
+KLEE: WARNING: undefined reference to function: ceil
+KLEE: WARNING: undefined reference to function: fesetround
+KLEE: WARNING: undefined reference to function: fflush
+KLEE: WARNING: undefined reference to function: floor
+KLEE: WARNING: undefined reference to function: fprintf
+KLEE: WARNING: undefined reference to function: llabs
+KLEE: WARNING: undefined reference to function: mpfr_add
+KLEE: WARNING: undefined reference to function: mpfr_add_ui
+KLEE: WARNING: undefined reference to function: mpfr_clear
+KLEE: WARNING: undefined reference to function: mpfr_cmp3
+KLEE: WARNING: undefined reference to function: mpfr_cmp_d
+KLEE: WARNING: undefined reference to function: mpfr_cmp_q
+KLEE: WARNING: undefined reference to function: mpfr_cmp_si_2exp
+KLEE: WARNING: undefined reference to function: mpfr_div
+KLEE: WARNING: undefined reference to function: mpfr_div_2ui
+KLEE: WARNING: undefined reference to function: mpfr_equal_p
+KLEE: WARNING: undefined reference to function: mpfr_get_d
+KLEE: WARNING: undefined reference to function: mpfr_get_si
+KLEE: WARNING: undefined reference to function: mpfr_get_z_2exp
+KLEE: WARNING: undefined reference to function: mpfr_init
+KLEE: WARNING: undefined reference to function: mpfr_init2
+KLEE: WARNING: undefined reference to function: mpfr_integer_p
+KLEE: WARNING: undefined reference to function: mpfr_mul
+KLEE: WARNING: undefined reference to function: mpfr_mul_2si
+KLEE: WARNING: undefined reference to function: mpfr_neg
+KLEE: WARNING: undefined reference to function: mpfr_number_p
+KLEE: WARNING: undefined reference to function: mpfr_pow_ui
+KLEE: WARNING: undefined reference to function: mpfr_rint_ceil
+KLEE: WARNING: undefined reference to function: mpfr_rint_floor
+KLEE: WARNING: undefined reference to function: mpfr_rint_trunc
+KLEE: WARNING: undefined reference to function: mpfr_set4
+KLEE: WARNING: undefined reference to function: mpfr_set_d
+KLEE: WARNING: undefined reference to function: mpfr_set_erangeflag
+KLEE: WARNING: undefined reference to function: mpfr_set_inf
+KLEE: WARNING: undefined reference to function: mpfr_set_prec
+KLEE: WARNING: undefined reference to function: mpfr_set_q
+KLEE: WARNING: undefined reference to function: mpfr_set_si_2exp
+KLEE: WARNING: undefined reference to function: mpfr_set_ui_2exp
+KLEE: WARNING: undefined reference to function: mpfr_sqrt
+KLEE: WARNING: undefined reference to function: mpfr_sub_ui
+KLEE: WARNING: undefined reference to function: mpfr_ui_div
+KLEE: WARNING: undefined reference to function: nextafter
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to function: qsort
+KLEE: WARNING: undefined reference to function: snprintf
+KLEE: WARNING: undefined reference to function: sprintf
+KLEE: WARNING: undefined reference to function: sqrt
+KLEE: WARNING: undefined reference to variable: stderr
+KLEE: WARNING: undefined reference to variable: stdout
+KLEE: WARNING: undefined reference to function: strcat
+KLEE: WARNING: undefined reference to function: strcpy
+KLEE: WARNING: undefined reference to function: strdup
+KLEE: WARNING: undefined reference to function: trunc
+KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
+KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
+1
+KLEE: WARNING ONCE: calling external: strcat(81994032, 81759824)
+1
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(81709088)
+KLEE: WARNING ONCE: calling external: fflush(47039469614080)
+.1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(86923456)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(86923456, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(83615648, 84177104, 1, 8, 0, 0, 86923456)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(86923456)
+1
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(85756944, 2, 1, 8, 0, 0, 87460816)
+KLEE: WARNING ONCE: calling external: __gmpq_mul(87433104, 87433104, 86614992)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
+1
+1
+.1
+1
+..1
+1
+.......1
+.....................1
+..........1
+.....................1
+.........1
 ...............1
-1
-..1
-...1
-1
-..1
-..........1
-1
-......................1
 .......1
+....1
 .1
-1
-......1
-..............1
-...........1
-........1
-................1
 ..1
-1
-............1
-...1
-....1
-...........1
-......1
-...1
-......1
-......1
-1
-.......1
-1
-1
-.............1
-..................1
-.1
-1
-....1
-....1
 .....1
-...1
-...........1
-.1
-1
-..1
-..1
-1
-......1
-.1
-1
-..1
-.1
-....1
-1
-1
-.1
-1
-1
-1
-..1
-1
-1
-.1
-1
-..1
-1
-.1
-1
-.1
-1
 .1
 .1
 .1
-..1
-1
-..1
-.........1
-...................
-KLEE: done: total instructions = 2930341
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 271
-Execution time: 355 sec for test_poly23
-
-KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-19"
-Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
-KLEE: WARNING: undefined reference to function: __finite
-KLEE: WARNING: undefined reference to function: __gmpfr_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_add
-KLEE: WARNING: undefined reference to function: __gmpq_canonicalize
-KLEE: WARNING: undefined reference to function: __gmpq_clear
-KLEE: WARNING: undefined reference to function: __gmpq_cmp
-KLEE: WARNING: undefined reference to function: __gmpq_cmp_si
-KLEE: WARNING: undefined reference to function: __gmpq_div
-KLEE: WARNING: undefined reference to function: __gmpq_div_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_equal
-KLEE: WARNING: undefined reference to function: __gmpq_init
-KLEE: WARNING: undefined reference to function: __gmpq_inv
-KLEE: WARNING: undefined reference to function: __gmpq_mul
-KLEE: WARNING: undefined reference to function: __gmpq_mul_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_neg
-KLEE: WARNING: undefined reference to function: __gmpq_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_set
-KLEE: WARNING: undefined reference to function: __gmpq_set_d
-KLEE: WARNING: undefined reference to function: __gmpq_set_si
-KLEE: WARNING: undefined reference to function: __gmpq_set_ui
-KLEE: WARNING: undefined reference to function: __gmpq_sub
-KLEE: WARNING: undefined reference to function: __gmpz_add_ui
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_qr
-KLEE: WARNING: undefined reference to function: __gmpz_clear
-KLEE: WARNING: undefined reference to function: __gmpz_cmp_ui
-KLEE: WARNING: undefined reference to function: __gmpz_export
-KLEE: WARNING: undefined reference to function: __gmpz_fdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_get_si
-KLEE: WARNING: undefined reference to function: __gmpz_get_ui
-KLEE: WARNING: undefined reference to function: __gmpz_import
-KLEE: WARNING: undefined reference to function: __gmpz_init
-KLEE: WARNING: undefined reference to function: __gmpz_mul
-KLEE: WARNING: undefined reference to function: __gmpz_neg
-KLEE: WARNING: undefined reference to function: __gmpz_perfect_square_p
-KLEE: WARNING: undefined reference to function: __gmpz_pow_ui
-KLEE: WARNING: undefined reference to function: __gmpz_set
-KLEE: WARNING: undefined reference to function: __gmpz_set_si
-KLEE: WARNING: undefined reference to function: __gmpz_set_ui
-KLEE: WARNING: undefined reference to function: __gmpz_sizeinbase
-KLEE: WARNING: undefined reference to function: __gmpz_sqrt
-KLEE: WARNING: undefined reference to function: __gmpz_tdiv_q
-KLEE: WARNING: undefined reference to function: ceil
-KLEE: WARNING: undefined reference to function: fesetround
-KLEE: WARNING: undefined reference to function: fflush
-KLEE: WARNING: undefined reference to function: floor
-KLEE: WARNING: undefined reference to function: fprintf
-KLEE: WARNING: undefined reference to function: llabs
-KLEE: WARNING: undefined reference to function: mpfr_add
-KLEE: WARNING: undefined reference to function: mpfr_add_ui
-KLEE: WARNING: undefined reference to function: mpfr_clear
-KLEE: WARNING: undefined reference to function: mpfr_cmp3
-KLEE: WARNING: undefined reference to function: mpfr_cmp_d
-KLEE: WARNING: undefined reference to function: mpfr_cmp_q
-KLEE: WARNING: undefined reference to function: mpfr_cmp_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_div
-KLEE: WARNING: undefined reference to function: mpfr_div_2ui
-KLEE: WARNING: undefined reference to function: mpfr_equal_p
-KLEE: WARNING: undefined reference to function: mpfr_get_d
-KLEE: WARNING: undefined reference to function: mpfr_get_si
-KLEE: WARNING: undefined reference to function: mpfr_get_z_2exp
-KLEE: WARNING: undefined reference to function: mpfr_init
-KLEE: WARNING: undefined reference to function: mpfr_init2
-KLEE: WARNING: undefined reference to function: mpfr_integer_p
-KLEE: WARNING: undefined reference to function: mpfr_mul
-KLEE: WARNING: undefined reference to function: mpfr_mul_2si
-KLEE: WARNING: undefined reference to function: mpfr_neg
-KLEE: WARNING: undefined reference to function: mpfr_number_p
-KLEE: WARNING: undefined reference to function: mpfr_pow_ui
-KLEE: WARNING: undefined reference to function: mpfr_rint_ceil
-KLEE: WARNING: undefined reference to function: mpfr_rint_floor
-KLEE: WARNING: undefined reference to function: mpfr_rint_trunc
-KLEE: WARNING: undefined reference to function: mpfr_set4
-KLEE: WARNING: undefined reference to function: mpfr_set_d
-KLEE: WARNING: undefined reference to function: mpfr_set_erangeflag
-KLEE: WARNING: undefined reference to function: mpfr_set_inf
-KLEE: WARNING: undefined reference to function: mpfr_set_prec
-KLEE: WARNING: undefined reference to function: mpfr_set_q
-KLEE: WARNING: undefined reference to function: mpfr_set_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_set_ui_2exp
-KLEE: WARNING: undefined reference to function: mpfr_sqrt
-KLEE: WARNING: undefined reference to function: mpfr_sub_ui
-KLEE: WARNING: undefined reference to function: mpfr_ui_div
-KLEE: WARNING: undefined reference to function: nextafter
-KLEE: WARNING: undefined reference to function: printf
-KLEE: WARNING: undefined reference to function: qsort
-KLEE: WARNING: undefined reference to function: snprintf
-KLEE: WARNING: undefined reference to function: sprintf
-KLEE: WARNING: undefined reference to function: sqrt
-KLEE: WARNING: undefined reference to variable: stderr
-KLEE: WARNING: undefined reference to variable: stdout
-KLEE: WARNING: undefined reference to function: strcat
-KLEE: WARNING: undefined reference to function: strcpy
-KLEE: WARNING: undefined reference to function: strdup
-KLEE: WARNING: undefined reference to function: trunc
-KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
-KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
-1
-KLEE: WARNING ONCE: calling external: strcat(85137088, 84908288)
-1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(84854832)
-KLEE: WARNING ONCE: calling external: fflush(46949511070720)
-.1
-1
-.1
-1
-1
-1
-..1
-1
-....1
-.1
-1
-1
-.1
-1
-..1
-1
-..1
-1
-.1
-.1
-1
-..1
-1
-...1
-1
-..1
-.KLEE: WARNING ONCE: skipping fork (max-forks reached)
-.1
-..1
-1
-...1
-1
-1
-...1
-.1
-1
-....1
-.1
-....1
-.1
-..1
-1
-.................1
-.1
-...........1
-.1
-....1
-1
-...1
-........1
-1
-.1
-..........1
-.................1
-.....1
-..1
-................1
-1
-...........1
-....1
-............1
-...1
-........1
-.......1
-1
-......1
-...........1
-1
-.............................1
-..1
-..1
-...1
-1
-1
-.1
-1
-..1
-.............................1
-.1
-.1
-.1
-..........1
-.1
-1
-....1
-.1
-1
-1
-....1
-...1
-....1
-..1
-.........1
-1
-..1
-..1
-..1
-1
-.1
-1
-1
-1
-..1
-..1
-1
-..1
-.1
-.1
-.1
-1
-..1
-1
-.1
-1
-....1
-..1
-..1
-.1
-.....1
-..................
-KLEE: done: total instructions = 3080709
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 301
-Execution time: 366 sec for test_poly24
-
-KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-22"
-Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
-KLEE: WARNING: undefined reference to function: __finite
-KLEE: WARNING: undefined reference to function: __gmpfr_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_add
-KLEE: WARNING: undefined reference to function: __gmpq_canonicalize
-KLEE: WARNING: undefined reference to function: __gmpq_clear
-KLEE: WARNING: undefined reference to function: __gmpq_cmp
-KLEE: WARNING: undefined reference to function: __gmpq_cmp_si
-KLEE: WARNING: undefined reference to function: __gmpq_div
-KLEE: WARNING: undefined reference to function: __gmpq_div_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_equal
-KLEE: WARNING: undefined reference to function: __gmpq_init
-KLEE: WARNING: undefined reference to function: __gmpq_inv
-KLEE: WARNING: undefined reference to function: __gmpq_mul
-KLEE: WARNING: undefined reference to function: __gmpq_mul_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_neg
-KLEE: WARNING: undefined reference to function: __gmpq_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_set
-KLEE: WARNING: undefined reference to function: __gmpq_set_d
-KLEE: WARNING: undefined reference to function: __gmpq_set_si
-KLEE: WARNING: undefined reference to function: __gmpq_set_ui
-KLEE: WARNING: undefined reference to function: __gmpq_sub
-KLEE: WARNING: undefined reference to function: __gmpz_add_ui
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_qr
-KLEE: WARNING: undefined reference to function: __gmpz_clear
-KLEE: WARNING: undefined reference to function: __gmpz_cmp_ui
-KLEE: WARNING: undefined reference to function: __gmpz_export
-KLEE: WARNING: undefined reference to function: __gmpz_fdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_get_si
-KLEE: WARNING: undefined reference to function: __gmpz_get_ui
-KLEE: WARNING: undefined reference to function: __gmpz_import
-KLEE: WARNING: undefined reference to function: __gmpz_init
-KLEE: WARNING: undefined reference to function: __gmpz_mul
-KLEE: WARNING: undefined reference to function: __gmpz_neg
-KLEE: WARNING: undefined reference to function: __gmpz_perfect_square_p
-KLEE: WARNING: undefined reference to function: __gmpz_pow_ui
-KLEE: WARNING: undefined reference to function: __gmpz_set
-KLEE: WARNING: undefined reference to function: __gmpz_set_si
-KLEE: WARNING: undefined reference to function: __gmpz_set_ui
-KLEE: WARNING: undefined reference to function: __gmpz_sizeinbase
-KLEE: WARNING: undefined reference to function: __gmpz_sqrt
-KLEE: WARNING: undefined reference to function: __gmpz_tdiv_q
-KLEE: WARNING: undefined reference to function: ceil
-KLEE: WARNING: undefined reference to function: fesetround
-KLEE: WARNING: undefined reference to function: fflush
-KLEE: WARNING: undefined reference to function: floor
-KLEE: WARNING: undefined reference to function: fprintf
-KLEE: WARNING: undefined reference to function: llabs
-KLEE: WARNING: undefined reference to function: mpfr_add
-KLEE: WARNING: undefined reference to function: mpfr_add_ui
-KLEE: WARNING: undefined reference to function: mpfr_clear
-KLEE: WARNING: undefined reference to function: mpfr_cmp3
-KLEE: WARNING: undefined reference to function: mpfr_cmp_d
-KLEE: WARNING: undefined reference to function: mpfr_cmp_q
-KLEE: WARNING: undefined reference to function: mpfr_cmp_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_div
-KLEE: WARNING: undefined reference to function: mpfr_div_2ui
-KLEE: WARNING: undefined reference to function: mpfr_equal_p
-KLEE: WARNING: undefined reference to function: mpfr_get_d
-KLEE: WARNING: undefined reference to function: mpfr_get_si
-KLEE: WARNING: undefined reference to function: mpfr_get_z_2exp
-KLEE: WARNING: undefined reference to function: mpfr_init
-KLEE: WARNING: undefined reference to function: mpfr_init2
-KLEE: WARNING: undefined reference to function: mpfr_integer_p
-KLEE: WARNING: undefined reference to function: mpfr_mul
-KLEE: WARNING: undefined reference to function: mpfr_mul_2si
-KLEE: WARNING: undefined reference to function: mpfr_neg
-KLEE: WARNING: undefined reference to function: mpfr_number_p
-KLEE: WARNING: undefined reference to function: mpfr_pow_ui
-KLEE: WARNING: undefined reference to function: mpfr_rint_ceil
-KLEE: WARNING: undefined reference to function: mpfr_rint_floor
-KLEE: WARNING: undefined reference to function: mpfr_rint_trunc
-KLEE: WARNING: undefined reference to function: mpfr_set4
-KLEE: WARNING: undefined reference to function: mpfr_set_d
-KLEE: WARNING: undefined reference to function: mpfr_set_erangeflag
-KLEE: WARNING: undefined reference to function: mpfr_set_inf
-KLEE: WARNING: undefined reference to function: mpfr_set_prec
-KLEE: WARNING: undefined reference to function: mpfr_set_q
-KLEE: WARNING: undefined reference to function: mpfr_set_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_set_ui_2exp
-KLEE: WARNING: undefined reference to function: mpfr_sqrt
-KLEE: WARNING: undefined reference to function: mpfr_sub_ui
-KLEE: WARNING: undefined reference to function: mpfr_ui_div
-KLEE: WARNING: undefined reference to function: nextafter
-KLEE: WARNING: undefined reference to function: printf
-KLEE: WARNING: undefined reference to function: qsort
-KLEE: WARNING: undefined reference to function: snprintf
-KLEE: WARNING: undefined reference to function: sprintf
-KLEE: WARNING: undefined reference to function: sqrt
-KLEE: WARNING: undefined reference to variable: stderr
-KLEE: WARNING: undefined reference to variable: stdout
-KLEE: WARNING: undefined reference to function: strcat
-KLEE: WARNING: undefined reference to function: strcpy
-KLEE: WARNING: undefined reference to function: strdup
-KLEE: WARNING: undefined reference to function: trunc
-KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
-KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
-1
-KLEE: WARNING ONCE: calling external: strcat(91039072, 90814224)
-1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(90760768)
-KLEE: WARNING ONCE: calling external: fflush(47285634888704)
-.1
-1
-.1
-1
-1
-1
-.1
-.1
-.1
-..1
-..1
-1
-1
-1
-.1
-..1
-.1
-..1
-.1
-.1
-1
-1
-1
-.1
-1
-...1
-.1
-1
-1
-.1
-KLEE: WARNING ONCE: skipping fork (max-forks reached)
-1
-1
-.1
-.1
-....1
-..1
-1
-.1
-1
-1
-.1
-1
-..1
-..1
-..1
-...1
-1
-1
 0  klee            0x0000000000ed7732 llvm::sys::PrintStackTrace(_IO_FILE*) + 34
 1  klee            0x0000000000ed7524
-2  libpthread.so.0 0x00002b018a56a330
-3  klee            0x0000000000922c35 klee::Expr::compare(klee::Expr const&, llvm::DenseSet<std::pair<klee::Expr const*, klee::Expr const*>, llvm::DenseMapInfo<std::pair<klee::Expr const*, klee::Expr const*> > >&) const + 293
-4  klee            0x0000000000922cfb klee::Expr::compare(klee::Expr const&, llvm::DenseSet<std::pair<klee::Expr const*, klee::Expr const*>, llvm::DenseMapInfo<std::pair<klee::Expr const*, klee::Expr const*> > >&) const + 491
-5  klee            0x0000000000922cfb klee::Expr::compare(klee::Expr const&, llvm::DenseSet<std::pair<klee::Expr const*, klee::Expr const*>, llvm::DenseMapInfo<std::pair<klee::Expr const*, klee::Expr const*> > >&) const + 491
-6  klee            0x0000000000922d89 klee::Expr::compare(klee::Expr const&) const + 41
-7  klee            0x00000000007f486f
-8  klee            0x00000000007f4ac4 CexCachingSolver::searchForAssignment(std::set<klee::ref<klee::Expr>, std::less<klee::ref<klee::Expr> >, std::allocator<klee::ref<klee::Expr> > >&, klee::Assignment*&) + 84
-9  klee            0x00000000007f5078 CexCachingSolver::lookupAssignment(klee::Query const&, std::set<klee::ref<klee::Expr>, std::less<klee::ref<klee::Expr> >, std::allocator<klee::ref<klee::Expr> > >&, klee::Assignment*&) + 408
-10 klee            0x00000000007f51ef CexCachingSolver::getAssignment(klee::Query const&, klee::Assignment*&) + 111
-11 klee            0x00000000007f5fa4 CexCachingSolver::computeValue(klee::Query const&, klee::ref<klee::Expr>&) + 244
-12 klee            0x0000000000801bf3 IndependentSolver::computeValue(klee::Query const&, klee::ref<klee::Expr>&) + 275
-13 klee            0x00000000008068b0 klee::Solver::getValue(klee::Query const&, klee::ref<klee::ConstantExpr>&) + 64
-14 klee            0x00000000005ade1b klee::TimingSolver::getValue(klee::ExecutionState const&, klee::ref<klee::Expr>, klee::ref<klee::ConstantExpr>&) + 395
-15 klee            0x00000000005817c6 klee::Executor::toConstant(klee::ExecutionState&, klee::ref<klee::Expr>, char const*) + 214
-16 klee            0x000000000058ccd0 klee::Executor::executeInstruction(klee::ExecutionState&, klee::KInstruction*) + 1968
-17 klee            0x0000000000591c7e klee::Executor::run(klee::ExecutionState&) + 1534
-18 klee            0x000000000059251e klee::Executor::runFunctionAsMain(llvm::Function*, int, char**, char**) + 1918
-19 klee            0x00000000005645cf main + 10015
-20 libc.so.6       0x00002b018b3e6f45 __libc_start_main + 245
-21 klee            0x0000000000579b52
-Segmentation fault (core dumped)
-Execution time: 34 sec for test_poly25
+2  libpthread.so.0 0x00002ac839bea330
+3  libc.so.6       0x00002ac83aa7bc37 gsignal + 55
+4  libc.so.6       0x00002ac83aa7f028 abort + 328
+5  libc.so.6       0x00002ac83aab82a4
+6  libc.so.6       0x00002ac83aac456e
+7  klee            0x00000000005a0e26 klee::MemoryManager::markFreed(klee::MemoryObject*) + 102
+8  klee            0x000000000059d5ac klee::MemoryObject::~MemoryObject() + 28
+9  klee            0x000000000059dc66 klee::ObjectState::~ObjectState() + 182
+10 klee            0x000000000059dc97 klee::ObjectHolder::~ObjectHolder() + 23
+11 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+12 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+13 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+14 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+15 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+16 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+17 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+18 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+19 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+20 klee            0x00000000005b2dd5 klee::AddressSpace::unbindObject(klee::MemoryObject const*) + 85
+21 klee            0x00000000005b5037 klee::ExecutionState::popFrame() + 55
+22 klee            0x000000000058e772 klee::Executor::executeInstruction(klee::ExecutionState&, klee::KInstruction*) + 8786
+23 klee            0x0000000000591c7e klee::Executor::run(klee::ExecutionState&) + 1534
+24 klee            0x000000000059251e klee::Executor::runFunctionAsMain(llvm::Function*, int, char**, char**) + 1918
+25 klee            0x00000000005645cf main + 10015
+26 libc.so.6       0x00002ac83aa66f45 __libc_start_main + 245
+27 klee            0x0000000000579b52
+Aborted (core dumped)
+Execution time: 448 sec for test_poly25
 
-KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-23"
+KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-24"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -1607,82 +1444,73 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(76698976, 76474128)
+KLEE: WARNING ONCE: calling external: strcat(94920960, 94686752)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(76420672)
-KLEE: WARNING ONCE: calling external: fflush(47548190024704)
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(94636016)
+KLEE: WARNING ONCE: calling external: fflush(47521128416256)
 .1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
 1
-.1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(99247024)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(99247024, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(97997280, 98567840, 1, 8, 0, 0, 99247024)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(99247024)
 1
-1
-1
-.1
-.1
-.1
-..1
-..1
-1
-1
-1
-.1
-.1
-..1
-..1
-.1
-.1
-1
-1
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(100282992, 2, 1, 8, 0, 0, 100638160)
+KLEE: WARNING ONCE: calling external: __gmpq_mul(100957072, 100957072, 100719728)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
 1
 1
 .1
 ..1
-..1
 1
 1
-1
-.KLEE: WARNING ONCE: skipping fork (max-forks reached)
-1
-1
-1
-.1
-....1
-.1
-.KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly26.c:23: invalid klee_assume call (provably false)
+............1
+.........KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly26.c:23: invalid klee_assume call (provably false)
 KLEE: NOTE: now ignoring this error at this location
-..1
-1
-1
-1
-1
-..1
-..1
-.1
-1
-.1
-...1
-1
-..1
-1
-.0  klee            0x0000000000ed7732 llvm::sys::PrintStackTrace(_IO_FILE*) + 34
+.......1
+..........1
+.........................1
+........1
+..........1
+0  klee            0x0000000000ed7732 llvm::sys::PrintStackTrace(_IO_FILE*) + 34
 1  klee            0x0000000000ed7524
-2  libpthread.so.0 0x00002b3eabd81330
-3  klee            0x00000000005af7e5 klee::AddressSpace::copyOutConcretes() + 229
-4  klee            0x0000000000585547 klee::Executor::callExternalFunction(klee::ExecutionState&, klee::KInstruction*, llvm::Function*, std::vector<klee::ref<klee::Expr>, std::allocator<klee::ref<klee::Expr> > >&) + 519
-5  klee            0x000000000058bf84 klee::Executor::executeCall(klee::ExecutionState&, klee::KInstruction*, llvm::Function*, std::vector<klee::ref<klee::Expr>, std::allocator<klee::ref<klee::Expr> > >&) + 1444
-6  klee            0x000000000058ff5e klee::Executor::executeInstruction(klee::ExecutionState&, klee::KInstruction*) + 14910
-7  klee            0x0000000000591c7e klee::Executor::run(klee::ExecutionState&) + 1534
-8  klee            0x000000000059251e klee::Executor::runFunctionAsMain(llvm::Function*, int, char**, char**) + 1918
-9  klee            0x00000000005645cf main + 10015
-10 libc.so.6       0x00002b3eacbfdf45 __libc_start_main + 245
-11 klee            0x0000000000579b52
-Segmentation fault (core dumped)
-Execution time: 36 sec for test_poly26
+2  libpthread.so.0 0x00002b385ed8b330
+3  libc.so.6       0x00002b385fc1cc37 gsignal + 55
+4  libc.so.6       0x00002b385fc20028 abort + 328
+5  libc.so.6       0x00002b385fc592a4
+6  libc.so.6       0x00002b385fc6556e
+7  klee            0x00000000005a0e26 klee::MemoryManager::markFreed(klee::MemoryObject*) + 102
+8  klee            0x000000000059d5ac klee::MemoryObject::~MemoryObject() + 28
+9  klee            0x000000000059dc66 klee::ObjectState::~ObjectState() + 182
+10 klee            0x000000000059dc97 klee::ObjectHolder::~ObjectHolder() + 23
+11 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+12 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+13 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+14 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+15 klee            0x000000000057cd7a klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 26
+16 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+17 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+18 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+19 klee            0x000000000057cd94 klee::ImmutableTree<klee::MemoryObject const*, std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::_Select1st<std::pair<klee::MemoryObject const*, klee::ObjectHolder>, klee::MemoryObject const*>, klee::MemoryObjectLT>::Node::~Node() + 52
+20 klee            0x00000000005b2dd5 klee::AddressSpace::unbindObject(klee::MemoryObject const*) + 85
+21 klee            0x00000000005b5037 klee::ExecutionState::popFrame() + 55
+22 klee            0x000000000058e772 klee::Executor::executeInstruction(klee::ExecutionState&, klee::KInstruction*) + 8786
+23 klee            0x0000000000591c7e klee::Executor::run(klee::ExecutionState&) + 1534
+24 klee            0x000000000059251e klee::Executor::runFunctionAsMain(llvm::Function*, int, char**, char**) + 1918
+25 klee            0x00000000005645cf main + 10015
+26 libc.so.6       0x00002b385fc07f45 __libc_start_main + 245
+27 klee            0x0000000000579b52
+Aborted (core dumped)
+Execution time: 326 sec for test_poly26
 
 KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-25"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -1781,142 +1609,140 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(67512720, 67298288)
+KLEE: WARNING ONCE: calling external: strcat(64832432, 64599328)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(67244832)
-KLEE: WARNING ONCE: calling external: fflush(47817373402112)
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(64548592)
+KLEE: WARNING ONCE: calling external: fflush(47159343670272)
 .1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
 1
-.1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(66375568)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(66375568, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(70166016, 69968160, 1, 8, 0, 0, 66375568)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(66375568)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(70470160, 2, 1, 8, 0, 0, 70591072)
 1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(67091984, 67091984, 70977680)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
 1
-1
-..1
-1
-....1
-.1
-1
-1
-.1
-1
-..1
-.1
-.1
-1
-.1
-.1
-1
-...1
-1
-..1
-1
-....KLEE: WARNING ONCE: skipping fork (max-forks reached)
 1
 .1
 .1
 .1
-...1
-.1
-.1
-..1
-..1
 1
-..1
-.1
-1
-1
-.....1
-.1
-...1
-....1
-...................1
-..........1
-1
-.1
-1
-....1
-....1
-.....1
-.............................1
-.1
-...1
-..1
-....1
-..1
-...........1
-.1
-1
-.....1
-....1
-..........1
 .....................1
-...........1
-.....1
-....1
-1
 ..........1
+..............................1
+....................1
+.1
+.....1
 .........1
-..1
-..1
-.....1
-.......1
 ...1
-.......1
 .1
-1
-........1
-.....1
-....1
 ..1
-.1
-.....1
-.......1
-.1
-......1
-.......1
-1
-.1
-....1
-......1
-....1
-1
 1
 ..1
+1
+...1
+1
+..1
+..1
+.1
+.1
+.1
+.1
 .1
 1
 1
+...1
 1
-1
-.1
 1
 ...1
 .1
+.1
+.1
 1
+..1
+1
+..1
+.1
+.1
+.1
+1
+..1
+.1
+1
+..1
+1
+..1
+.1
+.1
+1
+..1
+1
+.1
+..1
+1
+..1
+1
+.1
+..1
+.1
+1
+..1
+.1
+1
+..1
 1
 .1
 1
+..1
+.1
+..1
+1
+1
+...1
+.1
+1
+..1
+.1
+.1
+1
+1
+...1
+.1
+.1
+1
+..1
+.1
+.1
+.1
+.1
 1
 .1
 ..1
 1
 1
-1
-1
-1
-....1
+...1
 .1
-....1
-..1
-.........................
-KLEE: done: total instructions = 2945423
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 301
-Execution time: 354 sec for test_poly27
+.1
+.1
+.1
+.1
+.1
+.
+KLEE: done: total instructions = 69162412
+KLEE: done: completed paths = 101
+KLEE: done: generated tests = 101
+Execution time: 2235 sec for test_poly27
 
 KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-29"
 Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
 KLEE: WARNING: undefined reference to function: __finite
 KLEE: WARNING: undefined reference to function: __gmpfr_out_str
 KLEE: WARNING: undefined reference to function: __gmpq_add
@@ -2015,272 +1841,121 @@ KLEE: WARNING: undefined reference to function: trunc
 KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
 KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(88617584, 88392720)
+KLEE: WARNING ONCE: calling external: strcat(77890528, 77657424)
 1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(88339264)
-KLEE: WARNING ONCE: calling external: fflush(47223097402368)
+KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (SExt w64 (ReadLSB w32 N0:(Extract w32 0 (Mul w64 4
+                                                   (ZExt w64 (ReadLSB w16 0 number of variables)))) symbolic coefficients for polyhedron 1)) to value 1 (/home/klee/elina/elina_linearize/elina_scalar_arith.c:769)
+1
+KLEE: WARNING ONCE: calling external: printf(77606688)
+KLEE: WARNING ONCE: calling external: fflush(47852585280512)
+.1
+KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+..KLEE: WARNING ONCE: calling external: __gmpq_init(83255296)
+KLEE: WARNING ONCE: calling external: __finite(4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpq_set_d(83255296, 4607182418800017408)
+KLEE: WARNING ONCE: calling external: __gmpz_export(78029840, 82454048, 1, 8, 0, 0, 83255296)
+KLEE: WARNING ONCE: calling external: __gmpq_clear(83255296)
+KLEE: WARNING ONCE: calling external: llabs(1)
+KLEE: WARNING ONCE: calling external: __gmpz_import(82762736, 2, 1, 8, 0, 0, 83436512)
+1
+KLEE: WARNING ONCE: calling external: __gmpq_mul(84171024, 84171024, 81826544)
+.KLEE: WARNING ONCE: Alignment of memory from call "realloc" is not modelled. Using alignment of 8.
+1
+1
+.1
+.1
 .1
 1
-.1
-1
-1
-1
-..1
-1
-....1
-.1
-1
-1
-.1
-KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly28.c:20: ASSERTION FAIL: opt_pk_is_leq(man, polyhedron2, opt_pk_widening(man, polyhedron1, polyhedron2))
+..KLEE: ERROR: /home/klee/elina/elina_poly/tests/test_poly28.c:20: invalid klee_assume call (provably false)
 KLEE: NOTE: now ignoring this error at this location
-1
-..1
-1
-..1
-1
-.1
-.1
-1
-...1
-.1
-.1
-1
-...KLEE: WARNING ONCE: skipping fork (max-forks reached)
-1
-..1
-..1
-1
-....1
-1
-1
-1
-1
-....1
-..1
-..1
-.1
-...1
-....1
-...1
-.1
-..1
-..........1
-...............1
-1
-.1
-......1
-..1
+............1
+............1
+...............................1
 .........................1
-....1
-..1
-...1
-1
-...1
-....................1
 .1
-......1
+..1
+.........1
+.1
 .....1
-.....1
-.....1
-1
-.1
-......1
-.............1
-..........1
-.....1
-....1
-.............1
-....1
-.....1
-.................1
-1
-.1
-....1
 ..1
-...1
-..........1
-...1
-.....1
-........1
-......1
-.1
-1
-.1
-....1
-......1
-.1
-1
-....1
-...........1
-.1
-1
-1
 1
 ..1
 1
-...1
-1
-1
-.1
-1
-1
-.1
-.1
-1
-1
-1
-..1
-1
-.1
-1
-1
-.1
-.1
-.1
-..1
-1
-...1
 ....1
-.......................
-KLEE: done: total instructions = 2909396
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 287
-Execution time: 357 sec for test_poly28
-
-KLEE: output directory is "/home/klee/elina/elina_poly/tests/klee-out-31"
-Using STP solver backend
-WARNING: this target does not support the llvm.stacksave intrinsic.
-KLEE: WARNING: undefined reference to function: __finite
-KLEE: WARNING: undefined reference to function: __gmpfr_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_add
-KLEE: WARNING: undefined reference to function: __gmpq_canonicalize
-KLEE: WARNING: undefined reference to function: __gmpq_clear
-KLEE: WARNING: undefined reference to function: __gmpq_cmp
-KLEE: WARNING: undefined reference to function: __gmpq_cmp_si
-KLEE: WARNING: undefined reference to function: __gmpq_div
-KLEE: WARNING: undefined reference to function: __gmpq_div_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_equal
-KLEE: WARNING: undefined reference to function: __gmpq_init
-KLEE: WARNING: undefined reference to function: __gmpq_inv
-KLEE: WARNING: undefined reference to function: __gmpq_mul
-KLEE: WARNING: undefined reference to function: __gmpq_mul_2exp
-KLEE: WARNING: undefined reference to function: __gmpq_neg
-KLEE: WARNING: undefined reference to function: __gmpq_out_str
-KLEE: WARNING: undefined reference to function: __gmpq_set
-KLEE: WARNING: undefined reference to function: __gmpq_set_d
-KLEE: WARNING: undefined reference to function: __gmpq_set_si
-KLEE: WARNING: undefined reference to function: __gmpq_set_ui
-KLEE: WARNING: undefined reference to function: __gmpq_sub
-KLEE: WARNING: undefined reference to function: __gmpz_add_ui
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_cdiv_qr
-KLEE: WARNING: undefined reference to function: __gmpz_clear
-KLEE: WARNING: undefined reference to function: __gmpz_cmp_ui
-KLEE: WARNING: undefined reference to function: __gmpz_export
-KLEE: WARNING: undefined reference to function: __gmpz_fdiv_q
-KLEE: WARNING: undefined reference to function: __gmpz_get_si
-KLEE: WARNING: undefined reference to function: __gmpz_get_ui
-KLEE: WARNING: undefined reference to function: __gmpz_import
-KLEE: WARNING: undefined reference to function: __gmpz_init
-KLEE: WARNING: undefined reference to function: __gmpz_mul
-KLEE: WARNING: undefined reference to function: __gmpz_neg
-KLEE: WARNING: undefined reference to function: __gmpz_perfect_square_p
-KLEE: WARNING: undefined reference to function: __gmpz_pow_ui
-KLEE: WARNING: undefined reference to function: __gmpz_set
-KLEE: WARNING: undefined reference to function: __gmpz_set_si
-KLEE: WARNING: undefined reference to function: __gmpz_set_ui
-KLEE: WARNING: undefined reference to function: __gmpz_sizeinbase
-KLEE: WARNING: undefined reference to function: __gmpz_sqrt
-KLEE: WARNING: undefined reference to function: __gmpz_tdiv_q
-KLEE: WARNING: undefined reference to function: ceil
-KLEE: WARNING: undefined reference to function: fesetround
-KLEE: WARNING: undefined reference to function: fflush
-KLEE: WARNING: undefined reference to function: floor
-KLEE: WARNING: undefined reference to function: fprintf
-KLEE: WARNING: undefined reference to function: llabs
-KLEE: WARNING: undefined reference to function: mpfr_add
-KLEE: WARNING: undefined reference to function: mpfr_add_ui
-KLEE: WARNING: undefined reference to function: mpfr_clear
-KLEE: WARNING: undefined reference to function: mpfr_cmp3
-KLEE: WARNING: undefined reference to function: mpfr_cmp_d
-KLEE: WARNING: undefined reference to function: mpfr_cmp_q
-KLEE: WARNING: undefined reference to function: mpfr_cmp_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_div
-KLEE: WARNING: undefined reference to function: mpfr_div_2ui
-KLEE: WARNING: undefined reference to function: mpfr_equal_p
-KLEE: WARNING: undefined reference to function: mpfr_get_d
-KLEE: WARNING: undefined reference to function: mpfr_get_si
-KLEE: WARNING: undefined reference to function: mpfr_get_z_2exp
-KLEE: WARNING: undefined reference to function: mpfr_init
-KLEE: WARNING: undefined reference to function: mpfr_init2
-KLEE: WARNING: undefined reference to function: mpfr_integer_p
-KLEE: WARNING: undefined reference to function: mpfr_mul
-KLEE: WARNING: undefined reference to function: mpfr_mul_2si
-KLEE: WARNING: undefined reference to function: mpfr_neg
-KLEE: WARNING: undefined reference to function: mpfr_number_p
-KLEE: WARNING: undefined reference to function: mpfr_pow_ui
-KLEE: WARNING: undefined reference to function: mpfr_rint_ceil
-KLEE: WARNING: undefined reference to function: mpfr_rint_floor
-KLEE: WARNING: undefined reference to function: mpfr_rint_trunc
-KLEE: WARNING: undefined reference to function: mpfr_set4
-KLEE: WARNING: undefined reference to function: mpfr_set_d
-KLEE: WARNING: undefined reference to function: mpfr_set_erangeflag
-KLEE: WARNING: undefined reference to function: mpfr_set_inf
-KLEE: WARNING: undefined reference to function: mpfr_set_prec
-KLEE: WARNING: undefined reference to function: mpfr_set_q
-KLEE: WARNING: undefined reference to function: mpfr_set_si_2exp
-KLEE: WARNING: undefined reference to function: mpfr_set_ui_2exp
-KLEE: WARNING: undefined reference to function: mpfr_sqrt
-KLEE: WARNING: undefined reference to function: mpfr_sub_ui
-KLEE: WARNING: undefined reference to function: mpfr_ui_div
-KLEE: WARNING: undefined reference to function: nextafter
-KLEE: WARNING: undefined reference to function: printf
-KLEE: WARNING: undefined reference to function: qsort
-KLEE: WARNING: undefined reference to function: snprintf
-KLEE: WARNING: undefined reference to function: sprintf
-KLEE: WARNING: undefined reference to function: sqrt
-KLEE: WARNING: undefined reference to variable: stderr
-KLEE: WARNING: undefined reference to variable: stdout
-KLEE: WARNING: undefined reference to function: strcat
-KLEE: WARNING: undefined reference to function: strcpy
-KLEE: WARNING: undefined reference to function: strdup
-KLEE: WARNING: undefined reference to function: trunc
-KLEE: WARNING ONCE: Alignment of memory from call "malloc" is not modelled. Using alignment of 8.
-KLEE: WARNING ONCE: Alignment of memory from call "calloc" is not modelled. Using alignment of 8.
 1
-KLEE: WARNING ONCE: calling external: strcat(68916384, 68695264)
-1
-KLEE: WARNING ONCE: silently concretizing (reason: floating point) expression (ReadLSB w32 16 symbolic variables for polyhedron 1) to value 2147483647 (/home/klee/elina/elina_poly/tests/test_poly.c:18)
-KLEE: WARNING ONCE: calling external: printf(68641808)
-KLEE: WARNING ONCE: calling external: fflush(47965016466432)
-.1
-1
+..1
 .1
 .1
-1
+.1
 .1
 .1
 .1
 1
+1
+...1
+.1
+1
+.1
+..1
+1
+..1
+1
+..1
+1
+..1
+.1
+.1
+1
+1
+..1
+..1
+.1
+.1
+1
+.1
+..1
+.1
+.1
+.1
+.1
+1
+.1
+1
+.1
+...1
+.1
 1
 1
 .1
 ...1
 .1
+1
+1
+...1
+.1
+1
+1
+1
 .1
 ....1
+1
 ..1
+1
+.1
+.1
 ..1
+1
+1
 ...1
-...1
+.1
+1
+.1
+.1
 ..1
-.....KLEE: WARNING ONCE: skipping fork (max-forks reached)
+1
+.1
 ..1
-................................................
-KLEE: done: total instructions = 1064363
-KLEE: done: completed paths = 301
-KLEE: done: generated tests = 301
-Execution time: 72 sec for test_poly29
-
+.1
+.1
+1
