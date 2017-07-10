@@ -18,7 +18,7 @@
  *
  */
 
-#include <s.h>
+#include <time.h>
 #include "opt_oct.h"
 #include "opt_oct_internal.h"
 #include "opt_oct_hmat.h"

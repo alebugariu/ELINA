@@ -12,11 +12,11 @@ compile:
 	cd ..       
  
 test:
-	cd elina_poly/tests; \
+	cd elina_poly/tests/klee; \
         #rm -rf klee-*; \
-	clang -I /home/klee/klee_src/include -I ../ -emit-llvm -O0 -c -g *.c ; \
+	clang -I /home/klee/klee_src/include -I ../../ -emit-llvm -O0 -c -g *.c ; \
         number=$(start) ; while [ $${number} -le $(number) ] ; do \
-		llvm-link ../../elina_auxiliary/*.bc ../../partitions_api/*.bc ../../elina_linearize/*.bc ../*.bc test_poly.bc test_poly$${number}.bc -o test$${number}.bc ; \
+		llvm-link ../../../elina_auxiliary/*.bc ../../../partitions_api/*.bc ../../../elina_linearize/*.bc ../../*.bc test_poly.bc test_poly$${number}.bc -o test$${number}.bc ; \
                 startTime=`date +%s` ; \
                 klee -load=/usr/local/lib/libgmp.so.10.3.2 -allow-external-sym-calls -max-forks=100 -check-overshift=false -solver-backend=stp -sym-malloc-bound=1024 test$${number}.bc ; \
                 endTime=`date +%s` ; \

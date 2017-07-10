@@ -1,6 +1,6 @@
 *.bc
 *.o
 *.so
-elina_oct/tests/klee-*
+elina_oct/tests/klee/klee-*
 elina_oct/tests/failing_tests/klee-*
-elina_poly/tests/klee-*
+elina_poly/tests/klee/klee-*
