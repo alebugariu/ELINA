@@ -9,6 +9,8 @@
 #define MAX_DIM 20
 #define MIN_NBCONS 1
 #define MAX_NBCONS 50
+#define ASSUME_FALSE -5
+#define ASSERTION_FAILED -10
 
 //for widening
 #define K 3

@@ -18,7 +18,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t dataSize) {
 
 	// bottom <= x
 	if(!opt_oct_is_leq(man, bottom, octagon1))){
-		exit(EXIT_FAILURE);
+		exit(ASSERTION_FAILED);
 	}
 	return 0;
 }

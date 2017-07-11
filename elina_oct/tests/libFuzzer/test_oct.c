@@ -164,7 +164,7 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 void make_fuzzable(void *array, size_t size, uint8_t *data, size_t dataSize,
 		unsigned int *dataIndex) {
 	if (dataSize <= dataIndex) {
-		exit(EXIT_FAILURE);
+		exit(ASSUME_FALSE);
 	}
 	memcopy(array, &data[dataIndex], dataIndex + size);
 	*dataIndex += size;
@@ -172,7 +172,7 @@ void make_fuzzable(void *array, size_t size, uint8_t *data, size_t dataSize,
 
 void assume_fuzzable(bool condition) {
 	if (!condition) {
-		exit(EXIT_FAILURE);
+		exit(ASSUME_FALSE);
 	}
 }
 
