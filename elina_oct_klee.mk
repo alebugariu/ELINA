@@ -8,7 +8,7 @@ compile:
 	clang -I /home/klee/klee_src/include -emit-llvm -O0 -c -g *.c ; \
 	cd ../elina_oct ; \
 	clang -I /home/klee/klee_src/include -emit-llvm -O0 -c -g *.c ; \
-	cd ..       
+	cd ..        
  
 test:
 	cd elina_oct/tests/klee; \
