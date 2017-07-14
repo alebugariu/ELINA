@@ -30,7 +30,7 @@ elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
 	return linexpr0;
 }
 
-elina_lincons0_array_t create_constraints(unsigned short int dim, const uint8_t *data,
+elina_lincons0_array_t create_constraints(unsigned short int dim, const uint64_t *data,
 		size_t dataSize, unsigned int *dataIndex) {
 	size_t i;
 	size_t nbcons;
@@ -153,7 +153,7 @@ void print_constraints(elina_lincons0_array_t* array) {
 }
 
 opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
-		char * octagonNumber, unsigned short int dim, const uint8_t *data, size_t dataSize, unsigned int *dataIndex) {
+		char * octagonNumber, unsigned short int dim, const uint64_t *data, size_t dataSize, unsigned int *dataIndex) {
 	elina_lincons0_array_t constraints = create_constraints(dim, data, dataSize, dataIndex);
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 			&constraints);
@@ -161,24 +161,24 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 	return octagon;
 }
 
-void make_fuzzable(void *array, size_t size, const uint8_t *data, size_t dataSize,
+void make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex) {
-	if (dataSize <= *dataIndex) {
-		exit(ASSUME_FALSE);
+	if (dataSize <= *dataIndex + size) {
+           abort();
 	}
-	memcpy(array, &data[*dataIndex], *dataIndex + size);
+	memcpy(array, &data[*dataIndex], size);
 	*dataIndex += size;
 }
 
 void assume_fuzzable(bool condition) {
 	if (!condition) {
-		exit(ASSUME_FALSE);
+           abort();
 	}
 }
 
-unsigned short int make_fuzzable_dimension(const uint8_t *data, size_t dataSize,
+unsigned short int make_fuzzable_dimension(const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex) {
-	unsigned short int dim;
+	unsigned short int dim = MIN_DIM + 1;
 	make_fuzzable(&dim, sizeof(dim), data, dataSize, dataIndex);
 	assume_fuzzable(dim > MIN_DIM & dim < MAX_DIM);
 	return dim;

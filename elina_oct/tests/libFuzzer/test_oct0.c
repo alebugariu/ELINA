@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-extern int LLVMFuzzerTestOneInput(const uint8_t *data, size_t dataSize) {
+extern int LLVMFuzzerTestOneInput(const uint64_t *data, size_t dataSize) {
 	unsigned int dataIndex;
 	dataIndex = 0;
 	unsigned short int dim = make_fuzzable_dimension(data, dataSize, &dataIndex);
@@ -18,7 +18,7 @@ extern int LLVMFuzzerTestOneInput(const uint8_t *data, size_t dataSize) {
 
 	// bottom <= x
 	if(!opt_oct_is_leq(man, bottom, octagon1)){
-		exit(ASSERTION_FAILED);
+	   abort();
 	}
 	return 0;
 }
