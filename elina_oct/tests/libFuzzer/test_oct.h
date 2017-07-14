@@ -14,9 +14,9 @@
 #define K 3
 #define R(i) i < K
 
-opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
-		char * octagonNumber, unsigned short int dim, const uint64_t *data,
-		size_t dataSize, unsigned int *dataIndex);
+bool create_octagon(opt_oct_t* octagon, elina_manager_t* man, opt_oct_t * top,
+		unsigned short int dim, const uint64_t *data, size_t dataSize,
+		unsigned int *dataIndex)
 
 bool make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex);
