@@ -66,120 +66,36 @@ elina_lincons0_array_t create_constraints(unsigned short int dim, const uint64_t
 		lincons0.p[i].linexpr0 = linexpr0;
 	}
 	return lincons0;
-}
-
-char * linexpr0_toString(elina_linexpr0_t* a) {
-	size_t i;
-	elina_scalar_t* pscalar = 0;
-	elina_coeff_t* coeff;
-	elina_dim_t dim;
-	bool first;
-	int sgn;
-
-	char * constraintAsString = (char *) calloc(500, sizeof(char));
-	char sign[5];
-	char value[15];
-	char buffer[50];
-	strcpy(constraintAsString, "");
-	strcpy(sign, "");
-	strcpy(value, "");
-	strcpy(buffer, "");
-
-	double scalar;
-
-	first = true;
-	elina_linexpr0_ForeachLinterm(a,i,dim,coeff)
-	{
-		switch (coeff->discr) {
-		case ELINA_COEFF_SCALAR:
-			pscalar = coeff->val.scalar;
-			sgn = elina_scalar_sgn(pscalar);
-			if (sgn > 0) {
-				scalar = pscalar->val.dbl;
-				if (!first) {
-					strcpy(sign, " + ");
-				}
-			} else {
-				scalar = -pscalar->val.dbl;
-				strcpy(sign, " - ");
-			}
-			break;
-		case ELINA_COEFF_INTERVAL:
-			break;
-		}
-		strcpy(value, "");
-		strcpy(buffer, "");
-		snprintf(value, 20, "%.*g", 10, scalar + 0.0);
-		snprintf(buffer, 500, "%s%s%s*x%lu", constraintAsString, sign, value,
-				(unsigned long) dim);
-		strcpy(constraintAsString, buffer);
-		first = false;
-	}
-	/* Constant */
-	if (first || !elina_coeff_zero(&a->cst)) {
-		switch (a->cst.discr) {
-		case ELINA_COEFF_SCALAR:
-			pscalar = a->cst.val.scalar;
-			sgn = elina_scalar_sgn(pscalar);
-			if (sgn >= 0) {
-				scalar = pscalar->val.dbl;
-				if (!first) {
-					strcpy(sign, " + ");
-				}
-			} else {
-				scalar = -pscalar->val.dbl;
-				strcpy(sign, " - ");
-			}
-			strcpy(value, "");
-			strcpy(buffer, "");
-			snprintf(value, 20, "%.*g", 10, scalar + 0.0);
-			snprintf(buffer, 500, "%s%s%s", constraintAsString, sign, value);
-			strcpy(constraintAsString, buffer);
-			break;
-		case ELINA_COEFF_INTERVAL:
-			break;
-		}
-	}
-	return constraintAsString;
-}
-
-void print_constraints(elina_lincons0_array_t* array) {
-	int i;
-	printf("Created array of constraints of size %lu\n",
-			(unsigned long) array->size);
-	for (i = 0; i < array->size; i++) {
-		printf("%d: %s >=0\n", i, linexpr0_toString((&array->p[i])->linexpr0));
-	}
-}
+}				
 
 opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 		char * octagonNumber, unsigned short int dim, const uint64_t *data, size_t dataSize, unsigned int *dataIndex) {
 	elina_lincons0_array_t constraints = create_constraints(dim, data, dataSize, dataIndex);
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top,
 			&constraints);
-	//printf("Created octagon %s!\n", octagonNumber);
 	return octagon;
 }
 
-void make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
+bool make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex) {
 	if (dataSize <= *dataIndex + size) {
-           abort();
+            return false;
 	}
 	memcpy(array, &data[*dataIndex], size);
 	*dataIndex += size;
+	return true;
 }
 
-void assume_fuzzable(bool condition) {
-	if (!condition) {
-           abort();
-	}
+bool assume_fuzzable(bool condition) {
+	return condition;
 }
 
-unsigned short int make_fuzzable_dimension(const uint64_t *data, size_t dataSize,
+bool make_fuzzable_dimension(unsigned short int *dim, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex) {
-	unsigned short int dim = MIN_DIM + 1;
-	make_fuzzable(&dim, sizeof(dim), data, dataSize, dataIndex);
-	assume_fuzzable(dim > MIN_DIM & dim < MAX_DIM);
-	return dim;
+	if(make_fuzzable(dim, sizeof(dim), data, dataSize, dataIndex)){
+           if(assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)){
+	      return true;
+             }
+        }
+	return false;
 }

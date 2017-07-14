@@ -18,11 +18,11 @@ opt_oct_t* create_octagon(elina_manager_t* man, opt_oct_t * top,
 		char * octagonNumber, unsigned short int dim, const uint64_t *data,
 		size_t dataSize, unsigned int *dataIndex);
 
-void make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
+bool make_fuzzable(void *array, size_t size, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex);
-void assume_fuzzable(bool condition);
+bool assume_fuzzable(bool condition);
 
-unsigned short int make_fuzzable_dimension(const uint64_t *data, size_t dataSize,
+bool make_fuzzable_dimension(unsigned short int * dim, const uint64_t *data, size_t dataSize,
 		unsigned int *dataIndex);
 
 #endif /* TEST_OCT_H_ */
