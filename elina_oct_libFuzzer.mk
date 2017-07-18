@@ -19,7 +19,7 @@ test:
         number=$(start) ; while [ $${number} -le $(number) ] ; do \
 		clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -I /usr/local/include $(INCLUDES) $(OBJS) test_oct$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp; \
                 startTime=`date +%s` ; \
-		./test$${number} -max_len=10000 -rss_limit_mb=2000000000 -timeout=900000000000000 -print_final_stats=1; \
+		./test$${number} -max_len=10000 -detect_leaks=0 -rss_limit_mb=2000000000 -timeout=900000000000000 -print_final_stats=1; \
                 endTime=`date +%s` ; \
                 runtime=`expr $$endTime - $$startTime` ; \
                 echo "Execution time: $$runtime sec for test_oct$$number\n" ; \
