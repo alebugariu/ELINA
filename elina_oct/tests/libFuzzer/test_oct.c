@@ -31,14 +31,15 @@ elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
 }
 
 bool create_constraints(elina_lincons0_array_t *lincons0, unsigned short int dim,
-		const uint64_t *data, size_t dataSize, unsigned int *dataIndex) {
+		const int *data, size_t dataSize, unsigned int *dataIndex) {
 	size_t i;
 	size_t nbcons = MIN_NBCONS;
-
+    abort();
 	if (!make_fuzzable(&nbcons, sizeof(nbcons), data, dataSize, dataIndex)) //number of constraints
 			{
 		return false;
 	}
+	abort();
 	if (!assume_fuzzable(
 			nbcons >= MIN_NBCONS && nbcons <= MAX_NBCONS && nbcons >= dim)) {
 		return false;
@@ -57,7 +58,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, unsigned short int dim
 		lincons0->p[i].constyp = type;
 
 		int fuzzableValues[5];
-		if (!make_fuzzable(fuzzableValues, sizeof(fuzzableValues), data,
+		if (!make_fuzzable(fuzzableValues, 5 * sizeof(int), data,
 				dataSize, dataIndex)) {
 			return false;
 		}
@@ -67,6 +68,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, unsigned short int dim
 						&& fuzzableValues[0] >= 0 && fuzzableValues[1] >= 0)) {
 			return false;
 		}
+		abort();
 		if (!assume_fuzzable(
 				fuzzableValues[2] == 1 || fuzzableValues[2] == -1
 						|| fuzzableValues[2] == 0)) {
@@ -89,7 +91,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, unsigned short int dim
 }
 
 bool create_octagon(opt_oct_t* octagon, elina_manager_t* man, opt_oct_t * top,
-		unsigned short int dim, const uint64_t *data, size_t dataSize,
+		unsigned short int dim, const int *data, size_t dataSize,
 		unsigned int *dataIndex) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize,
@@ -100,16 +102,15 @@ bool create_octagon(opt_oct_t* octagon, elina_manager_t* man, opt_oct_t * top,
 	return true;
 }
 
-bool make_fuzzable(void *array, size_t size, const uint64_t *data,
+bool make_fuzzable(void *array, size_t size, const int *data,
 		size_t dataSize, unsigned int *dataIndex) {
 	if (dataSize <= (*dataIndex + size)) {
 		return false;
 	}
-	if (dataSize <= dataIndex) { // in case the first check overflows
+	if (dataSize <= *dataIndex) { // in case the first check overflows
 		return false;
 	}
-	const uint64_t from = data[*dataIndex];
-	memcpy(array, &from, size);
+	memcpy(array, data + *dataIndex, size);
 	*dataIndex += size;
 	return true;
 }
@@ -118,7 +119,7 @@ bool assume_fuzzable(bool condition) {
 	return condition;
 }
 
-bool make_fuzzable_dimension(size_t *dim, const uint64_t *data,
+bool make_fuzzable_dimension(size_t *dim, const int *data,
 		size_t dataSize, unsigned int *dataIndex) {
 	if (make_fuzzable(dim, sizeof(dim), data, dataSize, dataIndex)) {
 		if (assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)) {

@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-extern int LLVMFuzzerTestOneInput(const uint64_t *data, size_t dataSize) {
+extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
 	size_t dim = MIN_DIM;
 

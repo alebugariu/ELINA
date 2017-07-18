@@ -6,23 +6,31 @@
 #include <string.h>
 #include <stdio.h>
 
-extern int LLVMFuzzerTestOneInput(const uint64_t *data, size_t dataSize) {
+extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-		size_t dim = MIN_DIM;
+	size_t dim = MIN_DIM;
 
-		if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex)) {
+	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex)) {
 
-	elina_manager_t * man = opt_oct_manager_alloc();
-	opt_oct_t * top = opt_oct_top(man, dim, 0);
-	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+		elina_manager_t * man = opt_oct_manager_alloc();
+		opt_oct_t * top = opt_oct_top(man, dim, 0);
+		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
-	opt_oct_t* octagon1 = create_octagon(man, top, "1", dim);
-	opt_oct_t* octagon2 = create_octagon(man, top, "2", dim);
+		opt_oct_t* octagon1;
+		if (create_octagon(octagon1, man, top, dim, data, dataSize,
+				&dataIndex)) {
+			opt_oct_t* octagon2;
+			if (create_octagon(octagon2, man, top, dim, data, dataSize,
+					&dataIndex)) {
 
-	//meet == glb, join == lub
-	//x narrowing y <= x
-	klee_assert(
-			opt_oct_is_leq(man, opt_oct_narrowing(man, octagon1, octagon2), octagon1));
+				//meet == glb, join == lub
+				//x narrowing y <= x
+				if (!opt_oct_is_leq(man,
+						opt_oct_narrowing(man, octagon1, octagon2), octagon1)) {
+					abort();
+				}
+			}
 		}
+	}
 	return 0;
 }

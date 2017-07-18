@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-extern int LLVMFuzzerTestOneInput(const uint64_t *data, size_t dataSize) {
+extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
 	size_t dim = MIN_DIM;
 
@@ -23,7 +23,8 @@ extern int LLVMFuzzerTestOneInput(const uint64_t *data, size_t dataSize) {
 			if (create_octagon(octagon2, man, top, dim, data, dataSize,
 					&dataIndex)) {
 				opt_oct_t* octagon3;
-				if (create_octagon(man, top, "3", dim)) {
+				if (create_octagon(octagon3, man, top, dim, data, dataSize,
+						&dataIndex)) {
 
 					//meet == glb, join == lub
 					//join is associative
