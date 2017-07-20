@@ -92,15 +92,14 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 	return true;
 }
 
-bool create_octagon(opt_oct_t* octagon, elina_manager_t* man, opt_oct_t * top,
+bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 		int dim, const int *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
 	}
-	octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
-	//fclose(fp);
+	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
 	return true;
 }
 

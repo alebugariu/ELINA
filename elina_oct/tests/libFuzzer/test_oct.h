@@ -14,7 +14,7 @@
 #define K 3
 #define R(i) i < K
 
-bool create_octagon(opt_oct_t* octagon, elina_manager_t* man, opt_oct_t * top,
+bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 		int dim, const int *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp);
 

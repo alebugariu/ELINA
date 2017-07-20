@@ -21,13 +21,13 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_oct_t* octagon1;
-		if (create_octagon(octagon1, man, top, dim, data, dataSize, &dataIndex,
+		if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
 				fp)) {
 			opt_oct_t* narrowingResult;
 			int i = 0;
 			while (true) {
 				opt_oct_t* octagon2;
-				if (create_octagon(octagon2, man, top, dim, data, dataSize,
+				if (create_octagon(&octagon2, man, top, dim, data, dataSize,
 						&dataIndex, fp)) {
 					narrowingResult = opt_oct_narrowing(man, octagon1,
 							octagon2);
@@ -38,7 +38,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 					i++;
 					if (!(R(i))) {
 						fclose(fp);
-						abort();
+						return 1;
 					}
 				}
 			}

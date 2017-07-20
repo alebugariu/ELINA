@@ -16,13 +16,14 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 		elina_manager_t * man = opt_oct_manager_alloc();
 		opt_oct_t * top = opt_oct_top(man, dim, 0);
 		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+
 		opt_oct_t* octagon1;
-		if (create_octagon(octagon1, man, top, dim, data, dataSize,
+		if (create_octagon(&octagon1, man, top, dim, data, dataSize,
 				&dataIndex, fp)) {
 			// bottom <= x
 			if (!opt_oct_is_leq(man, bottom, octagon1)) {
 				fclose(fp);
-				abort();
+				return 1;
 			}
 		}
 	}

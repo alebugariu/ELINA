@@ -271,7 +271,7 @@ void test_assign(unsigned short int dim, size_t nbcons) {
 	elina_lincons0_array_clear(&lincons0);
 }
 
-elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
+elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2,
 		int coeff1, int coeff2, int scalar_value) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
@@ -292,6 +292,28 @@ elina_linexpr0_t * create_linexpr0(unsigned short int dim, int v1, int v2,
 	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
 	coeff->val.scalar->val.dbl = (double) coeff2;
 	return linexpr0;
+}
+
+void test_0() {
+	elina_manager_t * man = opt_oct_manager_alloc();
+	opt_oct_t * top = opt_oct_top(man, 2, 0);
+	opt_oct_t * bottom = opt_oct_bottom(man, 2, 0);
+
+	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(2);
+	lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
+	lincons0.p[1].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr0 = create_linexpr0(2, 0, 1, 0, 1, 2);
+	lincons0.p[0].linexpr0 = linexpr0;
+	elina_linexpr0_t * linexpr1 = create_linexpr0(2, 1, 0, 1, 0, 513);
+	lincons0.p[1].linexpr0 = linexpr1;
+
+	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top, &lincons0);
+
+	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
+	print_opt_hmat(oo->mat, 2);
+	printf("bottom <= octagon: ");
+	printf("%d\n",
+			opt_oct_is_leq(man, bottom, octagon));
 }
 
 void test_16() {
@@ -395,7 +417,7 @@ void test_24() {
 
 
 int main(int argc, char **argv) {
-	if (argc < 3) {
+	/*if (argc < 3) {
 		printf(
 				"The test requires two positive integers: (a) Number of variables and (b) Number of constraints");
 		return 0;
@@ -405,7 +427,7 @@ int main(int argc, char **argv) {
 	if (dim <= 0 || nbcons <= 0) {
 		printf("The Input parameters should be positive\n");
 		return 0;
-	}
+	}*/
 	/*printf("Testing Meet\n");
 	 test_meetjoin(dim,nbcons,true);
 	 printf("Testing Join\n");
@@ -416,7 +438,7 @@ int main(int argc, char **argv) {
 	 test_fold(dim,nbcons);
 	 printf("Testing Expand\n");
 	 test_expand(dim,nbcons);*/
-	printf("Testing top meet octagon\n");
+	/*printf("Testing top meet octagon\n");
 	test_16();
 	printf("\n");
 	printf("Testing octagon meet octagon\n");
@@ -427,6 +449,8 @@ int main(int argc, char **argv) {
 	printf("\n");
 	printf("Testing absorption\n");
 	test_24();
-	printf("\n");
+	printf("\n");*/
+	printf("Testing bottom less equal octagon\n");
+	test_0();
 }
 

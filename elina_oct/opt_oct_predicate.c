@@ -55,7 +55,12 @@ bool opt_oct_is_top(elina_manager_t* man, opt_oct_t* o)
 bool opt_oct_is_leq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 {
   opt_oct_internal_t* pr = opt_oct_init_from_manager(man,ELINA_FUNID_IS_LEQ,0);
-   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim))return false;
+   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim)){
+	   printf("%d %d\n", o1->dim , o2->dim );
+	   printf("%d %d\n", o1->intdim , o2->intdim );
+	   return false;
+
+   }
   if (pr->funopt->algorithm>=0){ opt_oct_cache_closure(pr,o1);}
   if (!o1->closed && !o1->m) {
     /* a1 definitively empty */

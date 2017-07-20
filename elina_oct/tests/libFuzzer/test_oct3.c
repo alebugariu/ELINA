@@ -18,13 +18,13 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 		opt_oct_t * top = opt_oct_top(man, dim, 0);
 
 		opt_oct_t* octagon1;
-		if (create_octagon(octagon1, man, top, dim, data, dataSize, &dataIndex,
+		if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
 				fp)) {
 			opt_oct_t* octagon2;
-			if (create_octagon(octagon2, man, top, dim, data, dataSize,
+			if (create_octagon(&octagon2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
 				opt_oct_t* octagon3;
-				if (create_octagon(octagon3, man, top, dim, data, dataSize,
+				if (create_octagon(&octagon3, man, top, dim, data, dataSize,
 						&dataIndex, fp)) {
 
 					// <= is transitive
@@ -34,7 +34,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 											octagon3))) {
 						if (!opt_oct_is_leq(man, octagon1, octagon3)) {
 							fclose(fp);
-							abort();
+							return 1;
 						}
 					}
 				}

@@ -5,3 +5,4 @@ elina_oct/tests/klee/klee-*
 elina_oct/tests/failing_tests/klee-*
 elina_poly/tests/klee/klee-*
 elina_oct/tests/libFuzzer/test*
+elina_oct/tests/libFuzzer/crash-*
