@@ -2,20 +2,20 @@ OBJS= ../../../*.o ../../../../elina_auxiliary/*.o ../../../../elina_linearize/*
 all: compile test
 compile: 
 	cd elina_auxiliary ; \
-	clang -O0 -c -g *.c; \
+	clang -O0 -c -g -DTHRESHOLD=0.75 -DNUM_DOUBLE *.c; \
 	cd ../elina_linearize ; \
-	clang -I ../elina_auxiliary -O0 -c -g *.c; \
+	clang -I ../elina_auxiliary -O0 -c -g -DTHRESHOLD=0.75 -DNUM_DOUBLE  *.c; \
 	cd ../partitions_api ; \
-	clang  -O0 -c -g *.c; \
+	clang  -O0 -c -g -DTHRESHOLD=0.75 -DNUM_DOUBLE *.c; \
 	cd ../elina_oct ; \
-	clang -I ../elina_auxiliary -I ../elina_linearize -I ../partitions_api -O0 -c -g *.c; \
+	clang -I ../elina_auxiliary -I ../elina_linearize -I ../partitions_api -O0 -c -g -DTHRESHOLD=0.75 -DNUM_DOUBLE *.c; \
 	rm -fr elina_test_oct.o; \
 	cd ..        
  
 test:
 	cd elina_oct/tests/libFuzzer/failing_tests; \
         number=$(start) ; while [ $${number} -le $(number) ] ; do \
-		clang -lstdc++  -I /usr/local/include $(OBJS) test$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp -lm; \
+		clang -lstdc++  -I /usr/local/include -DTHRESHOLD=0.75 -DNUM_DOUBLE $(OBJS) test$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp -lm; \
                 startTime=`date +%s` ; \
 		./test$${number}; \
                 endTime=`date +%s` ; \

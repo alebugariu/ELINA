@@ -271,8 +271,8 @@ void test_assign(unsigned short int dim, size_t nbcons) {
 	elina_lincons0_array_clear(&lincons0);
 }
 
-elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2,
-		int coeff1, int coeff2, int scalar_value) {
+elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2, int coeff1,
+		int coeff2, int scalar_value) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
 	cst = &linexpr0->cst;
@@ -294,7 +294,7 @@ elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2,
 	return linexpr0;
 }
 
-void test_0() {
+void test_0(void) {
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, 2, 0);
 	opt_oct_t * bottom = opt_oct_bottom(man, 2, 0);
@@ -312,28 +312,86 @@ void test_0() {
 	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
 	print_opt_hmat(oo->mat, 2);
 	printf("bottom <= octagon: ");
-	printf("%d\n",
-			opt_oct_is_leq(man, bottom, octagon));
+	printf("%d\n", opt_oct_is_leq(man, bottom, octagon));
 }
 
-void test_16() {
+void test_16(void) {
+	int dim = 14;
+	int nbcons = 14;
 	elina_manager_t * man = opt_oct_manager_alloc();
-	opt_oct_t * top = opt_oct_top(man, 2, 0);
-	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(1);
+	opt_oct_t * top = opt_oct_top(man, dim, 0);
+
+	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
+
 	lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr0 = create_linexpr0(2, 0, 1, 1, 1, 2);
-	//elina_linexpr0_t * linexpr0 = create_linexpr0(2, 1, 0, 1, 1, 4294967167);
+	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, 0, 1, -1, -1, 1);
 	lincons0.p[0].linexpr0 = linexpr0;
+
+	lincons0.p[1].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, 2, 1, 0, 0, 1);
+	lincons0.p[1].linexpr0 = linexpr1;
+
+	lincons0.p[2].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[2].linexpr0 = linexpr2;
+
+	lincons0.p[3].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[3].linexpr0 = linexpr3;
+
+	lincons0.p[4].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr4 = create_linexpr0(dim, 3, 0, 0, 0, 1);
+	lincons0.p[4].linexpr0 = linexpr4;
+
+	lincons0.p[5].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr5 = create_linexpr0(dim, 0, 1, 0, 1, 3);
+	lincons0.p[5].linexpr0 = linexpr5;
+
+	lincons0.p[6].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr6 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[6].linexpr0 = linexpr6;
+
+	lincons0.p[7].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr7 = create_linexpr0(dim, 2, 0, -1, -1, 1);
+	lincons0.p[7].linexpr0 = linexpr7;
+
+	lincons0.p[8].constyp = ELINA_CONS_EQ;
+	elina_linexpr0_t * linexpr8 = create_linexpr0(dim, 2, 1, 1, 0, 1);
+	lincons0.p[8].linexpr0 = linexpr8;
+
+	lincons0.p[9].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr9 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[9].linexpr0 = linexpr9;
+
+	lincons0.p[10].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr10 = create_linexpr0(dim, 1, 0, 1, 1, 3);
+	lincons0.p[10].linexpr0 = linexpr10;
+
+	lincons0.p[11].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr11 = create_linexpr0(dim, 3, 0, 0, 0, 1);
+	lincons0.p[11].linexpr0 = linexpr11;
+
+	lincons0.p[12].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr12 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[12].linexpr0 = linexpr12;
+
+	lincons0.p[13].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr13 = create_linexpr0(dim, 1, 0, 0, 1, 3);
+	lincons0.p[13].linexpr0 = linexpr13;
 
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top, &lincons0);
 	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
-	print_opt_hmat(oo->mat, 2);
+	//printf("DENSE: %d\n", oo->is_dense);
+	//print_opt_hmat(oo->mat, dim);
 	printf("top meet octagon == octagon: ");
-	printf("%d\n",
-			(opt_oct_is_eq(man, opt_oct_meet(man, false, top, octagon), octagon)));
+	opt_oct_t * meet_result = opt_oct_meet(man, false, top, octagon);
+	opt_oct_mat_t *oo_result = meet_result->closed ? meet_result->closed : meet_result->m;
+	//print_opt_hmat(oo_result->mat, dim);
+	bool res = opt_oct_is_eq(man, meet_result, octagon);
+	printf("%d\n", res);
 }
 
-void test_21() {
+void test_21(void) {
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, 2, 0);
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(1);
@@ -351,14 +409,15 @@ void test_21() {
 					octagon));
 }
 
-bool is_meet_compatible_direct(elina_manager_t * man, opt_oct_t * x, opt_oct_t * y) {
+bool is_meet_compatible_direct(elina_manager_t * man, opt_oct_t * x,
+		opt_oct_t * y) {
 	if (opt_oct_is_leq(man, x, y)) {
 		return opt_oct_is_eq(man, opt_oct_meet(man, false, x, y), x);
 	}
 	return true;
 }
 
-void test_22() {
+void test_22(void) {
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, 2, 0);
 
@@ -387,19 +446,19 @@ void test_22() {
 
 }
 
-void test_24() {
+void test_24(void) {
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, 2, 0);
 
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(1);
-    lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
-    elina_linexpr0_t * linexpr0 = create_linexpr0(2, 0, 1, 1, 1, 4294967167);
+	lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr0 = create_linexpr0(2, 0, 1, 1, 1, 4294967167);
 	lincons0.p[0].linexpr0 = linexpr0;
 
 	opt_oct_t* octagon1 = opt_oct_meet_lincons_array(man, false, top,
-				&lincons0);
+			&lincons0);
 	opt_oct_mat_t *oo1 = octagon1->closed ? octagon1->closed : octagon1->m;
-	print_opt_hmat(oo1->mat,2);
+	print_opt_hmat(oo1->mat, 2);
 
 	elina_lincons0_array_t lincons1 = elina_lincons0_array_make(1);
 	lincons1.p[0].constyp = ELINA_CONS_SUPEQ;
@@ -407,27 +466,30 @@ void test_24() {
 	lincons1.p[0].linexpr0 = linexpr1;
 
 	opt_oct_t* octagon2 = opt_oct_meet_lincons_array(man, false, top,
-					&lincons1);
+			&lincons1);
 	opt_oct_mat_t *oo2 = octagon2->closed ? octagon2->closed : octagon2->m;
-	print_opt_hmat(oo2->mat,2);
+	print_opt_hmat(oo2->mat, 2);
 
 	printf("meet-join absorption: ");
-	printf("%d\n", opt_oct_is_eq(man, opt_oct_meet(man, false, octagon1, opt_oct_join(man, false, octagon1, octagon2)), octagon1));
+	printf("%d\n",
+			opt_oct_is_eq(man,
+					opt_oct_meet(man, false, octagon1,
+							opt_oct_join(man, false, octagon1, octagon2)),
+					octagon1));
 }
-
 
 int main(int argc, char **argv) {
 	/*if (argc < 3) {
-		printf(
-				"The test requires two positive integers: (a) Number of variables and (b) Number of constraints");
-		return 0;
-	}
-	unsigned short int dim = atoi(argv[1]);
-	size_t nbcons = atoi(argv[2]);
-	if (dim <= 0 || nbcons <= 0) {
-		printf("The Input parameters should be positive\n");
-		return 0;
-	}*/
+	 printf(
+	 "The test requires two positive integers: (a) Number of variables and (b) Number of constraints");
+	 return 0;
+	 }
+	 unsigned short int dim = atoi(argv[1]);
+	 size_t nbcons = atoi(argv[2]);
+	 if (dim <= 0 || nbcons <= 0) {
+	 printf("The Input parameters should be positive\n");
+	 return 0;
+	 }*/
 	/*printf("Testing Meet\n");
 	 test_meetjoin(dim,nbcons,true);
 	 printf("Testing Join\n");
@@ -438,19 +500,17 @@ int main(int argc, char **argv) {
 	 test_fold(dim,nbcons);
 	 printf("Testing Expand\n");
 	 test_expand(dim,nbcons);*/
-	/*printf("Testing top meet octagon\n");
+	printf("Testing top meet octagon\n");
 	test_16();
 	printf("\n");
-	printf("Testing octagon meet octagon\n");
-	test_21();
-	printf("\n");
-	printf("Testing is meet compatible direct\n");
-	test_22();
-	printf("\n");
-	printf("Testing absorption\n");
-	test_24();
-	printf("\n");*/
-	printf("Testing bottom less equal octagon\n");
-	test_0();
+	/*printf("Testing octagon meet octagon\n");
+	 test_21();
+	 printf("\n");
+	 printf("Testing is meet compatible direct\n");
+	 test_22();
+	 printf("\n");
+	 printf("Testing absorption\n");
+	 test_24();
+	 printf("\n");*/
 }
 

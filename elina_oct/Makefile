@@ -1,7 +1,7 @@
 #
 #
 #  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
-#  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+#  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
 #  This software is distributed under GNU Lesser General Public License Version 3.0.
 #  For more information, see the ELINA project website at:
 #  http://elina.ethz.ch
@@ -58,6 +58,7 @@ SOINST = liboptoct.so
 
 OPTOCTH = opt_oct.h opt_oct_internal.h opt_oct_hmat.h $(CLOSUREH)
 
+.PHONY: all
 all : liboptoct.so elina_test_oct
 
 
@@ -105,8 +106,8 @@ opt_oct_transfer.o : opt_oct_transfer.c
 liboptoct.so : $(OBJS) $(OPTOCTH)
 	$(CC) -shared $(CFLAGS) $(DFLAGS) $(INCLUDES) -o $(SOINST) $(OBJS) $(LIBS)
 
-elina_test_oct : elina_test_oct.c liboptoct.so
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) -o elina_test_oct elina_test_oct.c $(LIBS) -L. -loptoct
+elina_test_oct : elina_test_oct.c $(OBJS) $(OPTOCTH)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) -o elina_test_oct elina_test_oct.c $(OBJS) $(LIBS)
 
 install:
 	$(INSTALLd) $(LIBDIR); \
