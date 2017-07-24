@@ -27,7 +27,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 			int i = 0;
 			while (true) {
 				opt_oct_t* octagon2;
-				if (create_octagon(&octagon1, man, top, dim, data, dataSize,
+				if (create_octagon(&octagon2, man, top, dim, data, dataSize,
 						&dataIndex, fp)) {
 					wideningResult = opt_oct_widening(man, octagon1, octagon2);
 					if (opt_oct_is_leq(man, wideningResult, octagon1)) {
@@ -39,6 +39,8 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 						fclose(fp);
 						return 1;
 					}
+				} else {
+					break;
 				}
 			}
 		}

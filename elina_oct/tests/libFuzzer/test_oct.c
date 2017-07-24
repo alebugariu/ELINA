@@ -43,6 +43,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		return false;
 	}
 	fprintf(fp, "Number of constraints: %d\n", nbcons);
+	fflush(fp);
 	*lincons0 = elina_lincons0_array_make(nbcons);
 	for (i = 0; i < nbcons; i++) {
 		elina_constyp_t type;
@@ -55,6 +56,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 			return false;
 		}
 		fprintf(fp, "Type: %c\n", type == 0 ? 'e' : 's');
+		fflush(fp);
 		lincons0->p[i].constyp = type;
 
 		int fuzzableValues[5];
@@ -81,9 +83,10 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		if (!assume_fuzzable(fuzzableValues[4] > 0)) {
 			return false;
 		}
-		fprintf(fp, "Values: %d %d %d %d %d\n", fuzzableValues[0],
+		fprintf(fp, "Values: %d, %d, %d, %d, %d\n", fuzzableValues[0],
 				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 				fuzzableValues[4]);
+		fflush(fp);
 		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, fuzzableValues[0],
 				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 				fuzzableValues[4]);
@@ -127,6 +130,7 @@ bool make_fuzzable_dimension(int *dim, const int *data, size_t dataSize,
 	if (make_fuzzable(dim, sizeof(int), data, dataSize, dataIndex)) {
 		if (assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)) {
 			fprintf(fp, "Dim: %d\n", *dim);
+			fflush(fp);
 			return true;
 		}
 	}

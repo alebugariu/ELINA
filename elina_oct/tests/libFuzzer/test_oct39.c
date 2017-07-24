@@ -36,10 +36,13 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 					}
 					octagon1 = narrowingResult;
 					i++;
+					fflush(fp);
 					if (!(R(i))) {
 						fclose(fp);
 						return 1;
 					}
+				} else {
+					break;
 				}
 			}
 		}

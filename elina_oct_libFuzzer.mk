@@ -17,7 +17,7 @@ test:
 	cd elina_oct/tests/libFuzzer; \
 	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES) -O0 -c -g test_oct.c; \
         number=$(start) ; while [ $${number} -le $(number) ] ; do \
-		clang -lstdc++  -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I /usr/local/include $(INCLUDES) $(OBJS) test_oct$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp; \
+		clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I /usr/local/include $(INCLUDES) $(OBJS) test_oct$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp; \
                 startTime=`date +%s` ; \
 		./test$${number} -max_len=10000 -detect_leaks=0 -rss_limit_mb=2000000000 -timeout=1800 -print_final_stats=1 MY_CORPUS/ SEED_CORPUS/; \
                 endTime=`date +%s` ; \

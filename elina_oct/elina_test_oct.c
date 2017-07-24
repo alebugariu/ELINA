@@ -385,7 +385,8 @@ void test_16(void) {
 	//print_opt_hmat(oo->mat, dim);
 	printf("top meet octagon == octagon: ");
 	opt_oct_t * meet_result = opt_oct_meet(man, false, top, octagon);
-	opt_oct_mat_t *oo_result = meet_result->closed ? meet_result->closed : meet_result->m;
+	opt_oct_mat_t *oo_result =
+			meet_result->closed ? meet_result->closed : meet_result->m;
 	//print_opt_hmat(oo_result->mat, dim);
 	bool res = opt_oct_is_eq(man, meet_result, octagon);
 	printf("%d\n", res);
@@ -445,9 +446,48 @@ void test_16_2(void) {
 	//print_opt_hmat(oo->mat, dim);
 	printf("top meet octagon == octagon: ");
 	opt_oct_t * meet_result = opt_oct_meet(man, false, top, octagon);
-	opt_oct_mat_t *oo_result = meet_result->closed ? meet_result->closed : meet_result->m;
+	opt_oct_mat_t *oo_result =
+			meet_result->closed ? meet_result->closed : meet_result->m;
 	//print_opt_hmat(oo_result->mat, dim);
 	bool res = opt_oct_is_eq(man, meet_result, octagon);
+	printf("%d\n", res);
+}
+
+void test_28(void) {
+	int dim = 2;
+	int nbcons = 2;
+	elina_manager_t * man = opt_oct_manager_alloc();
+	opt_oct_t * top = opt_oct_top(man, dim, 0);
+
+	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
+
+	lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, 0, 1, 1, 1, 2);
+	lincons0.p[0].linexpr0 = linexpr0;
+
+	lincons0.p[1].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, 0, 1, 0, -1, 510);
+	lincons0.p[1].linexpr0 = linexpr1;
+
+	opt_oct_t* octagon1 = opt_oct_meet_lincons_array(man, false, top,
+			&lincons0);
+
+	elina_lincons0_array_t lincons1 = elina_lincons0_array_make(nbcons);
+
+	lincons1.p[0].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, 0, 1, 1, 1, 2);
+	lincons1.p[0].linexpr0 = linexpr2;
+
+	lincons1.p[1].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, 0, 1, 0, -1, 510);
+	lincons1.p[1].linexpr0 = linexpr3;
+
+	opt_oct_t* octagon2 = opt_oct_meet_lincons_array(man, false, top,
+				&lincons0);
+
+	printf("y <= x widening y: ");
+	bool res = opt_oct_is_leq(man, octagon2,
+					opt_oct_widening(man, octagon1, octagon2));
 	printf("%d\n", res);
 }
 
@@ -560,10 +600,10 @@ int main(int argc, char **argv) {
 	 test_fold(dim,nbcons);
 	 printf("Testing Expand\n");
 	 test_expand(dim,nbcons);*/
-	printf("Testing top meet octagon\n");
-	test_16_2();
-	printf("\n");
-	/*printf("Testing octagon meet octagon\n");
+	/*printf("Testing top meet octagon\n");
+	 test_16_2();
+	 printf("\n");
+	 printf("Testing octagon meet octagon\n");
 	 test_21();
 	 printf("\n");
 	 printf("Testing is meet compatible direct\n");
@@ -572,5 +612,8 @@ int main(int argc, char **argv) {
 	 printf("Testing absorption\n");
 	 test_24();
 	 printf("\n");*/
+	printf("Testing widening\n");
+	test_28();
+	printf("\n");
 }
 
