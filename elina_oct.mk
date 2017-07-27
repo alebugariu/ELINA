@@ -1,4 +1,5 @@
-OBJS= ../../../*.o ../../../../elina_auxiliary/*.o ../../../../elina_linearize/*.o ../../../../partitions_api/*.o
+INCLUDES=-I /home/elina/elina_oct -I /home/elina/elina_auxiliary -I /home/elina/elina_linearize -I /home/elina/partitions_api 
+OBJS= /home/elina/elina_oct/*.o /home/elina/elina_auxiliary/*.o /home/elina/elina_linearize/*.o /home/elina/partitions_api/*.o
 all: compile test
 compile: 
 	cd elina_auxiliary ; \
@@ -13,9 +14,11 @@ compile:
 	cd ..        
  
 test:
-	cd elina_oct/tests/libFuzzer/failing_tests; \
+	cd elina_oct/tests/libFuzzer ; \
+	clang -O0 -c -g -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES) test_oct.c ;\
+	cd failing_tests; \
         number=$(start) ; while [ $${number} -le $(number) ] ; do \
-		clang -lstdc++  -I /usr/local/include -DTHRESHOLD=0.75 -DNUM_DOUBLE $(OBJS) test$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp -lm; \
+		clang -lstdc++ -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES) $(OBJS) test$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp -lm; \
                 startTime=`date +%s` ; \
 		./test$${number}; \
                 endTime=`date +%s` ; \
