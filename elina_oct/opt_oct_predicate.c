@@ -90,8 +90,9 @@ bool opt_oct_is_leq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 bool opt_oct_is_eq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 {
   opt_oct_internal_t* pr = opt_oct_init_from_manager(man,ELINA_FUNID_IS_EQ,0);
-   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim))return false;
+   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim)){printf("HERE1\n");return false;}
   if (pr->funopt->algorithm>=0) {
+	printf("CLOSURE\n");
     opt_oct_cache_closure(pr,o1);
     opt_oct_cache_closure(pr,o2);
   }
@@ -103,17 +104,19 @@ bool opt_oct_is_eq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
     else if (o2->closed) {
       /* a1 empty, e2 not empty on Q */
       if (num_incomplete || o1->intdim) { flag_incomplete; }
+      printf("HER21\n");
       return false;
     }
-    else { flag_algo; return false; }
+    else { flag_algo; printf("HERE3\n"); return false; }
   }
   else if (!o2->closed && !o2->m) {
     if (o1->closed) {
       /* a2 empty, e1 not empty on Q */
       if (num_incomplete || o1->intdim) { flag_incomplete; }
+      printf("HERE4\n");
       return false;
     }
-    else { flag_algo; return false; }
+    else { flag_algo; printf("HERE5\n"); return false; }
   }
   else {
     opt_oct_mat_t *oo1 = o1->closed ? o1->closed : o1->m;
@@ -125,6 +128,7 @@ bool opt_oct_is_eq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 	//print_hmat(oo1,o1->dim);
 	//print_hmat(oo2,o2->dim);
     //}
+    printf("HERE6\n");
     return res;
   }
 }

@@ -36,7 +36,6 @@ bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 }
 
 int main(int argc, char **argv) {
-	unsigned int dataIndex = 0;
 	int dim = 14;
 	int nbcons = 14;
 

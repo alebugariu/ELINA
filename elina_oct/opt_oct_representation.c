@@ -171,6 +171,7 @@ void opt_oct_cache_closure(opt_oct_internal_t *pr, opt_oct_t *o){
 	int size = 2*o->dim*(o->dim + 1);
 	o->closed = opt_hmat_copy(o->m,o->dim);
 	if(opt_hmat_strong_closure(o->closed,o->dim)){
+		printf("Strong closure\n");
 		opt_hmat_free(o->closed);
 		opt_hmat_free(o->m);
 		o->closed = NULL;

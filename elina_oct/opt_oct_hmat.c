@@ -625,7 +625,6 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 			/****
 				If we come here we know that both oo1 and oo2 contain the same set of Independent components
 			*****/
-		
 			comp_list_t *cl = oo1->acl->head;
 			while(cl!=NULL){
 				unsigned short int comp_size = cl->size;
@@ -653,7 +652,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		}
   		
 	}
-	else{
+	else{printf("BRANCH3\n");
 		/***
 			If the operand is sparse, we fully initialize it,
 			but no need to change type.
@@ -690,7 +689,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#else
 			for(int i = 0; i < (size/v_length)*v_length;i++){
 				if(m1[i] != m2[i]){
-					//printf("%d %g %g\n",i,m1[i],m2[i]);
+					printf("%d %g %g\n",i,m1[i],m2[i]);
 					#if defined(TIMING)
 						record_timing(is_equal_time);
 					#endif
@@ -700,7 +699,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#endif
 		for(int i = (size/v_length)*v_length; i < size; i++){
 			if(m1[i] != m2[i]){
-				//printf("%d %g %g\n",i,m1[i],m2[i]);
+				printf("%d %g %g\n",i,m1[i],m2[i]);
 				#if defined(TIMING)
 					record_timing(is_equal_time);
 				#endif

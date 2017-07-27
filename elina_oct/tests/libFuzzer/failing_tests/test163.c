@@ -31,12 +31,11 @@ elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2, int coeff1,
 bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 		int dim, elina_lincons0_array_t constraints) {
 	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
-	printf("Create octagon: %d %d\n", (*octagon)->dim, (*octagon)->intdim);
+	//printf("Create octagon: %d %d\n", (*octagon)->dim, (*octagon)->intdim);
 	return true;
 }
 
 int main(int argc, char **argv) {
-	unsigned int dataIndex = 0;
 	int dim = 10;
 	int nbcons = 10;
 	elina_manager_t * man = opt_oct_manager_alloc();
@@ -89,10 +88,13 @@ int main(int argc, char **argv) {
 	opt_oct_mat_t *oo = octagon->closed ? octagon->closed : octagon->m;
 	//printf("DENSE: %d\n", oo->is_dense);
 	//print_opt_hmat(oo->mat, dim);
-	printf("top meet octagon == octagon: ");
+
+	//printf("**********************************************\n");
 	opt_oct_t * meet_result = opt_oct_meet(man, false, top, octagon);
 	opt_oct_mat_t *oo_result = meet_result->closed ? meet_result->closed : meet_result->m;
 	//print_opt_hmat(oo_result->mat, dim);
+	//printf("**********************************************\n");
+	printf("top meet octagon == octagon: ");
 	bool res = opt_oct_is_eq(man, meet_result, octagon);
 	printf("%d\n", res);
 }
