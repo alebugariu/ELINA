@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -625,6 +625,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 			/****
 				If we come here we know that both oo1 and oo2 contain the same set of Independent components
 			*****/
+
 			comp_list_t *cl = oo1->acl->head;
 			while(cl!=NULL){
 				unsigned short int comp_size = cl->size;
@@ -652,7 +653,7 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		}
   		
 	}
-	else{printf("BRANCH3\n");
+	else{
 		/***
 			If the operand is sparse, we fully initialize it,
 			but no need to change type.
@@ -689,7 +690,6 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#else
 			for(int i = 0; i < (size/v_length)*v_length;i++){
 				if(m1[i] != m2[i]){
-					printf("%d %g %g\n",i,m1[i],m2[i]);
 					#if defined(TIMING)
 						record_timing(is_equal_time);
 					#endif
@@ -699,7 +699,6 @@ bool is_equal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim){
 		#endif
 		for(int i = (size/v_length)*v_length; i < size; i++){
 			if(m1[i] != m2[i]){
-				printf("%d %g %g\n",i,m1[i],m2[i]);
 				#if defined(TIMING)
 					record_timing(is_equal_time);
 				#endif
@@ -938,12 +937,7 @@ void meet_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 					}
 					
 					int ind = j1 + (((i1 + 1)*(i1 + 1))/2);	
-					//m[ind] = min(m1[ind],m2[ind]);
-					if(m1[ind] < m2[ind]){
-						m[ind] = m1[ind];
-					} else {
-						m[ind] = m2[ind];
-					}
+					m[ind] = min(m1[ind],m2[ind]);
 				}
 			}
 			free(ca);
@@ -1000,21 +994,11 @@ void meet_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 			
 		#else
 			for(int i = 0; i < (size/v_length)*v_length;i++){
-				//m[i] = min(m1[i],m2[i]);
-				if(m1[i] < m2[i]){
-				   m[i] = m1[i];
-				} else {
-				  m[i] = m2[i];
-			    }
+				m[i] = min(m1[i],m2[i]);
 			}
 		#endif
 			for(int i = (size/v_length)*v_length; i < size; i++){
-				//m[i] = min(m1[i],m2[i]);
-				if(m1[i] < m2[i]){
-				   m[i] = m1[i];
-				} else {
-				  m[i] = m2[i];
-				}
+				m[i] = min(m1[i],m2[i]);
 			}
 	}
 	
@@ -1212,12 +1196,7 @@ void join_half(opt_oct_mat_t *oo, opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int di
 				m[i] = max(m1[i],m2[i]);
 			}
 	}
-	//oo->nni = min(oo1->nni,oo2->nni);
-	if(oo1->nni < oo2->nni){
-		oo->nni = oo1->nni;
-	}else{
-		oo->nni = oo2->nni;
-	}
+	oo->nni = min(oo1->nni,oo2->nni);
 	#if defined(TIMING)
 		record_timing(join_time);
 	#endif
@@ -1266,6 +1245,7 @@ void opt_hmat_addrem_dimensions(opt_oct_mat_t * dst_mat, opt_oct_mat_t* src_mat,
 				ac++;
 				l++;
 			}
+
 			map[k] = p;
 			k++;
 			p++;
@@ -1327,9 +1307,7 @@ void opt_hmat_addrem_dimensions(opt_oct_mat_t * dst_mat, opt_oct_mat_t* src_mat,
 		}
 		
      }
-     else{
-	new_dim = dim;
-     }
+     dst_mat->is_dense = src_mat->is_dense;
      if(!src_mat->is_dense){
 		/*****
 			If the source matrix is decomposed type,
@@ -1376,10 +1354,6 @@ void opt_hmat_addrem_dimensions(opt_oct_mat_t * dst_mat, opt_oct_mat_t* src_mat,
 		If the source matrix is dense type,
 		apply the dense type operator.
 	 *****/
-	if(!dst_mat->is_dense){
-		convert_to_dense_mat(dst_mat,new_dim,false);
-	}
-	
 	  opt_hmat_set_array(dst,src,org_j*(org_j/2 + 1));
 	  for (j=0;j<nb_pos;j++) {
 	    /* skip lines */
@@ -1435,8 +1409,8 @@ void opt_hmat_addrem_dimensions(opt_oct_mat_t * dst_mat, opt_oct_mat_t* src_mat,
 	}	
 	dst_mat->ti = true;
       }
-	dst_mat->is_dense = src_mat->is_dense;
 	
+
   	free(map);
         free(add_pos);
   	#if defined(TIMING)
@@ -2037,14 +2011,14 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	Measure sparsity to decide on whether to use dense or decomposed type incremental closure.
 	We do not recalculate sparsity here (if estimate of nni is too imprecise) as it increases overhead.
   ******/
-  /*if(sparsity >=sparse_threshold){
+  if(sparsity >=sparse_threshold){
 	if(oo->is_dense){
 		oo->is_dense = false;
 		oo->acl = extract(oo->mat,dim);
 	}
 	incr_closure = &incremental_closure_comp_sparse;
   }
-  else{*/
+  else{
 	if(!oo->is_dense){
 		if(!oo->ti){
 			oo->ti = true;
@@ -2052,14 +2026,13 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		}
 		oo->is_dense = true;
 		free_array_comp_list(oo->acl);
-	/*}
+	}
   	#if defined(VECTOR)
 		incr_closure = &incremental_closure_opt_dense;
   //}
   	#else
 		incr_closure = &incremental_closure_opt_dense_scalar;
   	#endif
-  	*/
   }
   
   for (i=0;i<ar->size;i++) {
@@ -2122,8 +2095,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	
       /* can we delay incremental closure further? */
       if (*respect_closure && closure_pending && var_pending!=u.i) {
-    	  if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
-          //if (incr_closure(oo,dim,var_pending, is_int_flag)){
+          if (incr_closure(oo,dim,var_pending, is_int_flag)){
                 return true;
           }
       }
@@ -2156,10 +2128,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	count++;
       }
       else{
-	//m[opt_matpos(ui,ui^1)] = min(m[opt_matpos(ui,ui^1)], pr->tmp[1]);
-    	  if(m[opt_matpos(ui,ui^1)] > pr->tmp[1]){
-    		  m[opt_matpos(ui,ui^1)] = pr->tmp[1];
-    	  }
+	m[opt_matpos(ui,ui^1)] = min(m[opt_matpos(ui,ui^1)], pr->tmp[1]);
       }
       /*  c_i X_i + [-a,b] >= 0 <=> -c_i X_i <= b */
       if (c==ELINA_CONS_EQ) {
@@ -2168,10 +2137,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	}
         else{
-		//m[opt_matpos(ui^1,ui)] = min(m[opt_matpos(ui^1,ui)], pr->tmp[0]);
-        if(m[opt_matpos(ui,ui^1)] > pr->tmp[0]){
-           m[opt_matpos(ui,ui^1)] = pr->tmp[0];
-        }
+		m[opt_matpos(ui^1,ui)] = min(m[opt_matpos(ui^1,ui)], pr->tmp[0]);
 	}
       }
       /*  c_i X_i + [-a,b] <= 0 <=>  c_i X_i <= a */
@@ -2184,8 +2150,8 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
       /* can we delay incremental closure further? */
       if (*respect_closure && closure_pending &&
 	  var_pending!=u.i && var_pending!=u.j) {
-    	 if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
-         // if (incr_closure(oo,dim,var_pending, is_int_flag)) {
+
+          if (incr_closure(oo,dim,var_pending, is_int_flag)) {
               return true;
           }
       }
@@ -2274,10 +2240,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
       }
       else{
-      	//m[opt_matpos2(uj,ui^1)] = min(m[opt_matpos2(uj,ui^1)], pr->tmp[1]);
-    	 if(m[opt_matpos2(uj,ui^1)] > pr->tmp[1]){
-    	    m[opt_matpos(uj,ui^1)] = pr->tmp[1];
-    	 }
+      	m[opt_matpos2(uj,ui^1)] = min(m[opt_matpos2(uj,ui^1)], pr->tmp[1]);
       }
       /*  c_i X_i + c_j X_j + [-a,b] >= 0 <=> -c_i X_i - c_j X_j <= b */
       if (c==ELINA_CONS_EQ){
@@ -2286,21 +2249,13 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	}
         else{
-		//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], pr->tmp[0]);
-        if(m[opt_matpos2(uj,ui^1)] > pr->tmp[0]){
-           m[opt_matpos2(uj,ui^1)] = pr->tmp[0];
-        }
+		m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], pr->tmp[0]);
 	}
       }
      
       /*  c_i X_i + c_j X_j + [-a,b] <= 0 <=>  c_i X_i + c_j X_j <= a */
       if (c==ELINA_CONS_SUP) *exact = 0; /* not exact for strict constraints */
-      //oo->nni = min(max_nni,count);
-      if(max_nni < count){
-    	  oo->nni = max_nni;
-      }else {
-    	  oo->nni = count;
-      }
+      oo->nni = min(max_nni,count);
       break;
 
     case OPT_OTHER:
@@ -2449,10 +2404,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			//m[opt_matpos(2*k,uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
-			if(m[opt_matpos(2*k,uj)] > tmpb){
-			   m[opt_matpos(2*k,uj)] = tmpb;
-			}
+			m[opt_matpos(2*k,uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
 		}
 	      }
 	      else if ((pr->tmp[2*k+3] <=-1) &&
@@ -2465,10 +2417,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			//m[opt_matpos(2*k + 1,uj)] = min(m[opt_matpos(2*k + 1,uj)],tmpb);
-			if(m[opt_matpos(2*k + 1,uj)] > tmpb){
-			   m[opt_matpos(2*k + 1,uj)] = tmpb;
-			}
+			m[opt_matpos(2*k + 1,uj)] = min(m[opt_matpos(2*k + 1,uj)],tmpb);
 		}
 	      }
 	       /******
@@ -2478,12 +2427,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	    }
 		
 	  }
-	  //oo->nni = min(max_nni,count);
-	  if(max_nni < count){
-		  oo->nni = max_nni;
-	  }else{
-		oo->nni = count;
-	  }
+	  oo->nni = min(max_nni,count);
 	}
 
 	else if (Cinf==1) {
@@ -2524,10 +2468,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
 	      else{
-	      	//m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
-	    	if(m[opt_matpos(2*k,uj)] > tmpb){
-	    	   m[opt_matpos(2*k,uj)] = tmpb;
-	    	}
+	      	m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
 	      }
 		
 	    }
@@ -2541,10 +2482,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	      }
 	      else{
-	      	//m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
-	    	if(m[opt_matpos(2*k + 1,uj)] > tmpb){
-	    	   m[opt_matpos(2*k + 1,uj)] = tmpb;
-	    	}
+	      	m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
 	      }
 	 	
 	    }
@@ -2555,12 +2493,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	  }
 	   
 	   
-          //oo->nni = min(max_nni,count);
-	      if(max_nni < count){
-	    	  oo->nni = max;
-	      }else{
-	    	  oo->nni = count;
-	      }
+          oo->nni = min(max_nni,count);
 	}
 
 	else if (Cinf==2) {
@@ -2634,17 +2567,9 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	  }
 	  else{
-	  	//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)],tmpa);
-		if(m[opt_matpos2(uj^1,ui)] > tmpa){
-		   m[opt_matpos2(uj^1,ui)] = tmpa;
-		}
+	  	m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)],tmpa);
 	  }
-	  //oo->nni = min(max_nni,count);
-	  if(max_nni < count){
-		  oo->nni = max_nni;
-	  }else{
-		  oo->nni = count;
-	  }
+	  oo->nni = min(max_nni,count);
 	  
 	}
 	
@@ -2697,10 +2622,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			//m[opt_matpos(2*k, uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
-			if(m[opt_matpos(2*k,uj)] > tmpb){
-			   m[opt_matpos(2*k,uj)] = tmpb;
-		    }
+			m[opt_matpos(2*k, uj)] = min(m[opt_matpos(2*k,uj)], tmpb);
 		}
 	      }
 	      else if ((pr->tmp[2*k+2] <=-1) &&
@@ -2712,10 +2634,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 			count++;
 		}
 		else{
-			//m[opt_matpos(2*k + 1, uj)] = min(m[opt_matpos(2*k + 1, uj)], tmpb);
-			if(m[opt_matpos(2*k + 1,uj)] > tmpb){
-			   m[opt_matpos(2*k + 1,uj)] = tmpb;
-			}
+			m[opt_matpos(2*k + 1, uj)] = min(m[opt_matpos(2*k + 1, uj)], tmpb);
 		}
 	      }
 		
@@ -2723,12 +2642,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 	    }
 		
 	  }
-	  //oo->nni = min(max_nni,count);
-	  if(max_nni < count){
-		 oo->nni = max_nni;
-	  }else {
-		 oo->nni = count;
-	  }
+	  oo->nni = min(max_nni,count);
 	}
 	else if (cinf==1) {
 	  
@@ -2766,10 +2680,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
               else{	
-	      	//m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
-            if(m[opt_matpos(2*k,uj)] > tmpb){
-               m[opt_matpos(2*k,uj)] = tmpb;
-            }
+	      	m[opt_matpos2(2*k,uj)] = min(m[opt_matpos2(2*k,uj)], tmpb);
 	      }
 		
 	    }
@@ -2784,22 +2695,14 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		 count++;
 	      }
 	      else{
-	      	//m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
-	    	if(m[opt_matpos2(2*k + 1,uj)] > tmpb){
-	    	   m[opt_matpos2(2*k + 1,uj)] = tmpb;
-	    	}
+	      	m[opt_matpos2(2*k + 1,uj)] = min(m[opt_matpos2(2*k + 1,uj)], tmpb);
 	      }
 		
 	    }
 	       
 		
 	  }
-	   //oo->nni = min(max_nni,count);
-	   if(max_nni < count){
-		   oo->nni = max_nni;
-	   }else {
-		   oo->nni = count;
-	   }
+	   oo->nni = min(max_nni,count);
 	}
 	else if (cinf==2) {
 	  if ((pr->tmp[2*cj1+2]==-1) &&
@@ -2871,18 +2774,11 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
 		count++;
 	  }
 	  else{
-	  	//m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], tmpa);
-		if(m[opt_matpos2(uj^1,ui)] > tmpa){
-		   m[opt_matpos2(uj^1,ui)] = tmpa;
-		}
+	  	m[opt_matpos2(uj^1,ui)] = min(m[opt_matpos2(uj^1,ui)], tmpa);
 	  }
 	}
-	 //oo->nni = min(max_nni,count);
-	 if(max_nni < count){
-		 oo->nni = max_nni;
-	 }else {
-		oo->nni = count;
-	 }
+	 oo->nni = min(max_nni,count);
+
 	}
 
       cbrk:
@@ -2897,8 +2793,7 @@ bool opt_hmat_add_lincons(opt_oct_internal_t* pr, opt_oct_mat_t* oo, int intdim,
   /* apply pending incremental closure now */
   
   if (*respect_closure && closure_pending)
-     // if (incr_closure(oo,dim,var_pending,is_int_flag)) {
-     if(incremental_closure_opt_dense_scalar(oo, dim, var_pending, is_int_flag)){
+      if (incr_closure(oo,dim,var_pending,is_int_flag)) {
           return true;
       }
   
@@ -2943,6 +2838,7 @@ void opt_hmat_assign(opt_oct_internal_t* pr, opt_uexpr u, opt_oct_mat_t* oo, siz
   size_t i,k;
   double *m = oo->mat;
   bool (*incr_closure)(opt_oct_mat_t * ,...);
+
   double size = 2*dim*(dim+1);
   double sparsity = 1- ((double)(oo->nni)/size);
   int count = oo->nni;
@@ -3305,9 +3201,6 @@ void opt_hmat_assign(opt_oct_internal_t* pr, opt_uexpr u, opt_oct_mat_t* oo, siz
     cb = 2*pr->tmp[0];
     Cb = 2*pr->tmp[1];
     for (i=0;i<dim;i++) {
-	 if((!oo->ti) && (!oo->is_dense) && (find(oo->acl,i)==NULL)){
-		ini_relation(m,i,i,dim);
-	  }
       opt_bounds_mul(m[opt_matpos(2*i,2*i+1)],m[opt_matpos(2*i+1,2*i)],
 		 pr->tmp[2*i+2],pr->tmp[2*i+3], &tmpa,&tmpb);
       if (tmpa==INFINITY) { cinf++; ci = i; } else cb += tmpa;
@@ -3315,6 +3208,7 @@ void opt_hmat_assign(opt_oct_internal_t* pr, opt_uexpr u, opt_oct_mat_t* oo, siz
     }
 
     opt_hmat_forget_var(oo,dim,d);
+
     /* upper bounds */
     if (!Cinf) {
       /* no bound is infinite */
@@ -3572,6 +3466,3 @@ void opt_hmat_assign(opt_oct_internal_t* pr, opt_uexpr u, opt_oct_mat_t* oo, siz
   oo->nni = count;
   
 }
-
-
-

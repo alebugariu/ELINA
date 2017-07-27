@@ -39,10 +39,7 @@ bool strengthning_int_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j <= (i|1); j++){
 			int ind = j + (((i+1)*(i+1))/2);
-			//m[ind] = min(m[ind], temp[i^1] + temp[j]);
-			if(m[ind] > temp[i^1] + temp[j]){
-			   m[ind] = temp[i^1] + temp[j];
-			}
+			m[ind] = min(m[ind], temp[i^1] + temp[j]);
 		}
 			
 	}
@@ -78,10 +75,7 @@ bool strengthning_dense_scalar(opt_oct_mat_t * oo, double *temp, int n){
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j <= (i|1); j++){
 			int ind = j + (((i+1)*(i+1))/2);
-			//m[ind] = min(m[ind], (temp[i^1] + temp[j])/2);
-			if(m[ind] > (temp[i^1] + temp[j])/2){
-			   m[ind] = (temp[i^1] + temp[j])/2;
-			}
+			m[ind] = min(m[ind], (temp[i^1] + temp[j])/2);
 		}
 			
 	}
@@ -129,10 +123,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 		//int ind2 = n*i + ((2*k)^1);
 		//int ind1 = n*i + (2*k);
 		//m[ind2] = std::min(m[ind2], m[ind1] + m[n*(2*k) + ((2*k)^1)] );
-		//m[ind1] = min(m[ind1], m[ind2] + m[pos1] );
-		if(m[ind1] > m[ind2] + m[pos1]){
-		   m[ind1] = m[ind2] + m[pos1];
-		}
+		m[ind1] = min(m[ind1], m[ind2] + m[pos1] );
 		temp2[i^1] = m[ind1];
 	}
 
@@ -146,10 +137,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 		//int ind2 = n*i + ((2*k)^1);
 		//int ind1 = n*i + (2*k);
 		//m[ind1] = std::min(m[ind1], m[ind2] + m[n*((2*k)^1) + (2*k)] );
-		//m[ind2] = min(m[ind2], m[ind1] + m[pos2] );
-		if(m[ind2] > m[ind1] + m[pos2]){
-		   m[ind2] = m[ind1] + m[pos2];
-		}
+		m[ind2] = min(m[ind2], m[ind1] + m[pos2] );
 		temp1[i^1] = m[ind2];
 	}
 
@@ -159,10 +147,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 		//int ind4 = matpos2( 2*k,j);
 		int ind4 = j + ((((2*k)+1)*((2*k)+1))/2);
 		//m[n*((2*k)^1) + j] = std::min(m[n*((2*k)^1) + j], m[n*((2*k)^1) + 2*k] + m[n*(2*k) + j]);
-		//m[ind3] = min(m[ind3], m[pos2] + m[ind4]);
-		if(m[ind3] > m[pos2] + m[ind4]){
-		   m[ind3] = m[pos2] + m[ind4];
-		}
+		m[ind3] = min(m[ind3], m[pos2] + m[ind4]);
 	}
 	for(int j = 0; j < (2*k); j++){
 		//int ind3 = matpos2((2*k)^1,j);
@@ -170,10 +155,7 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 		//int ind4 = matpos2(2*k,j);
 		int ind4 = j + ((((2*k)+1)*((2*k)+1))/2);
 		//m[n*2*k + j] = std::min(m[n*2*k + j], m[n*2*k + ((2*k)^1)] + m[n*((2*k)^1) + j]);
-		//m[ind4] = min(m[ind4], m[pos1] + m[ind3]);
-		if(m[ind4] > m[pos1] + m[ind3]){
-		   m[ind4] = m[pos1] + m[ind3];
-		}
+		m[ind4] = min(m[ind4], m[pos1] + m[ind3]);
 	}
 
 	/*******
@@ -205,17 +187,8 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 				//double op2 = t2 + m[n*(2*k) + j];
 				double op1 = t1 + m[ind3];
 				double op2 = t2 + m[ind4];
-				//double op3 = min(op1, op2);
-				double op3;
-				if(op1<op2){
-					op3 = op1;
-				}else{
-					op3 = op2;
-				}
-				//m[ind5] = min(m[ind5],op3);
-				if(m[ind5] > op3){
-				   m[ind5] = op3;
-				}
+				double op3 = min(op1, op2);
+				m[ind5] = min(m[ind5],op3);
 				count = count + 4;
 			}
 			for(int j = (2*k) + 2; j <=i2; j++){
@@ -228,17 +201,8 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 				int ind5 = j + (((i+1)*(i+1))/2);
 				double op1 = t1 + temp1[j];
 				double op2 = t2 + temp2[j];
-				//double op3 = min(op1, op2);
-				double op3;
-				if(op1 < op2){
-					op3 = op1;
-				}else {
-					op3 = op2;
-				}
-				//m[ind5] = min(m[ind5],op3 );
-				if(m[ind5] > op3){
-				   m[ind5] = op3;
-				}
+				double op3 = min(op1, op2);
+				m[ind5] = min(m[ind5],op3 );
 				count = count + 4;
 			}
 		//}
@@ -268,17 +232,8 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 				//double op2 = t2 + m[n*(2*k) + j];
 				double op1 = t1 + m[ind3];
 				double op2 = t2 + m[ind4];
-				//double op3 = min(op1, op2);
-				double op3;
-				if(op1 < op2){
-				   op3 = op1;
-				}else {
-				   op3 = op2;
-				}
-				//m[ind5] = min(m[ind5],op3 );
-				if(m[ind5] > op3){
-				   m[ind5] = op3;
-				}
+				double op3 = min(op1, op2);
+				m[ind5] = min(m[ind5],op3 );
 				count = count + 4;
 			}
 			for(int j = (2*k) + 2; j <= i2; j++){
@@ -291,17 +246,8 @@ bool floyd_warshall_dense_scalar(opt_oct_mat_t *oo, double *temp1, double *temp2
 				int ind5 = j + (((i+1)*(i+1))/2);
 				double op1 = t1 + temp1[j];
 				double op2 = t2 + temp2[j];
-				//double op3 = min(op1, op2);
-				double op3;
-				if(op1 < op2){
-				   op3 = op1;
-				}else {
-				   op3 = op2;
-				}
-				//m[ind5] = min(m[ind5],op3 );
-				if(m[ind5] > op3){
-				   m[ind5] = op3;
-				}
+				double op3 = min(op1, op2);
+				m[ind5] = min(m[ind5],op3 );
 				count = count + 4;
 			}
 		//}

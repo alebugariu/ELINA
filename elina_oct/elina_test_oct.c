@@ -462,43 +462,43 @@ void test_16_3(void) {
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
 
 	lincons0.p[0].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, 0, 1, 1, 1, 2);
+	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, 0, 1, 0, 1, 2);
 	lincons0.p[0].linexpr0 = linexpr0;
 
 	lincons0.p[1].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, 0, 1, -1, 1, 2);
+	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, 2, 9, 1, 0, 2);
 	lincons0.p[1].linexpr0 = linexpr1;
 
 	lincons0.p[2].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, 0, 1, -1, 1, 2);
+	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, 0, 3, -1, 1, 2);
 	lincons0.p[2].linexpr0 = linexpr2;
 
 	lincons0.p[3].constyp = ELINA_CONS_EQ;
-	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, 1, 5, 0, 1, 2);
+	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, 8, 0, 1, 1, 2);
 	lincons0.p[3].linexpr0 = linexpr3;
 
-	lincons0.p[4].constyp = ELINA_CONS_EQ;
+	lincons0.p[4].constyp = ELINA_CONS_SUPEQ;
 	elina_linexpr0_t * linexpr4 = create_linexpr0(dim, 0, 1, -1, 1, 2);
 	lincons0.p[4].linexpr0 = linexpr4;
 
 	lincons0.p[5].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr5 = create_linexpr0(dim, 0, 1, 0, 0, 2);
+	elina_linexpr0_t * linexpr5 = create_linexpr0(dim, 4, 1, -1, 1, 2);
 	lincons0.p[5].linexpr0 = linexpr5;
 
-	lincons0.p[6].constyp = ELINA_CONS_EQ;
+	lincons0.p[6].constyp = ELINA_CONS_SUPEQ;
 	elina_linexpr0_t * linexpr6 = create_linexpr0(dim, 0, 6, 0, 1, 2);
 	lincons0.p[6].linexpr0 = linexpr6;
 
-	lincons0.p[7].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr7 = create_linexpr0(dim, 4, 1, -1, 1, 2);
+	lincons0.p[7].constyp = ELINA_CONS_EQ;
+	elina_linexpr0_t * linexpr7 = create_linexpr0(dim, 3, 1, -1, 1, 2);
 	lincons0.p[7].linexpr0 = linexpr7;
 
-	lincons0.p[8].constyp = ELINA_CONS_EQ;
-	elina_linexpr0_t * linexpr8 = create_linexpr0(dim, 0, 1, -1, -1, 2);
+	lincons0.p[8].constyp = ELINA_CONS_SUPEQ;
+	elina_linexpr0_t * linexpr8 = create_linexpr0(dim, 0, 3, -1, 1, 2);
 	lincons0.p[8].linexpr0 = linexpr8;
 
-	lincons0.p[9].constyp = ELINA_CONS_SUPEQ;
-	elina_linexpr0_t * linexpr9 = create_linexpr0(dim, 0, 1, -1, 1, 2);
+	lincons0.p[9].constyp = ELINA_CONS_EQ;
+	elina_linexpr0_t * linexpr9 = create_linexpr0(dim, 8, 1, 1, 1, 2);
 	lincons0.p[9].linexpr0 = linexpr9;
 
 	opt_oct_t* octagon = opt_oct_meet_lincons_array(man, false, top, &lincons0);
@@ -509,7 +509,7 @@ void test_16_3(void) {
 	opt_oct_t * meet_result = opt_oct_meet(man, false, top, octagon);
 	opt_oct_mat_t *oo_result =
 			meet_result->closed ? meet_result->closed : meet_result->m;
-	//print_opt_hmat(oo_result->mat, dim);
+	print_opt_hmat(oo_result->mat, dim);
 	bool res = opt_oct_is_eq(man, meet_result, octagon);
 	printf("%d\n", res);
 }

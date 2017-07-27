@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -224,10 +224,7 @@ bool strengthning_int_comp_sparse(opt_oct_mat_t * oo,  unsigned short int * ind1
 			int ind = j1 + ((((i1^1) + 1)*((i1^1) + 1))/2);
 			//m[n*(i1^1) + j1] = min(m[n*(i1^1) + j1], t1 + t2);
 			if(m[ind]!=INFINITY){
-				//m[ind] = min(m[ind], t1 + t2);
-				if(m[ind] > t1 + t2){
-					m[ind] = t1 + t2;
-				}
+				m[ind] = min(m[ind], t1 + t2);
 			}
 			else{
 				m[ind] = t1 + t2;
@@ -383,10 +380,7 @@ bool strengthning_comp_sparse(opt_oct_mat_t *oo, unsigned short int * ind1, doub
 			int ind = j1 + ((((i1^1) + 1)*((i1^1) + 1))/2);
 			//m[n*(i1^1) + j1] = min(m[n*(i1^1) + j1], (t1 + t2)/2);
 			if(m[ind]!=INFINITY){
-				//m[ind] = min(m[ind], (t1 + t2)/2);
-				if(m[ind] > (t1 + t2)/2){
-					m[ind] = (t1 + t2)/2;
-				}
+				m[ind] = min(m[ind], (t1 + t2)/2);
 			}
 			else{
 				m[ind] = (t1+t2)/2;
@@ -640,10 +634,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind2 = ((2*k1)^1) + (((i2 + 1)*(i2 + 1))/2);
 
 				if(m[ind2]!= INFINITY){
-					//m[ind2] = min(m[ind2],  m[pos1] + m[ind1]);
-					if(m[ind2] > m[pos1] + m[ind1]){
-						m[ind2] = m[pos1] + m[ind1];
-					}
+					m[ind2] = min(m[ind2],  m[pos1] + m[ind1]);
 				}
 				else{
 					m[ind2] =  m[pos1] + m[ind1];
@@ -675,10 +666,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind1 = (2*k1) + (((i1 + 1)*(i1 + 1))/2);
 				int ind2 = ((2*k1)^1) + (((i2 + 1)*(i2 + 1))/2);
 				if(m[ind1] != INFINITY){
-					//m[ind1] = min(m[ind1], m[pos2] + m[ind2]);
-					if(m[ind1] > m[pos2] + m[ind2]){
-						m[ind1] = m[pos2] + m[ind2];
-					}
+					m[ind1] = min(m[ind1], m[pos2] + m[ind2]);
 				}
 				else{
 					m[ind1] = m[pos2] + m[ind2];
@@ -709,10 +697,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind1 = j1 + ((((2*k1) + 1)*((2*k1) + 1))/2);
 				int ind2 = j1 + (((((2*k1)^1) + 1)*(((2*k1)^1) + 1))/2);
 				if(m[ind2] != INFINITY ){
-					//m[ind2] = min(m[ind2], m[pos2] + m[ind1]);
-					if(m[ind2] > m[pos1] + m[ind1]){
-					   m[ind2] = m[pos1] + m[ind1];
-					}
+					m[ind2] = min(m[ind2], m[pos2] + m[ind1]);
 				}
 				else{
 					m[ind2] =  m[pos2] + m[ind1];
@@ -736,10 +721,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind2 = j1 + (((((2*k1)^1) + 1)*(((2*k1)^1) + 1))/2);
 				//if(m[ind2] != std::numeric_limits<double>::infinity(
 				if(m[ind1] != INFINITY ){
-					//m[ind1] = min(m[ind1], m[pos1] + m[ind2]);
-					if(m[ind1] > m[pos1] + m[ind2]){
-					   m[ind1] = m[pos1] + m[ind2];
-					}
+					m[ind1] = min(m[ind1], m[pos1] + m[ind2]);
 				}
 				else{
 					m[ind1] =  m[pos1] + m[ind2];
@@ -785,10 +767,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind3 = j1 + ((((i1^1) + 1)*((i1^1) + 1))/2);
 				//m[n*(i1^1) + j1] = min(m[n*(i1^1) + j1],op1 );
 				if(m[ind3]!=INFINITY){
-					//m[ind3] = min(m[ind3],op1 );
-					if(m[ind3] > op1){
-					   m[ind3] = op1;
-					}
+					m[ind3] = min(m[ind3],op1 );
 				}
 				else{
 					m[ind3] = op1;
@@ -806,10 +785,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 				int ind3 = (j1^1) + ((((i1^1) + 1)*((i1^1) + 1))/2);
 				//m[n*(i1^1) + (j1^1)] = min(m[n*(i1^1) + (j1^1)],op1 );
 				if(m[ind3]!=INFINITY){
-					//m[ind3] = min(m[ind3],op1 );
-					if(m[ind3] > op1){
-					   m[ind3] = op1;
-					}
+					m[ind3] = min(m[ind3],op1 );
 				}
 				else{
 					m[ind3] = op1;
@@ -841,10 +817,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			    int ind3 = j1 + ((((i1^1) + 1)*((i1^1) + 1))/2);
 		            //m[n*(i1^1) + j1] = min(m[n*(i1^1) + j1],op2 );
 			    if(m[ind3] !=INFINITY){
-			    	//m[ind3] = min(m[ind3],op2 );
-			    	if(m[ind3] > op2){
-			    	   m[ind3] = op2;
-			    	}
+			    	m[ind3] = min(m[ind3],op2 );
 			    }
 			    else{
 				m[ind3] = op2;
@@ -862,10 +835,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			    int ind3 = (j1^1) + ((((i1^1) + 1)*((i1^1) + 1))/2);
 		            //m[n*(i1^1) + (j1^1)] = min(m[n*(i1^1) + (j1^1)],op2 );
 			    if(m[ind3]!=INFINITY){
-			    	//m[ind3] = min(m[ind3],op2 );
-			    	if(m[ind3] > op2){
-			    	   m[ind3] = op2;
-			    	}
+			    	m[ind3] = min(m[ind3],op2 );
 			    }
 			    else{
 				m[ind3] = op2;
@@ -897,10 +867,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			    int ind3 = j1 + (((i1 + 1)*(i1 + 1))/2);
 		            //m[n*i1 + j1] = min(m[n*i1 + j1],op1 );
 			    if(m[ind3]!=INFINITY){
-			    	//m[ind3] = min(m[ind3],op1 );
-			    	if(m[ind3] > op1){
-			    	   m[ind3] = op1;
-			    	}
+			    	m[ind3] = min(m[ind3],op1 );
 			    }
 			    else{
 				m[ind3] = op1;
@@ -919,10 +886,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 		            //double op1 = t1 + m[n*(j1) + 2*k];
 		     	    int ind3 = (j1^1) + (((i1 + 1)*(i1 + 1))/2);
 			    if(m[ind3]!=INFINITY){
-			    	//m[ind3] = min(m[ind3],op1 );
-			    	if(m[ind3] > op1){
-			    	   m[ind3] = op1;
-			    	}
+			    	m[ind3] = min(m[ind3],op1 );
 			    }
 			    else{
 				m[ind3] = op1;
@@ -953,10 +917,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			    int ind3 = j1 + (((i1 + 1)*(i1 + 1))/2);
 		            //m[n*i1 + j1] = min(m[n*i1 + j1],op2 );
 			    if(m[ind3]!=INFINITY){
-			    	//m[ind3] = min(m[ind3],op2 );
-			    	if(m[ind3] > op2){
-			    	   m[ind3] = op2;
-			    	}
+			    	m[ind3] = min(m[ind3],op2 );
 			    }
 			    else{
 				m[ind3] = op2;
@@ -976,10 +937,7 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
 			    int ind3 = (j1^1) + (((i1 + 1)*(i1 + 1))/2);
 		            //m[n*i1 + (j1^1)] = min(m[n*i1 + (j1^1)],op2 );
 			    if(m[ind3]!=INFINITY){
-			    	//m[ind3] = min(m[ind3],op2 );
-			    	if(m[ind3] > op2){
-			    	   m[ind3] = op2;
-			    	}
+			    	m[ind3] = min(m[ind3],op2 );
 			    }
 			    else{
 				m[ind3] = op2;
@@ -995,18 +953,15 @@ bool strong_closure_comp_sparse(opt_oct_mat_t *oo, double *temp1, double *temp2,
     oo->nni = count;
     
     if(is_int){
-    	printf("IS_INT\n");
 		if(strengthning_int_comp_sparse(oo,index1,temp1,n)){
 			return 1;
 		}
     	}
     	else{
-    		printf("IS_NOT_INT\n");
     		if(strengthning_comp_sparse(oo,index1,temp1,n)){
 			return 1;
 		}
     }
-    printf("AFTER\n");
     /*Original code with the bug: because there is no return statement,
       the behavior is undefined and gcc and clang return different values
       //return strengthning_dense_scalar(m,temp1,n);

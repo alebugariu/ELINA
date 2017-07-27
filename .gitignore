@@ -1,11 +1,14 @@
 *.bc
 *.o
 *.so
+elina_oct/elina_test_oct
 elina_oct/tests/klee/klee-*
 elina_oct/tests/failing_tests/klee-*
 elina_poly/tests/klee/klee-*
+elina_poly/elina_test_poly
 elina_oct/tests/libFuzzer/test*
 elina_oct/tests/libFuzzer/crash-*
 elina_oct/tests/libFuzzer/slow-*
 elina_oct/tests/libFuzzer/oom-*
 elina_oct/tests/libFuzzer/out*.txt
+elina_oct/tests/libFuzzer/failing_tests/test*
