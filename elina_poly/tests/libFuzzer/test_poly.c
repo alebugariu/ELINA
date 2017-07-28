@@ -4,32 +4,27 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(int dim, int v1, int v2, int coeff1,
-		int coeff2, int scalar_value) {
+elina_linexpr0_t * create_linexpr0(unsigned short int dim, int *values) {
 	elina_coeff_t *cst, *coeff;
-	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
+	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
+			dim);
 	cst = &linexpr0->cst;
+	elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_DOUBLE);
 
-	elina_scalar_reinit(cst->val.scalar, ELINA_SCALAR_DOUBLE);
-	cst->val.scalar->val.dbl = (double) scalar_value;
-
-	elina_linterm_t * linterm = &linexpr0->p.linterm[0];
-	linterm->dim = v1;
-	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff1;
-
-	linterm = &linexpr0->p.linterm[1];
-	linterm->dim = v2;
-	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff2;
+	size_t i;
+	for (i = 0; i < dim; i++) {
+		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
+		linterm->dim = i;
+		coeff = &linterm->coeff;
+		elina_scalar_set_to_int(coeff->val.scalar, values[i],
+				ELINA_SCALAR_DOUBLE);
+	}
 	return linexpr0;
 }
 
 bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		const int *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
-	size_t i;
+	size_t i, j;
 	int nbcons = MIN_NBCONS;
 	if (!make_fuzzable(&nbcons, sizeof(nbcons), data, dataSize, dataIndex)) //number of constraints
 			{
@@ -56,50 +51,31 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		fflush(fp);
 		lincons0->p[i].constyp = type;
 
-		int fuzzableValues[5];
-		if (!make_fuzzable(fuzzableValues, 5 * sizeof(int), data, dataSize,
-				dataIndex)) {
+		int fuzzableValues[MAX_DIM + 1];
+		if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(int), data,
+				dataSize, dataIndex)) {
 			return false;
 		}
-		if (!assume_fuzzable(
-				fuzzableValues[0] < dim && fuzzableValues[1] < dim
-						&& fuzzableValues[0] != fuzzableValues[1]
-						&& fuzzableValues[0] >= 0 && fuzzableValues[1] >= 0)) {
-			return false;
+		fprintf(fp, "Values: ");
+		for (j = 0; j < dim; j++) {
+			fprintf(fp, "%d, ", fuzzableValues[j]);
 		}
-		if (!assume_fuzzable(
-				fuzzableValues[2] == 1 || fuzzableValues[2] == -1
-						|| fuzzableValues[2] == 0)) {
-			return false;
-		}
-		if (!assume_fuzzable(
-				fuzzableValues[3] == 1 || fuzzableValues[3] == -1
-						|| fuzzableValues[3] == 0)) {
-			return false;
-		}
-		if (!assume_fuzzable(fuzzableValues[4] > 0)) {
-			return false;
-		}
-		fprintf(fp, "Values: %d, %d, %d, %d, %d\n", fuzzableValues[0],
-				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
-				fuzzableValues[4]);
+		fprintf(fp, "%d\n", fuzzableValues[j]);
 		fflush(fp);
-		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, fuzzableValues[0],
-				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
-				fuzzableValues[4]);
+		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, fuzzableValues);
 		lincons0->p[i].linexpr0 = linexpr0;
 	}
 	return true;
 }
 
-bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
-		int dim, const int *data, size_t dataSize, unsigned int *dataIndex,
-		FILE *fp) {
+bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
+		opt_pk_array_t * top, int dim, const int *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
 	}
-	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
+	*polyhedron = opt_pk_meet_lincons_array(man, false, top, &constraints);
 	return true;
 }
 

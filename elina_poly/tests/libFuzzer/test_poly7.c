@@ -12,19 +12,19 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
 
 		elina_manager_t * man = opt_oct_manager_alloc();
-		opt_oct_t * top = opt_oct_top(man, dim, 0);
+		opt_pk_array_t * top = opt_pk_array_top(man, dim, 0);
 
-		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
+		opt_pk_array_t* polyhedron1;
+		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize, &dataIndex,
 				fp)) {
-			opt_oct_t* octagon2;
-			if (create_octagon(&octagon2, man, top, dim, data, dataSize,
+			opt_pk_array_t* polyhedron2;
+			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
 
 				//meet == glb, join == lub
 				//x <= x join y
-				if (!opt_oct_is_leq(man, octagon1,
-						opt_oct_join(man, false, octagon1, octagon2))) {
+				if (!opt_pk_is_leq(man, polyhedron1,
+						opt_pk_join(man, false, polyhedron1, polyhedron2))) {
 					fclose(fp);
 					return 1;
 				}

@@ -12,24 +12,24 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
 
 		elina_manager_t * man = opt_oct_manager_alloc();
-		opt_oct_t * top = opt_oct_top(man, dim, 0);
+		opt_pk_array_t * top = opt_pk_array_top(man, dim, 0);
 
-		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
+		opt_pk_array_t* polyhedron1;
+		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize, &dataIndex,
 				fp)) {
-			opt_oct_t* octagon2;
-			if (create_octagon(&octagon2, man, top, dim, data, dataSize,
+			opt_pk_array_t* polyhedron2;
+			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
-				opt_oct_t* octagon3;
-				if (create_octagon(&octagon3, man, top, dim, data, dataSize,
+				opt_pk_array_t* polyhedron3;
+				if (create_polyhedron(&polyhedron3, man, top, dim, data, dataSize,
 						&dataIndex, fp)) {
 
 					// <= is transitive
 					if (assume_fuzzable(
-							opt_oct_is_leq(man, octagon1, octagon2)
-									&& opt_oct_is_leq(man, octagon2,
-											octagon3))) {
-						if (!opt_oct_is_leq(man, octagon1, octagon3)) {
+							opt_pk_is_leq(man, polyhedron1, polyhedron2)
+									&& opt_pk_is_leq(man, polyhedron2,
+											polyhedron3))) {
+						if (!opt_pk_is_leq(man, polyhedron1, polyhedron3)) {
 							fclose(fp);
 							return 1;
 						}
