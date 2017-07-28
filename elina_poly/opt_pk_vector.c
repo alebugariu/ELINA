@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -528,10 +528,10 @@ void opt_vector_combine(opt_pk_internal_t* opk,
   ov3[k] = 0;
   for (j=0; j<size; j++){
       if (opt_numint_abs(ov3[j]) > (ELINA_INT_MAX/2)){
-	opt_vector_print(ov1,size);
-	opt_vector_print(ov2,size);
-	printf("exception %d %lld %lld\n",k,opt_numint_abs(ov3[j]),ELINA_INT_MAX/2);
-	fflush(stdout);
+	//opt_vector_print(ov1,size);
+	//opt_vector_print(ov2,size);
+	//printf("exception %d %lld %lld\n",k,opt_numint_abs(ov3[j]),ELINA_INT_MAX/2);
+	//fflush(stdout);
 	opk->exn = ELINA_EXC_OVERFLOW;
 	return ;
       }

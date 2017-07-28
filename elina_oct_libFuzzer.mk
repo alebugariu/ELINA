@@ -1,5 +1,6 @@
-INCLUDES=-I ../.. -I ../../../elina_auxiliary -I ../../../elina_linearize -I ../../../partitions_api
-OBJS=*.o ../../*.o ../../../elina_auxiliary/*.o ../../../elina_linearize/*.o ../../../partitions_api/*.o
+INCLUDES_FOR_OCT=-I /home/elina/elina_auxiliary -I /home/elina/elina_linearize -I /home/elina/partitions_api
+INCLUDES=-I /home/elina/octagons $(INCLUDES_FOR_OCT)
+OBJS=*.o ../../*.o ../../../elina_auxiliary/*.o /home/elina/elina_linearize/*.o /home/elina/partitions_api/*.o
 all: compile test
 compile: 
 	cd elina_auxiliary ; \
@@ -9,7 +10,7 @@ compile:
 	cd ../partitions_api ; \
 	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -O0 -c -g *.c; \
 	cd ../elina_oct ; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I ../elina_auxiliary -I ../elina_linearize -I ../partitions_api -O0 -c -g *.c; \
+	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES_FOR_OCT) -O0 -c -g *.c; \
 	rm -fr elina_test_oct.o; \
 	cd ..        
  

@@ -80,9 +80,6 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 						|| fuzzableValues[3] == 0)) {
 			return false;
 		}
-		if (!assume_fuzzable(fuzzableValues[4] > 0)) {
-			return false;
-		}
 		fprintf(fp, "Values: %d, %d, %d, %d, %d\n", fuzzableValues[0],
 				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 				fuzzableValues[4]);
