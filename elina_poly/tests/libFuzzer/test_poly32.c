@@ -26,7 +26,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 				opt_pk_array_t* polyhedron2;
 				if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
 						&dataIndex, fp)) {
-					wideningResult = opt_oct_widening(man, polyhedron1, polyhedron2);
+					wideningResult = opt_pk_widening(man, polyhedron1, polyhedron2);
 					if (opt_pk_is_leq(man, wideningResult, polyhedron1)) {
 						break; // we reached a fixed point
 					}

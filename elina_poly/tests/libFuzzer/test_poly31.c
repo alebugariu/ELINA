@@ -26,7 +26,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 				//widening approximates join
 				if (!opt_pk_is_leq(man,
 						opt_pk_join(man, false, polyhedron1, polyhedron2),
-						opt_oct_widening(man, polyhedron1, polyhedron2))) {
+						opt_pk_widening(man, polyhedron1, polyhedron2))) {
 					fclose(fp);
 					return 1;
 				}

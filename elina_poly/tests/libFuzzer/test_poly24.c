@@ -25,7 +25,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 				//meet == glb, join == lub
 				//meet absorbtion
 				if (!opt_pk_is_eq(man,
-						opt_oct_meet(man, false, polyhedron1,
+						opt_pk_meet(man, false, polyhedron1,
 								opt_pk_join(man, false, polyhedron1, polyhedron2)),
 						polyhedron1)) {
 					fclose(fp);

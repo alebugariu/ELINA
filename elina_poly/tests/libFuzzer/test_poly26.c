@@ -21,7 +21,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 			opt_pk_array_t* polyhedron2;
 			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
-				opt_pk_array_t* glb = opt_oct_meet(man, false, polyhedron1, polyhedron2);
+				opt_pk_array_t* glb = opt_pk_meet(man, false, polyhedron1, polyhedron2);
 
 				opt_pk_array_t* bound;
 				if (create_polyhedron(&bound, man, top, dim, data, dataSize,

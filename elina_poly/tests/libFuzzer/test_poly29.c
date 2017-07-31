@@ -21,7 +21,7 @@ extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
 
 			//meet == glb, join == lub
 			//x widening bottom == x
-			if (!opt_pk_is_eq(man, opt_oct_widening(man, polyhedron1, bottom),
+			if (!opt_pk_is_eq(man, opt_pk_widening(man, polyhedron1, bottom),
 					polyhedron1)) {
 				return 1;
 				abort();
