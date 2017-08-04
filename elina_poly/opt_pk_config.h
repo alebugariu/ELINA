@@ -46,6 +46,7 @@ extern "C" {
 typedef char bool;
 static const bool false = 0;
 static const bool true  = 1;
+static const bool top = 2;
 #endif
 
 #define opt_numint_t long long int
@@ -110,4 +111,3 @@ static inline opt_numint_t opt_numint_fdiv(opt_numint_t num, opt_numint_t den){
 #endif
 
 #endif
-
