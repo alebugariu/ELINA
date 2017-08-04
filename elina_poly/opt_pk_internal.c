@@ -54,10 +54,11 @@
 	double fold_time = 0;
 	double sat_lincons_time = 0;
 	double assign_linexpr_time = 0;
+	double substitute_linexpr_time = 0;
 	double bound_dimension_time = 0;
 	double opt_conversion_time = 0;
 	long int join_count = 0;
-	FILE *fp;
+	double poly_is_unconstrained_time = 0;
 #endif
 
 /* Initialize opk with size maxdims */
@@ -221,7 +222,7 @@ elina_manager_t* opt_pk_manager_alloc(bool strict)
   funptr[ELINA_FUNID_SAT_LINCONS] = &opt_pk_sat_lincons;
   funptr[ELINA_FUNID_SAT_TCONS] = &opt_pk_sat_tcons;
   funptr[ELINA_FUNID_BOUND_DIMENSION] = &opt_pk_bound_dimension;
-  //funptr[ELINA_FUNID_BOUND_LINEXPR] = &opt_pk_bound_linexpr;
+  funptr[ELINA_FUNID_BOUND_LINEXPR] = &opt_pk_bound_linexpr;
   //funptr[ELINA_FUNID_BOUND_TEXPR] = &opt_pk_bound_texpr;
   funptr[ELINA_FUNID_TO_BOX] = &opt_pk_to_box;
   funptr[ELINA_FUNID_TO_LINCONS_ARRAY] = &opt_pk_to_lincons_array;
@@ -232,6 +233,7 @@ elina_manager_t* opt_pk_manager_alloc(bool strict)
   funptr[ELINA_FUNID_JOIN] = &opt_pk_join;
   //funptr[ELINA_FUNID_JOIN_ARRAY] = &opt_pk_join_array;
   funptr[ELINA_FUNID_ASSIGN_LINEXPR_ARRAY] = &opt_pk_assign_linexpr_array;
+  funptr[ELINA_FUNID_SUBSTITUTE_LINEXPR_ARRAY] = &opt_pk_substitute_linexpr_array;
   funptr[ELINA_FUNID_ASSIGN_TEXPR_ARRAY] = &opt_pk_assign_texpr_array;
   funptr[ELINA_FUNID_ADD_DIMENSIONS] = &opt_pk_add_dimensions;
   funptr[ELINA_FUNID_REMOVE_DIMENSIONS] = &opt_pk_remove_dimensions;
@@ -247,4 +249,3 @@ elina_manager_t* opt_pk_manager_alloc(bool strict)
   
   return man;
 }
-

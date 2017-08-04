@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -93,7 +93,7 @@ void opt_vector_set_elina_linexpr0(opt_pk_internal_t* opk,
   bool* peq;
   elina_dim_t d;
   elina_coeff_t* coeff;
-  elina_scalar_t * scalar;
+  elina_scalar_t * scalar=NULL;
   elina_coeff_t * cst = &(expr->cst);
   /* compute lcm of denominators, in vec[0] */
   switch(cst->discr){
@@ -135,7 +135,7 @@ void opt_vector_set_elina_linexpr0(opt_pk_internal_t* opk,
   }
   
    elina_linexpr0_ForeachLinterm(expr,i,d,coeff){
-    assert(coeff->discr==ELINA_COEFF_SCALAR);
+    assert(coeff.discr==ELINA_COEFF_SCALAR);
     scalar = coeff->val.scalar;
     elina_rat_set_elina_scalar(opk->poly_numrat,scalar);
     ov[0] = elina_int_lcm(ov[0],opk->poly_numrat->d);
@@ -186,7 +186,7 @@ void opt_vector_set_elina_lincons0(opt_pk_internal_t* opk,
   assert(cons->constyp == ELINA_CONS_EQ ||
 	 cons->constyp == ELINA_CONS_SUPEQ ||
 	 cons->constyp == ELINA_CONS_SUP);
-  //assert(elina_linexpr0_is_linear(&cons->linexpr0));
+  assert(elina_linexpr0_is_linear(&cons->linexpr));
 
   opt_vector_set_elina_linexpr0(opk, ov, cons->linexpr0, intdim+realdim,1);
   opt_vector_normalize(opk,ov,opk->dec+intdim+realdim);
@@ -282,7 +282,7 @@ bool opt_matrix_append_elina_lincons0_array(opt_pk_internal_t* opk,
   res = true;
   j = nbrows;
   for (i=0; i<array->size; i++){
-    //assert(elina_linexpr0_is_linear(&array->p[i].linexpr0));
+    assert(elina_linexpr0_is_linear(&array->p[i].linexpr0));
     switch (array->p[i].constyp){
     case ELINA_CONS_EQ:
     case ELINA_CONS_SUPEQ:
@@ -335,7 +335,7 @@ elina_lincons0_t opt_lincons0_of_vector(opt_pk_internal_t* opk,
   }
  
   if (ov[0]){
-    if (opk->strict && elina_int_sgn(ov + opt_polka_eps)<0)
+    if (opk->strict && elina_int_sgn(ov[opt_polka_eps])<0)
       lincons.constyp = ELINA_CONS_SUP;
     else
       lincons.constyp = ELINA_CONS_SUPEQ;
@@ -347,6 +347,5 @@ elina_lincons0_t opt_lincons0_of_vector(opt_pk_internal_t* opk,
   lincons.scalar = NULL;
   return lincons;
 }
-
 
 
