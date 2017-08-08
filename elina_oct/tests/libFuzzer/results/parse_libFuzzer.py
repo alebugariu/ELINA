@@ -22,12 +22,16 @@ with open(output_file, 'w') as results_fp:
         'execution time (minutes)',
         'initial coverage',
         'final coverage',
+	'number of executed units',
+	'new units added',
         'status',
         'error message'
     ]
     writer.writerow(columns)
     for test_file in [input_file]:
         results = {}
+	results['number of executed units']='-'
+	results['new units added']='-'
         results['error message']='-'
         results['status']='PASS'
         with open(test_file) as fp:
@@ -42,7 +46,16 @@ with open(output_file, 'w') as results_fp:
                    cov = line.split('cov: ')[1].split()[0]
                    results['initial coverage']=int(cov.strip())
  		elif 'Killed' in line:
-                   results['status']='KILLED'  
+                   results['status']='KILLED'
+		elif line.startswith('SUMMARY'):
+		   status=line.split(':')[2].strip()
+  		   results['status']=status
+		elif line.startswith('stat::number_of_executed_units: '):
+	             line = line.replace('stat::number_of_executed_units: ', '').strip();
+                     results['number of executed units']=int(line)
+                elif line.startswith('stat::new_units_added: '):
+                     line = line.replace('stat::new_units_added: ', '').strip();
+                     results['new units added']=int(line)
                 elif line.startswith('Execution time: '):
                    line = line.replace('Execution time: ', '').strip();
                    values = line.split(" ");
@@ -53,5 +66,7 @@ with open(output_file, 'w') as results_fp:
                    results = {}
                    results['initial coverage']= '-'
                    results['final coverage']= '-'
+		   results['number of executed units']='-'
+                   results['new units added']='-'
 		   results['error message']='-'
                    results['status']='PASS'

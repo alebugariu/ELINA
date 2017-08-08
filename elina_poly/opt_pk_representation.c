@@ -1118,6 +1118,10 @@ void combine_satmat(opt_pk_internal_t *opk, opt_pk_t *poly, unsigned short int c
 			if(opt_vector_product(opk,ri,ci,comp_size+2)){
 				opt_bitstring_set(dst,ind);
 			}
+			else if(opk->exn){
+				opk->exn = ELINA_EXC_NONE;
+				opt_bitstring_set(dst,ind);
+			}
 			opt_bitindex_inc(&ind);
 		}
 	}
@@ -1301,14 +1305,17 @@ void opt_pk_array_fprint(FILE* stream, elina_manager_t * man, opt_pk_array_t * o
 		fprintf(stdout,"Fold: %g\n",fold_time);
 		fprintf(stdout,"Sat_Lincons: %g\n",sat_lincons_time);
 		fprintf(stdout,"Assign Linexpr: %g\n",assign_linexpr_time);
+		fprintf(stdout,"Substitute Linexpr: %g\n",substitute_linexpr_time);
 		fprintf(stdout,"Bound Dimension: %g\n",bound_dimension_time);
 		fprintf(stdout,"Conversion time: %g\n",opt_conversion_time);
+		fprintf(stdout,"Poly is unconstrained time: %g\n",poly_is_unconstrained_time);
+		fprintf(stdout,"join count: %lld\n",join_count);
 		double total_time = top_time + free_time + copy_time + bottom_time + remove_dimension_time + is_lequal_time + meet_time + join_time + widening_time + add_dimension_time 
 					+ permute_dimension_time + meet_lincons_time + bound_dimension_time + 
-					forget_array_time + poly_to_box_time  + is_top_time + is_bottom_time + expand_time + fold_time + sat_lincons_time + assign_linexpr_time;
-		fprintf(stdout,"Total OptPoly Analysis: %g\n",total_time);
+					forget_array_time + poly_to_box_time  + is_top_time + is_bottom_time + expand_time + fold_time + sat_lincons_time + assign_linexpr_time + substitute_linexpr_time +
+					poly_is_unconstrained_time;
+		fprintf(stdout,"Total OptOctagon Analysis: %g\n",total_time);
 		fflush(stdout);
 	#endif
 }
-
 

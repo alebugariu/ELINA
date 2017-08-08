@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -105,7 +105,8 @@ bool opt_poly_meet_matrix(bool meet,
     	combine_satmat(opk,op,op->C->nbcolumns -2,start,true);
     	opt_cherni_add_and_minimize(opk,meet,op,start);
 	if(opk->exn){
-		opk->exn = ELINA_EXC_NONE;
+		//opk->exn = ELINA_EXC_NONE;
+
 		return false;
 	}
 	if(!op->F){
@@ -143,11 +144,9 @@ bool opt_poly_meet_elina_lincons_array(bool lazy,
 	}
 	free(env);
   }
-	
   linearize_elina_lincons0_array(array,true,ELINA_SCALAR_MPQ);
   elina_lincons0_array_reduce_integer(array,op->intdim,ELINA_SCALAR_MPQ);
   bool exact = opt_matrix_set_elina_lincons0_array(opk,&mat,array,op->intdim,op->realdim,true);
-  
   opt_matrix_sort_rows(opk,mat);
   size_t i;
   for(i=0; i < mat->nbrows; i++){
@@ -160,7 +159,7 @@ bool opt_poly_meet_elina_lincons_array(bool lazy,
   
   opt_matrix_free(mat);
   if (opk->exn){
-    	opk->exn = ELINA_EXC_NONE;
+    	//opk->exn = ELINA_EXC_NONE;
     	man->result.flag_exact = man->result.flag_best = false;
   }
   else {
@@ -327,12 +326,12 @@ int elina_coeff_sgn(elina_coeff_t * coeff){
 
 opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destructive, opt_pk_array_t* oa, elina_lincons0_array_t* array)
 {
-  //printf(".");
+  printf(".");
   //printf("meet lincons input\n");
   //elina_lincons0_array_t arr2 = opt_pk_to_lincons_array(man,oa);
   //elina_lincons0_array_fprint(stdout,&arr2,NULL);
   //elina_lincons0_array_clear(&arr2);
-  //elina_lincons0_array_fprint(stdout,array,NULL);
+  elina_lincons0_array_fprint(stdout,array,NULL);
   fflush(stdout);
   opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_MEET_LINCONS_ARRAY);
   size_t i;
@@ -426,6 +425,7 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
     	return op;
   }
 
+
   array_comp_list_t * aclb = lincons0_array_to_array_comp_list(opk,array,oa->maxcols, is_trivial);
   
   /**********************************
@@ -493,9 +493,9 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
   size_t * nblinemapa = (size_t *)calloc(num_comp,sizeof(size_t));
   size_t * num_vertex_a = (size_t *)calloc(num_compa,sizeof(size_t));
   size_t * num_vertex = (size_t *)calloc(num_comp,sizeof(size_t));
-  char * array_map_a = create_array_map(acla,maxcols);
+  unsigned short int * array_map_a = create_array_map(acla,maxcols);
   comp_list_t * cla = acla->head;
-  //char * array_map_b = create_array_map(aclb,maxcols);
+  //unsigned short int * array_map_b = create_array_map(aclb,maxcols);
   for(k=0; k < num_compa; k++){
 	opt_pk_t * oak = poly_a[k];
 	short int res = is_comp_list_included(acl,cla,maxcols);
@@ -613,19 +613,26 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
 
   // meet of rays
   meet_rays_with_map(oa, poly, rmapa, ca_arr, num_vertex_a, counterF, disjoint_map);
-  
+  char * exc_map = (char *)calloc(num_comp,sizeof(char));
   is_bottom = false;	
   for(k=0; k < num_comp; k++){
 	if(nbmapb[k] && !is_bottom){
 		poly[k]->satC = opt_satmat_alloc(poly[k]->F->nbrows,opt_bitindex_size(poly[k]->C->nbrows));
 		is_bottom = opt_poly_meet_elina_lincons_array(opk->funopt->algorithm<0,
 				      man,poly[k],poly[k],arr+k);
+		if(opk->exn){
+
+			opk->exn = ELINA_EXC_NONE;
+			exc_map[k]=1;
+		}
 	  	
 	}
 	free(ca_arr[k]);
 	elina_lincons0_array_clear(arr+k);
   }
   
+
+
   if(destructive){
 	for(k=0; k < num_compa; k++){
 		//unsigned short int ind = rmapa[k];
@@ -643,6 +650,26 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
 	if(destructive){
 		free_array_comp_list(tmpa);
 	}
+	k=0;
+	  cl = acl->head;
+	  while(k < num_comp){
+	  	opt_pk_t *oak = poly[k];
+	  	if(exc_map[k]){
+	  		comp_list_t * tmp = cl;
+	  		cl = cl->next;
+	  		remove_comp_list(acl,tmp);
+	  		unsigned short int k1;
+	  		for(k1=k; k1 < num_comp - 1; k1++){
+	  			poly[k1] = poly[k1+1];
+	  		}
+	  		opt_poly_clear(oak);
+	  		num_comp--;
+	  	}
+	  	else{
+	  		k++;
+	  		cl=cl->next;
+	  	}
+	      }
 	op->acl = acl;
 	op->poly = poly;
 	op->is_bottom = false;
@@ -660,7 +687,6 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
 	op->is_bottom = true;
 	
   }
-  
   free(comp_size_map);
   free(rmapa);
   free(rmapb);
@@ -679,7 +705,11 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
   free(num_vertex_a);
   free(nbgenmapa);
   free(nblinemapa);
+  free(exc_map);
   free_array_comp_list(aclb);
+  //for(k=0; k<num_comp; k++){
+//	opt_matrix_fprint(stdout,poly[k]->F);
+ // }
   //printf("meet lincons output\n");
   //elina_lincons0_array_t arr1 = opt_pk_to_lincons_array(man,op);
   //elina_lincons0_array_fprint(stdout,&arr1,NULL);
@@ -780,6 +810,8 @@ void combine_vertex(opt_pk_internal_t *opk, opt_numint_t *v1, opt_numint_t *v2, 
 		Join based on generator representation
 *******************************/
 opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt_pk_array_t *ob, bool destructive){
+
+	join_count++;
 	opt_pk_internal_t *opk = opt_pk_init_from_manager(man, ELINA_FUNID_JOIN);
 	size_t i;
 	unsigned short int j,k;
@@ -1018,7 +1050,7 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 	for(k = 0; k < num_comp; k++){
 		
 		unsigned short int comp_size = cl->size;
-		size_t gen_size, nblines, nbeq=0;
+		size_t gen_size, nblines=0, nbeq=0;
 		unsigned short int k1;
 		
 		// A
@@ -1216,6 +1248,7 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 	size_t num_vertex1a = 0, num_vertex2b=0;
 	size_t nbF = 0, nbC = 0, nbeq = 0, nbline = 0, nblinea = 0;
 	cl = acl->head;
+
 	for(k=0; k < num_comp; k++){
 		unsigned short int k2 = num_comp_res - k1 - 1;
 		unsigned short int comp_size = cl->size;
@@ -1274,8 +1307,10 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 	}
 	
 	free(clp_map);
+
 	if(flag){
-		
+		//printf("start %d %d\n",clp->size,oa->maxcols-2);
+		//fflush(stdout);
 		unsigned short int comp_size = clp->size;
 		poly[0] = opt_poly_alloc(comp_size,0);
 		poly[0]->F = opt_matrix_alloc(nbF + 2*(num_vertex1a + num_vertex2b),comp_size+2,false);
@@ -1287,6 +1322,7 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 		//combine all overlapping vertices of A into one
 		count = cartesian_product_vertices_one_comp(poly1,acl,ca_arr,num_vertex1,poly[0],count,ca,pos_con_map);
 		//combine all overlapping rays of A into one		
+
 		meet_rays_one_comp(poly1,acl,ca_arr,nblinemapa,poly[0],num_vertex1,ca,count,pos_con_map);
 		size_t begin = poly[0]->F->nbrows - nblinea;
 		//combine all overlapping constraints of A into one
@@ -1302,6 +1338,7 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 		//combine all overlapping vertices of B into one
 		count = cartesian_product_vertices_one_comp(poly2,acl,ca_arr,num_vertex2,poly[0],poly[0]->F->nbrows,ca,pos_con_map);
 		//combine all overlapping rays of B into one
+
 		meet_rays_one_comp(poly2,acl,ca_arr,NULL,poly[0],num_vertex2,ca,count,pos_con_map);
 		free(ca);
 		opt_matrix_t * F = poly[0]->F;
@@ -1318,9 +1355,21 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 		opt_poly_dual(poly[0]);
 		opt_cherni_add_and_minimize(opk,false,poly[0],begin);
 		opt_poly_dual(poly[0]);
-		insert_comp_list(res,clp);
+		if(opk->exn){
+			opk->exn = ELINA_EXC_NONE;
+			opt_pk_t *tmp = poly[0];
+			unsigned short int k1;
+			for(k1=0; k1 < num_comp_res - 1; k1++){
+				poly[k1] = poly[k1+1];
+			}
+			opt_poly_clear(tmp);
+		}
+		else{
+			insert_comp_list(res,clp);
+		}
+		//printf("finish %lld\n",poly[0]->F->nbrows);
+		//fflush(stdout);
 	}
-	
 
 	if(destructive){
 		for(k=0; k < num_compa; k++){
@@ -1384,6 +1433,7 @@ opt_pk_array_t * opt_poly_join_gen(elina_manager_t *man, opt_pk_array_t *oa, opt
 	free(pos_con_map);
 	free_array_comp_list(acl);
 	
+
 	return op;
 }
 
@@ -1705,6 +1755,5 @@ opt_pk_array_t* opt_pk_meet(elina_manager_t* man, bool destructive, opt_pk_array
 	#endif
 	return op;
 }
-
 
 

@@ -22,18 +22,21 @@ with open(output_file, 'w') as results_fp:
         'execution time (minutes)',
         'initial coverage',
         'final coverage',
-        'status',
-        'error message'
+	'number of executed units',
+	'new units added',
+        'status'
     ]
     writer.writerow(columns)
     for test_file in [input_file]:
         results = {}
+	results['number of executed units']='-'
+	results['new units added']='-'
         results['error message']='-'
         results['status']='PASS'
         with open(test_file) as fp:
             last_line = None
             for line in fp:
-                if line.startswith('#'):
+                if line.startswith('#') and 'cov' in line:
                    last_line = line
                 elif last_line is not None:
                    cov = last_line.split('cov: ')[1].split()[0]
@@ -42,9 +45,18 @@ with open(output_file, 'w') as results_fp:
                    cov = line.split('cov: ')[1].split()[0]
                    results['initial coverage']=int(cov.strip())
  		elif 'Killed' in line:
-                   results['status']='KILLED'  
+                   results['status']='KILLED'
+		elif line.startswith('SUMMARY'):
+		   status=line.replace('SUMMARY:','').strip()
+  		   results['status']=status
+		elif line.startswith('stat::number_of_executed_units: '):
+	             line = line.replace('stat::number_of_executed_units: ', '').strip()
+                     results['number of executed units']=int(line)
+                elif line.startswith('stat::new_units_added: '):
+                     line = line.replace('stat::new_units_added: ', '').strip()
+                     results['new units added']=int(line)
                 elif line.startswith('Execution time: '):
-                   line = line.replace('Execution time: ', '').strip();
+                   line = line.replace('Execution time: ', '').strip()
                    values = line.split(" ");
                    results['execution time (seconds)'] = int(values[0])
                    results['execution time (minutes)'] = float(values[0]) / 60
@@ -53,5 +65,6 @@ with open(output_file, 'w') as results_fp:
                    results = {}
                    results['initial coverage']= '-'
                    results['final coverage']= '-'
-		   results['error message']='-'
+		   results['number of executed units']='-'
+                   results['new units added']='-'
                    results['status']='PASS'
