@@ -1,29 +1,20 @@
-INCLUDES_FOR_OCT=-I /home/elina/elina_auxiliary -I /home/elina/elina_linearize -I /home/elina/partitions_api
-INCLUDES=-I /home/elina/octagons $(INCLUDES_FOR_OCT)
-OBJS=*.o ../../*.o ../../../elina_auxiliary/*.o /home/elina/elina_linearize/*.o /home/elina/partitions_api/*.o
+LIBS=-lmpfr -lgmp -lelinalinearize -lelinaux -loptoct -lpartitions
+
 all: compile test
 compile: 
-	cd elina_auxiliary ; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -O0 -c -g *.c; \
-	cd ../elina_linearize ; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I ../elina_auxiliary -O0 -c -g *.c; \
-	cd ../partitions_api ; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -O0 -c -g *.c; \
-	cd ../elina_oct ; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES_FOR_OCT) -O0 -c -g *.c; \
-	rm -fr elina_test_oct.o; \
-	cd ..        
+	make CC=clang CFLAGS="-fsanitize-coverage=trace-pc-guard -fPIC -O0"
+	sudo make install         
  
 test:
 	cd elina_oct/tests/libFuzzer; \
-	clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE $(INCLUDES) -O0 -c -g test_oct.c; \
-        number=$(start) ; while [ $${number} -le $(number) ] ; do \
-		clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I /usr/local/include $(INCLUDES) $(OBJS) test_oct$${number}.c /home/libFuzzer.a -o test$${number} -lmpfr -lgmp; \
-                startTime=`date +%s` ; \
+    number=$(start) ; while [ $${number} -le $(number) ] ; do \
+		clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -fPIC -O0 -DTHRESHOLD=0.75 -DNUM_DOUBLE \
+				-I /usr/local/include test_oct.c test_oct$${number}.c /home/libFuzzer.a -o test$${number} $(LIBS); \
+        startTime=`date +%s` ; \
 		./test$${number} -max_len=10000 -detect_leaks=0 -rss_limit_mb=8192 -timeout=3600 -print_final_stats=1 MY_CORPUS/ SEED_CORPUS/; \
-                endTime=`date +%s` ; \
-                runtime=`expr $$endTime - $$startTime` ; \
-                echo "Execution time: $$runtime sec for test_oct$$number\n" ; \
+        endTime=`date +%s` ; \
+        runtime=`expr $$endTime - $$startTime` ; \
+        echo "Execution time: $$runtime sec for test_oct$$number\n" ; \
 		number=`expr $$number + 1` ; \
     	done; \
         true
