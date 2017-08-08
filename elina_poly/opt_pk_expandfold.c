@@ -216,7 +216,7 @@ opt_pk_array_t* opt_pk_expand(elina_manager_t* man,
 			unsigned short int comp_size = cl->size;
 			poly[k] = opt_poly_alloc(comp_size,0);
 		}
-		unsigned short int ndim,l;
+		unsigned short int ndim=0,l;
 		unsigned short int * ca = to_sorted_array(cl,nmaxcols);
 		for(l=0; l < cl->size; l++){
 			if(ca[l]==(dim+opk->dec)){
@@ -372,9 +372,9 @@ opt_matrix_t* opt_matrix_fold_diff_comp(opt_pk_internal_t* opk,
   for(j=0; j < dimsup; j++){
 	//num_vertex[j+1] = opt_generator_rearrange(fold_val[j],NULL);
 	//num_vertex1 *= num_vertex[j+1];
-	
-	fold_size += fold_val[j]->nbrows;
-	
+	if(fold_val[j]){
+		fold_size += fold_val[j]->nbrows;
+	}
   }
   nbrows = F->nbrows;
   nbcols = F->nbcolumns;
@@ -394,7 +394,9 @@ opt_matrix_t* opt_matrix_fold_diff_comp(opt_pk_internal_t* opk,
     row++;
     for (j=0;j<dimsup;j++){
       opt_matrix_t *fv = fold_val[j];
-	
+	if(!fold_val[j]){
+		continue;
+	}
       for(i1=0; i1 < fv->nbrows; i1++){
 	opt_numint_t * pi = fv->p[i1];
 	opt_numint_t * di = nF->p[row];
@@ -468,6 +470,16 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
   maxcols = oa->maxcols;
   size_t i;
   array_comp_list_t *acla = oa->acl;
+  if(oa->is_bottom || !oa->acl){
+	man->result.flag_best = man->result.flag_exact = true;
+	if(destructive){
+		oa->maxcols -= dimsup;
+		return oa;
+	}
+	else{
+		return opt_pk_bottom(man,oa->maxcols-dimsup,0);
+	}
+  }
   num_compa = acla->size;
   opt_pk_t ** poly_a = oa->poly;
   if (destructive){
@@ -485,6 +497,7 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
 	}
 	return op;
   }
+
 
   for(k=0; k < num_compa; k++){
 	  opt_pk_t * oak = poly_a[k];
@@ -569,6 +582,9 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
   }
   free(fca);
   opt_matrix_t ** fold_val = (opt_matrix_t **)malloc(dimsup * sizeof(opt_matrix_t *));
+  for(k=0; k < dimsup; k++){
+	fold_val[k]= NULL;
+  }
   //opt_numint_t ** fold_val = (opt_numint_t **)malloc(dimsup*sizeof(opt_numint_t *));
   //opt_numint_t ** coeff_val = (opt_numint_t **)malloc(dimsup*sizeof(opt_numint_t *));
   k=0, k2 =0;
@@ -590,7 +606,6 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
 		unsigned short int var = tdim[l+1] + opk->dec;
 		if(num==var){
 			fold_val[l] = opt_matrix_alloc(nbrows,3,false);
-
 			for(i=0; i < nbrows; i++){
 				opt_numint_t * pi = F->p[i];
 				opt_numint_t * di = fold_val[l]->p[i];
@@ -716,6 +731,7 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
 	free(tdimk);
 	cl = cl->next;
   }
+
   if(!destructive){
 	unsigned short int k3 = null_flag ? k2+1: k2;
 	poly = (opt_pk_t **)realloc(poly,k3*sizeof(opt_pk_t*));
@@ -757,6 +773,7 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
 		opt_matrix_free(tmp2);
 	  }
   }
+
   /* Minimize the result */
   if (opk->funopt->algorithm>0){
     opt_poly_chernikova(man,poly[ind],"of the result");
@@ -775,6 +792,7 @@ opt_pk_array_t* opt_pk_fold(elina_manager_t* man,
   man->result.flag_exact = (dimsup==0);
   //assert(poly_check(pk,po));
   for(l=0; l < dimsup; l++){
+	if(fold_val[l])
 	opt_matrix_free(fold_val[l]);
   }
   free(fold_val);
