@@ -29,9 +29,10 @@ with open(output_file, 'w') as results_fp:
     writer.writerow(columns)
     for test_file in [input_file]:
         results = {}
-	results['number of executed units']='-'
-	results['new units added']='-'
-        results['error message']='-'
+        results['initial coverage']= '-'
+        results['final coverage']= '-'
+        results['number of executed units']='-'
+        results['new units added']='-'
         results['status']='PASS'
         with open(test_file) as fp:
             last_line = None
