@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdio.h>
 
-extern int LLVMFuzzerTestOneInput(const int *data, size_t dataSize) {
+extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim = MIN_DIM;
+	long dim = MIN_DIM;
 	FILE *fp;
 	fp = fopen("out1.txt", "w+");
 
