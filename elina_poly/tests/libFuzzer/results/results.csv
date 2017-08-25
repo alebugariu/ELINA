@@ -1,34 +1,34 @@
 test case,execution time (seconds),execution time (minutes),initial coverage,final coverage,number of executed units,new units added,status
-test_poly0,5403,90.05,686,686,132667,22,libFuzzer: timeout
-test_poly1,0,0.0,-,686,57,0,libFuzzer: deadly signal
-test_poly2,0,0.0,-,686,37,0,libFuzzer: deadly signal
-test_poly3,5403,90.05,839,856,746400,75,libFuzzer: timeout
-test_poly4,5403,90.05,865,865,297162,21,libFuzzer: timeout
-test_poly5,0,0.0,-,865,37,0,libFuzzer: deadly signal
-test_poly6,5403,90.05,836,837,64882,32,libFuzzer: timeout
-test_poly7,0,0.0,-,837,70,0,libFuzzer: deadly signal
-test_poly8,0,0.0,-,837,71,0,libFuzzer: deadly signal
-test_poly9,0,0.0,-,837,70,0,libFuzzer: deadly signal
-test_poly10,0,0.0,-,837,132,0,libFuzzer: deadly signal
-test_poly11,0,0.0,-,837,39,0,libFuzzer: deadly signal
-test_poly12,0,0.0,-,837,271,0,libFuzzer: deadly signal
-test_poly13,3,0.05,1007,1009,13516,15,libFuzzer: deadly signal
-test_poly14,0,0.0,-,1009,70,0,libFuzzer: deadly signal
-test_poly15,5403,90.05,718,718,242319,14,libFuzzer: timeout
-test_poly16,0,0.0,-,718,17,0,libFuzzer: deadly signal
-test_poly17,0,0.0,-,718,82,0,libFuzzer: deadly signal
-test_poly18,0,0.0,-,718,75,0,libFuzzer: deadly signal
-test_poly19,0,0.0,-,718,72,0,libFuzzer: deadly signal
-test_poly20,2,0.03333333333333333,912,912,7992,11,libFuzzer: deadly signal
-test_poly21,0,0.0,-,912,17,0,libFuzzer: deadly signal
-test_poly22,0,0.0,-,912,71,0,libFuzzer: deadly signal
-test_poly23,0,0.0,-,912,75,0,libFuzzer: deadly signal
-test_poly24,0,0.0,-,912,70,0,libFuzzer: deadly signal
-test_poly25,3,0.05,992,992,11305,4,libFuzzer: deadly signal
-test_poly26,1,0.016666666666666666,-,992,136,0,libFuzzer: deadly signal
-test_poly27,0,0.0,-,992,70,0,libFuzzer: deadly signal
-test_poly28,0,0.0,-,992,72,0,libFuzzer: deadly signal
-test_poly29,0,0.0,-,992,14,0,libFuzzer: deadly signal
-test_poly30,0,0.0,-,992,13,0,libFuzzer: deadly signal
-test_poly31,0,0.0,-,992,70,0,libFuzzer: deadly signal
-test_poly32,1,0.016666666666666666,-,992,483,0,AddressSanitizer: SEGV /home/elina/elina_poly/opt_pk_widening.c:351:38 in opt_poly_widening_gen
+test_poly0,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly1,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly2,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly3,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly4,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly5,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly6,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly7,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly8,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly9,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly10,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly11,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly12,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly13,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly14,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly15,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly16,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly17,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly18,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly19,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly20,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly21,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly22,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly23,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly24,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly25,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly26,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly27,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly28,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly29,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly30,1,0.016666666666666666,-,-,13,0,libFuzzer: deadly signal
+test_poly31,0,0.0,-,-,14,0,libFuzzer: deadly signal
+test_poly32,0,0.0,-,-,14,0,libFuzzer: deadly signal
