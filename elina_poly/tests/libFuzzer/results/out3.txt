@@ -1,36 +1,6 @@
 Dim: 2
-Number of constraints: 17
+Number of constraints: 2
 Type: e
-Values: 0, 0, 0
+Values: -3182967604875373613, -3182967604875373613, -3182967604875373613
 Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 285212672, -4919131752989245184, -4919131752989213765
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 565148976676864, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
+Values: -4919131752989213765, 68719524795, 0
