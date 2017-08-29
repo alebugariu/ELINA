@@ -282,7 +282,8 @@ bool opt_matrix_append_elina_lincons0_array(opt_pk_internal_t* opk,
   res = true;
   j = nbrows;
   for (i=0; i<array->size; i++){
-    assert(elina_linexpr0_is_linear(&array->p[i].linexpr0));
+	//ORIGINAL CODE WITH THE BUG: assert(elina_linexpr0_is_linear(&array->p[i].linexpr0));
+    assert(elina_linexpr0_is_linear(array->p[i].linexpr0));
     switch (array->p[i].constyp){
     case ELINA_CONS_EQ:
     case ELINA_CONS_SUPEQ:
