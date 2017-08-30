@@ -42,7 +42,6 @@ used.
 
 #include "opt_pk_internal.h"
 #include "opt_pk_satmat.h"
-#include "elina_rat.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -158,14 +157,9 @@ elina_interval_t ** opt_matrix_to_box(opt_pk_internal_t* opk,
 opt_matrix_t* _opt_matrix_alloc_int(size_t nr, unsigned short int nc, bool s);
 
 
-size_t  opt_matrix_assign_variable(opt_pk_internal_t* opk,opt_matrix_t * nmat,
-				 opt_matrix_t* mat,
+opt_matrix_t* opt_matrix_assign_variable(opt_pk_internal_t* opk,
+				 bool destructive, opt_matrix_t* mat,
 				 elina_dim_t dim, opt_numint_t* tab);
-
-opt_matrix_t* opt_matrix_substitute_variable(opt_pk_internal_t* opk,
-				     bool destructive,
-				     opt_matrix_t* mat,
-				     elina_dim_t dim, opt_numint_t* tab);
 
 opt_matrix_t* opt_matrix_assign_variables(opt_pk_internal_t* opk,
 				  opt_matrix_t* mat,
@@ -173,12 +167,10 @@ opt_matrix_t* opt_matrix_assign_variables(opt_pk_internal_t* opk,
 				  opt_numint_t** tvec,
 				  size_t size);
 
-
-opt_matrix_t* opt_matrix_substitute_variables(opt_pk_internal_t* opk,
-				      opt_matrix_t* mat,
-				      elina_dim_t* tdim,
-				      opt_numint_t** tvec,
-				      size_t size);
+opt_matrix_t* opt_matrix_substitute_variable(opt_pk_internal_t* opk,
+				     bool destructive,
+				     opt_matrix_t* mat,
+				     elina_dim_t dim, opt_numint_t* tab);
 
 void opt_generator_init(opt_pk_internal_t *opk, opt_matrix_t * mat, unsigned short int comp_size, size_t start);
 
@@ -187,10 +179,6 @@ void opt_generator_init(opt_pk_internal_t *opk, opt_matrix_t * mat, unsigned sho
 ********************************/
 void remove_common_gen(opt_pk_internal_t *opk, opt_matrix_t * F, size_t start);
 
-
-/*******************************
-	Compute bounds for a variable
-********************************/
 void opt_generator_bound_dimension(opt_pk_internal_t* opk,
 			    elina_interval_t *interval,
 			    elina_dim_t dim,
@@ -198,12 +186,6 @@ void opt_generator_bound_dimension(opt_pk_internal_t* opk,
 
 elina_interval_t ** opt_generator_to_box(opt_pk_internal_t* opk,
 		     opt_matrix_t* of);
-
-/*********************************
-	Compute bounds for a linear expression
-**********************************/
-void opt_generator_bound_elina_linexpr0(opt_pk_internal_t *opk, elina_rat_t *inf, elina_rat_t *sup,
-				     elina_linexpr0_t *expr, opt_matrix_t * F);
 
 #ifdef __cplusplus
 }

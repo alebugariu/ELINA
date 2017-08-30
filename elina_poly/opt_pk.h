@@ -28,14 +28,13 @@
 #define __OPT_PK_H__
 
 
-#include "elina_int.h"
-#include "elina_rat.h"
-#include "comp_list.h"
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include "elina_int.h"
+#include "elina_rat.h"
+#include "comp_list.h"
 
 #if defined (HAS_APRON)
 #include "apron_wrapper.h"
@@ -284,8 +283,8 @@ bool opt_pk_is_dimension_unconstrained(elina_manager_t* man, opt_pk_array_t* oa,
 /* II.4 Extraction of properties */
 /* ============================================================ */
 
-elina_interval_t* opt_pk_bound_linexpr(elina_manager_t* man,
-				opt_pk_array_t* o, elina_linexpr0_t* expr);
+//elina_interval_t* opt_pk_bound_linexpr(elina_manager_t* man,
+//				opt_pk_t* o, elina_linexpr0_t* expr);
   /* Returns the interval taken by a linear expression
      over the abstract value.
 
@@ -360,19 +359,14 @@ opt_pk_array_t* opt_pk_meet_tcons_array(elina_manager_t* man,
 /* ============================================================ */
 /* III.2 Assignement and Substitutions */
 /* ============================================================ */
+
 opt_pk_array_t* opt_pk_assign_linexpr_array(elina_manager_t* man,
-			      bool destructive, opt_pk_array_t* oa,
+			      bool destructive, opt_pk_array_t* a,
 			      elina_dim_t* tdim,
 			      elina_linexpr0_t** texpr,
 			      size_t size,
-			      opt_pk_array_t* dest);
 
-opt_pk_array_t* opt_pk_substitute_linexpr_array(elina_manager_t* man,
-				  bool destructive, opt_pk_array_t* oa,
-				  elina_dim_t* tdim,
-				  elina_linexpr0_t** texpr,
-				  size_t size,
-				  opt_pk_array_t* dest);
+			      opt_pk_array_t* dest);
 
 opt_pk_array_t* opt_pk_assign_texpr_array(elina_manager_t* man,
 			    bool destructive, opt_pk_array_t* oa,

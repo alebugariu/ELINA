@@ -67,11 +67,10 @@ extern "C" {
 	extern double fold_time;
 	extern double sat_lincons_time;
 	extern double assign_linexpr_time;
-	extern double substitute_linexpr_time;
 	extern double bound_dimension_time;
 	extern double opt_conversion_time;
 	extern long int join_count;
-	extern double poly_is_unconstrained_time;
+	extern FILE * fp ;
 #endif
 /* ********************************************************************** */
 /* I. Types */
@@ -142,7 +141,6 @@ static inline opt_pk_internal_t* opt_pk_init_from_manager(elina_manager_t* man, 
 /* ********************************************************************** */
 static inline opt_pk_internal_t* opt_pk_init_from_manager(elina_manager_t* man, elina_funid_t funid)
 {
-
   opt_pk_internal_t* opk = (opt_pk_internal_t*)man->internal;
   opk->funid = funid;
   opk->funopt = &man->option.funopt[funid];

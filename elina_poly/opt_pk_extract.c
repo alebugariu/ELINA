@@ -28,9 +28,7 @@
 #include "opt_pk_matrix.h"
 #include "opt_pk.h"
 #include "opt_pk_user.h"
-#include "opt_pk_meetjoin.h"
 #include "opt_pk_representation.h"
-#include "opt_pk_test.h"
 
 
 /* Bounding the value of a dimension in a matrix of generators. */
@@ -115,146 +113,8 @@ elina_interval_t* opt_pk_bound_dimension(elina_manager_t* man,
 }
 
 /* ====================================================================== */
-/* Bounding the value of a linear expression constrained under oa */
+/* Bounding the value of a linear expression in a polyhedra */
 /* ====================================================================== */
-
-elina_interval_t* opt_pk_bound_linexpr(elina_manager_t* man,
-				opt_pk_array_t* oa,
-				elina_linexpr0_t* expr)
-{
-  bool exact;
-  elina_interval_t* interval;
-  opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_BOUND_LINEXPR);
-
-  array_comp_list_t * acla = oa->acl;
-
-  interval = elina_interval_alloc();
-  elina_interval_reinit(interval,ELINA_SCALAR_MPQ);
-  if(oa->is_bottom || !acla){
-    elina_interval_set_bottom(interval);
-    man->result.flag_exact = man->result.flag_best = true;
-    return interval;
-  }
-
-  unsigned short int num_compa = acla->size;
-  opt_pk_t **poly_a = oa->poly;
-  unsigned short int k, maxcols = oa->maxcols;
-  for(k=0; k < num_compa; k++){
-      opt_pk_t * oak = poly_a[k];
-      if (opk->funopt->algorithm>0){
-	    opt_poly_chernikova(man,oak,"Bound Linexpr");
-      }
-      else{
-	    opt_poly_obtain_F(man,oak,"Bound Linexpr");
-      }
-      if (opk->exn){
-	    opk->exn = ELINA_EXC_NONE;
-	    elina_interval_set_top(interval);
-	    return interval;
-      }
-      if (!oak->F){ /* oa is empty */
-	    elina_interval_set_bottom(interval);
-	    man->result.flag_exact = man->result.flag_best = true;
-	    return interval;
-      }
-  }
-
-  if(expr->size==0){
-	elina_coeff_t *cst = &expr->cst;
-	if(cst->discr==ELINA_COEFF_SCALAR){
-		elina_scalar_set(interval->inf,cst->val.scalar);
-		elina_scalar_set(interval->sup,cst->val.scalar);
-	}
-	else{
-		elina_scalar_set(interval->inf,cst->val.interval->inf);
-		elina_scalar_set(interval->sup,cst->val.interval->sup);
-	}
-	return interval;
-  }
-  // compute the block of variables B in the linear expression
-  comp_list_t * clb = linexpr0_to_comp_list(opk,expr);
-  array_comp_list_t *aclb = create_array_comp_list();
-  insert_comp_list(aclb,clb);
-  // compute the fusion of B with acla
-  array_comp_list_t * acl = union_array_comp_list(acla,aclb,maxcols);
-
-  // compute the blocks of acla that intersect with B
-  char * map = create_map(clb,maxcols);
-  comp_list_t * cla = acla->head;
-  char * intersect_map = (char *)calloc(num_compa,sizeof(char));
-  size_t * num_vertex_a = (size_t *)calloc(num_compa,sizeof(size_t));
-  size_t num_vertex=0;
-  size_t nbgen=0;
-  bool flag = false;
-  for(k=0; k < num_compa; k++){
-      if(is_disjoint_with_map(cla,map)){
-          cla = cla->next;
-	  continue;
-      }
-      flag = true;
-      opt_pk_t * oak = poly_a[k];
-      intersect_map[k] = 1;
-      num_vertex_a[k] = opt_generator_rearrange(oak->F,oak->satF);
-      if(!num_vertex){
-	 num_vertex = num_vertex_a[k];
-      }
-      else{
-	 num_vertex = num_vertex*num_vertex_a[k];
-      }
-      nbgen = nbgen + oak->F->nbrows - num_vertex_a[k];
-      cla = cla->next;
-  }
-  if(!flag){
-	elina_interval_set_top(interval);
-	free(map);
-	free(intersect_map);
-	free(num_vertex_a);
-	return interval;
-  }
-  // compute the factor by fusing all intersecting blocks
-  comp_list_t * cl = acl->head;
-  unsigned short int num_comp = acl->size;
-  unsigned short int comp_size=0;
-  unsigned short int * ca = NULL;
-  elina_linexpr0_t * new_expr=NULL;
-  for(k=0; k < num_comp; k++){
-        if(!is_disjoint(cl,clb,maxcols)){
-		comp_size = cl->size;
-		ca = to_sorted_array(cl,maxcols);
-		new_expr = copy_linexpr0_with_comp_list(opk,expr,ca, comp_size);
-		break;
-	}
-        cl = cl->next;
-  }
-
-  opt_matrix_t * F = opt_matrix_alloc(nbgen+num_vertex,comp_size+2,false);
-  fuse_generators_intersecting_blocks(F,poly_a,acla,ca,num_vertex_a,intersect_map,maxcols);
-  free(ca);
-  free(map);
-  free(intersect_map);
-
-  /* we fill the vector with the expression, taking lower bound of the interval
-     constant */
-  elina_rat_t *inf = (elina_rat_t*)malloc(sizeof(elina_rat_t));
-  elina_rat_t *sup = (elina_rat_t*)malloc(sizeof(elina_rat_t));
-  opt_generator_bound_elina_linexpr0(opk,inf,sup,new_expr,F);
-  elina_scalar_set_elina_rat(interval->inf,inf);
-  elina_scalar_set_elina_rat(interval->sup,sup);
-  man->result.flag_exact = man->result.flag_best =
-    ( (opk->funopt->flag_exact_wanted || opk->funopt->flag_best_wanted) &&
-      elina_linexpr0_is_real(new_expr,comp_size) ) ?
-    exact :
-    false;
-  elina_linexpr0_clear(new_expr);
-  free(new_expr);
-  free_array_comp_list(aclb);
-  free_array_comp_list(acl);
-  free(inf);
-  free(sup);
-  free(num_vertex_a);
-  opt_matrix_free(F);
-  return interval;
-}
 
 
 

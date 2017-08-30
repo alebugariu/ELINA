@@ -887,62 +887,68 @@ void opt_matrix_backsubstitute(opt_pk_internal_t *opk, opt_matrix_t *oc, size_t 
 Extract Functionality
 ************************************************************************* */
 
-/* ---------------------------------------------------------------------- */
-/* Substitution by an array of equations */
-/* ---------------------------------------------------------------------- */
-
 
 
 /* ---------------------------------------------------------------------- */
 /* Assignement of an expression to a variable */
 /* ---------------------------------------------------------------------- */
 
-size_t  opt_matrix_assign_variable(opt_pk_internal_t* opk,opt_matrix_t *nmat,
+opt_matrix_t* opt_matrix_assign_variable(opt_pk_internal_t* opk,
+				 bool destructive,
 				 opt_matrix_t* mat,
 				 elina_dim_t dim, opt_numint_t* tab)
 {
-  size_t i,j,var,nbline = 0;
+  size_t i,j,var;
   bool den;
-
+  opt_matrix_t* nmat;
 
   var = opk->dec + dim;
   den = (tab[0] > 1);
 
+  nmat =
+    destructive ?
+    mat :
+    _opt_matrix_alloc_int(mat->nbrows,mat->nbcolumns,false);
 
-  size_t i1 = 0;
+  nmat->_sorted = false;
 
-  //nmat->_sorted = false;
   for (i=0; i<mat->nbrows; i++){
     /* product for var column */
     opk->matrix_prod = opt_vector_product(opk, mat->p[i],
 		   tab,mat->nbcolumns);
     /* columns != var */
-
+    if (!destructive){
+      /* Functional */
+      nmat->p[i][0] = mat->p[i][0];
+      for (j=1; j<mat->nbcolumns; j++){
+	if (j!=var){
+	  nmat->p[i][j] = mat->p[i][j];
+	  if (den){
+	    nmat->p[i][j] = mat->p[i][j]*tab[0];
+	  }
+	}
+      }
+    }
+    else {
       /* Side-effect */
       for (j=0; j<mat->nbcolumns; j++){
 	if (j!=var){
 	  if (den)
-	    mat->p[i][j] = mat->p[i][j]*tab[0];
+	    nmat->p[i][j] = mat->p[i][j]*tab[0];
 	  else
-	    mat->p[i][j] = mat->p[i][j];
+	    nmat->p[i][j] = mat->p[i][j];
 	}
       }
-
+    }
     /* var column */
-      mat->p[i][var] = opk->matrix_prod;
+    if (!destructive)
+      nmat->p[i][var] = opk->matrix_prod;
+    else
+      nmat->p[i][var] = opk->matrix_prod;
 
     opt_matrix_normalize_row(opk,nmat,i);
-    if(!opt_vector_is_null(opk,mat->p[i],mat->nbcolumns)){
-		if(mat->p[i][0]==0){
-			nbline++;
-		}
-		opt_vector_copy(nmat->p[i1],mat->p[i],mat->nbcolumns);
-		i1++;
-    }
   }
-  nmat->nbrows = i1;
-
-  return nbline;
+  return nmat;
 }
 
 
@@ -1115,96 +1121,7 @@ opt_matrix_t* opt_matrix_substitute_variable(opt_pk_internal_t* opk,
       }
     }
   }
-  return nmat;
-}
-
-
-/* ---------------------------------------------------------------------- */
-/* Substitution by an array of equations */
-/* ---------------------------------------------------------------------- */
-
-opt_matrix_t* opt_matrix_substitute_variables(opt_pk_internal_t* opk,
-				      opt_matrix_t* mat,
-				      elina_dim_t* tdim,
-				      opt_numint_t** tvec,
-				      size_t size)
-{
-  size_t i,j,eindex;
-  opt_matrix_t* nmat = opt_matrix_alloc(mat->nbrows, mat->nbcolumns,false);
-  opt_numint_t den;
-
-  /* Computing common denominator */
-  den = tvec[0][0];
-  for (i=1; i<size; i++){
-       den = den*tvec[i][0];
-  }
-
-  if (den!=1){
-    /* General case */
-    opt_numint_t* vden = opt_vector_alloc(size);
-    for (i=0; i<size; i++){
-         vden[i] = den/tvec[i][0];
-    }
-    /* For each row */
-    for (i=0; i<mat->nbrows; i++) {
-      /* Column 0 */
-        nmat->p[i][0] = mat->p[i][0];
-      /* Other columns */
-      /* First, copy the row and sets to zero substituted variables */
-      eindex = 0;
-      for (j=1; j<mat->nbcolumns; j++){
-	if (eindex < size && opk->dec + tdim[eindex] == j)
-	  eindex++;
-	else
-	  nmat->p[i][j] = mat->p[i][j]*den;
-      }
-      /* Second, add things coming from substitution */
-      for (j=1; j<mat->nbcolumns; j++){
-	for (eindex=0; eindex<size; eindex++){
-	  if (opt_numint_sgn(mat->p[i][opk->dec + tdim[eindex]])) {
-	      opk->matrix_prod = mat->p[i][opk->dec + tdim[eindex]]*
-		       tvec[eindex][j];
-	      opk->matrix_prod = opk->matrix_prod * vden[eindex];
-	      nmat->p[i][j] = nmat->p[i][j] + opk->matrix_prod;
-	  }
-	}
-      }
-    }
-    opt_vector_free(vden,size);
-  }
-  else {
-    /* Special case: all denominators are 1 */
-    /* For each row */
-    for (i=0; i<mat->nbrows; i++) {
-      /* Column 0 */
-      nmat->p[i][0] = mat->p[i][0];
-      /* Other columns */
-      /* First, copy the row and sets to zero substituted variables */
-      eindex = 0;
-      for (j=1; j<mat->nbcolumns; j++){
-	if (eindex < size && opk->dec + tdim[eindex] == j)
-	  eindex++;
-	else
-	  nmat->p[i][j]= mat->p[i][j];
-      }
-
-      /* Second, add things coming from substitution */
-      for (j=1; j<mat->nbcolumns; j++){
-	for (eindex=0; eindex<size; eindex++){
-	  if (opt_numint_sgn(mat->p[i][opk->dec + tdim[eindex]])) {
-	      opk->matrix_prod = mat->p[i][opk->dec + tdim[eindex]]*tvec[eindex][j];
-
-	      nmat->p[i][j] = nmat->p[i][j] + opk->matrix_prod;
-	  }
-	}
-      }
-    }
-  }
-
-  for (i=0; i<mat->nbrows; i++){
-    opt_matrix_normalize_row(opk,nmat,i);
-  }
-
+  //matrix_fprint(stdout,nmat);
   return nmat;
 }
 
@@ -1279,9 +1196,6 @@ void remove_common_gen(opt_pk_internal_t *opk, opt_matrix_t * F, size_t start){
 }
 
 
-/***********************
-	Compute the bounds for a variable
-************************/
 void opt_generator_bound_dimension(opt_pk_internal_t* opk,
 			    elina_interval_t * interval,
 			    elina_dim_t dim,
@@ -1380,62 +1294,4 @@ elina_interval_t** opt_matrix_to_box(opt_pk_internal_t* opk,
     opt_generator_bound_dimension(opk,res[i],i,F);
   }
   return res;
-}
-
-
-/************************
-	Compute the bounds for a linear expression
-*************************/
-void opt_generator_bound_elina_linexpr0(opt_pk_internal_t *opk, elina_rat_t *inf, elina_rat_t *sup,
-				     elina_linexpr0_t *expr, opt_matrix_t * F){
-  size_t i;
-  int sgn;
-  elina_rat_set_infty(inf,1);
-  elina_rat_set_infty(sup,-1);
-  elina_rat_t *prod1 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
-  elina_rat_t *prod2 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
-  for (i=0; i<F->nbrows; i++){
-    if (!opk->strict || opt_numint_sgn(F->p[i][opt_polka_eps])==0 ){
-      opt_vector_bound_elina_linexpr0(opk, prod1, prod2, expr, F->p[i], F->nbcolumns);
-      if (opt_numint_sgn(F->p[i][0])==0){
-	// line: result should be zero
-	if (elina_rat_sgn(prod1)!=0 || elina_rat_sgn(prod2)!=0){
-	  elina_rat_set_infty(inf,-1);
-	  elina_rat_set_infty(sup,1);
-	  goto opt_generator_bound_elina_linexpr0_exit;
-	}
-      }
-      else if (opt_numint_sgn(F->p[i][opt_polka_cst])==0){
-	// ray
-	if (elina_rat_sgn(prod1)!=0 || elina_rat_sgn(prod2)!=0){
-	  if (elina_rat_sgn(prod1)>0){
-	    // [inf,sup]>0
-	    elina_rat_set_infty(sup,+1);
-	    if (elina_rat_infty(inf) && elina_rat_sgn(inf)<0)
-	      goto opt_generator_bound_elina_linexpr0_exit;
-	  }
-	  else if (elina_rat_sgn(prod2)<0){
-	    // [inf,sup]<0
-	    elina_rat_set_infty(inf,-1);
-	    if (elina_rat_infty(sup) && elina_rat_sgn(sup)>0)
-	      goto opt_generator_bound_elina_linexpr0_exit;
-	  }
-	  else {
-	    elina_rat_set_infty(inf,-1);
-	    elina_rat_set_infty(sup,1);
-	    goto opt_generator_bound_elina_linexpr0_exit;
-	  }
-	}
-      }
-      else {
-        elina_rat_min(inf,inf,prod1);
-	elina_rat_max(sup,sup,prod2);
-      }
-    }
-  }
- opt_generator_bound_elina_linexpr0_exit:
-  free(prod1);
-  free(prod2);
-  return;
-
 }
