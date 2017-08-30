@@ -32,9 +32,6 @@ extern "C" {
 
 bool opt_poly_leq(opt_pk_internal_t * opk, opt_matrix_t * C, opt_matrix_t * F);
 
-void fuse_generators_intersecting_blocks(opt_matrix_t *F, opt_pk_t ** poly_a, array_comp_list_t *acla, unsigned short int *ca,
-					 size_t * num_vertex_a, char *intersect_map, unsigned short int maxcols);
-
 #ifdef __cplusplus
 }
 #endif

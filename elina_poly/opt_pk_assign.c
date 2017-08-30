@@ -28,7 +28,6 @@
 #include "opt_pk.h"
 #include "opt_pk_representation.h"
 #include "opt_pk_user.h"
-#include "opt_pk_test.h"
 #include "opt_pk_constructor.h"
 #include "opt_pk_meetjoin.h"
 #include "opt_pk_assign.h"
@@ -111,19 +110,13 @@ void opt_vector_invert_expr(opt_pk_internal_t* opk,
 /* ====================================================================== */
 /* Assignement/Substitution by a *deterministic* linear expression */
 /* ====================================================================== */
+
 opt_pk_array_t* opt_poly_asssub_linexpr_det(bool assign, elina_manager_t* man,
 			      bool destructive,
 			      opt_pk_array_t* oa,
 			      elina_dim_t dim, elina_linexpr0_t* linexpr0)
 {
-   /*printf("ASSIGN INPUT\n");
- elina_lincons0_array_t arr = opt_pk_to_lincons_array(man,oa);
-	elina_lincons0_array_fprint(stdout,&arr,NULL);
-	printf("x%d:= ",dim);
-	elina_linexpr0_fprint(stdout,linexpr0,NULL);
-	printf("\n");
-	elina_lincons0_array_clear(&arr);
-	fflush(stdout);*/
+
   int sgn;
   opt_pk_array_t* op;
   opt_pk_internal_t* opk = (opt_pk_internal_t*)man->internal;
@@ -136,18 +129,14 @@ opt_pk_array_t* opt_poly_asssub_linexpr_det(bool assign, elina_manager_t* man,
   array_comp_list_t * acla = oa->acl;
   unsigned short int var = dim + opk->dec;
   comp_list_t *clb = linexpr0_to_comp_list(opk,linexpr0);
-  comp_list_t * cli = find(acla,var);
-  //bool need_refine = false;
+
   if(!contains_comp(clb,var)){
-	//if(cli!=NULL && is_disjoint(cli,clb,maxcols)){
-        //	need_refine = true;
-	//}
 	insert_comp(clb,var);
   }
   array_comp_list_t * aclb = create_array_comp_list();
   insert_comp_list(aclb,clb);
-
   array_comp_list_t * acl = union_array_comp_list(acla,aclb,maxcols);
+
   unsigned short int num_comp = acl->size;
   
   /*************************
@@ -193,216 +182,103 @@ opt_pk_array_t* opt_poly_asssub_linexpr_det(bool assign, elina_manager_t* man,
   //elina_lincons0_array_t arr1 = opt_pk_to_lincons_array(man,op);
   //elina_lincons0_array_fprint(stdout,&arr1,NULL);
   unsigned short int * rmapa = (unsigned short int *)calloc(num_compa, sizeof(unsigned short int));
-  size_t * num_vertex_a = (size_t *)calloc(num_compa,sizeof(size_t));
-  size_t  nbvertex = 0;
-  size_t  nbline = 0;
-  size_t  nbcons = 0;
-  size_t  nbeq = 0;
+  size_t * nbmapa = (size_t *)calloc(num_comp,sizeof(size_t));
+  size_t * nbeqmapa = (size_t *)calloc(num_comp,sizeof(size_t));
   char * disjoint_map = (char *)calloc(num_compa,sizeof(char));
-  char * line_map = (char *)calloc(comp_size, sizeof(char));
   opt_pk_t ** poly_a = oa->poly;
-  // whether to use generators or constraints
-  bool flag1 = !sgn && assign;
-  bool flag2 = sgn && ! assign;
+
   for(k=0; k < num_compa; k++){
 	short int res_a = is_comp_list_included(acl,cla,maxcols);
 	rmapa[k] = res_a;
-	opt_pk_t *oak = poly_a[k];
-	if(res_a==res){
-		disjoint_map[k] = 1;
-		unsigned short int *ca_a = to_sorted_array(cla,maxcols);
-		if(flag1){
-			num_vertex_a[k] = opt_generator_rearrange(oak->F,oak->satF);
-			if(!nbvertex){
-	 			nbvertex = num_vertex_a[k];
-      			}
-      			else{
-	 			nbvertex = nbvertex*num_vertex_a[k];
-      			}
-      			nbline += oak->F->nbrows - num_vertex_a[k];
-			nbcons +=  poly_a[k]->C->nbrows;
-			nbeq +=  poly_a[k]->nbeq;
-		}
-		else if(flag2){
-			num_vertex_a[k] = opt_generator_rearrange(oak->F,oak->satF);
-			if(!nbvertex){
-	 			nbvertex = num_vertex_a[k];
-      			}
-      			else{
-	 			nbvertex = nbvertex*num_vertex_a[k];
-      			}
-      			nbline += oak->F->nbrows - num_vertex_a[k];
-		}
-		else{
-			nbcons +=  poly_a[k]->C->nbrows;
-			nbeq +=  poly_a[k]->nbeq;
-		}
-
-		unsigned short int k2=0, k3 = 0;
-		for(k2=0; k2< cla->size; k2++){
-			while(ca[k3]!=ca_a[k2]){
-				k3++;
-			}
-			line_map[k3] = 1;
-		}
-		free(ca_a);
-	}
+	nbmapa[res_a] = nbmapa[res_a] + poly_a[k]->C->nbrows;
+        nbeqmapa[res_a] = nbeqmapa[res_a] + poly_a[k]->nbeq;
 	cla = cla->next;
   }
-  opt_pk_t ** poly;
-  //if(need_refine && assign){
-	//poly = (opt_pk_t **)malloc(num_comp+1*sizeof(opt_pk_t *));
- // }
- // else{
-	poly = (opt_pk_t **)malloc(num_comp*sizeof(opt_pk_t *));
-  //}
 
+  opt_pk_t ** poly = (opt_pk_t **)malloc(num_comp*sizeof(opt_pk_t *));
   cl = acl->head;
-  char * exc_map = (char *)calloc(num_comp,sizeof(char));
+
   for(k=0; k < num_comp; k++){
 	unsigned short int comp_size = cl->size;
 	poly[k] = opt_poly_alloc(comp_size,0);
 	cl = cl->next;
   }
-	size_t num_uncons_var = 0;
-	opt_matrix_t *matC = NULL;
-	opt_matrix_t *matF = NULL;
-	if(flag1){
-		for(k=0; k < comp_size; k++){
-			if(!line_map[k]){
-				nbline++;
-			}
-		}
-		matF =  opt_matrix_alloc(nbvertex+nbline+1, poly[res]->intdim+2,false);
-		matC = opt_matrix_alloc(nbcons+1, poly[res]->intdim+2,false);
-	}
-	else if(flag2){
-		matF =  opt_matrix_alloc(nbvertex+nbline+1, poly[res]->intdim+2,false);
-	}
-	else{
-		matC = opt_matrix_alloc(nbcons+1, poly[res]->intdim+2,false);
-	}
-	if(flag1 || flag2){
-		fuse_generators_intersecting_blocks(matF,poly_a,acla,ca,num_vertex_a,disjoint_map,maxcols);
-		size_t nbrows = matF->nbrows;
-		for(k=0; k < comp_size; k++){
-			if(!line_map[k]){
-				matF->p[nbrows][k+opk->dec] = 1;
-				nbrows++;
-			}
-		}
-		if(!nbvertex){
-			matF->p[nbrows][0] = 1;
-			matF->p[nbrows][1] = 1;
-			nbrows++;
-		}
-		matF->nbrows=nbrows;
-		poly[res]->F = matF;
-	}
-	if(!flag2){
-		//matC->p[0][0] = 1;
-		//matC->p[0][1] = 1;
-		size_t countC = 0;
-		cla = acla->head;
-		bool pos_flag = true;
-		for(k=0; k < num_compa; k++){
-			if(rmapa[k]==res){
-				unsigned short int * ca_a = to_sorted_array(cla,maxcols);
-				unsigned short int comp_size_a = cla->size;
-				opt_pk_t * oal = poly_a[k];
-				opt_matrix_t * src = oal->C;
-				size_t nbconsa = src->nbrows;
-				opt_numint_t ** sa = src->p;
-				opt_matrix_t *dst_mat = matC;
-				size_t count = countC;
-				opt_numint_t ** da = dst_mat->p;
-				size_t i;
-				bool flag = false;
-				for(i=0; i < nbconsa; i++){
-					opt_numint_t * sai = sa[i];
-					opt_numint_t * dai = da[count];
-					if(opt_vector_is_positivity_constraint(opk,sai,src->nbcolumns)){
-						flag = true;
-					}
-					dai[0] = sai[0];
-					dai[1] = sai[1];
-					unsigned short int j1 = 0;
-					for(j=0; j < comp_size_a; j++){
-						while(ca[j1]!=ca_a[j]){
-							j1++;
-						}
-						dai[j1+2] = sai[j+2];
+	opt_matrix_t *mat = opt_matrix_alloc(nbmapa[res]+1, poly[res]->intdim+2,false);
+	poly[res]->C = mat;
+	mat->p[0][0] = 1;
+	mat->p[0][1] = 1;
+	size_t countC = 1;
+	cla = acla->head;
+	for(k=0; k < num_compa; k++){
+		if(rmapa[k]==res){
+			unsigned short int * ca_a = to_sorted_array(cla,maxcols);
+			unsigned short int comp_size_a = cla->size;
+			opt_pk_t * oal = poly_a[k];
+			opt_matrix_t * src = oal->C;
+			size_t nbconsa = src->nbrows;
+			opt_numint_t ** sa = src->p;
+			opt_matrix_t *dst_mat = mat;
+			size_t count = countC;
+			opt_numint_t ** da = dst_mat->p;
+			size_t i;
+			for(i=0; i < nbconsa; i++){
+				opt_numint_t * sai = sa[i];
+				opt_numint_t * dai = da[count];
+				dai[0] = sai[0];
+				dai[1] = sai[1];
+				unsigned short int j1 = 0;
+				for(j=0; j < comp_size_a; j++){
+					while(ca[j1]!=ca_a[j]){
 						j1++;
 					}
-					count++;
+					dai[j1+2] = sai[j+2];
+					j1++;
 				}
-				if(!flag){
-					pos_flag = false;
-				}
-				countC = count;
-				free(ca_a);
+				count++;
 			}
-			cla = cla->next;
+			countC = count;
+			free(ca_a);
 		}
-		if(pos_flag){
-			matC->p[countC][0] = 1;
-			matC->p[countC][1] = 1;
-			countC++;
-		}
-		matC->nbrows = countC;
-		poly[res]->C = matC;
+		cla = cla->next;
 	}
-	//
-
+	//if(k==res){
 		if (!sgn){ /* Expression is not invertible */
 			//opt_pk_t * tmp = opt_poly_alloc(comp_size,0);
-			//
-			//elina_dim_t tdim = nvar;
-			if(assign){
-				//poly[res]->nbline = nbline;
+			poly[res]->nbeq = nbeqmapa[res];
+			elina_dim_t tdim = nvar;
+			/*#if defined (CONVERT)
 				
-				poly[res]->F = opt_matrix_alloc(matF->nbrows,matF->nbcolumns,false);
-				poly[res]->nbline = opt_matrix_assign_variable(opk, poly[res]->F, matF, nvar, opk->poly_numintp);
+				tmp->F = matF;
 				if(opk->exn){
 					opk->exn = ELINA_EXC_NONE;
-					exc_map[res] = 1;
+					opt_poly_set_top(opk,op);
+					man->result.flag_best = man->result.flag_exact = false;
+					goto  opt_poly_asssub_linexpr_det_exit;
 				}
-				poly[res]->nbeq = nbeq;
+				poly[k]->F = assign ?
+      					     opt_matrix_assign_variable(opk, destructive, tmp->F, tdim, opk->poly_numintp) :
+      					     opt_matrix_substitute_variable(opk, destructive, tmp->F, tdim, opk->poly_numintp);
+
+				poly[k]->nbline = nblinemapa[k];
+				opt_poly_chernikova(man,poly[k],"gen to cons");
+				if(poly[k]->satC)
+				opt_satmat_fprint(stdout,poly[k]->satC);
+			#else*/
 				
-				elina_dim_t tdim[1];
-				tdim[0] = nvar;
+				//opt_matrix_t * cons = opt_matrix_alloc(1,comp_size+2,true);
 				opt_poly_projectforget_array(false,
 						  man,poly[res],poly[res],&tdim,1,true);
 			    	size_t nbcons = poly[res]->C->nbrows;
 			    	opt_matrix_resize_rows(poly[res]->C,nbcons+1);
 				opt_numint_t * ov = opk->poly_numintp;
 				opt_numint_t * dpi = poly[res]->C->p[nbcons];
-				opt_vector_copy(dpi,ov,matC->nbcolumns);
+				opt_vector_copy(dpi,ov,mat->nbcolumns);
 				dpi[0] = 0;
 				dpi[nvar+opk->dec] = -1; 
 				poly[res]->nbeq++;			
 				poly[res]->is_minimized = false;
-				poly[res]->satC = opt_satmat_alloc(poly[res]->F->nbrows,opt_bitindex_size(poly[res]->C->nbrows));
-				combine_satmat(opk,poly[res],matC->nbcolumns - opk->dec,poly[res]->C->nbrows,true);
-
-				opt_matrix_free(matF);
-			}
-			else{
-				poly[res]->C = opt_matrix_substitute_variable(opk,true, matC, nvar, opk->poly_numintp);
 				opt_poly_chernikova(man,poly[res],"non invertible assign");
-			}
-
-				//opt_matrix_t * cons = opt_matrix_alloc(1,comp_size+2,true);
-
-				//if(assign && need_refine){
-				//	comp_list_t * clv = find(acl,var);
-				//	comp_t * ci = cli->head;
-				//	while(ci!=NULL){
-				//		remove_comp();
-				//		ci = ci->next;
-				//	}
-
-				//}
+			//#endif
 	  	}
 	  
 	  	else { /* Expression is invertible and we have constraints */
@@ -410,31 +286,18 @@ opt_pk_array_t* opt_poly_asssub_linexpr_det(bool assign, elina_manager_t* man,
 	    		opt_vector_invert_expr(opk,
 					       opk->poly_numintp2,
 					       nvar, opk->poly_numintp,
-					       matC? matC->nbcolumns: matF->nbcolumns);
-			if(assign){
-
-				poly[res]->C = opt_matrix_substitute_variable(opk,true,matC, nvar, opk->poly_numintp2);
-
-			}
-			else{
-				poly[res]->F = opt_matrix_alloc(matF->nbrows,matF->nbcolumns,false);
-				poly[res]->nbline =  opt_matrix_assign_variable(opk,poly[res]->F,matF, nvar, opk->poly_numintp2);
-				if(opk->exn){
-					opk->exn = ELINA_EXC_NONE;
-					exc_map[res] = 1;
-				}
-				opt_matrix_free(matF);
-			}
-
-			//poly[res]->nbeq = nbeqmapa[res];
-			//poly[res]->is_minimized = true;
+					       mat->nbcolumns);
+	    		poly[res]->C = assign ?
+				     opt_matrix_substitute_variable(opk,true,mat, nvar, opk->poly_numintp2) :
+				     opt_matrix_assign_variable(opk,true,mat, nvar, opk->poly_numintp2);
+			poly[res]->nbeq = nbeqmapa[res];
+			poly[res]->is_minimized = true;
 			opt_poly_chernikova(man,poly[res],"gen to cons");
 	  	}
 		
 	//}
 	//else{
 	  for(k=0; k < num_compa; k++){
-		disjoint_map[k] = 0;
 		unsigned short int ind = rmapa[k];
 		if(ind==res){	
 			continue;
@@ -471,48 +334,18 @@ opt_pk_array_t* opt_poly_asssub_linexpr_det(bool assign, elina_manager_t* man,
 		free_array_comp_list(acla);
 		free(poly_a);	 
 	    }
-    free(num_vertex_a);
-    free(rmapa);
-    free(disjoint_map);
-    free(ca);
-    free(line_map);
+	    free(rmapa);
+	    free(nbmapa);
+	    free(nbeqmapa);
+	    free(disjoint_map);
+		free(ca);
     elina_linexpr0_free(dst);
     free_array_comp_list(aclb);
-    k=0;
-    cl = acl->head;
-    while(k < num_comp){
-	opt_pk_t *oak = poly[k];
-	if(exc_map[k]){
-		comp_list_t * tmp = cl;
-		cl = cl->next;
-		remove_comp_list(acl,tmp);
-		unsigned short int k1;
-		for(k1=k; k1 < num_comp - 1; k1++){
-			poly[k1] = poly[k1+1];
-		}
-		opt_poly_clear(oak);
-		num_comp--;
-	}
-	else{
-		k++;
-		cl=cl->next;
-	}
-    }
     op->poly = poly;
     op->acl = acl;
-    free(exc_map);
-    /*printf("ASSIGN OUTPUT\n");
 
-	elina_lincons0_array_t arr1 = opt_pk_to_lincons_array(man,op);
-	elina_lincons0_array_fprint(stdout,&arr1,NULL);
-	elina_lincons0_array_clear(&arr1);
-	fflush(stdout);*/
     return op;
 }
-
-
-
-
 
 
 
@@ -581,7 +414,7 @@ opt_pk_array_t* opt_poly_asssub_linexpr(bool assign, bool lazy,
     }
   }
   else {
-    op = elina_generic_asssub_linexpr_array(assign,man,destructive,oa,&dim,&linexpr,1,ob);
+    op = elina_generic_asssub_linexpr_array(true,man,destructive,oa,&dim,&linexpr,1,ob);
   }
 
 
@@ -628,7 +461,7 @@ opt_pk_array_t* opt_poly_asssub_linexpr(bool assign, bool lazy,
 /* Assignement/Substitution by several *deterministic* linear expressions */
 /* ====================================================================== */
 
-opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* man,
+opt_pk_array_t* opt_poly_asssub_linexpr_array_det(elina_manager_t* man,
 				    bool destructive,
 				    opt_pk_array_t* oa,
 				    elina_dim_t* tdim, elina_linexpr0_t** texpr,
@@ -704,46 +537,42 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
 	Factor A according to LUB
   **********************************/
   unsigned short int * rmapa = (unsigned short int *)calloc(num_compa, sizeof(unsigned short int));
+  size_t * nbmapa = (size_t *)calloc(num_comp,sizeof(size_t));
+  size_t * nbeqmapa = (size_t *)calloc(num_comp,sizeof(size_t));
   char * disjoint_map = (char *)calloc(num_compa,sizeof(char));
   size_t * nbgenmapa = (size_t *)calloc(num_comp,sizeof(size_t));
   size_t * nblinemapa = (size_t *)calloc(num_comp,sizeof(size_t));
   size_t * num_vertex_a = (size_t *)calloc(num_compa,sizeof(size_t));
   size_t * num_vertex = (size_t *)calloc(num_comp,sizeof(size_t));
-  unsigned short int * array_map_a = create_array_map(acla,maxcols);
+  char * array_map_a = create_array_map(acla,maxcols);
   comp_list_t * cla = acla->head;
   for(k=0; k < num_compa; k++){
 	opt_pk_t * oak = poly_a[k];
 	short int res = is_comp_list_included(acl,cla,maxcols);
 	rmapa[k] = res;
-	if(assign){
-		opt_poly_obtain_satF(oak);
-		num_vertex_a[k] = opt_generator_rearrange(oak->F,oak->satF);
-		if(num_vertex_a[k]){
-			if(!num_vertex[res]){
-				num_vertex[res] = num_vertex_a[k];
-			}
-			else{
-				num_vertex[res] = num_vertex[res] * num_vertex_a[k];
-			}
+	nbmapa[res] = nbmapa[res] + oak->C->nbrows;
+	nbeqmapa[res] = nbeqmapa[res] + oak->nbeq;
+	opt_poly_obtain_satF(oak);
+	num_vertex_a[k] = opt_generator_rearrange(oak->F,oak->satF);
+	if(num_vertex_a[k]){
+		if(!num_vertex[res]){
+			num_vertex[res] = num_vertex_a[k];
 		}
-		nbgenmapa[res] = nbgenmapa[res] + oak->F->nbrows;
-		nblinemapa[res] = nblinemapa[res] + oak->nbline;
-        }
-        else{
-		nbgenmapa[res] = nbgenmapa[res] + oak->C->nbrows;
-		nblinemapa[res] = nblinemapa[res] + oak->nbeq;
+		else{
+			num_vertex[res] = num_vertex[res] * num_vertex_a[k];
+		}
 	}
+	nbgenmapa[res] = nbgenmapa[res] + oak->F->nbrows;
+	nblinemapa[res] = nblinemapa[res] + oak->nbline;
 	cla = cla->next;
   }
   
   opt_pk_t ** poly = (opt_pk_t **)malloc(num_comp*sizeof(opt_pk_t *));
   size_t * counterF = (size_t *)calloc(num_comp,sizeof(size_t));
-  char * pos_con_map = (size_t *)calloc(num_comp,sizeof(char));
   cl = acl->head;
   for(k=0; k < num_comp; k++){
 	unsigned short int comp_size = cl->size;
 	poly[k] = opt_poly_alloc(comp_size,0);
-	pos_con_map[k] = 1;
 	cl = cl->next;
   }
 
@@ -777,71 +606,49 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
 	}
 	else{
 		unsigned short int comp_size = comp_size_map[k];
+		//poly[k]->C = opt_matrix_alloc(nbmapa[k]+1, comp_size+2,false);
+		//poly[k]->nbeq = nbeqmapa[k];
 		unsigned short int k1;
+		unsigned short int nblines = 0;
 		unsigned short int * ca = ca_arr[k];
-		if(assign){
-
-			//poly[k]->C = opt_matrix_alloc(nbmapa[k]+1, comp_size+2,false);
-			//poly[k]->nbeq = nbeqmapa[k];
-			unsigned short int nblines = 0;
-			for(k1=0; k1 < comp_size; k1++){
-				unsigned short int var = ca[k1];
-				if(!array_map_a[var]){
-					nblines++;
-				}
-			}
-			poly[k]->F = opt_matrix_alloc(nbgenmapa[k]+2*num_vertex[k]+nblines+1, comp_size+2,false);
-			num_vertex[k] = 0;
-			nblines = 0;
-			for(k1=0; k1 < comp_size; k1++){
-				unsigned short int var = ca[k1];
-				if(!array_map_a[var]){
-					poly[k]->F->p[nblines][k1+2] = 1;
-					nblines++;
-				}
-			}
-			poly[k]->nbline = nblinemapa[k] + nblines;
-			if(nblines==comp_size){
-				poly[k]->F->p[nblines][0] = 1;
-				poly[k]->F->p[nblines][1] = 1;
+		for(k1=0; k1 < comp_size; k1++){
+			unsigned short int var = ca[k1];
+			if(!array_map_a[var]){
 				nblines++;
 			}
-			counterF[k] = nblines;
-			poly[k]->F->nbrows = nblines;
 		}
-		else{
-			poly[k]->C = opt_matrix_alloc(nbgenmapa[k]+1,comp_size+2,false);
-			poly[k]->nbeq = nblinemapa[k];
-			counterF[k] = 0;
+		poly[k]->F = opt_matrix_alloc(nbgenmapa[k]+2*num_vertex[k]+nblines+1, comp_size+2,false);
+		num_vertex[k] = 0;
+		nblines = 0;
+		for(k1=0; k1 < comp_size; k1++){
+			unsigned short int var = ca[k1];
+			if(!array_map_a[var]){
+				poly[k]->F->p[nblines][k1+2] = 1;
+				nblines++;
+			}
 		}
+		poly[k]->nbline = nblinemapa[k] + nblines;
+		if(nblines==comp_size){
+			poly[k]->F->p[nblines][0] = 1;
+			poly[k]->F->p[nblines][1] = 1;
+			nblines++;
+		}
+		counterF[k] = nblines;
+		poly[k]->F->nbrows = nblines;
 	}
 	cl = cl->next;
   }
   
   free(array_map_a);
 	
-  if(assign){
-	  // cartesian product of vertices
-	  cartesian_product_vertices_with_map(oa, poly, rmapa, ca_arr, num_vertex_a, num_vertex, counterF, disjoint_map);
+  // cartesian product of vertices
+  cartesian_product_vertices_with_map(oa, poly, rmapa, ca_arr, num_vertex_a, num_vertex, counterF, disjoint_map);
 
-	  // meet of rays
-	  meet_rays_with_map(oa, poly, rmapa, ca_arr, num_vertex_a, counterF, disjoint_map);
-  }
+  // meet of rays
+  meet_rays_with_map(oa, poly, rmapa, ca_arr, num_vertex_a, counterF, disjoint_map);
 
-  else{
-		meet_cons_with_map(opk,oa,poly,rmapa,ca_arr,counterF,pos_con_map,disjoint_map);
-		for(k=0; k < num_comp; k++){
-		    size_t count = counterF[k];
-	            if(pos_con_map[k] && nbmapb[k]){
-		       poly[k]->C->p[count][0] = 1;
-		       poly[k]->C->p[count][1] = 1;
-		       counterF[k]++;
-	 	       poly[k]->C->nbrows = counterF[k];
-	            }
-  		}
-  }
+
   /* Copy tdim because of sorting */
-  char * exc_map = (char *)calloc(num_comp,sizeof(char));
   for(k=0; k < num_comp; k++){
         if(nbmapb[k]){
 		tvec = (opt_numint_t **)malloc(nbmapb[k]*sizeof(opt_numint_t *));
@@ -866,17 +673,8 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
 	  	opt_pk_asssub_isort(tdim2,tvec,nbmapb[k]);
 		opt_pk_t * oak = poly[k];
 	   	/* Perform the assignment operation */
-		opt_matrix_t * tmp = assign ? oak->F : oak->C;
-		if(assign){
-	 		poly[k]->F = opt_matrix_assign_variables(opk, oak->F, tdim2, tvec, nbmapb[k]);
-			if(opk->exn){
-				opk->exn = ELINA_EXC_NONE;
-				exc_map[k] = 1;
-			}
-		}
-		else{
-			poly[k]->C = opt_matrix_substitute_variables(opk,oak->C, tdim2, tvec, nbmapb[k]);
-		}
+		opt_matrix_t * tmp = oak->F;
+	 	poly[k]->F = opt_matrix_assign_variables(opk, oak->F, tdim2, tvec, nbmapb[k]);
 		opt_matrix_free(tmp);
 	  	/* Free allocated stuff */
 		for(i=0; i < nbmapb[k]; i++){
@@ -886,7 +684,6 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
 		free(tdim2);
 	}
 	free(ca_arr[k]);
-	cl = cl->next;
   }
   
   for (i=0; i<size; i++){
@@ -910,6 +707,8 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
   free(rmapb);
   free(nbmapb);
   free(rmapa);
+  free(nbmapa);
+  free(nbeqmapa);
   free(disjoint_map);
   free(nbgenmapa);
   free(nblinemapa);
@@ -919,33 +718,12 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
   free_array_comp_list(aclb);
   free(comp_size_map);
   free(ca_arr);
-  free(pos_con_map);
   free(counterF);
   op = destructive ? oa : opt_pk_array_alloc(NULL,NULL,maxcols);
   
-  k=0;
-  cl = acl->head;
-  while(k < num_comp){
-	opt_pk_t * oak = poly[k];
-	if(exc_map[k]){
-		comp_list_t * tmp = cl;
-		cl = cl->next;
-		remove_comp_list(acl,tmp);
-		unsigned short int k1;
-		for(k1=k; k1 < num_comp - 1; k1++){
-			poly[k1] = poly[k1+1];
-		}
-		opt_poly_clear(oak);
-		num_comp--;
-	}
-	else{
-		k++;
-		cl=cl->next;
-	}
-  }
+
   op->poly = poly;
   op->acl = acl;
-  free(exc_map);
   //op->status = 0;
   return op;
 }
@@ -955,7 +733,7 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array_det(bool assign, elina_manager_t* 
 /* Assignement/Substitution by an array of linear expressions */
 /* ====================================================================== */
 static
-opt_pk_array_t* opt_poly_asssub_linexpr_array(bool assign, bool lazy,
+opt_pk_array_t* opt_poly_asssub_linexpr_array(bool lazy,
 				elina_manager_t* man,
 				bool destructive,
 				opt_pk_array_t* oa,
@@ -996,13 +774,13 @@ opt_pk_array_t* opt_poly_asssub_linexpr_array(bool assign, bool lazy,
   
   /* Choose the right technique */
   if (elina_linexpr0_array_is_linear(texpr,size)){
-    op = opt_poly_asssub_linexpr_array_det(assign,man,destructive,oa,tdim,texpr,size);
+    op = opt_poly_asssub_linexpr_array_det(man,destructive,oa,tdim,texpr,size);
     if (ob){
       opt_poly_meet(true,lazy,man,op,op,ob);
     }
   }
   else {
-    op = elina_generic_asssub_linexpr_array(assign,man,destructive,oa,tdim,texpr,size,ob);
+    op = elina_generic_asssub_linexpr_array(true,man,destructive,oa,tdim,texpr,size,ob);
   }
 
   /* Minimize the result if option say so */
@@ -1119,7 +897,7 @@ opt_pk_array_t* opt_poly_asssub_texpr_array(bool assign,
       elina_linexpr0_t** tlinexpr =
 	elina_intlinearize_texpr0_array(man,&abs,texpr,size,NULL,
 				     ELINA_SCALAR_MPQ,false);
-      op = opt_poly_asssub_linexpr_array_det(assign,man,destructive,
+      op = opt_poly_asssub_linexpr_array_det(man,destructive,
 					 oa,tdim,tlinexpr,size);
       
       elina_linexpr0_array_free(tlinexpr,size);
@@ -1188,7 +966,7 @@ opt_pk_array_t* opt_pk_assign_linexpr_array(elina_manager_t* man,
   #endif
 
   op = size==1 ? opt_poly_asssub_linexpr(true, opk->funopt->algorithm<=0, man,destructive,oa,tdim[0],texpr[0],ob) :
-       		 opt_poly_asssub_linexpr_array(true, opk->funopt->algorithm<=0,
+       		 opt_poly_asssub_linexpr_array( opk->funopt->algorithm<=0,
 			      man,destructive,oa,tdim,texpr,size,ob);
   //assert(poly_check(pk,po));
   #if defined(TIMING)
@@ -1197,34 +975,6 @@ opt_pk_array_t* opt_pk_assign_linexpr_array(elina_manager_t* man,
  
   return op;
 }
-
-opt_pk_array_t* opt_pk_substitute_linexpr_array(elina_manager_t* man,
-				  bool destructive, opt_pk_array_t* oa,
-				  elina_dim_t* tdim, elina_linexpr0_t** texpr,
-				  size_t size,
-				  opt_pk_array_t* ob)
-{
-  opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_SUBSTITUTE_LINEXPR_ARRAY);
-  opt_pk_array_t* op;
-  #if defined(TIMING)
- 	 start_timing();
-  #endif
-  op =
-    size==1 ?
-    opt_poly_asssub_linexpr(false,
-			opk->funopt->algorithm<=0,
-			man,destructive,oa,tdim[0],texpr[0],ob)
-    :
-    opt_poly_asssub_linexpr_array(false,
-			      opk->funopt->algorithm<=0,
-			      man,destructive,oa,tdim,texpr,size,ob);
-  #if defined(TIMING)
- 	 	record_timing(substitute_linexpr_time);
-  #endif
-
-  return op;
-}
-
 
 opt_pk_array_t* opt_pk_assign_texpr_array(elina_manager_t* man,
 			    bool destructive, opt_pk_array_t* oa,

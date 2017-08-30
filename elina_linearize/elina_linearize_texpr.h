@@ -86,7 +86,7 @@ elina_linexpr0_t* elina_intlinearize_texpr0_intlinear(elina_manager_t* man,
 /* III. Interval linearization of tree expressions */
 /* ********************************************************************** */
 
-elina_texpr_rtype_t elina_interval_intlinearize_texpr0_rec(elina_texpr0_t* expr,
+static elina_texpr_rtype_t elina_interval_intlinearize_texpr0_rec(elina_texpr0_t* expr,
 			    elina_interval_t** env, size_t intdim,
 			    elina_linexpr0_t** lres /* out */, elina_interval_t *ires /* out */
 			    ,elina_scalar_discr_t discr);

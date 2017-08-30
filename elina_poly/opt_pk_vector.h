@@ -87,10 +87,10 @@ void opt_vector_add(opt_numint_t *dst, opt_numint_t *op1, opt_numint_t *op2, uns
 opt_numint_t opt_vector_product_strict(opt_pk_internal_t* opk,
 			   opt_numint_t* r1, opt_numint_t* r2, unsigned short int size);
 
-//opt_numint_t opt_vector_product_strict_comp(opt_pk_internal_t* opk,
-//			   opt_numint_t* q1, opt_numint_t* q2, unsigned short int * ind_map1,
-//			   unsigned short int *ind_map2, unsigned short int size1,
-//			   unsigned short int size2, unsigned short int size);
+opt_numint_t opt_vector_product_strict_comp(opt_pk_internal_t* opk,
+			   opt_numint_t* q1, opt_numint_t* q2, unsigned short int * ind_map1,
+			   unsigned short int *ind_map2, unsigned short int size1,
+			   unsigned short int size2, unsigned short int size);
 
 void opt_vector_permute_dimensions(opt_pk_internal_t* opk,
 			       opt_numint_t* nov, opt_numint_t* ov, unsigned short int size,
@@ -149,15 +149,6 @@ bool is_line(opt_numint_t * v);
 bool opt_vector_equal(opt_pk_internal_t* opk,
 		   opt_numint_t* ov1, opt_numint_t* ov2,
 		   unsigned short int size, unsigned short int* ind);
-
-
-/* Bounding the value of an (interval) linear expression (itv_linexpr) in a
-   generator vector
-*/
-void opt_vector_bound_elina_linexpr0(opt_pk_internal_t* opk,
-			      elina_rat_t *inf, elina_rat_t *sup,
-			      elina_linexpr0_t* linexpr,
-			      opt_numint_t* vec, size_t size);
 
 #ifdef __cplusplus
 }
