@@ -1,8 +1,66 @@
 Dim: 2
-Number of constraints: 3
+Number of constraints: 32
 Type: e
-Values: -1099511627776, 255, 63771674411008
+Values: 7310868735959459187, -608000081919, -9007199254740993
 Type: e
-Values: 0, 1099511627520, 0
+Values: 0, 0, 0
 Type: e
-Values: 7956002776888011122, 500151839841, 144115188075866112
+Values: 0, 0, 0
+Type: e
+Values: 2251799813685248, 52842233568690176, 0
+Type: e
+Values: 6874027355736637440, 6845472968876515702, -36240
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 576460752303423488, -4919132280124866560, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 1, 0
+Type: e
+Values: 2199023272192, 3072, 0
+Type: e
+Values: -4919338167972134912, -4919131752989213765, -4919131752989213765
+Type: e
+Values: 0, 134217728, -4919131752989213887
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: -4900554404526310469, 18220813492403131, 13194139533824
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 134217728, 3149642561
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 34359738368, -4919131752989245184, -4919131752989213765
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: -4919131752989213765, -4919131752984888389, 2199027497915

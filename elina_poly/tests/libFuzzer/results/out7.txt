@@ -1,12 +1,6 @@
-Dim: 3
-Number of constraints: 5
+Dim: 2
+Number of constraints: 2
 Type: e
-Values: 6381921, 0, 10496, 0
+Values: 0, 0, 0
 Type: e
-Values: 0, 0, 0, 0
-Type: e
-Values: -4919131752989213765, 1108101562555, 12, 0
-Type: e
-Values: 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0
+Values: 0, -281474976710656, 0

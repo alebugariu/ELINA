@@ -1,1 +1,66 @@
-Dim: 16
+Dim: 2
+Number of constraints: 32
+Type: e
+Values: 35184372088832, 0, 18295873486192652
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 33554688, 3072
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 32, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: -4919259103072550912, -4919131752989213765, -4919059185221780549
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 69805794224242688, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 63488, 35184372088832, 9007199254740992
+Type: e
+Values: 2199023272192, 3072, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 2199023255552, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 69805794224242688, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 16252928, 9007199254740992
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 144115189166374912, 201326592, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 536870912, 0
+Type: e
+Values: 218103808, 4304239786392206145, -4919131752989213765
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0

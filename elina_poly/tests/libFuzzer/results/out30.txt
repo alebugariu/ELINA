@@ -1,11 +1,5 @@
 Dim: 2
-Number of constraints: 5
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
+Number of constraints: 2
 Type: e
 Values: 0, 0, 0
 Type: e
