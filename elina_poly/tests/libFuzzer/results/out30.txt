@@ -1,6 +1,18 @@
-Dim: 2
-Number of constraints: 2
+Dim: 6
+Number of constraints: 8
 Type: e
-Values: 0, 0, 0
+Values: 0, 6438274998837706752, 6438275382588823897, 6438275382588823897, 6438275382588823897, 6438275382588823897, 6438275382588823897
 Type: e
-Values: 0, 0, 0
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0
+Type: e
+Values: 0, 0, 0, 0, 0, 0, 0

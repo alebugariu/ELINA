@@ -1,18 +1,11 @@
-Dim: 4
-Number of constraints: 8
+Dim: 2
+Number of constraints: 2
 Type: e
-Values: 0, 0, 0, 0, 0
+Values: -4919131752989213765, 0, 0
 Type: e
-Values: 0, 0, 65, 0, 0
+Values: 0, 0, 0
+Number of constraints: 2
 Type: e
-Values: 0, 0, 0, 0, 0
+Values: 52842235627813819, 514, 0
 Type: e
-Values: 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0
-Type: e
-Values: -4919131752989213765, -4900554404526310469, 18220813492403131, 13194139533824, 0
-Type: e
-Values: 0, 0, 0, 0, 0
-Type: e
-Values: -4919132012633408703, -4919131752989213765, -4919131469521372229, 4676074060731, -4936112610576629760
+Values: -4919061386409329989, -4919131752989213765, 144321603058777019
