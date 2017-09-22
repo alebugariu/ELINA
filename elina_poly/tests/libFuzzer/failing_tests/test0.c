@@ -51,8 +51,6 @@ int main(int argc, char **argv) {
 	lincons0.p[1].linexpr0 = linexpr1;
 	long values3[3] = {-9223372036854775808, 4294967295, 0};
 	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, values3);
-	printf("linexpr2: %p",linexpr2);
-	fflush(stdout);
 	lincons0.p[2].linexpr0 = linexpr2;
 
 	if (create_polyhedron(&polyhedron1, man, top, dim, lincons0)) {

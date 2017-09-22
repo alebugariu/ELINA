@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -501,49 +501,104 @@ int opt_vector_compare(opt_pk_internal_t* opk,
    Assumes ov1[k] and ov2[k] have opposite signs.
    This function uses opk->vector_tmp[0..4] and opk->vector_numintp. */
 
-void opt_vector_combine(opt_pk_internal_t* opk,
-		    opt_numint_t* ov1, opt_numint_t * ov2,
-		    opt_numint_t* ov3, size_t k, unsigned short int size, bool add)
-{
-  unsigned short int j;
-  //ov3[0] = (ov1[0] | ov2[0]);
-  //printf("input\n");
-  //opt_vector_print(ov1,size);
-  //opt_vector_print(ov2,size);
-  //fflush(stdout);
-  opk->vector_tmp[0] = opt_numint_gcd(ov1[k],ov2[k]);
-
-  opk->vector_tmp[1] = opt_numint_abs(ov1[k]/opk->vector_tmp[0]);
-  opk->vector_tmp[2] = opt_numint_abs(ov2[k]/opk->vector_tmp[0]);
-  for (j=1;j<size;j++){
-    if (j!=k){
-      opk->vector_tmp[3] = opk->vector_tmp[2] * ov1[j];
-      opk->vector_tmp[4] = opk->vector_tmp[1] * ov2[j];
-      if(add)
-      ov3[j] = opk->vector_tmp[3] + opk->vector_tmp[4];
-      else
-      ov3[j] = opk->vector_tmp[3] - opk->vector_tmp[4];
+//addition with overflow detection
+bool opt_int64_add(opt_numint_t x, opt_numint_t y, opt_numint_t * result){
+    *result = 0;
+    if(x > 0 && y > INT64_MAX - x) return true;
+    else if(x < 0 && y < INT64_MIN - x){
+        return true;
     }
-  }
-  ov3[k] = 0;
-  for (j=0; j<size; j++){
-      if (opt_numint_abs(ov3[j]) > (ELINA_INT_MAX/2)){
-	//opt_vector_print(ov1,size);
-	//opt_vector_print(ov2,size);
-	//printf("exception %d %lld %lld\n",k,opt_numint_abs(ov3[j]),ELINA_INT_MAX/2);
-	//fflush(stdout);
-	opk->exn = ELINA_EXC_OVERFLOW;
-	return ;
-      }
-    }
-  opt_vector_normalize(opk,ov3,size);
-  //if (opk->max_coeff_size){
-    
-  //}
-  //printf("output\n");
-  //opt_vector_print(ov3,size);
-  //fflush(stdout);
+    *result = x + y;
+    return false;
 }
+
+
+//multiplication with overflow detection
+bool opt_int64_mult(opt_numint_t x, opt_numint_t y, opt_numint_t x1, opt_numint_t x2, opt_numint_t * result)
+{
+    *result = 0;
+    if (x > 0 && y > 0 && x > x1) return true;
+    if (x < 0 && y > 0 && x < x2) return true;
+    if (x > 0 && y < 0 && y < INT64_MIN / x) return true;
+    if (x < 0 && y < 0 && (x <= INT64_MIN || y <= INT64_MIN || -x > -x1))
+        return 1;
+    *result = x * y;
+    return false;
+}
+
+
+void opt_vector_combine(opt_pk_internal_t* opk,
+                        opt_numint_t* ov1, opt_numint_t * ov2,
+                        opt_numint_t* ov3, size_t k, unsigned short int size, bool add)
+{
+    unsigned short int j;
+    //ov3[0] = (ov1[0] | ov2[0]);
+
+    opk->vector_tmp[0] = opt_numint_gcd(ov1[k],ov2[k]);
+
+    bool flag = false;
+    if(ov1[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
+	 printf("exception division\n");
+         fflush(stdout);
+         opk->exn = ELINA_EXC_OVERFLOW;
+         return ;
+    }
+    opk->vector_tmp[1] = opt_numint_abs(ov1[k]/opk->vector_tmp[0]);
+    if(ov2[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
+	 printf("exception division\n");
+         fflush(stdout);
+         opk->exn = ELINA_EXC_OVERFLOW;
+         return ;
+    }
+    opk->vector_tmp[2] = opt_numint_abs(ov2[k]/opk->vector_tmp[0]);
+
+    // optimize the overflow detection by precomputing the division
+    opt_numint_t x1 = INT64_MAX/opk->vector_tmp[2];
+    opt_numint_t x2 = INT64_MIN/opk->vector_tmp[2];
+
+    opt_numint_t x3 = INT64_MAX/opk->vector_tmp[1];
+    opt_numint_t x4 = INT64_MIN/opk->vector_tmp[1];
+
+
+    for (j=1;j<size;j++){
+        if (j!=k){
+            flag=flag || opt_int64_mult(ov1[j],opk->vector_tmp[2],x1,x2,&opk->vector_tmp[3]);
+            flag=flag || opt_int64_mult(ov2[j],opk->vector_tmp[1],x3,x4,&opk->vector_tmp[4]);
+
+            if(add){
+                flag=flag || opt_int64_add(opk->vector_tmp[3],opk->vector_tmp[4],&ov3[j]);
+            }
+            else{
+                flag=flag || opt_int64_add(opk->vector_tmp[3],-opk->vector_tmp[4],&ov3[j]);
+            }
+
+        }
+    }
+
+    ov3[k] = 0;
+    if(flag){
+             printf("exception \n");
+             fflush(stdout);
+             opk->exn = ELINA_EXC_OVERFLOW;
+             return ;
+    }
+    /*for (j=0; j<size; j++){
+        if (opt_numint_abs(ov3[j]) > (ELINA_INT_MAX/2)){
+            opt_vector_print(ov1,size);
+            opt_vector_print(ov2,size);
+            printf("exception %d %lld %lld\n",k,opt_numint_abs(ov3[j]),ELINA_INT_MAX/2);
+            fflush(stdout);
+            opk->exn = ELINA_EXC_OVERFLOW;
+            return ;
+        }
+    }*/
+    opt_vector_normalize(opk,ov3,size);
+    //if (opk->max_coeff_size){
+    
+    //}
+
+}
+
 
 
 //************************************************************************ */
@@ -691,24 +746,53 @@ void opt_vector_add(opt_numint_t *dst, opt_numint_t *op1, opt_numint_t *op2, uns
 opt_numint_t opt_vector_product_strict(opt_pk_internal_t* opk,
 			   opt_numint_t* q1, opt_numint_t* q2, unsigned short int size)
 {
-  opt_numint_t prod;
+  opt_numint_t prod = 0;
   size_t j;
+  bool flag = false;
+
   if (opt_polka_cst<size){
-    prod = q1[opt_polka_cst]*q2[opt_polka_cst];
+    if((q2[opt_polka_cst]!=0) && (q1[opt_polka_cst]!=0)){
+	opk->vector_tmp[0] = opt_numint_abs(q2[opt_polka_cst]);
+	opt_numint_t x1 = INT64_MAX/opk->vector_tmp[0];
+  	opt_numint_t x2 = INT64_MIN/opk->vector_tmp[0];
+	flag = flag || opt_int64_mult(opt_numint_abs(q1[opt_polka_cst]),opk->vector_tmp[0],x1,x2,&opk->vector_tmp[1]);
+	if(opt_numint_sgn(q1[opt_polka_cst])*opt_numint_sgn(q2[opt_polka_cst])>0){
+		flag = flag || opt_int64_add(prod,opk->vector_tmp[1],&prod);
+	}
+	else{
+		flag = flag || opt_int64_add(prod,-opk->vector_tmp[1],&prod);
+	}
+     }
   }
   else {
     prod = 0;
     return prod;
   }
   for (j=opk->dec; j<size; j++){
-    opk->vector_tmp[0] = q1[j]*q2[j];
-    prod = prod + opk->vector_tmp[0];
+    if((q2[j]!=0) && (q1[j]!=0)){
+	opk->vector_tmp[0] = opt_numint_abs(q2[j]);
+	opt_numint_t x1 = INT64_MAX/opk->vector_tmp[0];
+  	opt_numint_t x2 = INT64_MIN/opk->vector_tmp[0];
+	flag = flag || opt_int64_mult(opt_numint_abs(q1[j]),opk->vector_tmp[0],x1,x2,&opk->vector_tmp[1]);
+	if(opt_numint_sgn(q1[j])*opt_numint_sgn(q2[j])>0){
+		flag = flag || opt_int64_add(prod,opk->vector_tmp[1],&prod);
+	}
+	else{
+		flag = flag || opt_int64_add(prod,-opk->vector_tmp[1],&prod);
+	}
+    }
+  }
+
+  if(flag){
+      printf("exception vector product strict\n");
+      fflush(stdout);
+      opk->exn = ELINA_EXC_OVERFLOW;
   }
   return prod;
 }
 
 
-opt_numint_t opt_vector_product_strict_comp(opt_pk_internal_t* opk,
+/*opt_numint_t opt_vector_product_strict_comp(opt_pk_internal_t* opk,
 			   opt_numint_t* q1, opt_numint_t* q2, unsigned short int * ind_map1,
 			   unsigned short int *ind_map2, unsigned short int size1, 
 			   unsigned short int size2, unsigned short int size)
@@ -723,29 +807,30 @@ opt_numint_t opt_vector_product_strict_comp(opt_pk_internal_t* opk,
   }
   opt_numint_t * tmp = opt_vector_alloc(size);
   unsigned short int j;
-  //printf("check1\n");
-  //fflush(stdout);
+
   for(j=opk->dec; j<size1; j++){
 	unsigned short int ind = ind_map1[j-2];
 	tmp[ind+2] = q1[j];
   }
-  //printf("check2\n");
-  //fflush(stdout);
+
   for(j=opk->dec; j<size2; j++){
 	unsigned short int ind = ind_map2[j-2];
 	tmp[ind+2] = tmp[ind+2]*q2[j];
   }
-  //printf("check3\n");
-  //fflush(stdout);
+
   for (j=opk->dec; j<size; j++){
    
     prod = prod + tmp[j];
   }
-  //printf("check4\n");
-  //fflush(stdout);
+
   free(tmp);
+  if(flag){
+             printf("exception vector product\n");
+             fflush(stdout);
+             opk->exn = ELINA_EXC_OVERFLOW;
+  }
   return prod;
-}
+}*/
 /* ********************************************************************** */
 /* VI. Predicates */
 /* ********************************************************************** */
@@ -885,11 +970,35 @@ opt_numint_t * opt_map_vector(opt_numint_t *q, unsigned short int *map, unsigned
 opt_numint_t opt_vector_product(opt_pk_internal_t* opk,
 		    opt_numint_t* q1, opt_numint_t* q2, size_t size)
 {
+
   size_t j;
   opt_numint_t prod = 0;
+  bool flag = false;
+
   for (j=1; j<size; j++){
-    prod = prod + q1[j]*q2[j];
+	if((q2[j]!=0) && (q1[j]!=0)){
+		opk->vector_tmp[0] = opt_numint_abs(q2[j]);
+		opt_numint_t x1 = INT64_MAX/opk->vector_tmp[0];
+  		opt_numint_t x2 = INT64_MIN/opk->vector_tmp[0];
+		flag = flag || opt_int64_mult(opt_numint_abs(q1[j]),opk->vector_tmp[0],x1,x2,&opk->vector_tmp[1]);
+		if(opt_numint_sgn(q1[j])*opt_numint_sgn(q2[j])>0){
+			flag = flag || opt_int64_add(prod,opk->vector_tmp[1],&prod);
+		}
+		else{
+
+			flag = flag || opt_int64_add(prod,-opk->vector_tmp[1],&prod);
+		}
+	}
+
   }
+
+  if(flag){
+             printf("exception vector product\n");
+             fflush(stdout);
+             opk->exn = ELINA_EXC_OVERFLOW;
+
+  }
+
   return prod;
 }
 
@@ -912,9 +1021,28 @@ opt_numint_t opt_vector_product_with_index(opt_pk_internal_t* opk,
   size_t j;
   opt_numint_t prod = 0;
   unsigned short int size = nz[0];
+  bool flag = false;
   for (j=0; j<size; j++){
     unsigned short int j1 = nz[j+1];
-    prod = prod + q1[j1]*q2[j1];
+    if((q1[j1]!=0) && (q2[j1]!=0)){
+	opk->vector_tmp[0] = opt_numint_abs(q2[j1]);
+	opt_numint_t x1 = INT64_MAX/opk->vector_tmp[0];
+  	opt_numint_t x2 = INT64_MIN/opk->vector_tmp[0];
+	flag = flag || opt_int64_mult(opt_numint_abs(q1[j1]),opk->vector_tmp[0],x1,x2,&opk->vector_tmp[1]);
+	if(opt_numint_sgn(q1[j1])*opt_numint_sgn(q2[j1])>0){
+		flag = flag || opt_int64_add(prod,opk->vector_tmp[1],&prod);
+	}
+	else{
+		flag = flag || opt_int64_add(prod,-opk->vector_tmp[1],&prod);
+	}
+    }
+
+  }
+  if(flag){
+      printf("exception vector product\n");
+      fflush(stdout);
+      opk->exn = ELINA_EXC_OVERFLOW;
+
   }
   return prod;
 }
@@ -930,4 +1058,92 @@ bool is_ray(opt_numint_t * v){
 
 bool is_line(opt_numint_t * v){
 	return (!v[0] && !v[1]);
+}
+
+
+/* Bounding the value of an (interval) linear expression (itv_linexpr) in a
+   generator vector
+*/
+void opt_vector_bound_elina_linexpr0(opt_pk_internal_t* opk,
+			      elina_rat_t *inf, elina_rat_t *sup,
+			      elina_linexpr0_t* linexpr,
+			      opt_numint_t* vec, size_t size)
+{
+  size_t i,dim;
+  elina_coeff_t *coeff, *cst;
+  elina_rat_t* rat = (elina_rat_t *)malloc(sizeof(elina_rat_t));
+  rat->n = 1;
+  rat->d = 1;
+  elina_rat_t * prod1 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
+  elina_rat_t * prod2 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
+  elina_rat_t * op1 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
+  elina_rat_t * op2 = (elina_rat_t *)malloc(sizeof(elina_rat_t));
+  inf->n = 0;
+  inf->d = 1;
+  sup->n = 0;
+  sup->d = 1;
+  elina_linexpr0_ForeachLinterm(linexpr,i,dim,coeff){
+    size_t index = opk->dec + dim;
+    if (opt_numint_sgn(vec[index])){
+      rat->n = vec[index];
+      if(coeff->discr==ELINA_COEFF_SCALAR){
+		elina_rat_set_elina_scalar(op1,coeff->val.scalar);
+		elina_rat_mul(prod1,op1,rat);
+		prod2->n = prod1->n;
+		prod2->d = prod1->d;
+      }
+      else{
+        elina_rat_set_elina_scalar(op1,coeff->val.interval->inf);
+	elina_rat_set_elina_scalar(op2,coeff->val.interval->sup);
+	if (elina_rat_sgn(rat)>=0){
+	  elina_rat_mul(prod1,op1,rat);
+    	  elina_rat_mul(prod2,op2,rat);
+      	} else {
+          elina_rat_mul(prod1,op2,rat);
+          elina_rat_mul(prod2,op1,rat);
+      	}
+      }
+      elina_rat_add(inf,inf,prod1);
+      elina_rat_add(sup,sup,prod2);
+
+    }
+  }
+
+
+  if (opt_numint_sgn(vec[opt_polka_cst])){
+      rat->n = vec[opt_polka_cst];
+      if (elina_rat_sgn(rat)>=0){
+	  elina_rat_div(inf,inf,rat);
+    	  elina_rat_div(sup,sup,rat);
+      } else {
+          elina_rat_div(prod1,inf,rat);
+          elina_rat_div(prod2,sup,rat);
+	  inf->n = prod2->n;
+	  inf->d = prod2->d;
+	  sup->n = prod1->n;
+	  sup->d = prod1->d;
+      }
+      cst = &linexpr->cst;
+      if(cst->discr==ELINA_COEFF_SCALAR){
+
+	 elina_rat_set_elina_scalar(op1,cst->val.scalar);
+	 elina_rat_add(inf,inf,op1);
+	 elina_rat_add(sup,sup,op1);
+
+     }
+     else{
+
+	elina_rat_set_elina_scalar(op1,cst->val.interval->inf);
+	elina_rat_set_elina_scalar(op2,cst->val.interval->sup);
+	elina_rat_add(inf,inf,op1);
+	elina_rat_add(sup,sup,op2);
+     }
+  }
+
+  free(prod1);
+  free(prod2);
+  free(op1);
+  free(op2);
+  free(rat);
+  return;
 }
