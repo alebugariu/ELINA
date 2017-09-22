@@ -369,6 +369,48 @@ static elina_rat_t * elina_scalar_set_rat(elina_scalar_t * scalar){
 	}
 }
 
+static inline void elina_rat_neg(elina_rat_t *a, elina_rat_t* b){
+	a->n = -b->n;
+	a->d = b->d;
+}
+
+static inline void elina_rat_mul(elina_rat_t* a, elina_rat_t* b, elina_rat_t* c)
+{
+  a->n = b->n * c->n;
+  a->d = b->d * c->d;
+  elina_rat_canonicalize(a);
+}
+
+static inline void elina_rat_add(elina_rat_t* a, elina_rat_t* b, elina_rat_t* c)
+{
+  elina_int_t d = elina_int_lcm(b->d,c->d);
+  a->n = b->n * (d / b->d) + (d / c->d) * c->n;
+  a->d = d;
+  elina_rat_canonicalize(a);
+}
+
+
+static inline void elina_rat_min(elina_rat_t *a, elina_rat_t *b, elina_rat_t *c){
+       if(elina_rat_cmp(b,c)<=0){
+	  a->n = b->n;
+	  a->d = b->d;
+       }
+       else{
+	  a->n = c->n;
+	  a->d = c->d;
+       }
+
+}
+static inline void elina_rat_max(elina_rat_t *a, elina_rat_t *b, elina_rat_t *c){
+	if(elina_rat_cmp(b,c)>=0){
+	   a->n = b->n;
+	   a->d = b->d;
+	}
+	else{
+	   a->n = c->n;
+	   a->d = c->d;
+	}
+}
 
 #ifdef __cplusplus
 }
