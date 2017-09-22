@@ -852,6 +852,9 @@ void elina_lincons0_reduce_integer(elina_lincons0_t* cons, size_t intdim, elina_
       return;
     elina_linexpr0_ForeachLinterm(expr,i,dim,coeff) {
       elina_rat_set_elina_scalar(tmp,coeff->val.scalar);
+      printf("TEST:\n");
+      printf("%ld/%ld", tmp->n,rat->n);
+      fflush(NULL);
       tmp->n = tmp->n/rat->n;
       tmp->n = tmp->n*rat->d;
       tmp->n = tmp->n/tmp->d;
@@ -914,6 +917,8 @@ void elina_lincons0_reduce_integer(elina_lincons0_t* cons, size_t intdim, elina_
 
 char elina_lincons0_array_reduce_integer(elina_lincons0_array_t* array, size_t intdim, elina_scalar_discr_t discr)
 {
+  printf("REDUCE integer\n");
+  fflush(NULL);
   size_t i;
   for (i=0; i<array->size; i++){
     elina_lincons0_reduce_integer(&array->p[i],intdim,discr);

@@ -18,3 +18,5 @@ elina_poly/tests/libFuzzer/crash-*
 elina_poly/tests/libFuzzer/slow-*
 elina_poly/tests/libFuzzer/oom-*
 elina_poly/tests/libFuzzer/timeout-*
+elina_poly/tests/libFuzzer/failing_tests/test*
+!elina_poly/tests/libFuzzer/failing_tests/test*.c
