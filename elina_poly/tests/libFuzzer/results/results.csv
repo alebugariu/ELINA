@@ -1,34 +1,34 @@
 test case,execution time (seconds),execution time (minutes),initial coverage,final coverage,number of executed units,new units added,status
-test_poly0,8,0.13333333333333333,11,646,186618,92,AddressSanitizer: FPE /home/elina/elina_linearize/elina_linearize.c:855:22 in elina_lincons0_reduce_integer
-test_poly1,0,0.0,-,646,1327,0,libFuzzer: deadly signal
-test_poly2,0,0.0,-,646,1317,0,libFuzzer: deadly signal
-test_poly3,5403,90.05,11,809,442530,199,libFuzzer: timeout
-test_poly4,480,8.0,11,86,-,-,KILLED
-test_poly5,53,0.8833333333333333,11,87,1537841,22,libFuzzer: deadly signal
-test_poly6,3,0.05,11,615,60384,71,AddressSanitizer: FPE /home/elina/elina_poly/opt_pk_vector.c:516:45 in opt_vector_combine
-test_poly7,5403,90.05,11,641,85210,81,libFuzzer: timeout
-test_poly8,15,0.25,11,624,137033,170,libFuzzer: deadly signal
-test_poly9,0,0.0,-,624,1769,0,libFuzzer: deadly signal
-test_poly10,5403,90.05,11,643,147156,173,libFuzzer: timeout
-test_poly11,2,0.03333333333333333,11,763,43553,13,libFuzzer: deadly signal
-test_poly12,1,0.016666666666666666,-,763,1778,0,libFuzzer: deadly signal
-test_poly13,3,0.05,984,984,33781,11,libFuzzer: deadly signal
-test_poly14,0,0.0,-,984,1907,0,libFuzzer: deadly signal
-test_poly15,49,0.8166666666666667,11,704,886697,220,AddressSanitizer: bad-free (/home/elina/elina_poly/tests/libFuzzer/test15+0x4bd6a2) in free
-test_poly16,1,0.016666666666666666,11,755,39903,20,libFuzzer: deadly signal
-test_poly17,5403,90.05,11,636,66016,85,libFuzzer: timeout
-test_poly18,6,0.1,11,782,77240,94,libFuzzer: deadly signal
-test_poly19,1,0.016666666666666666,-,782,3844,0,libFuzzer: deadly signal
-test_poly20,4,0.06666666666666667,12,782,92919,69,libFuzzer: deadly signal
-test_poly21,91,1.5166666666666666,11,124,2976178,28,libFuzzer: deadly signal
-test_poly22,1,0.016666666666666666,-,124,2164,0,libFuzzer: deadly signal
-test_poly23,1,0.016666666666666666,-,124,2340,0,libFuzzer: deadly signal
-test_poly24,1,0.016666666666666666,-,124,1890,0,libFuzzer: deadly signal
-test_poly25,5403,90.05,11,657,108837,154,libFuzzer: timeout
-test_poly26,5403,90.05,11,767,204995,205,libFuzzer: timeout
-test_poly27,1,0.016666666666666666,-,767,2175,0,libFuzzer: deadly signal
-test_poly28,91,1.5166666666666666,11,684,2783607,173,libFuzzer: deadly signal
-test_poly29,11,0.18333333333333332,11,669,175244,138,AddressSanitizer: FPE /home/elina/elina_linearize/elina_linearize.c:855:22 in elina_lincons0_reduce_integer
-test_poly30,14,0.23333333333333334,11,87,189071,23,libFuzzer: deadly signal
-test_poly31,1,0.016666666666666666,-,87,1911,0,libFuzzer: deadly signal
-test_poly32,5403,90.05,1030,1030,43556,11,libFuzzer: timeout
+test_poly0,559,9.316666666666666,11,38,-,-,KILLED
+test_poly1,2,0.03333333333333333,-,38,1391,0,libFuzzer: deadly signal
+test_poly2,1,0.016666666666666666,-,38,1392,0,libFuzzer: deadly signal
+test_poly3,559,9.316666666666666,11,39,-,-,KILLED
+test_poly4,968,16.133333333333333,11,43,-,-,KILLED
+test_poly5,7,0.11666666666666667,11,27,211718,7,libFuzzer: deadly signal
+test_poly6,642,10.7,11,38,-,-,KILLED
+test_poly7,53,0.8833333333333333,11,39,418063,22,libFuzzer: deadly signal
+test_poly8,1,0.016666666666666666,-,39,1946,0,libFuzzer: deadly signal
+test_poly9,1,0.016666666666666666,-,39,2005,0,libFuzzer: deadly signal
+test_poly10,696,11.6,18,42,-,-,KILLED
+test_poly11,712,11.866666666666667,11,35,-,-,KILLED
+test_poly12,2,0.03333333333333333,-,35,2015,0,libFuzzer: deadly signal
+test_poly13,1,0.016666666666666666,-,35,4619,0,libFuzzer: deadly signal
+test_poly14,1,0.016666666666666666,-,35,1961,0,libFuzzer: deadly signal
+test_poly15,529,8.816666666666666,11,35,-,-,KILLED
+test_poly16,3,0.05,11,34,42169,13,libFuzzer: deadly signal
+test_poly17,4,0.06666666666666667,11,40,56488,18,libFuzzer: deadly signal
+test_poly18,5403,90.05,11,39,1903142,22,libFuzzer: timeout
+test_poly19,2,0.03333333333333333,-,39,1981,0,libFuzzer: deadly signal
+test_poly20,167,2.783333333333333,11,42,2137503,24,libFuzzer: deadly signal
+test_poly21,16,0.26666666666666666,11,35,604614,8,libFuzzer: deadly signal
+test_poly22,1,0.016666666666666666,-,35,2298,0,libFuzzer: deadly signal
+test_poly23,0,0.0,-,35,1998,0,libFuzzer: deadly signal
+test_poly24,0,0.0,-,35,1989,0,libFuzzer: deadly signal
+test_poly25,646,10.766666666666667,11,44,-,-,KILLED
+test_poly26,71,1.1833333333333333,11,44,961398,20,libFuzzer: deadly signal
+test_poly27,1,0.016666666666666666,-,44,2594,0,libFuzzer: deadly signal
+test_poly28,654,10.9,11,35,-,-,KILLED
+test_poly29,661,11.016666666666667,11,39,-,-,KILLED
+test_poly30,2,0.03333333333333333,-,39,1473,0,libFuzzer: deadly signal
+test_poly31,1,0.016666666666666666,-,39,2018,0,libFuzzer: deadly signal
+test_poly32,427,7.116666666666666,43,43,-,-,KILLED
