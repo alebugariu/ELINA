@@ -331,8 +331,8 @@ opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destru
   //elina_lincons0_array_t arr2 = opt_pk_to_lincons_array(man,oa);
   //elina_lincons0_array_fprint(stdout,&arr2,NULL);
   //elina_lincons0_array_clear(&arr2);
-  elina_lincons0_array_fprint(stdout,array,NULL);
-  fflush(stdout);
+  //elina_lincons0_array_fprint(stdout,array,NULL);
+  //fflush(stdout);
   opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_MEET_LINCONS_ARRAY);
   size_t i;
   size_t size = array->size; 
