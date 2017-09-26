@@ -1,0 +1,6 @@
+Dim: 2
+Number of constraints: 2
+Type: e
+Values: 1, 0, 1, 0, 0
+Type: s
+Values: 1, 0, 1, 0, 0

@@ -845,18 +845,23 @@ void elina_lincons0_reduce_integer(elina_lincons0_t* cons, size_t intdim, elina_
     rat->d = 1;
     elina_linexpr0_ForeachLinterm(expr,i,dim,coeff) {
       elina_rat_set_elina_scalar(tmp,coeff->val.scalar);
+
       rat->d = elina_int_lcm(rat->d,tmp->d);
       rat->n = elina_int_gcd(rat->n,tmp->n);
     }
     if (elina_int_sgn(rat->n)==0)
       return;
+
     elina_linexpr0_ForeachLinterm(expr,i,dim,coeff) {
       elina_rat_set_elina_scalar(tmp,coeff->val.scalar);
+      if((tmp->n==ELINA_INT_MIN)&&(rat->n==-1)){
+		elina_lincons0_set_bool(cons,true,discr);
+		return;
+      }
       tmp->n = tmp->n/rat->n;
       tmp->n = tmp->n*rat->d;
       tmp->n = tmp->n/tmp->d;
       tmp->d = 1;
-	
       elina_scalar_set_elina_rat(coeff->val.scalar,tmp);
     }
     free(tmp);

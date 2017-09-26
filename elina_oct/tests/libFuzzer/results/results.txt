@@ -1,1611 +1,861 @@
 cd elina_oct/tests/libFuzzer; \
-clang -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I ../.. -I ../../../elina_auxiliary -I ../../../elina_linearize -I ../../../partitions_api -O0 -c -g test_oct.c; \
-        number=0 ; while [ ${number} -le 39 ] ; do \
-	clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -DTHRESHOLD=0.75 -DNUM_DOUBLE -I /usr/local/include -I ../.. -I ../../../elina_auxiliary -I ../../../elina_linearize -I ../../../partitions_api *.o ../../*.o ../../../elina_auxiliary/*.o ../../../elina_linearize/*.o ../../../partitions_api/*.o test_oct${number}.c /home/libFuzzer.a -o test${number} -lmpfr -lgmp; \
-                startTime=`date +%s` ; \
+    number=0 ; while [ ${number} -le 39 ] ; do \
+	clang -lstdc++ -fsanitize=address -fsanitize-coverage=trace-pc-guard -fPIC -O0 -DTHRESHOLD=0.75 -DNUM_DOUBLE \
+			-I /usr/local/include test_oct.c test_oct${number}.c /home/libFuzzer.a -o test${number} -lmpfr -lgmp -lelinalinearize -lelinaux -loptoct -lpartitions; \
+        startTime=`date +%s` ; \
 	./test${number} -max_len=10000 -detect_leaks=0 -rss_limit_mb=8192 -timeout=3600 -print_final_stats=1 MY_CORPUS/ SEED_CORPUS/; \
-                endTime=`date +%s` ; \
-                runtime=`expr $endTime - $startTime` ; \
-                echo "Execution time: $runtime sec for test_oct$number\n" ; \
+        endTime=`date +%s` ; \
+        runtime=`expr $endTime - $startTime` ; \
+        echo "Execution time: $runtime sec for test_oct$number\n" ; \
 	number=`expr $number + 1` ; \
     	done; \
         true
-In file included from test_oct.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-In file included from test_oct0.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1195153868
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 2333708687
+INFO: Loaded 1 modules (59 guards): [0x748010, 0x7480fc), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1145 files from MY_CORPUS/
+Loaded 1024/1397 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1146
-#1147	INITED cov: 508 ft: 2500 corp: 195/386Kb exec/s: 0 rss: 104Mb
-#8192	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 4096 rss: 243Mb
-#16384	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 3276 rss: 405Mb
-#32768	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 3276 rss: 666Mb
-#65536	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 3449 rss: 904Mb
-#131072	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 3276 rss: 1363Mb
-#262144	pulse  cov: 508 ft: 2500 corp: 195/386Kb exec/s: 3196 rss: 2286Mb
-#298769	NEW    cov: 508 ft: 2501 corp: 196/391Kb exec/s: 3212 rss: 2549Mb L: 5220 MS: 2 ChangeBit-ShuffleBytes-
-#314220	NEW    cov: 508 ft: 2502 corp: 197/396Kb exec/s: 3206 rss: 2658Mb L: 4740 MS: 2 ShuffleBytes-ChangeBinInt-
-#524288	pulse  cov: 508 ft: 2502 corp: 197/396Kb exec/s: 3196 rss: 4141Mb
+#0	READ units: 1398
+#1399	INITED cov: 20 ft: 23 corp: 5/11026b exec/s: 0 rss: 80Mb
+#1452	NEW    cov: 21 ft: 24 corp: 6/11932b exec/s: 0 rss: 81Mb L: 906 MS: 3 ShuffleBytes-EraseBytes-InsertRepeatedBytes-
+#1828	NEW    cov: 22 ft: 25 corp: 7/12004b exec/s: 0 rss: 84Mb L: 72 MS: 4 ShuffleBytes-EraseBytes-ChangeBinInt-InsertRepeatedBytes-
+#5245	NEW    cov: 23 ft: 26 corp: 8/12914b exec/s: 0 rss: 118Mb L: 910 MS: 1 CMP- DE: "\x01\x00\x00\x00"-
+#5283	NEW    cov: 27 ft: 33 corp: 9/13852b exec/s: 0 rss: 118Mb L: 938 MS: 4 CMP-PersAutoDict-CMP-ChangeBinInt- DE: "\x01\x00"-"\x01\x00\x00\x00"-"\x01\x00"-
+#5405	NEW    cov: 29 ft: 38 corp: 10/14791b exec/s: 5405 rss: 120Mb L: 939 MS: 1 InsertByte-
+#5407	NEW    cov: 30 ft: 39 corp: 11/15534b exec/s: 5407 rss: 120Mb L: 743 MS: 3 InsertByte-EraseBytes-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
+#5427	NEW    cov: 31 ft: 40 corp: 12/16021b exec/s: 5427 rss: 120Mb L: 487 MS: 3 ChangeASCIIInt-CMP-EraseBytes- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
+#6171	NEW    cov: 32 ft: 41 corp: 13/16Kb exec/s: 6171 rss: 128Mb L: 543 MS: 2 ChangeBit-EraseBytes-
+#7408	NEW    cov: 33 ft: 42 corp: 14/16Kb exec/s: 7408 rss: 140Mb L: 136 MS: 4 ChangeBit-PersAutoDict-ChangeByte-CrossOver- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
+#7613	NEW    cov: 34 ft: 43 corp: 15/16Kb exec/s: 7613 rss: 143Mb L: 544 MS: 1 InsertByte-
+#13554	NEW    cov: 35 ft: 44 corp: 16/17Kb exec/s: 6777 rss: 203Mb L: 751 MS: 2 ChangeBit-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
+#16384	pulse  cov: 35 ft: 44 corp: 16/17Kb exec/s: 5461 rss: 232Mb
+#28741	NEW    cov: 37 ft: 46 corp: 17/18Kb exec/s: 5748 rss: 360Mb L: 824 MS: 4 InsertRepeatedBytes-ShuffleBytes-PersAutoDict-InsertRepeatedBytes- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
+#32768	pulse  cov: 37 ft: 46 corp: 17/18Kb exec/s: 5461 rss: 403Mb
+#42011	NEW    cov: 41 ft: 51 corp: 18/19Kb exec/s: 6001 rss: 500Mb L: 939 MS: 4 PersAutoDict-ChangeByte-InsertByte-InsertRepeatedBytes- DE: "\x01\x00"-
+#42228	NEW    cov: 41 ft: 52 corp: 19/20Kb exec/s: 5278 rss: 503Mb L: 947 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
+#42326	NEW    cov: 42 ft: 53 corp: 20/22Kb exec/s: 5290 rss: 504Mb L: 1881 MS: 4 ChangeByte-CrossOver-CopyPart-ChangeByte-
+#56389	NEW    cov: 42 ft: 54 corp: 21/23Kb exec/s: 5638 rss: 568Mb L: 1324 MS: 2 ChangeByte-CopyPart-
+#59978	NEW    cov: 43 ft: 55 corp: 22/24Kb exec/s: 5452 rss: 579Mb L: 939 MS: 1 ChangeBit-
+#64965	NEW    cov: 46 ft: 63 corp: 23/25Kb exec/s: 5413 rss: 592Mb L: 1699 MS: 3 ChangeASCIIInt-ShuffleBytes-CopyPart-
+#65536	pulse  cov: 46 ft: 63 corp: 23/25Kb exec/s: 5461 rss: 595Mb
+#67404	NEW    cov: 46 ft: 64 corp: 24/26Kb exec/s: 5184 rss: 601Mb L: 947 MS: 2 ChangeBit-ChangeBinInt-
+#89163	NEW    cov: 46 ft: 65 corp: 25/28Kb exec/s: 5244 rss: 671Mb L: 1699 MS: 1 ChangeBinInt-
+#89165	NEW    cov: 46 ft: 67 corp: 26/31Kb exec/s: 5245 rss: 671Mb L: 3321 MS: 3 ChangeBinInt-CMP-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
+#101293	NEW    cov: 47 ft: 68 corp: 27/32Kb exec/s: 5064 rss: 711Mb L: 1038 MS: 1 InsertRepeatedBytes-
+#106342	NEW    cov: 47 ft: 69 corp: 28/36Kb exec/s: 5063 rss: 727Mb L: 3473 MS: 5 InsertRepeatedBytes-ShuffleBytes-InsertByte-InsertByte-InsertRepeatedBytes-
+#117735	NEW    cov: 48 ft: 70 corp: 29/37Kb exec/s: 5118 rss: 761Mb L: 1039 MS: 3 EraseBytes-InsertByte-CMP- DE: "\x01\x00\x00\x00"-
+#124519	NEW    cov: 48 ft: 75 corp: 30/40Kb exec/s: 4980 rss: 782Mb L: 3322 MS: 2 InsertByte-CopyPart-
+#131072	pulse  cov: 48 ft: 75 corp: 30/40Kb exec/s: 5041 rss: 805Mb
+#170474	NEW    cov: 48 ft: 83 corp: 31/43Kb exec/s: 4870 rss: 932Mb L: 3322 MS: 2 ShuffleBytes-ChangeBit-
+#188370	NEW    cov: 49 ft: 84 corp: 32/46Kb exec/s: 4830 rss: 991Mb L: 3351 MS: 3 CopyPart-InsertByte-InsertRepeatedBytes-
+#262144	pulse  cov: 49 ft: 84 corp: 32/46Kb exec/s: 4766 rss: 1225Mb
+#524288	pulse  cov: 49 ft: 84 corp: 32/46Kb exec/s: 4639 rss: 2014Mb
+#789473	NEW    cov: 49 ft: 86 corp: 33/50Kb exec/s: 4616 rss: 2811Mb L: 3322 MS: 1 CopyPart-
+#1002401	NEW    cov: 49 ft: 87 corp: 34/51Kb exec/s: 4619 rss: 3459Mb L: 1709 MS: 4 ChangeByte-ChangeBinInt-ChangeBit-CopyPart-
+#1048576	pulse  cov: 49 ft: 87 corp: 34/51Kb exec/s: 4619 rss: 3601Mb
+#1626923	NEW    cov: 49 ft: 88 corp: 35/52Kb exec/s: 4582 rss: 5360Mb L: 1039 MS: 1 CopyPart-
+#1771736	NEW    cov: 49 ft: 89 corp: 36/53Kb exec/s: 4578 rss: 5802Mb L: 901 MS: 4 EraseBytes-ShuffleBytes-InsertByte-CopyPart-
+#2097152	pulse  cov: 49 ft: 89 corp: 36/53Kb exec/s: 4568 rss: 6791Mb
+#4194304	pulse  cov: 49 ft: 89 corp: 36/53Kb exec/s: 4471 rss: 8015Mb
+Killed
+Execution time: 1207 sec for test_oct0
+
+INFO: Seed: 3795403288
+INFO: Loaded 1 modules (59 guards): [0x748010, 0x7480fc), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1428 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1429
+#1430	INITED cov: 49 ft: 89 corp: 30/44Kb exec/s: 0 rss: 81Mb
+#16384	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 5461 rss: 276Mb
+#32768	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4681 rss: 488Mb
+#65536	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4369 rss: 626Mb
+#131072	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4228 rss: 837Mb
+#262144	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4297 rss: 1254Mb
+#524288	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4297 rss: 2090Mb
+#1048576	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4297 rss: 3764Mb
+#2097152	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4297 rss: 7110Mb
+#4194304	pulse  cov: 49 ft: 89 corp: 30/44Kb exec/s: 4219 rss: 8036Mb
+Killed
+Execution time: 1273 sec for test_oct1
+
+INFO: Seed: 2776445122
+INFO: Loaded 1 modules (59 guards): [0x748010, 0x7480fc), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1428 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1429
+#1430	INITED cov: 49 ft: 89 corp: 29/43Kb exec/s: 0 rss: 81Mb
+#8192	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4096 rss: 169Mb
+#16384	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 5461 rss: 275Mb
+#32768	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4681 rss: 489Mb
+#65536	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4369 rss: 626Mb
+#131072	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4369 rss: 840Mb
+#262144	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4297 rss: 1260Mb
+#524288	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4297 rss: 2100Mb
+#1048576	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4297 rss: 3774Mb
+#2097152	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4315 rss: 7113Mb
+#4194304	pulse  cov: 49 ft: 89 corp: 29/43Kb exec/s: 4228 rss: 8143Mb
+Killed
+Execution time: 1379 sec for test_oct2
+
+INFO: Seed: 3353895467
+INFO: Loaded 1 modules (68 guards): [0x748010, 0x748120), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1428 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1429
+#1430	INITED cov: 50 ft: 92 corp: 31/45Kb exec/s: 0 rss: 82Mb
+#8690	NEW    cov: 50 ft: 93 corp: 32/48Kb exec/s: 4345 rss: 176Mb L: 3323 MS: 5 ShuffleBytes-ShuffleBytes-ShuffleBytes-InsertByte-ChangeBit-
+#16384	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 5461 rss: 277Mb
+#32768	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 4681 rss: 492Mb
+#65536	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 4369 rss: 628Mb
+#131072	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 4369 rss: 843Mb
+#262144	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 4297 rss: 1267Mb
+#524288	pulse  cov: 50 ft: 93 corp: 32/48Kb exec/s: 4297 rss: 2112Mb
+#1025087	NEW    cov: 52 ft: 99 corp: 33/51Kb exec/s: 4289 rss: 3726Mb L: 2610 MS: 2 ChangeBinInt-CrossOver-
+#1048576	pulse  cov: 52 ft: 99 corp: 33/51Kb exec/s: 4279 rss: 3809Mb
+#1084387	NEW    cov: 52 ft: 100 corp: 34/55Kb exec/s: 4286 rss: 3930Mb L: 4279 MS: 2 CMP-CopyPart- DE: "rss_limit_m"-
+#1204617	NEW    cov: 52 ft: 101 corp: 35/58Kb exec/s: 4317 rss: 4288Mb L: 2849 MS: 2 CopyPart-CopyPart-
+#1271466	NEW    cov: 52 ft: 102 corp: 36/60Kb exec/s: 4339 rss: 4487Mb L: 2610 MS: 1 ChangeBinInt-
+#1305510	NEW    cov: 52 ft: 109 corp: 37/66Kb exec/s: 4351 rss: 4589Mb L: 5425 MS: 5 ChangeBinInt-CMP-ChangeBinInt-CrossOver-CMP- DE: "merge_control_"-"use_cmp"-
+#1496582	NEW    cov: 52 ft: 110 corp: 38/75Kb exec/s: 4375 rss: 5200Mb L: 9281 MS: 2 CopyPart-ChangeBit-
+#1932567	NEW    cov: 52 ft: 111 corp: 39/82Kb exec/s: 4412 rss: 6567Mb L: 7019 MS: 2 InsertRepeatedBytes-CrossOver-
+#2097152	pulse  cov: 52 ft: 111 corp: 39/82Kb exec/s: 4415 rss: 7091Mb
+#2117899	NEW    cov: 54 ft: 115 corp: 40/85Kb exec/s: 4421 rss: 7156Mb L: 3649 MS: 4 ChangeASCIIInt-ChangeBinInt-ChangeBit-CrossOver-
+#2217883	NEW    cov: 55 ft: 116 corp: 41/92Kb exec/s: 4426 rss: 7487Mb L: 6503 MS: 3 CopyPart-CopyPart-ChangeBinInt-
+#2219391	NEW    cov: 55 ft: 117 corp: 42/95Kb exec/s: 4421 rss: 7492Mb L: 3713 MS: 1 InsertRepeatedBytes-
+#2361616	NEW    cov: 55 ft: 118 corp: 43/101Kb exec/s: 4430 rss: 7958Mb L: 6503 MS: 1 ChangeBinInt-
+#2488631	NEW    cov: 55 ft: 119 corp: 44/108Kb exec/s: 4428 rss: 8137Mb L: 6588 MS: 1 CopyPart-
+#2553602	NEW    cov: 56 ft: 120 corp: 45/114Kb exec/s: 4425 rss: 8138Mb L: 6698 MS: 2 InsertRepeatedBytes-ChangeBit-
+#2608462	NEW    cov: 56 ft: 121 corp: 46/118Kb exec/s: 4421 rss: 8138Mb L: 3966 MS: 2 ChangeASCIIInt-EraseBytes-
+#4194304	pulse  cov: 56 ft: 121 corp: 46/118Kb exec/s: 4378 rss: 8141Mb
+Killed
+Execution time: 1457 sec for test_oct3
+
+INFO: Seed: 1794939926
+INFO: Loaded 1 modules (65 guards): [0x748010, 0x748114), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1443 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1444
+#1445	INITED cov: 53 ft: 109 corp: 35/69Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 53 ft: 109 corp: 35/69Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 53 ft: 109 corp: 35/69Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 53 ft: 109 corp: 35/69Kb exec/s: 4096 rss: 514Mb
+#65536	pulse  cov: 53 ft: 109 corp: 35/69Kb exec/s: 4096 rss: 649Mb
+#119220	NEW    cov: 53 ft: 110 corp: 36/73Kb exec/s: 4111 rss: 841Mb L: 3967 MS: 5 ChangeBinInt-ShuffleBytes-InsertByte-ShuffleBytes-CopyPart-
+#131072	pulse  cov: 53 ft: 110 corp: 36/73Kb exec/s: 4096 rss: 884Mb
+#262144	pulse  cov: 53 ft: 110 corp: 36/73Kb exec/s: 4096 rss: 1354Mb
+#304865	NEW    cov: 54 ft: 111 corp: 37/83Kb exec/s: 4064 rss: 1505Mb L: 10000 MS: 5 ShuffleBytes-CopyPart-InsertRepeatedBytes-InsertByte-CrossOver-
+#524288	pulse  cov: 54 ft: 111 corp: 37/83Kb exec/s: 4032 rss: 2293Mb
+#1048576	pulse  cov: 54 ft: 111 corp: 37/83Kb exec/s: 4080 rss: 4162Mb
+#1075633	NEW    cov: 54 ft: 112 corp: 38/85Kb exec/s: 4074 rss: 4260Mb L: 2611 MS: 3 InsertByte-ChangeByte-CopyPart-
+#1089931	NEW    cov: 54 ft: 113 corp: 39/89Kb exec/s: 4082 rss: 4312Mb L: 3880 MS: 1 CopyPart-
+#2097152	pulse  cov: 54 ft: 113 corp: 39/89Kb exec/s: 4072 rss: 7927Mb
+Killed
+Execution time: 1175 sec for test_oct4
+
+INFO: Seed: 453384499
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1447 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1448
+#1449	INITED cov: 49 ft: 91 corp: 31/54Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 49 ft: 91 corp: 31/54Kb exec/s: 4096 rss: 173Mb
+#16384	pulse  cov: 49 ft: 91 corp: 31/54Kb exec/s: 5461 rss: 282Mb
+#32768	pulse  cov: 49 ft: 91 corp: 31/54Kb exec/s: 4681 rss: 501Mb
+#65536	pulse  cov: 49 ft: 91 corp: 31/54Kb exec/s: 4369 rss: 633Mb
+#131072	pulse  cov: 49 ft: 91 corp: 31/54Kb exec/s: 4369 rss: 851Mb
+#252482	NEW    cov: 49 ft: 92 corp: 32/63Kb exec/s: 4279 rss: 1260Mb L: 9282 MS: 3 InsertByte-ChangeBit-ChangeBinInt-
+#256313	NEW    cov: 49 ft: 93 corp: 33/72Kb exec/s: 4271 rss: 1274Mb L: 9298 MS: 4 ChangeByte-EraseBytes-ChangeBinInt-CopyPart-
+#262144	pulse  cov: 49 ft: 93 corp: 33/72Kb exec/s: 4297 rss: 1294Mb
+#284032	NEW    cov: 49 ft: 94 corp: 34/81Kb exec/s: 4303 rss: 1369Mb L: 9282 MS: 3 ChangeBit-CopyPart-CopyPart-
+#524288	pulse  cov: 49 ft: 94 corp: 34/81Kb exec/s: 4228 rss: 2192Mb
+#556988	NEW    cov: 49 ft: 98 corp: 35/90Kb exec/s: 4219 rss: 2304Mb L: 9187 MS: 4 CopyPart-ChangeBit-InsertByte-EraseBytes-
+#650455	NEW    cov: 49 ft: 99 corp: 36/99Kb exec/s: 4223 rss: 2649Mb L: 9187 MS: 1 ChangeBit-
+#1013620	NEW    cov: 49 ft: 100 corp: 37/103Kb exec/s: 4171 rss: 3941Mb L: 3880 MS: 1 ChangeBinInt-
+#1048576	pulse  cov: 49 ft: 100 corp: 37/103Kb exec/s: 4177 rss: 4065Mb
+#2097152	pulse  cov: 49 ft: 100 corp: 37/103Kb exec/s: 4152 rss: 7786Mb
+#3189386	NEW    cov: 49 ft: 101 corp: 38/110Kb exec/s: 4088 rss: 8138Mb L: 7005 MS: 2 InsertRepeatedBytes-CrossOver-
+Killed
+Execution time: 1251 sec for test_oct5
+
+INFO: Seed: 2291630493
+INFO: Loaded 1 modules (59 guards): [0x748010, 0x7480fc), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1454 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1455
+#1456	INITED cov: 49 ft: 101 corp: 32/63Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 296Mb
+#32768	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 517Mb
+#65536	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 645Mb
+#131072	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 878Mb
+#262144	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4161 rss: 1345Mb
+#524288	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4161 rss: 2274Mb
+#1048576	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4144 rss: 4125Mb
+#2097152	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4152 rss: 7825Mb
+Killed
+Execution time: 1202 sec for test_oct6
+
+INFO: Seed: 2724588508
+INFO: Loaded 1 modules (62 guards): [0x748010, 0x748108), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1454 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1455
+#1456	INITED cov: 51 ft: 111 corp: 36/74Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 295Mb
+#32768	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 514Mb
+#65536	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 649Mb
+#131072	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 885Mb
+#262144	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4096 rss: 1355Mb
+#524288	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4161 rss: 2290Mb
+#1048576	pulse  cov: 51 ft: 111 corp: 36/74Kb exec/s: 4144 rss: 4154Mb
+#1109893	NEW    cov: 51 ft: 112 corp: 37/78Kb exec/s: 4141 rss: 4373Mb L: 3880 MS: 2 ShuffleBytes-CopyPart-
+#2097152	pulse  cov: 51 ft: 112 corp: 37/78Kb exec/s: 4144 rss: 7895Mb
+#2667098	NEW    cov: 51 ft: 113 corp: 38/85Kb exec/s: 4103 rss: 8139Mb L: 7436 MS: 2 CMP-CopyPart- DE: "\xff\xff\xff\xff"-
+#4194304	pulse  cov: 51 ft: 113 corp: 38/85Kb exec/s: 4219 rss: 8141Mb
 Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a23a5dfbec1505a4fdc9be2b05ebec01efff9437
-Slowest unit: 29 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-59f7dc42d09e30e1c8ebc19e55617bef189b760d
-Slowest unit: 34 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-de149722adfbcdc5bfaaff316416876fd166f6f9
-#895055	NEW    cov: 508 ft: 2503 corp: 198/401Kb exec/s: 1691 rss: 6369Mb L: 5220 MS: 2 ChangeBit-ChangeBit-
-#1048576	pulse  cov: 508 ft: 2503 corp: 198/401Kb exec/s: 1823 rss: 7141Mb
-#1102899	NEW    cov: 508 ft: 2504 corp: 199/406Kb exec/s: 1863 rss: 7141Mb L: 5220 MS: 1 ChangeBinInt-
-#1534325	NEW    cov: 508 ft: 2506 corp: 200/411Kb exec/s: 2110 rss: 7141Mb L: 5220 MS: 2 CopyPart-ChangeBinInt-
+artifact_prefix='./'; Test unit written to ./slow-unit-1f8d698bcfb8d5e0eda01adb742e31904ad1287c
 Killed
-Execution time: 1016 sec for test_oct0
+Execution time: 1240 sec for test_oct7
 
-In file included from test_oct1.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 731625316
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 2973799755
+INFO: Loaded 1 modules (62 guards): [0x748010, 0x748108), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1150 files from MY_CORPUS/
+Loaded 1024/1456 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1151
-#1152	INITED cov: 523 ft: 2531 corp: 190/383Kb exec/s: 0 rss: 106Mb
-#8192	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 4096 rss: 248Mb
-#16384	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3276 rss: 414Mb
-#32768	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3276 rss: 670Mb
-#65536	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3449 rss: 905Mb
-#131072	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3449 rss: 1367Mb
-#262144	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3404 rss: 2300Mb
-#524288	pulse  cov: 523 ft: 2531 corp: 190/383Kb exec/s: 3426 rss: 4150Mb
-#776932	NEW    cov: 523 ft: 2533 corp: 191/384Kb exec/s: 3348 rss: 5888Mb L: 1256 MS: 5 EraseBytes-ChangeBit-ShuffleBytes-ChangeByte-CMP- DE: "\x00\x00\x00\x00"-
-#1048576	pulse  cov: 523 ft: 2533 corp: 191/384Kb exec/s: 3307 rss: 5888Mb
+#0	READ units: 1457
+#1458	INITED cov: 51 ft: 113 corp: 36/81Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 5461 rss: 295Mb
+#32768	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4681 rss: 515Mb
+#65536	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4369 rss: 652Mb
+#131072	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4096 rss: 889Mb
+#262144	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4161 rss: 1360Mb
+#524288	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4128 rss: 2297Mb
+#1048576	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4096 rss: 4174Mb
+#2097152	pulse  cov: 51 ft: 113 corp: 36/81Kb exec/s: 4104 rss: 7934Mb
+#3988231	NEW    cov: 51 ft: 114 corp: 37/83Kb exec/s: 4020 rss: 8140Mb L: 1395 MS: 3 ShuffleBytes-InsertRepeatedBytes-CopyPart-
 Killed
-Execution time: 434 sec for test_oct1
+Execution time: 1130 sec for test_oct8
 
-In file included from test_oct2.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2171570489
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 3674782758
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1151 files from MY_CORPUS/
+Loaded 1024/1457 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1152
-#1153	INITED cov: 546 ft: 2620 corp: 195/394Kb exec/s: 0 rss: 105Mb
-#8192	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 4096 rss: 245Mb
-#16384	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3276 rss: 408Mb
-#32768	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3276 rss: 667Mb
-#65536	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3449 rss: 900Mb
-#131072	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3449 rss: 1358Mb
-#262144	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3404 rss: 2280Mb
-#524288	pulse  cov: 546 ft: 2620 corp: 195/394Kb exec/s: 3426 rss: 4109Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-42c69276e26da05b0befa2f52de8e4440a30cccb
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-7e92fab20298b9d3b13077d72aa1d136672b7e86
-#1013874	NEW    cov: 546 ft: 2621 corp: 196/395Kb exec/s: 2824 rss: 5845Mb L: 1256 MS: 1 ChangeBinInt-
-#1048576	pulse  cov: 546 ft: 2621 corp: 196/395Kb exec/s: 2841 rss: 5845Mb
-#1239666	NEW    cov: 546 ft: 2625 corp: 197/396Kb exec/s: 2910 rss: 6777Mb L: 1256 MS: 3 ChangeBinInt-ChangeBinInt-ChangeBit-
+#0	READ units: 1458
+#1459	INITED cov: 51 ft: 114 corp: 39/87Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 293Mb
+#32768	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 512Mb
+#65536	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 650Mb
+#131072	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 889Mb
+#262144	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 1362Mb
+#524288	pulse  cov: 51 ft: 114 corp: 39/87Kb exec/s: 4096 rss: 2308Mb
+#607366	NEW    cov: 51 ft: 115 corp: 40/89Kb exec/s: 4076 rss: 2605Mb L: 2487 MS: 2 ShuffleBytes-CopyPart-
+#1048576	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4064 rss: 4193Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4088 rss: 7971Mb
 Killed
-Execution time: 608 sec for test_oct2
+Execution time: 1104 sec for test_oct9
 
-In file included from test_oct3.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 652861319
-INFO: Loaded 1 modules (5940 guards): [0x7b9420, 0x7bf0f0), 
+INFO: Seed: 3999364736
+INFO: Loaded 1 modules (65 guards): [0x748020, 0x748124), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1153 files from MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1154
-#1155	INITED cov: 569 ft: 2895 corp: 254/563Kb exec/s: 0 rss: 116Mb
-#8192	pulse  cov: 569 ft: 2895 corp: 254/563Kb exec/s: 4096 rss: 270Mb
-#16384	pulse  cov: 569 ft: 2895 corp: 254/563Kb exec/s: 3276 rss: 446Mb
-#32768	pulse  cov: 569 ft: 2895 corp: 254/563Kb exec/s: 3276 rss: 695Mb
-#37397	NEW    cov: 570 ft: 2896 corp: 255/567Kb exec/s: 3399 rss: 731Mb L: 3846 MS: 2 CMP-ChangeBinInt- DE: "\x00\x00"-
-#40301	NEW    cov: 570 ft: 2897 corp: 256/571Kb exec/s: 3358 rss: 754Mb L: 4204 MS: 1 ChangeByte-
-#52941	NEW    cov: 570 ft: 2898 corp: 257/575Kb exec/s: 3308 rss: 849Mb L: 4300 MS: 1 ChangeByte-
-#65536	pulse  cov: 570 ft: 2898 corp: 257/575Kb exec/s: 3276 rss: 950Mb
-#87311	NEW    cov: 570 ft: 2900 corp: 258/579Kb exec/s: 3358 rss: 1118Mb L: 4204 MS: 1 ChangeBit-
-#131072	pulse  cov: 570 ft: 2900 corp: 258/579Kb exec/s: 3276 rss: 1455Mb
-#262144	pulse  cov: 570 ft: 2900 corp: 258/579Kb exec/s: 3318 rss: 2450Mb
-#387315	NEW    cov: 570 ft: 2901 corp: 259/584Kb exec/s: 3282 rss: 3412Mb L: 4704 MS: 5 InsertRepeatedBytes-ChangeByte-PersAutoDict-CMP-ChangeBit- DE: "\x00\x00"-"\xff\xff\xff\xff\xff\xff\xff\xff"-
-#524288	pulse  cov: 570 ft: 2901 corp: 259/584Kb exec/s: 3318 rss: 4394Mb
-#763176	NEW    cov: 570 ft: 2906 corp: 260/588Kb exec/s: 3275 rss: 5648Mb L: 4204 MS: 1 ChangeBit-
-#1023886	NEW    cov: 570 ft: 2909 corp: 261/591Kb exec/s: 3260 rss: 5648Mb L: 3035 MS: 1 EraseBytes-
-#1048576	pulse  cov: 570 ft: 2909 corp: 261/591Kb exec/s: 3256 rss: 5648Mb
-Slowest unit: 17 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-71faddc8441d9d5368007b46eb2052e641a2947d
-Slowest unit: 23 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-e6504682ba88d97f9f928dc04736dbf679fa1efc
-Slowest unit: 37 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-40dfa9d150d11f0629449ccf28c319c382b54b35
+#0	READ units: 1459
+#1460	INITED cov: 53 ft: 122 corp: 40/86Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 517Mb
+#65536	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 656Mb
+#131072	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 900Mb
+#262144	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 1383Mb
+#524288	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4096 rss: 2342Mb
+#1048576	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4080 rss: 4254Mb
+#2097152	pulse  cov: 53 ft: 122 corp: 40/86Kb exec/s: 4072 rss: 8088Mb
 Killed
-Execution time: 521 sec for test_oct3
+Execution time: 1049 sec for test_oct10
 
-In file included from test_oct4.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2547353233
-INFO: Loaded 1 modules (5937 guards): [0x7b9420, 0x7bf0e4), 
+INFO: Seed: 2080925801
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1160 files from MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1161
-#1162	INITED cov: 600 ft: 2905 corp: 252/523Kb exec/s: 0 rss: 114Mb
-#8192	pulse  cov: 600 ft: 2905 corp: 252/523Kb exec/s: 4096 rss: 261Mb
-#16384	pulse  cov: 600 ft: 2905 corp: 252/523Kb exec/s: 3276 rss: 432Mb
-#32768	pulse  cov: 600 ft: 2905 corp: 252/523Kb exec/s: 3276 rss: 682Mb
-#65536	pulse  cov: 600 ft: 2905 corp: 252/523Kb exec/s: 3449 rss: 924Mb
-#128934	NEW    cov: 600 ft: 2906 corp: 253/528Kb exec/s: 3393 rss: 1391Mb L: 5221 MS: 2 InsertByte-ShuffleBytes-
-#131072	pulse  cov: 600 ft: 2906 corp: 253/528Kb exec/s: 3360 rss: 1407Mb
-#262144	pulse  cov: 600 ft: 2906 corp: 253/528Kb exec/s: 3404 rss: 2372Mb
-#448478	NEW    cov: 600 ft: 2907 corp: 254/529Kb exec/s: 3397 rss: 3736Mb L: 1256 MS: 1 ChangeBit-
-#524288	pulse  cov: 600 ft: 2907 corp: 254/529Kb exec/s: 3382 rss: 4292Mb
-#558469	NEW    cov: 600 ft: 2908 corp: 255/532Kb exec/s: 3364 rss: 4543Mb L: 2346 MS: 2 ChangeBinInt-CopyPart-
-Slowest unit: 19 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3ca6288df9c0e65a0cbcf243f8d41863155bb93d
-#839288	NEW    cov: 600 ft: 2912 corp: 256/536Kb exec/s: 2724 rss: 6035Mb L: 4204 MS: 1 ChangeByte-
-#1048576	pulse  cov: 600 ft: 2912 corp: 256/536Kb exec/s: 2826 rss: 7271Mb
-#1185868	NEW    cov: 600 ft: 2914 corp: 257/537Kb exec/s: 2864 rss: 7271Mb L: 1256 MS: 1 ChangeBit-
+#0	READ units: 1459
+#1460	INITED cov: 49 ft: 101 corp: 33/67Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4096 rss: 518Mb
+#65536	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4096 rss: 649Mb
+#131072	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4228 rss: 884Mb
+#262144	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4161 rss: 1351Mb
+#524288	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4128 rss: 2284Mb
+#1048576	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4144 rss: 4145Mb
+#2097152	pulse  cov: 49 ft: 101 corp: 33/67Kb exec/s: 4136 rss: 7869Mb
 Killed
-Execution time: 664 sec for test_oct4
+Execution time: 1130 sec for test_oct11
 
-In file included from test_oct5.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2067114734
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 3291495110
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1165 files from MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1166
-#1167	INITED cov: 560 ft: 2663 corp: 191/385Kb exec/s: 0 rss: 107Mb
-#8192	pulse  cov: 560 ft: 2663 corp: 191/385Kb exec/s: 4096 rss: 248Mb
-#16384	pulse  cov: 560 ft: 2663 corp: 191/385Kb exec/s: 3276 rss: 410Mb
-#32768	pulse  cov: 560 ft: 2663 corp: 191/385Kb exec/s: 3276 rss: 677Mb
-#40318	NEW    cov: 560 ft: 2664 corp: 192/389Kb exec/s: 3359 rss: 732Mb L: 4740 MS: 1 ChangeBinInt-
-#65536	pulse  cov: 560 ft: 2664 corp: 192/389Kb exec/s: 3276 rss: 922Mb
-#131072	pulse  cov: 560 ft: 2664 corp: 192/389Kb exec/s: 3360 rss: 1397Mb
-#262144	pulse  cov: 560 ft: 2664 corp: 192/389Kb exec/s: 3360 rss: 2356Mb
-#409338	NEW    cov: 560 ft: 2665 corp: 193/394Kb exec/s: 3382 rss: 3433Mb L: 5220 MS: 1 ShuffleBytes-
-#519164	NEW    cov: 560 ft: 2666 corp: 194/395Kb exec/s: 3371 rss: 4244Mb L: 1166 MS: 2 ChangeBit-ChangeBinInt-
-#524288	pulse  cov: 560 ft: 2666 corp: 194/395Kb exec/s: 3382 rss: 4285Mb
-#676854	NEW    cov: 560 ft: 2667 corp: 195/401Kb exec/s: 3350 rss: 5397Mb L: 5220 MS: 2 ShuffleBytes-ChangeBit-
-#883149	NEW    cov: 560 ft: 2671 corp: 196/403Kb exec/s: 3307 rss: 6057Mb L: 2155 MS: 2 ChangeBinInt-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1048576	pulse  cov: 560 ft: 2671 corp: 196/403Kb exec/s: 3339 rss: 6057Mb
+#0	READ units: 1459
+#1460	INITED cov: 52 ft: 116 corp: 40/89Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 296Mb
+#32768	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 514Mb
+#65536	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 651Mb
+#131072	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 887Mb
+#262144	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 1362Mb
+#524288	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 2304Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4112 rss: 4183Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4104 rss: 7941Mb
 Killed
-Execution time: 456 sec for test_oct5
+Execution time: 1351 sec for test_oct12
 
-In file included from test_oct6.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3099221907
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 2772034061
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1170 files from MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1171
-#1172	INITED cov: 537 ft: 2558 corp: 191/383Kb exec/s: 0 rss: 107Mb
-#8192	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 4096 rss: 253Mb
-#16384	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 3276 rss: 419Mb
-#32768	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 3276 rss: 681Mb
-#65536	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 3449 rss: 932Mb
-#131072	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 3360 rss: 1419Mb
-#262144	pulse  cov: 537 ft: 2558 corp: 191/383Kb exec/s: 3360 rss: 2397Mb
-#412165	NEW    cov: 537 ft: 2559 corp: 192/391Kb exec/s: 3378 rss: 3514Mb L: 9042 MS: 3 ChangeASCIIInt-ShuffleBytes-CopyPart-
-#524288	pulse  cov: 537 ft: 2559 corp: 192/391Kb exec/s: 3360 rss: 4359Mb
-#631620	NEW    cov: 537 ft: 2560 corp: 193/397Kb exec/s: 3341 rss: 5159Mb L: 5220 MS: 2 CMP-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3b774a4a496575bf1011b31466993372899ff1b9
-#1048576	pulse  cov: 537 ft: 2560 corp: 193/397Kb exec/s: 2920 rss: 6886Mb
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-349827d2e353bc98fe1b8303cf08aeae15e93cb1
+#0	READ units: 1459
+#1460	INITED cov: 52 ft: 116 corp: 39/86Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 512Mb
+#65536	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 652Mb
+#131072	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 890Mb
+#262144	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 1360Mb
+#524288	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4128 rss: 2303Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 4185Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4088 rss: 7947Mb
 Killed
-Execution time: 687 sec for test_oct6
+Execution time: 1178 sec for test_oct13
 
-In file included from test_oct7.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3876654830
+INFO: Seed: 795264807
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1459
+#1460	INITED cov: 51 ft: 115 corp: 40/87Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 514Mb
+#65536	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 653Mb
+#131072	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 894Mb
+#262144	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4032 rss: 1372Mb
+#524288	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4064 rss: 2321Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4048 rss: 4219Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4080 rss: 8014Mb
+Killed
+Execution time: 1169 sec for test_oct14
+
+INFO: Seed: 2051677116
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1459
+#1460	INITED cov: 49 ft: 101 corp: 33/64Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4096 rss: 518Mb
+#65536	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4369 rss: 647Mb
+#131072	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4228 rss: 884Mb
+#262144	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4161 rss: 1349Mb
+#524288	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4096 rss: 2280Mb
+#1048576	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4112 rss: 4146Mb
+#2097152	pulse  cov: 49 ft: 101 corp: 33/64Kb exec/s: 4120 rss: 7868Mb
+Killed
+Execution time: 1121 sec for test_oct15
+
+INFO: Seed: 3420667314
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1458 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1459
+#1460	INITED cov: 49 ft: 101 corp: 32/63Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 5461 rss: 299Mb
+#32768	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4681 rss: 518Mb
+#65536	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4369 rss: 648Mb
+#131072	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4228 rss: 887Mb
+#262144	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4161 rss: 1359Mb
+#524288	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4161 rss: 2300Mb
+#1048576	pulse  cov: 49 ft: 101 corp: 32/63Kb exec/s: 4128 rss: 4183Mb
+#1434551	NEW    cov: 49 ft: 102 corp: 33/67Kb exec/s: 4134 rss: 5566Mb L: 3880 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
+#2097152	pulse  cov: 49 ft: 102 corp: 33/67Kb exec/s: 4271 rss: 7683Mb
+#4194304	pulse  cov: 49 ft: 102 corp: 33/67Kb exec/s: 4359 rss: 8143Mb
+Killed
+Execution time: 1439 sec for test_oct16
+
+INFO: Seed: 593847711
+INFO: Loaded 1 modules (62 guards): [0x748010, 0x748108), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 51 ft: 115 corp: 40/87Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 295Mb
+#32768	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 513Mb
+#65536	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 650Mb
+#131072	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 886Mb
+#262144	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 1354Mb
+#524288	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 2285Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4080 rss: 4146Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4072 rss: 7881Mb
+Killed
+Execution time: 1206 sec for test_oct17
+
+INFO: Seed: 4212972277
+INFO: Loaded 1 modules (62 guards): [0x748010, 0x748108), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 51 ft: 115 corp: 39/86Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 5461 rss: 293Mb
+#32768	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 511Mb
+#65536	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4369 rss: 647Mb
+#131072	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 883Mb
+#262144	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4161 rss: 1352Mb
+#524288	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 2283Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 4146Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4104 rss: 7865Mb
+Killed
+Execution time: 1402 sec for test_oct18
+
+INFO: Seed: 2912091058
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 51 ft: 115 corp: 38/85Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 516Mb
+#65536	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 653Mb
+#131072	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 894Mb
+#262144	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4032 rss: 1372Mb
+#524288	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4064 rss: 2317Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4064 rss: 4212Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4064 rss: 8002Mb
+Killed
+Execution time: 1425 sec for test_oct19
+
+INFO: Seed: 2860997451
+INFO: Loaded 1 modules (65 guards): [0x748020, 0x748124), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 53 ft: 122 corp: 39/85Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 296Mb
+#32768	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 517Mb
+#65536	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 657Mb
+#131072	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 899Mb
+#262144	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4096 rss: 1378Mb
+#524288	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4064 rss: 2336Mb
+#1048576	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4048 rss: 4250Mb
+#2097152	pulse  cov: 53 ft: 122 corp: 39/85Kb exec/s: 4048 rss: 8076Mb
+Killed
+Execution time: 1439 sec for test_oct20
+
+INFO: Seed: 181658165
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 49 ft: 102 corp: 34/68Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 299Mb
+#32768	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4681 rss: 521Mb
+#65536	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 652Mb
+#131072	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4228 rss: 893Mb
+#262144	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4161 rss: 1367Mb
+#524288	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4128 rss: 2310Mb
+#1048576	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4112 rss: 4197Mb
+#2097152	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4112 rss: 7969Mb
+Killed
+Execution time: 1163 sec for test_oct21
+
+INFO: Seed: 898822331
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 52 ft: 116 corp: 39/86Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4681 rss: 513Mb
+#65536	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4369 rss: 652Mb
+#131072	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4228 rss: 889Mb
+#262144	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4161 rss: 1359Mb
+#524288	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4128 rss: 2300Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4112 rss: 4185Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 39/86Kb exec/s: 4120 rss: 7957Mb
+Killed
+Execution time: 1228 sec for test_oct22
+
+INFO: Seed: 1649203235
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 52 ft: 116 corp: 39/87Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 298Mb
+#32768	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 516Mb
+#65536	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 654Mb
+#131072	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 893Mb
+#262144	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 1365Mb
+#524288	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 2312Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4096 rss: 4209Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 39/87Kb exec/s: 4088 rss: 7980Mb
+Killed
+Execution time: 1215 sec for test_oct23
+
+INFO: Seed: 2714403089
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 51 ft: 115 corp: 40/87Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 5461 rss: 294Mb
+#32768	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4681 rss: 512Mb
+#65536	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4369 rss: 652Mb
+#131072	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4228 rss: 891Mb
+#262144	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4161 rss: 1368Mb
+#524288	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4128 rss: 2317Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4112 rss: 4208Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 40/87Kb exec/s: 4104 rss: 7995Mb
+Killed
+Execution time: 1261 sec for test_oct24
+
+INFO: Seed: 1482946224
+INFO: Loaded 1 modules (67 guards): [0x748020, 0x74812c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 55 ft: 124 corp: 41/92Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4096 rss: 297Mb
+#32768	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4096 rss: 518Mb
+#65536	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4096 rss: 656Mb
+#131072	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4096 rss: 905Mb
+#262144	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4032 rss: 1390Mb
+#524288	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4032 rss: 2358Mb
+#1048576	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4048 rss: 4291Mb
+#2097152	pulse  cov: 55 ft: 124 corp: 41/92Kb exec/s: 4048 rss: 8138Mb
+Killed
+Execution time: 1204 sec for test_oct25
+
+INFO: Seed: 4182008215
+INFO: Loaded 1 modules (67 guards): [0x748020, 0x74812c), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1459 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1460
+#1461	INITED cov: 53 ft: 122 corp: 41/87Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 53 ft: 122 corp: 41/87Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 53 ft: 122 corp: 41/87Kb exec/s: 4096 rss: 297Mb
+#26102	NEW    cov: 54 ft: 123 corp: 42/91Kb exec/s: 4350 rss: 434Mb L: 3649 MS: 1 ChangeBinInt-
+#32768	pulse  cov: 54 ft: 123 corp: 42/91Kb exec/s: 4096 rss: 517Mb
+#65536	pulse  cov: 54 ft: 123 corp: 42/91Kb exec/s: 4096 rss: 657Mb
+#131072	pulse  cov: 54 ft: 123 corp: 42/91Kb exec/s: 4096 rss: 901Mb
+#262144	pulse  cov: 54 ft: 123 corp: 42/91Kb exec/s: 4096 rss: 1384Mb
+#524288	pulse  cov: 54 ft: 123 corp: 42/91Kb exec/s: 4064 rss: 2347Mb
+#707398	NEW    cov: 55 ft: 124 corp: 43/100Kb exec/s: 4065 rss: 3020Mb L: 10000 MS: 1 CrossOver-
+#1048576	pulse  cov: 55 ft: 124 corp: 43/100Kb exec/s: 4048 rss: 4288Mb
+#2097152	pulse  cov: 55 ft: 124 corp: 43/100Kb exec/s: 4032 rss: 8066Mb
+Killed
+Execution time: 1118 sec for test_oct26
+
+INFO: Seed: 2614542105
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
+Loading corpus dir: MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
+Loading corpus dir: SEED_CORPUS/
+#0	READ units: 1462
+#1463	INITED cov: 51 ft: 115 corp: 39/86Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 293Mb
+#32768	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 512Mb
+#65536	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 653Mb
+#131072	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 892Mb
+#262144	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4096 rss: 1365Mb
+#524288	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4128 rss: 2305Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4112 rss: 4177Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 39/86Kb exec/s: 4104 rss: 7933Mb
+Killed
+Execution time: 1451 sec for test_oct27
+
+test_oct28.c:9:52: error: expected ')'
+extern int LLVMFuzzerTestOneInput(const long *data size_t dataSize) {
+                                                   ^
+test_oct28.c:9:34: note: to match this '('
+extern int LLVMFuzzerTestOneInput(const long *data size_t dataSize) {
+                                 ^
+test_oct28.c:15:42: error: use of undeclared identifier 'dataSize'
+        if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
+                                                ^
+test_oct28.c:22:54: error: use of undeclared identifier 'dataSize'
+                if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
+                                                                   ^
+test_oct28.c:25:55: error: use of undeclared identifier 'dataSize'
+                        if (create_octagon(&octagon2, man, top, dim, data, dataSize,
+                                                                           ^
+4 errors generated.
+INFO: Seed: 3453579867
 INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1172 files from MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1173
-#1174	INITED cov: 599 ft: 2880 corp: 234/487Kb exec/s: 0 rss: 116Mb
-#8192	pulse  cov: 599 ft: 2880 corp: 234/487Kb exec/s: 4096 rss: 258Mb
-#16384	pulse  cov: 599 ft: 2880 corp: 234/487Kb exec/s: 3276 rss: 428Mb
-#29955	NEW    cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3328 rss: 657Mb L: 2512 MS: 1 CrossOver-
-#32768	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3276 rss: 682Mb
-#65536	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3449 rss: 932Mb
-#131072	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3449 rss: 1408Mb
-#262144	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3404 rss: 2375Mb
-#524288	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3404 rss: 4303Mb
-#1048576	pulse  cov: 599 ft: 2881 corp: 235/489Kb exec/s: 3276 rss: 5971Mb
-Slowest unit: 55 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-580c20fdae9ea5bfa6f6a0fc9a73ad680d584a48
+#0	READ units: 1462
+#1463	INITED cov: 605 ft: 2962 corp: 270/555Kb exec/s: 1463 rss: 134Mb
+#8192	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 2730 rss: 271Mb
+#16384	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3276 rss: 441Mb
+#32768	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3276 rss: 691Mb
+#65536	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3449 rss: 933Mb
+#131072	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3360 rss: 1422Mb
+#262144	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3404 rss: 2411Mb
+#524288	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3360 rss: 4382Mb
+#1048576	pulse  cov: 605 ft: 2962 corp: 270/555Kb exec/s: 3350 rss: 8140Mb
 Killed
-Execution time: 548 sec for test_oct7
+Execution time: 1013 sec for test_oct28
 
-In file included from test_oct8.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2921344292
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
+INFO: Seed: 3404717363
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1173 files from MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1174
-#1175	INITED cov: 599 ft: 2885 corp: 242/502Kb exec/s: 0 rss: 117Mb
-#8192	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 4096 rss: 260Mb
-#16384	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 3276 rss: 429Mb
-#32768	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 3276 rss: 689Mb
-#65536	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 3276 rss: 936Mb
-#131072	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 3360 rss: 1426Mb
-#262144	pulse  cov: 599 ft: 2885 corp: 242/502Kb exec/s: 3318 rss: 2405Mb
-#371527	NEW    cov: 599 ft: 2886 corp: 243/504Kb exec/s: 3347 rss: 3215Mb L: 2346 MS: 2 CopyPart-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#524288	pulse  cov: 599 ft: 2886 corp: 243/504Kb exec/s: 3339 rss: 4343Mb
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-e111d86b68f6b974fe1f2014f1558563b9ddb5fc
-#1028691	NEW    cov: 599 ft: 2897 corp: 244/509Kb exec/s: 2833 rss: 6787Mb L: 4514 MS: 1 CrossOver-
-#1048576	pulse  cov: 599 ft: 2897 corp: 244/509Kb exec/s: 2841 rss: 6938Mb
-#1370279	NEW    cov: 599 ft: 2925 corp: 245/518Kb exec/s: 2909 rss: 7252Mb L: 9187 MS: 4 CMP-ChangeBit-InsertRepeatedBytes-CopyPart- DE: "print_f"-
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-72603b860f1271639203eaa0e3709a90405b722b
+#0	READ units: 1462
+#1463	INITED cov: 49 ft: 102 corp: 34/70Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 181Mb
+#16384	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 5461 rss: 301Mb
+#32768	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 522Mb
+#65536	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 646Mb
+#131072	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 883Mb
+#262144	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 1353Mb
+#524288	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4096 rss: 2282Mb
+#1048576	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4112 rss: 4147Mb
+#2097152	pulse  cov: 49 ft: 102 corp: 34/70Kb exec/s: 4104 rss: 7880Mb
 Killed
-Execution time: 666 sec for test_oct8
+Execution time: 1276 sec for test_oct29
 
-In file included from test_oct9.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1071367063
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
+INFO: Seed: 1217872385
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1176 files from MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1177
-#1178	INITED cov: 601 ft: 2900 corp: 234/492Kb exec/s: 0 rss: 118Mb
-#8192	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 2730 rss: 272Mb
-#16384	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 447Mb
-#32768	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 699Mb
-#65536	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 953Mb
-#131072	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 1453Mb
-#262144	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 2468Mb
-#524288	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3276 rss: 4484Mb
-#1048576	pulse  cov: 601 ft: 2900 corp: 234/492Kb exec/s: 3187 rss: 6052Mb
-Slowest unit: 25 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-6202e1efd4086ad49c3908f9774c6eafb5744ec2
-Slowest unit: 32 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-23786b08c42c207132e2aea31f2158f51f075770
-Slowest unit: 71 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1c3f596c4376f5e8f5583e3cc4b1b273781334f7
+#0	READ units: 1462
+#1463	INITED cov: 49 ft: 102 corp: 35/71Kb exec/s: 0 rss: 82Mb
+#8192	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4096 rss: 181Mb
+#16384	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 5461 rss: 299Mb
+#32768	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4681 rss: 521Mb
+#65536	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4369 rss: 648Mb
+#131072	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4228 rss: 886Mb
+#262144	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4228 rss: 1353Mb
+#524288	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4228 rss: 2288Mb
+#1048576	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4177 rss: 4159Mb
+#2097152	pulse  cov: 49 ft: 102 corp: 35/71Kb exec/s: 4161 rss: 7894Mb
 Killed
-Execution time: 863 sec for test_oct9
+Execution time: 1193 sec for test_oct30
 
-In file included from test_oct10.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2762708643
-INFO: Loaded 1 modules (5937 guards): [0x7b9420, 0x7bf0e4), 
+INFO: Seed: 987008938
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1176 files from MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1177
-#1178	INITED cov: 603 ft: 2985 corp: 252/550Kb exec/s: 0 rss: 119Mb
-#8192	pulse  cov: 603 ft: 2985 corp: 252/550Kb exec/s: 2730 rss: 273Mb
-#16384	pulse  cov: 603 ft: 2985 corp: 252/550Kb exec/s: 3276 rss: 452Mb
-#23649	NEW    cov: 603 ft: 2991 corp: 253/554Kb exec/s: 3378 rss: 612Mb L: 3846 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#32768	pulse  cov: 603 ft: 2991 corp: 253/554Kb exec/s: 3276 rss: 695Mb
-#52759	NEW    cov: 603 ft: 2993 corp: 254/559Kb exec/s: 3297 rss: 840Mb L: 5963 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#65536	pulse  cov: 603 ft: 2993 corp: 254/559Kb exec/s: 3449 rss: 929Mb
-#78484	NEW    cov: 603 ft: 2996 corp: 255/563Kb exec/s: 3412 rss: 1020Mb L: 3846 MS: 1 ChangeBinInt-
-#92409	NEW    cov: 603 ft: 2997 corp: 256/566Kb exec/s: 3422 rss: 1121Mb L: 3035 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 603 ft: 2997 corp: 256/566Kb exec/s: 3542 rss: 1401Mb
-#160469	NEW    cov: 603 ft: 3002 corp: 257/570Kb exec/s: 3565 rss: 1606Mb L: 3846 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#262144	pulse  cov: 603 ft: 3002 corp: 257/570Kb exec/s: 3591 rss: 2324Mb
-#347895	NEW    cov: 603 ft: 3003 corp: 258/573Kb exec/s: 3623 rss: 2932Mb L: 3035 MS: 2 PersAutoDict-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\x01\x00\x00\x00\x00\x00\x00\x00"-
-#524288	pulse  cov: 603 ft: 3003 corp: 258/573Kb exec/s: 3640 rss: 4182Mb
-#655114	NEW    cov: 603 ft: 3004 corp: 259/577Kb exec/s: 3619 rss: 5106Mb L: 3846 MS: 1 ChangeBit-
-#673427	NEW    cov: 603 ft: 3005 corp: 260/579Kb exec/s: 3601 rss: 5237Mb L: 3035 MS: 4 ChangeByte-ChangeBit-ChangeBinInt-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-Slowest unit: 34 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-15a7cf0f31d797cbd0f389fa10bc5dc53a919e6c
-#987770	NEW    cov: 603 ft: 3006 corp: 261/587Kb exec/s: 2340 rss: 6122Mb L: 7659 MS: 2 ChangeBinInt-CopyPart-
-#1048576	pulse  cov: 603 ft: 3006 corp: 261/587Kb exec/s: 2388 rss: 6554Mb
-#1182629	NEW    cov: 603 ft: 3008 corp: 262/591Kb exec/s: 2489 rss: 7362Mb L: 4490 MS: 1 CopyPart-
+#0	READ units: 1462
+#1463	INITED cov: 51 ft: 115 corp: 38/85Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 513Mb
+#65536	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4369 rss: 650Mb
+#131072	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4228 rss: 888Mb
+#262144	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4161 rss: 1362Mb
+#524288	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4096 rss: 2303Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4128 rss: 4188Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 38/85Kb exec/s: 4104 rss: 7953Mb
 Killed
-Execution time: 959 sec for test_oct10
+Execution time: 1502 sec for test_oct31
 
-In file included from test_oct11.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1798754683
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 1053078692
+INFO: Loaded 1 modules (66 guards): [0x748020, 0x748128), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1186 files from MY_CORPUS/
+Loaded 1024/1461 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1187
-#1188	INITED cov: 579 ft: 2705 corp: 204/435Kb exec/s: 0 rss: 109Mb
-#8192	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 4096 rss: 256Mb
-#16384	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3276 rss: 424Mb
-#32768	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3276 rss: 686Mb
-#65536	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3449 rss: 930Mb
-#131072	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3360 rss: 1422Mb
-#262144	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3360 rss: 2409Mb
-#524288	pulse  cov: 579 ft: 2705 corp: 204/435Kb exec/s: 3382 rss: 4364Mb
-#556969	NEW    cov: 579 ft: 2706 corp: 205/436Kb exec/s: 3375 rss: 4605Mb L: 1040 MS: 1 ChangeBinInt-
-#1048576	pulse  cov: 579 ft: 2706 corp: 205/436Kb exec/s: 3287 rss: 6269Mb
+#0	READ units: 1462
+#1463	INITED cov: 54 ft: 128 corp: 42/99Kb exec/s: 0 rss: 84Mb
+#8192	pulse  cov: 54 ft: 128 corp: 42/99Kb exec/s: 4096 rss: 183Mb
+#16384	pulse  cov: 54 ft: 128 corp: 42/99Kb exec/s: 4096 rss: 301Mb
+#32768	pulse  cov: 54 ft: 128 corp: 42/99Kb exec/s: 4096 rss: 523Mb
+#65536	pulse  cov: 54 ft: 128 corp: 42/99Kb exec/s: 4096 rss: 663Mb
+#76519	NEW    cov: 54 ft: 130 corp: 43/103Kb exec/s: 4027 rss: 706Mb L: 3966 MS: 1 ChangeBit-
+#131072	pulse  cov: 54 ft: 130 corp: 43/103Kb exec/s: 4096 rss: 917Mb
+#262144	pulse  cov: 54 ft: 130 corp: 43/103Kb exec/s: 4032 rss: 1419Mb
+#524288	pulse  cov: 54 ft: 130 corp: 43/103Kb exec/s: 3971 rss: 2425Mb
+#1007501	NEW    cov: 54 ft: 132 corp: 44/106Kb exec/s: 3982 rss: 4279Mb L: 3966 MS: 2 ChangeByte-ShuffleBytes-
+#1036643	NEW    cov: 54 ft: 134 corp: 45/114Kb exec/s: 3987 rss: 4392Mb L: 7902 MS: 4 InsertRepeatedBytes-ChangeBinInt-CopyPart-CopyPart-
+#1048576	pulse  cov: 54 ft: 134 corp: 45/114Kb exec/s: 3986 rss: 4441Mb
+#2097152	pulse  cov: 54 ft: 134 corp: 45/114Kb exec/s: 3942 rss: 8145Mb
 Killed
-Execution time: 581 sec for test_oct11
+Execution time: 1399 sec for test_oct32
 
-In file included from test_oct12.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2096847760
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
+INFO: Seed: 4208939873
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1187 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1188
-#2	pulse  cov: 6 ft: 6 exec/s: 0 rss: 60Mb
-#4	pulse  cov: 45 ft: 46 corp: 2/14b exec/s: 1 rss: 60Mb
-#8	pulse  cov: 71 ft: 81 corp: 6/279b exec/s: 2 rss: 60Mb
-#16	pulse  cov: 214 ft: 290 corp: 12/2657b exec/s: 4 rss: 60Mb
-#32	pulse  cov: 435 ft: 838 corp: 25/9571b exec/s: 8 rss: 60Mb
-#64	pulse  cov: 472 ft: 932 corp: 39/20Kb exec/s: 16 rss: 60Mb
-#128	pulse  cov: 614 ft: 2068 corp: 86/72Kb exec/s: 32 rss: 60Mb
-#256	pulse  cov: 621 ft: 2280 corp: 130/141Kb exec/s: 64 rss: 60Mb
-#512	pulse  cov: 646 ft: 2603 corp: 184/252Kb exec/s: 128 rss: 60Mb
-#1024	pulse  cov: 646 ft: 2946 corp: 239/417Kb exec/s: 204 rss: 60Mb
-#1189	INITED cov: 647 ft: 3058 corp: 263/568Kb exec/s: 237 rss: 68Mb
-#2048	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 409 rss: 89Mb
-#4096	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 682 rss: 134Mb
-#8192	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 1170 rss: 221Mb
-#16384	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 1638 rss: 392Mb
-#32768	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 2184 rss: 651Mb
-#65536	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 2621 rss: 897Mb
-#131072	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 2849 rss: 1398Mb
-#262144	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 3048 rss: 2386Mb
-#524288	pulse  cov: 647 ft: 3058 corp: 263/568Kb exec/s: 3196 rss: 4376Mb
+#0	READ units: 1465
+#1466	INITED cov: 52 ft: 116 corp: 39/88Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4096 rss: 514Mb
+#65536	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4369 rss: 653Mb
+#131072	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4228 rss: 890Mb
+#262144	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4161 rss: 1365Mb
+#524288	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4161 rss: 2301Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4128 rss: 4181Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 39/88Kb exec/s: 4096 rss: 7944Mb
 Killed
-Execution time: 381 sec for test_oct12
+Execution time: 1348 sec for test_oct33
 
-In file included from test_oct13.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3620636812
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
+INFO: Seed: 4181765863
+INFO: Loaded 1 modules (63 guards): [0x748020, 0x74811c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1187 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1188
-#1189	INITED cov: 660 ft: 3110 corp: 265/570Kb exec/s: 0 rss: 119Mb
-#8192	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 4096 rss: 267Mb
-#16384	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3276 rss: 444Mb
-#32768	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3276 rss: 696Mb
-#65536	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3276 rss: 948Mb
-#131072	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3276 rss: 1457Mb
-#262144	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3318 rss: 2470Mb
-#524288	pulse  cov: 660 ft: 3110 corp: 265/570Kb exec/s: 3318 rss: 4500Mb
-Slowest unit: 19 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-84b60bfe8e20b904f615be916caa4e42d41ea0a4
-Slowest unit: 24 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-89f1215406e7ab00824aaf0b89bd4defea0b89e4
-#849920	NEW    cov: 660 ft: 3113 corp: 266/573Kb exec/s: 2023 rss: 6710Mb L: 2155 MS: 1 ShuffleBytes-
-#1048576	pulse  cov: 660 ft: 3113 corp: 266/573Kb exec/s: 2170 rss: 7434Mb
-Slowest unit: 34 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-175c4de52befc4564caf5de043066b05552b31be
+#0	READ units: 1465
+#1466	INITED cov: 52 ft: 116 corp: 40/89Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 5461 rss: 296Mb
+#32768	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4681 rss: 513Mb
+#65536	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4369 rss: 653Mb
+#131072	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4228 rss: 892Mb
+#262144	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4161 rss: 1364Mb
+#524288	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4128 rss: 2311Mb
+#1048576	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4096 rss: 4198Mb
+#2097152	pulse  cov: 52 ft: 116 corp: 40/89Kb exec/s: 4080 rss: 7973Mb
 Killed
-Execution time: 835 sec for test_oct13
+Execution time: 1242 sec for test_oct34
 
-In file included from test_oct14.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3041703359
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
+INFO: Seed: 1237597809
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1188 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1189
-#1190	INITED cov: 854 ft: 3857 corp: 330/760Kb exec/s: 0 rss: 125Mb
-#8192	pulse  cov: 854 ft: 3857 corp: 330/760Kb exec/s: 2730 rss: 284Mb
-#16384	pulse  cov: 854 ft: 3857 corp: 330/760Kb exec/s: 3276 rss: 472Mb
-#32768	pulse  cov: 854 ft: 3857 corp: 330/760Kb exec/s: 3276 rss: 723Mb
-#53420	NEW    cov: 854 ft: 3859 corp: 331/764Kb exec/s: 3142 rss: 903Mb L: 4308 MS: 5 CopyPart-EraseBytes-EraseBytes-ChangeBit-CopyPart-
-#65536	pulse  cov: 854 ft: 3859 corp: 331/764Kb exec/s: 3120 rss: 1008Mb
-#88561	NEW    cov: 854 ft: 3878 corp: 332/767Kb exec/s: 3162 rss: 1202Mb L: 2154 MS: 1 ShuffleBytes-
-#131072	pulse  cov: 854 ft: 3878 corp: 332/767Kb exec/s: 3196 rss: 1563Mb
-#224397	NEW    cov: 854 ft: 3879 corp: 333/771Kb exec/s: 3160 rss: 2365Mb L: 4308 MS: 2 ShuffleBytes-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#261346	NEW    cov: 854 ft: 3880 corp: 334/773Kb exec/s: 3226 rss: 2654Mb L: 2207 MS: 1 ChangeBit-
-#262144	pulse  cov: 854 ft: 3880 corp: 334/773Kb exec/s: 3236 rss: 2662Mb
-#444606	NEW    cov: 854 ft: 3883 corp: 335/775Kb exec/s: 3342 rss: 4069Mb L: 2154 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#524288	pulse  cov: 854 ft: 3883 corp: 335/775Kb exec/s: 3382 rss: 4687Mb
-#677421	NEW    cov: 854 ft: 3884 corp: 336/777Kb exec/s: 3387 rss: 5862Mb L: 2154 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1048576	pulse  cov: 854 ft: 3884 corp: 336/777Kb exec/s: 3360 rss: 6160Mb
-#1086706	NEW    cov: 854 ft: 3885 corp: 337/779Kb exec/s: 3364 rss: 6160Mb L: 2154 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1089856	NEW    cov: 854 ft: 3887 corp: 338/781Kb exec/s: 3363 rss: 6160Mb L: 2154 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1170791	NEW    cov: 854 ft: 3888 corp: 339/783Kb exec/s: 3354 rss: 6160Mb L: 2155 MS: 1 ChangeBit-
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-03a704ad86e18d96085b98b354e65ee4cd9cc962
+#0	READ units: 1465
+#1466	INITED cov: 49 ft: 102 corp: 34/68Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 179Mb
+#16384	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 298Mb
+#32768	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 519Mb
+#65536	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 648Mb
+#131072	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4228 rss: 884Mb
+#262144	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4161 rss: 1356Mb
+#524288	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4096 rss: 2287Mb
+#1048576	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4112 rss: 4155Mb
+#2097152	pulse  cov: 49 ft: 102 corp: 34/68Kb exec/s: 4104 rss: 7878Mb
 Killed
-Execution time: 423 sec for test_oct14
+Execution time: 1084 sec for test_oct35
 
-In file included from test_oct15.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2145239067
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 413691988
+INFO: Loaded 1 modules (59 guards): [0x748020, 0x74810c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1197 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1198
-#1199	INITED cov: 512 ft: 2527 corp: 196/403Kb exec/s: 0 rss: 107Mb
-#8192	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 4096 rss: 244Mb
-#16384	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3276 rss: 406Mb
-#32768	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3276 rss: 665Mb
-#65536	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3449 rss: 901Mb
-#131072	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3360 rss: 1369Mb
-#262144	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3404 rss: 2303Mb
-#524288	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 3382 rss: 4165Mb
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c5b7ea2c76e61d5f9b968d232d26db1b526b64fe
-Slowest unit: 23 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-65fc3286c351b4cccefbd778462feac9ac73b142
-Slowest unit: 31 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-d14c0a14e485d105d85e3f27fa0a49388866eeb2
-#1048576	pulse  cov: 512 ft: 2527 corp: 196/403Kb exec/s: 2330 rss: 6022Mb
+#0	READ units: 1465
+#1466	INITED cov: 49 ft: 102 corp: 35/69Kb exec/s: 0 rss: 84Mb
+#8192	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 182Mb
+#16384	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 304Mb
+#32768	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 523Mb
+#65536	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 647Mb
+#131072	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 886Mb
+#262144	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4032 rss: 1354Mb
+#524288	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 2291Mb
+#1048576	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4112 rss: 4157Mb
+#2097152	pulse  cov: 49 ft: 102 corp: 35/69Kb exec/s: 4096 rss: 7896Mb
 Killed
-Execution time: 716 sec for test_oct15
+Execution time: 1302 sec for test_oct36
 
-In file included from test_oct16.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1131203344
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
+INFO: Seed: 1512749262
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1197 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1198
-#1199	INITED cov: 732 ft: 3307 corp: 214/436Kb exec/s: 0 rss: 113Mb
-#8192	pulse  cov: 732 ft: 3307 corp: 214/436Kb exec/s: 4096 rss: 260Mb
-#16384	pulse  cov: 732 ft: 3307 corp: 214/436Kb exec/s: 3276 rss: 434Mb
-#32768	pulse  cov: 732 ft: 3307 corp: 214/436Kb exec/s: 3276 rss: 705Mb
-#46031	NEW    cov: 732 ft: 3309 corp: 215/441Kb exec/s: 3287 rss: 813Mb L: 5220 MS: 2 ChangeBinInt-CopyPart-
-#65536	pulse  cov: 732 ft: 3309 corp: 215/441Kb exec/s: 3276 rss: 971Mb
-#131072	pulse  cov: 732 ft: 3309 corp: 215/441Kb exec/s: 3276 rss: 1505Mb
-#131572	NEW    cov: 732 ft: 3322 corp: 216/446Kb exec/s: 3289 rss: 1508Mb L: 5220 MS: 2 ShuffleBytes-CopyPart-
-#190572	NEW    cov: 732 ft: 3323 corp: 217/447Kb exec/s: 3285 rss: 1990Mb L: 1165 MS: 2 ShuffleBytes-ChangeBit-
-#262144	pulse  cov: 732 ft: 3323 corp: 217/447Kb exec/s: 3276 rss: 2574Mb
-#301115	NEW    cov: 732 ft: 3324 corp: 218/453Kb exec/s: 3272 rss: 2888Mb L: 5867 MS: 5 CopyPart-InsertByte-InsertRepeatedBytes-ChangeBit-ChangeBit-
-#339576	NEW    cov: 732 ft: 3326 corp: 219/455Kb exec/s: 3296 rss: 3204Mb L: 1943 MS: 1 ChangeBit-
-#424397	NEW    cov: 732 ft: 3328 corp: 220/457Kb exec/s: 3289 rss: 3890Mb L: 1944 MS: 2 InsertByte-ChangeBinInt-
-#524288	pulse  cov: 732 ft: 3328 corp: 220/457Kb exec/s: 3276 rss: 4708Mb
-#755698	NEW    cov: 732 ft: 3329 corp: 221/459Kb exec/s: 3188 rss: 6128Mb L: 2051 MS: 3 InsertRepeatedBytes-ChangeByte-ChangeBit-
-#1048576	pulse  cov: 732 ft: 3329 corp: 221/459Kb exec/s: 3139 rss: 6128Mb
-Slowest unit: 27 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c694c6380f987e0f42fc7d5c44bb08def0bac877
+#0	READ units: 1465
+#1466	INITED cov: 51 ft: 115 corp: 39/88Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4096 rss: 178Mb
+#16384	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4096 rss: 516Mb
+#65536	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4096 rss: 653Mb
+#131072	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4228 rss: 893Mb
+#262144	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4161 rss: 1366Mb
+#524288	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4128 rss: 2314Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4080 rss: 4204Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 39/88Kb exec/s: 4088 rss: 7993Mb
 Killed
-Execution time: 481 sec for test_oct16
+Execution time: 1132 sec for test_oct37
 
-In file included from test_oct17.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3062478380
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
+INFO: Seed: 929434467
+INFO: Loaded 1 modules (62 guards): [0x748020, 0x748118), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1204 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1205
-#1206	INITED cov: 817 ft: 3791 corp: 316/717Kb exec/s: 1206 rss: 123Mb
-#4096	pulse  cov: 817 ft: 3791 corp: 316/717Kb exec/s: 2048 rss: 188Mb
-#8192	pulse  cov: 817 ft: 3791 corp: 316/717Kb exec/s: 2730 rss: 281Mb
-#16384	pulse  cov: 817 ft: 3791 corp: 316/717Kb exec/s: 2730 rss: 471Mb
-#32768	pulse  cov: 817 ft: 3791 corp: 316/717Kb exec/s: 2978 rss: 717Mb
-#65536	pulse  cov: 817 ft: 3791 corp: 316/717Kb exec/s: 2978 rss: 994Mb
-#83448	NEW    cov: 817 ft: 3792 corp: 317/719Kb exec/s: 3090 rss: 1147Mb L: 2235 MS: 2 InsertRepeatedBytes-ChangeBit-
-#131072	pulse  cov: 817 ft: 3792 corp: 317/719Kb exec/s: 3048 rss: 1538Mb
-#262144	pulse  cov: 817 ft: 3792 corp: 317/719Kb exec/s: 3158 rss: 2628Mb
-#524288	pulse  cov: 817 ft: 3792 corp: 317/719Kb exec/s: 3196 rss: 4808Mb
-#597323	NEW    cov: 817 ft: 3794 corp: 318/721Kb exec/s: 3194 rss: 5409Mb L: 2154 MS: 1 ChangeBit-
-#772667	NEW    cov: 817 ft: 3800 corp: 319/723Kb exec/s: 3128 rss: 6060Mb L: 2154 MS: 5 CMP-ShuffleBytes-ChangeBit-ChangeBit-CopyPart- DE: "report_slow_units"-
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-6c4dced8c5de2f237bd569b154b3a2e8107d110a
+#0	READ units: 1465
+#1466	INITED cov: 51 ft: 115 corp: 40/89Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 177Mb
+#16384	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 294Mb
+#32768	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 513Mb
+#65536	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 649Mb
+#131072	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 887Mb
+#262144	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 1359Mb
+#524288	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4096 rss: 2306Mb
+#1048576	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4080 rss: 4193Mb
+#2097152	pulse  cov: 51 ft: 115 corp: 40/89Kb exec/s: 4072 rss: 7969Mb
 Killed
-Execution time: 370 sec for test_oct17
+Execution time: 1248 sec for test_oct38
 
-In file included from test_oct18.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3379704781
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
+INFO: Seed: 4067594685
+INFO: Loaded 1 modules (66 guards): [0x748020, 0x748128), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1207 files from MY_CORPUS/
+Loaded 1024/1464 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1208
-#1209	INITED cov: 817 ft: 3807 corp: 315/713Kb exec/s: 0 rss: 124Mb
-#8192	pulse  cov: 817 ft: 3807 corp: 315/713Kb exec/s: 2730 rss: 285Mb
-#16384	pulse  cov: 817 ft: 3807 corp: 315/713Kb exec/s: 3276 rss: 472Mb
-#32768	pulse  cov: 817 ft: 3807 corp: 315/713Kb exec/s: 3276 rss: 720Mb
-#65536	pulse  cov: 817 ft: 3807 corp: 315/713Kb exec/s: 3276 rss: 994Mb
-#131072	pulse  cov: 817 ft: 3807 corp: 315/713Kb exec/s: 3196 rss: 1537Mb
-#169240	NEW    cov: 817 ft: 3809 corp: 316/715Kb exec/s: 3193 rss: 1856Mb L: 2155 MS: 1 ChangeBinInt-
-#206800	NEW    cov: 817 ft: 3811 corp: 317/719Kb exec/s: 3231 rss: 2165Mb L: 3967 MS: 1 ChangeBit-
-#262144	pulse  cov: 817 ft: 3811 corp: 317/719Kb exec/s: 3236 rss: 2627Mb
-#272265	NEW    cov: 817 ft: 3812 corp: 318/723Kb exec/s: 3203 rss: 2710Mb L: 4308 MS: 1 ShuffleBytes-
-#338406	NEW    cov: 817 ft: 3813 corp: 319/725Kb exec/s: 3222 rss: 3261Mb L: 2154 MS: 2 ChangeBit-ChangeBit-
-#351625	NEW    cov: 817 ft: 3814 corp: 320/727Kb exec/s: 3225 rss: 3373Mb L: 2154 MS: 1 ShuffleBytes-
-#401162	NEW    cov: 817 ft: 3816 corp: 321/730Kb exec/s: 3209 rss: 3790Mb L: 3469 MS: 3 InsertRepeatedBytes-ChangeByte-CrossOver-
-#524288	pulse  cov: 817 ft: 3816 corp: 321/730Kb exec/s: 3216 rss: 4811Mb
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-07ce5194a97ce1ae7238934cbb759f309a2e423f
-Slowest unit: 35 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1199c89a476f08067e325238113c17b09c293d32
-#909056	NEW    cov: 817 ft: 3818 corp: 322/732Kb exec/s: 2164 rss: 7321Mb L: 2154 MS: 2 ShuffleBytes-ShuffleBytes-
-#1048576	pulse  cov: 817 ft: 3818 corp: 322/732Kb exec/s: 2250 rss: 7321Mb
-#1345912	NEW    cov: 817 ft: 3819 corp: 323/735Kb exec/s: 2382 rss: 7321Mb L: 2888 MS: 3 CopyPart-EraseBytes-InsertByte-
+#0	READ units: 1465
+#1466	INITED cov: 54 ft: 127 corp: 39/88Kb exec/s: 0 rss: 83Mb
+#8192	pulse  cov: 54 ft: 127 corp: 39/88Kb exec/s: 4096 rss: 180Mb
+#16384	pulse  cov: 54 ft: 127 corp: 39/88Kb exec/s: 4096 rss: 298Mb
+#32768	pulse  cov: 54 ft: 127 corp: 39/88Kb exec/s: 4096 rss: 519Mb
+#65536	pulse  cov: 54 ft: 127 corp: 39/88Kb exec/s: 4096 rss: 659Mb
+#124353	NEW    cov: 54 ft: 128 corp: 40/91Kb exec/s: 4145 rss: 880Mb L: 3018 MS: 2 ChangeBit-EraseBytes-
+#131072	pulse  cov: 54 ft: 128 corp: 40/91Kb exec/s: 4096 rss: 905Mb
+#262144	pulse  cov: 54 ft: 128 corp: 40/91Kb exec/s: 4096 rss: 1396Mb
+#524288	pulse  cov: 54 ft: 128 corp: 40/91Kb exec/s: 4064 rss: 2377Mb
+#1048576	pulse  cov: 54 ft: 128 corp: 40/91Kb exec/s: 4032 rss: 4333Mb
+#2097152	pulse  cov: 54 ft: 128 corp: 40/91Kb exec/s: 4032 rss: 8139Mb
+#2202410	NEW    cov: 54 ft: 130 corp: 41/95Kb exec/s: 4026 rss: 8139Mb L: 3241 MS: 3 EraseBytes-InsertRepeatedBytes-CopyPart-
 Killed
-Execution time: 765 sec for test_oct18
-
-In file included from test_oct19.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 941962080
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1215 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1216
-#1217	INITED cov: 812 ft: 3628 corp: 297/653Kb exec/s: 0 rss: 128Mb
-#8192	pulse  cov: 812 ft: 3628 corp: 297/653Kb exec/s: 2730 rss: 290Mb
-#16384	pulse  cov: 812 ft: 3628 corp: 297/653Kb exec/s: 3276 rss: 478Mb
-#28699	NEW    cov: 812 ft: 3647 corp: 298/663Kb exec/s: 3188 rss: 690Mb L: 10000 MS: 2 CrossOver-ChangeBinInt-
-#32768	pulse  cov: 812 ft: 3647 corp: 298/663Kb exec/s: 2978 rss: 728Mb
-#47268	NEW    cov: 812 ft: 3649 corp: 299/666Kb exec/s: 3151 rss: 850Mb L: 3296 MS: 1 CopyPart-
-#65536	pulse  cov: 812 ft: 3649 corp: 299/666Kb exec/s: 3120 rss: 1013Mb
-#131072	pulse  cov: 812 ft: 3649 corp: 299/666Kb exec/s: 3120 rss: 1579Mb
-#262144	pulse  cov: 812 ft: 3649 corp: 299/666Kb exec/s: 3158 rss: 2702Mb
-#449958	NEW    cov: 812 ft: 3650 corp: 300/668Kb exec/s: 3168 rss: 4318Mb L: 2155 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#468353	NEW    cov: 812 ft: 3652 corp: 301/673Kb exec/s: 3186 rss: 4457Mb L: 5020 MS: 1 EraseBytes-
-#474223	NEW    cov: 812 ft: 3654 corp: 302/676Kb exec/s: 3182 rss: 4504Mb L: 2888 MS: 1 ChangeByte-
-#481415	NEW    cov: 812 ft: 3655 corp: 303/680Kb exec/s: 3188 rss: 4562Mb L: 4308 MS: 3 ShuffleBytes-CrossOver-ChangeBinInt-
-#524288	pulse  cov: 812 ft: 3655 corp: 303/680Kb exec/s: 3216 rss: 4892Mb
-#718983	NEW    cov: 812 ft: 3656 corp: 304/682Kb exec/s: 3224 rss: 6004Mb L: 2154 MS: 1 ChangeBinInt-
-#888233	NEW    cov: 812 ft: 3657 corp: 305/684Kb exec/s: 3241 rss: 6004Mb L: 2155 MS: 1 ChangeBit-
-#1048576	pulse  cov: 812 ft: 3657 corp: 305/684Kb exec/s: 3246 rss: 6004Mb
-#1050701	NEW    cov: 812 ft: 3658 corp: 306/692Kb exec/s: 3252 rss: 6004Mb L: 7696 MS: 4 InsertRepeatedBytes-ChangeBinInt-ChangeByte-CrossOver-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-352155986d0442337736ca9e10b6ee1fba8942b3
-Slowest unit: 20 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-edb5c4c2cefa7460579711ee7deb2b07cafab33c
-Killed
-Execution time: 525 sec for test_oct19
-
-In file included from test_oct20.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3460673939
-INFO: Loaded 1 modules (5937 guards): [0x7b9420, 0x7bf0e4), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1224 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1225
-#1226	INITED cov: 743 ft: 3457 corp: 282/665Kb exec/s: 0 rss: 126Mb
-#8192	pulse  cov: 743 ft: 3457 corp: 282/665Kb exec/s: 2730 rss: 296Mb
-#16384	pulse  cov: 743 ft: 3457 corp: 282/665Kb exec/s: 3276 rss: 494Mb
-#32768	pulse  cov: 743 ft: 3457 corp: 282/665Kb exec/s: 2978 rss: 741Mb
-#65536	pulse  cov: 743 ft: 3457 corp: 282/665Kb exec/s: 3120 rss: 1033Mb
-#131072	pulse  cov: 743 ft: 3457 corp: 282/665Kb exec/s: 3048 rss: 1623Mb
-#165482	NEW    cov: 743 ft: 3458 corp: 283/668Kb exec/s: 3064 rss: 1933Mb L: 3035 MS: 1 ChangeBit-
-#173223	NEW    cov: 743 ft: 3464 corp: 284/669Kb exec/s: 3093 rss: 2004Mb L: 1040 MS: 1 ChangeBinInt-
-#233039	NEW    cov: 743 ft: 3465 corp: 285/672Kb exec/s: 3066 rss: 2546Mb L: 3300 MS: 2 ChangeBit-CMP- DE: "prin"-
-#262144	pulse  cov: 743 ft: 3465 corp: 285/672Kb exec/s: 3120 rss: 2785Mb
-#399814	NEW    cov: 743 ft: 3466 corp: 286/676Kb exec/s: 3250 rss: 3884Mb L: 3846 MS: 2 ChangeBinInt-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#435856	NEW    cov: 743 ft: 3467 corp: 287/686Kb exec/s: 3252 rss: 4168Mb L: 10000 MS: 4 CrossOver-InsertRepeatedBytes-CopyPart-CrossOver-
-#436583	NEW    cov: 743 ft: 3468 corp: 288/687Kb exec/s: 3258 rss: 4175Mb L: 1039 MS: 1 ChangeBinInt-
-#448118	NEW    cov: 743 ft: 3469 corp: 289/692Kb exec/s: 3270 rss: 4267Mb L: 5200 MS: 1 ShuffleBytes-
-#468688	NEW    cov: 743 ft: 3471 corp: 290/696Kb exec/s: 3277 rss: 4430Mb L: 4300 MS: 1 ChangeBinInt-
-#487413	NEW    cov: 743 ft: 3472 corp: 291/700Kb exec/s: 3271 rss: 4579Mb L: 3296 MS: 1 CopyPart-
-#524288	pulse  cov: 743 ft: 3472 corp: 291/700Kb exec/s: 3297 rss: 4875Mb
-#606108	NEW    cov: 743 ft: 3474 corp: 292/703Kb exec/s: 3276 rss: 5538Mb L: 3846 MS: 1 ChangeBit-
-#632738	NEW    cov: 813 ft: 3564 corp: 293/707Kb exec/s: 3261 rss: 5749Mb L: 3846 MS: 1 ChangeBit-
-#641579	NEW    cov: 814 ft: 3586 corp: 294/711Kb exec/s: 3273 rss: 5827Mb L: 3846 MS: 2 ChangeByte-ChangeBinInt-
-#653424	NEW    cov: 814 ft: 3613 corp: 295/715Kb exec/s: 3267 rss: 5928Mb L: 3846 MS: 2 ChangeBinInt-ShuffleBytes-
-#687753	NEW    cov: 814 ft: 3624 corp: 296/718Kb exec/s: 3259 rss: 6084Mb L: 3846 MS: 1 ChangeBinInt-
-#693708	NEW    cov: 814 ft: 3632 corp: 297/722Kb exec/s: 3256 rss: 6084Mb L: 3846 MS: 1 ChangeBit-
-#703073	NEW    cov: 815 ft: 3649 corp: 298/726Kb exec/s: 3254 rss: 6084Mb L: 3846 MS: 1 ChangeBit-
-#745796	NEW    cov: 815 ft: 3650 corp: 299/730Kb exec/s: 3242 rss: 6084Mb L: 4309 MS: 4 ChangeBinInt-InsertByte-ChangeByte-ChangeBit-
-#749790	NEW    cov: 815 ft: 3653 corp: 300/734Kb exec/s: 3245 rss: 6084Mb L: 3846 MS: 3 ChangeBinInt-ChangeBinInt-ShuffleBytes-
-#765343	NEW    cov: 815 ft: 3658 corp: 301/738Kb exec/s: 3242 rss: 6084Mb L: 3846 MS: 1 ShuffleBytes-
-#765788	NEW    cov: 815 ft: 3659 corp: 302/741Kb exec/s: 3244 rss: 6084Mb L: 3846 MS: 1 ChangeByte-
-#781445	NEW    cov: 815 ft: 3660 corp: 303/745Kb exec/s: 3242 rss: 6084Mb L: 3597 MS: 3 ChangeBit-ChangeBit-ChangeBit-
-#785913	NEW    cov: 815 ft: 3669 corp: 304/749Kb exec/s: 3234 rss: 6084Mb L: 3846 MS: 1 PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#790359	NEW    cov: 815 ft: 3670 corp: 305/752Kb exec/s: 3239 rss: 6084Mb L: 3846 MS: 2 ChangeBinInt-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#796268	NEW    cov: 815 ft: 3675 corp: 306/756Kb exec/s: 3236 rss: 6084Mb L: 3846 MS: 1 ShuffleBytes-
-#817238	NEW    cov: 815 ft: 3678 corp: 307/760Kb exec/s: 3230 rss: 6084Mb L: 3846 MS: 1 ChangeBinInt-
-Slowest unit: 23 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0ebf22d5d0d1465b44b3f613726125432cf954cf
-#825210	NEW    cov: 815 ft: 3691 corp: 308/764Kb exec/s: 2679 rss: 6092Mb L: 3846 MS: 3 ChangeByte-ChangeBinInt-ChangeBit-
-#848684	NEW    cov: 815 ft: 3698 corp: 309/767Kb exec/s: 2694 rss: 6308Mb L: 3846 MS: 2 ChangeByte-ChangeBinInt-
-#870479	NEW    cov: 815 ft: 3700 corp: 310/771Kb exec/s: 2711 rss: 6500Mb L: 3846 MS: 2 ChangeBit-ShuffleBytes-
-#874866	NEW    cov: 815 ft: 3701 corp: 311/775Kb exec/s: 2708 rss: 6538Mb L: 3895 MS: 4 InsertRepeatedBytes-ChangeBinInt-ChangeByte-ChangeBit-
-#879838	NEW    cov: 816 ft: 3703 corp: 312/779Kb exec/s: 2715 rss: 6581Mb L: 3846 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#909247	NEW    cov: 816 ft: 3704 corp: 313/780Kb exec/s: 2730 rss: 6837Mb L: 1022 MS: 5 ChangeByte-CMP-ChangeBit-InsertRepeatedBytes-ShuffleBytes- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#950468	NEW    cov: 816 ft: 3716 corp: 314/783Kb exec/s: 2754 rss: 7199Mb L: 3846 MS: 1 ChangeBinInt-
-#972832	NEW    cov: 816 ft: 3717 corp: 315/787Kb exec/s: 2763 rss: 7392Mb L: 3846 MS: 5 ShuffleBytes-ChangeBinInt-ShuffleBytes-ChangeByte-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#999333	NEW    cov: 816 ft: 3719 corp: 316/791Kb exec/s: 2775 rss: 7407Mb L: 3846 MS: 1 ChangeBit-
-#1032629	NEW    cov: 816 ft: 3720 corp: 317/795Kb exec/s: 2783 rss: 7407Mb L: 3914 MS: 2 InsertRepeatedBytes-ShuffleBytes-
-#1048576	pulse  cov: 816 ft: 3720 corp: 317/795Kb exec/s: 2788 rss: 7407Mb
-#1164248	NEW    cov: 816 ft: 3721 corp: 318/799Kb exec/s: 2812 rss: 7407Mb L: 3846 MS: 1 ChangeBit-
-#1222908	NEW    cov: 816 ft: 3722 corp: 319/802Kb exec/s: 2824 rss: 7407Mb L: 3846 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1265233	NEW    cov: 816 ft: 3723 corp: 320/806Kb exec/s: 2830 rss: 7407Mb L: 3846 MS: 1 ShuffleBytes-
-#1293949	NEW    cov: 816 ft: 3726 corp: 321/810Kb exec/s: 2837 rss: 7407Mb L: 3846 MS: 2 ChangeByte-ChangeBinInt-
-#1410973	NEW    cov: 816 ft: 3727 corp: 322/814Kb exec/s: 2856 rss: 7407Mb L: 3846 MS: 1 ShuffleBytes-
-Killed
-Execution time: 567 sec for test_oct20
-
-In file included from test_oct21.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 174318849
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1264 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1265
-#1266	INITED cov: 760 ft: 3434 corp: 229/473Kb exec/s: 0 rss: 118Mb
-#8192	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 4096 rss: 267Mb
-#16384	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 3276 rss: 442Mb
-#32768	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 3276 rss: 711Mb
-#65536	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 3276 rss: 980Mb
-#131072	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 3276 rss: 1514Mb
-#262144	pulse  cov: 760 ft: 3434 corp: 229/473Kb exec/s: 3276 rss: 2594Mb
-#470834	NEW    cov: 760 ft: 3436 corp: 230/474Kb exec/s: 3292 rss: 4305Mb L: 1165 MS: 3 ChangeBinInt-ChangeBit-CopyPart-
-#524288	pulse  cov: 760 ft: 3436 corp: 230/474Kb exec/s: 3276 rss: 4742Mb
-#717153	NEW    cov: 760 ft: 3437 corp: 231/475Kb exec/s: 3215 rss: 6149Mb L: 1165 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#825269	NEW    cov: 760 ft: 3440 corp: 232/480Kb exec/s: 3236 rss: 6149Mb L: 5220 MS: 2 ChangeBit-ChangeBit-
-#889028	NEW    cov: 760 ft: 3441 corp: 233/482Kb exec/s: 3244 rss: 6149Mb L: 1944 MS: 1 CMP- DE: "\xff\xff\xff\xff"-
-#1020073	NEW    cov: 760 ft: 3443 corp: 234/484Kb exec/s: 3259 rss: 6149Mb L: 1256 MS: 1 CMP- DE: "\xff\xff\xff\xff"-
-#1048576	pulse  cov: 760 ft: 3443 corp: 234/484Kb exec/s: 3256 rss: 6149Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-4de508254ee7fbb58983ddbfe1d97809f283f748
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-77b247a69a8db7ff48ec2c0fa83d3c1980dc7a33
-Slowest unit: 17 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-d7acd45314972014058c19f417d996ed8d6123b5
-Slowest unit: 24 s:
-Killed
-Execution time: 508 sec for test_oct21
-
-In file included from test_oct22.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3980629468
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1269 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1270
-#1271	INITED cov: 821 ft: 3501 corp: 280/622Kb exec/s: 0 rss: 123Mb
-#8192	pulse  cov: 821 ft: 3501 corp: 280/622Kb exec/s: 2730 rss: 278Mb
-#16384	pulse  cov: 821 ft: 3501 corp: 280/622Kb exec/s: 3276 rss: 467Mb
-#32768	pulse  cov: 821 ft: 3501 corp: 280/622Kb exec/s: 3276 rss: 714Mb
-#59967	NEW    cov: 821 ft: 3502 corp: 281/624Kb exec/s: 3156 rss: 946Mb L: 2888 MS: 1 ChangeBinInt-
-#65536	pulse  cov: 821 ft: 3502 corp: 281/624Kb exec/s: 3276 rss: 993Mb
-#96782	NEW    cov: 821 ft: 3503 corp: 282/626Kb exec/s: 3226 rss: 1250Mb L: 1178 MS: 1 ChangeBinInt-
-#103604	NEW    cov: 821 ft: 3504 corp: 283/628Kb exec/s: 3237 rss: 1302Mb L: 2889 MS: 3 ChangeBinInt-InsertByte-ChangeBit-
-#131072	pulse  cov: 821 ft: 3504 corp: 283/628Kb exec/s: 3196 rss: 1530Mb
-#163859	NEW    cov: 821 ft: 3505 corp: 284/631Kb exec/s: 3212 rss: 1803Mb L: 2342 MS: 3 ChangeBinInt-CrossOver-ChangeBinInt-
-#262144	pulse  cov: 821 ft: 3505 corp: 284/631Kb exec/s: 3236 rss: 2621Mb
-#316322	NEW    cov: 821 ft: 3506 corp: 285/633Kb exec/s: 3261 rss: 3066Mb L: 2143 MS: 1 CopyPart-
-#342362	NEW    cov: 821 ft: 3532 corp: 286/635Kb exec/s: 3260 rss: 3276Mb L: 2207 MS: 1 ChangeBit-
-#504124	NEW    cov: 821 ft: 3533 corp: 287/637Kb exec/s: 3252 rss: 4628Mb L: 2155 MS: 3 ChangeBit-CopyPart-ShuffleBytes-
-#524288	pulse  cov: 821 ft: 3533 corp: 287/637Kb exec/s: 3256 rss: 4796Mb
-#732267	NEW    cov: 821 ft: 3534 corp: 288/647Kb exec/s: 3183 rss: 6048Mb L: 10000 MS: 1 ChangeBit-
-#747058	NEW    cov: 821 ft: 3542 corp: 289/651Kb exec/s: 3178 rss: 6048Mb L: 4308 MS: 2 CopyPart-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#886137	NEW    cov: 821 ft: 3547 corp: 290/653Kb exec/s: 3199 rss: 6048Mb L: 2207 MS: 1 ChangeBit-
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0fcdcc1d2e7d9d7ade31db852e7c9c352186d0ee
-Slowest unit: 18 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a885f1a32dc8d461a02b0b9bd40f6e62580840dd
-Killed
-Execution time: 408 sec for test_oct22
-
-In file included from test_oct23.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1237703879
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1279 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1280
-#1281	INITED cov: 872 ft: 3988 corp: 344/788Kb exec/s: 0 rss: 130Mb
-#8192	pulse  cov: 872 ft: 3988 corp: 344/788Kb exec/s: 2730 rss: 290Mb
-#16384	pulse  cov: 872 ft: 3988 corp: 344/788Kb exec/s: 3276 rss: 482Mb
-#32768	pulse  cov: 872 ft: 3988 corp: 344/788Kb exec/s: 3276 rss: 725Mb
-#62644	NEW    cov: 872 ft: 3992 corp: 345/792Kb exec/s: 3132 rss: 982Mb L: 4421 MS: 3 ShuffleBytes-InsertRepeatedBytes-ShuffleBytes-
-#65536	pulse  cov: 872 ft: 3992 corp: 345/792Kb exec/s: 3120 rss: 1008Mb
-#131072	pulse  cov: 872 ft: 3992 corp: 345/792Kb exec/s: 3196 rss: 1565Mb
-#262144	pulse  cov: 872 ft: 3992 corp: 345/792Kb exec/s: 3196 rss: 2682Mb
-#336208	NEW    cov: 872 ft: 3998 corp: 346/794Kb exec/s: 3201 rss: 3309Mb L: 2155 MS: 1 ChangeBit-
-#364774	NEW    cov: 873 ft: 3999 corp: 347/797Kb exec/s: 3199 rss: 3557Mb L: 2143 MS: 2 ChangeBinInt-ShuffleBytes-
-#389070	NEW    cov: 873 ft: 4000 corp: 348/799Kb exec/s: 3189 rss: 3760Mb L: 2154 MS: 3 ChangeBinInt-ChangeBit-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#520338	NEW    cov: 873 ft: 4003 corp: 349/803Kb exec/s: 3172 rss: 4880Mb L: 4308 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#524288	pulse  cov: 873 ft: 4003 corp: 349/803Kb exec/s: 3177 rss: 4915Mb
-#570948	NEW    cov: 873 ft: 4004 corp: 350/807Kb exec/s: 3137 rss: 5314Mb L: 4124 MS: 1 ChangeBit-
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-555f9779e881405266d98318e279988a58bcd42a
-Slowest unit: 25 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-35d43a24bb5b8e1388edfdb76057aecf8adc2d04
-#724366	NEW    cov: 873 ft: 4006 corp: 351/811Kb exec/s: 1788 rss: 6178Mb L: 4308 MS: 4 PersAutoDict-ChangeBit-PersAutoDict-CrossOver- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#973590	NEW    cov: 873 ft: 4011 corp: 352/813Kb exec/s: 2003 rss: 7234Mb L: 2154 MS: 3 ShuffleBytes-PersAutoDict-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#984319	NEW    cov: 873 ft: 4012 corp: 353/817Kb exec/s: 2012 rss: 7234Mb L: 3846 MS: 2 ShuffleBytes-ChangeBit-
-#1048576	pulse  cov: 873 ft: 4012 corp: 353/817Kb exec/s: 2052 rss: 7234Mb
-#1082953	NEW    cov: 874 ft: 4015 corp: 354/819Kb exec/s: 2070 rss: 7234Mb L: 2154 MS: 1 ShuffleBytes-
-#1268698	NEW    cov: 874 ft: 4016 corp: 355/829Kb exec/s: 2168 rss: 7234Mb L: 10000 MS: 1 ChangeBit-
-#1369414	NEW    cov: 874 ft: 4017 corp: 356/831Kb exec/s: 2212 rss: 7234Mb L: 2154 MS: 2 ChangeBinInt-ChangeBinInt-
-#1382147	NEW    cov: 874 ft: 4018 corp: 357/834Kb exec/s: 2214 rss: 7234Mb L: 2997 MS: 5 ChangeByte-ChangeByte-ChangeBit-InsertByte-CopyPart-
-Killed
-Execution time: 798 sec for test_oct23
-
-In file included from test_oct24.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1254641647
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1292 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1293
-#1294	INITED cov: 811 ft: 3604 corp: 283/620Kb exec/s: 0 rss: 130Mb
-#8192	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 2730 rss: 289Mb
-#16384	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 3276 rss: 473Mb
-#32768	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 3276 rss: 728Mb
-#65536	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 3276 rss: 1011Mb
-#131072	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 3276 rss: 1570Mb
-#262144	pulse  cov: 811 ft: 3604 corp: 283/620Kb exec/s: 3276 rss: 2681Mb
-#323086	NEW    cov: 811 ft: 3612 corp: 284/622Kb exec/s: 3263 rss: 3200Mb L: 2207 MS: 2 ChangeBinInt-ChangeBinInt-
-#343706	NEW    cov: 811 ft: 3616 corp: 285/624Kb exec/s: 3273 rss: 3376Mb L: 2207 MS: 2 ChangeBit-ShuffleBytes-
-#346090	NEW    cov: 811 ft: 3618 corp: 286/626Kb exec/s: 3265 rss: 3397Mb L: 2207 MS: 1 ChangeBinInt-
-#371640	NEW    cov: 811 ft: 3619 corp: 287/627Kb exec/s: 3288 rss: 3613Mb L: 1040 MS: 1 ChangeBit-
-#433938	NEW    cov: 811 ft: 3622 corp: 288/630Kb exec/s: 3287 rss: 4137Mb L: 2212 MS: 4 InsertRepeatedBytes-ChangeBinInt-CMP-ChangeBit- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#455706	NEW    cov: 811 ft: 3624 corp: 289/632Kb exec/s: 3302 rss: 4305Mb L: 2888 MS: 2 PersAutoDict-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\x01\x00"-
-#478611	NEW    cov: 811 ft: 3628 corp: 290/635Kb exec/s: 3300 rss: 4485Mb L: 2207 MS: 2 ChangeBit-ChangeBit-
-#524288	pulse  cov: 811 ft: 3628 corp: 290/635Kb exec/s: 3339 rss: 4830Mb
-#554375	NEW    cov: 811 ft: 3634 corp: 291/637Kb exec/s: 3339 rss: 5055Mb L: 2212 MS: 1 ChangeBit-
-#572380	NEW    cov: 811 ft: 3638 corp: 292/641Kb exec/s: 3347 rss: 5189Mb L: 4308 MS: 1 ChangeBinInt-
-#645513	NEW    cov: 811 ft: 3640 corp: 293/643Kb exec/s: 3344 rss: 5741Mb L: 2207 MS: 4 CopyPart-ChangeBit-ShuffleBytes-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#757201	NEW    cov: 811 ft: 3642 corp: 294/645Kb exec/s: 3350 rss: 6090Mb L: 2207 MS: 2 ShuffleBytes-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#765380	NEW    cov: 811 ft: 3644 corp: 295/649Kb exec/s: 3356 rss: 6090Mb L: 4308 MS: 1 ChangeBinInt-
-#872891	NEW    cov: 811 ft: 3652 corp: 296/652Kb exec/s: 3357 rss: 6090Mb L: 2207 MS: 2 ShuffleBytes-ShuffleBytes-
-#1027460	NEW    cov: 811 ft: 3663 corp: 297/654Kb exec/s: 3357 rss: 6090Mb L: 2207 MS: 1 ShuffleBytes-
-#1042432	NEW    cov: 811 ft: 3666 corp: 298/658Kb exec/s: 3351 rss: 6090Mb L: 4308 MS: 3 ChangeBit-ChangeByte-ShuffleBytes-
-#1048576	pulse  cov: 811 ft: 3666 corp: 298/658Kb exec/s: 3360 rss: 6090Mb
-Slowest unit: 17 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-98d168ffc354720cc80f3e0918d713a3145f468e
-Killed
-Execution time: 393 sec for test_oct24
-
-In file included from test_oct25.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 860988976
-INFO: Loaded 1 modules (5939 guards): [0x7b9420, 0x7bf0ec), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1307 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1308
-#1309	INITED cov: 620 ft: 3085 corp: 280/622Kb exec/s: 1309 rss: 129Mb
-#4096	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 2048 rss: 190Mb
-#8192	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 2730 rss: 284Mb
-#16384	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 2730 rss: 463Mb
-#32768	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 2978 rss: 707Mb
-#65536	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 3120 rss: 967Mb
-#131072	pulse  cov: 620 ft: 3085 corp: 280/622Kb exec/s: 3196 rss: 1485Mb
-#188613	NEW    cov: 620 ft: 3086 corp: 281/632Kb exec/s: 3196 rss: 1942Mb L: 10000 MS: 4 CopyPart-CMP-EraseBytes-CrossOver- DE: "print_final_stats=1"-
-#223833	NEW    cov: 620 ft: 3090 corp: 282/635Kb exec/s: 3243 rss: 2188Mb L: 3036 MS: 3 InsertByte-ChangeBit-ChangeBinInt-
-#262144	pulse  cov: 620 ft: 3090 corp: 282/635Kb exec/s: 3318 rss: 2460Mb
-#464646	NEW    cov: 620 ft: 3095 corp: 283/638Kb exec/s: 3467 rss: 3884Mb L: 3035 MS: 1 CopyPart-
-#524288	pulse  cov: 620 ft: 3095 corp: 283/638Kb exec/s: 3472 rss: 4307Mb
-#894021	NEW    cov: 620 ft: 3096 corp: 284/642Kb exec/s: 3451 rss: 5886Mb L: 3846 MS: 1 ChangeBinInt-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c9769846ed13da6fa9b54187df60e1456f567eb1
-#930361	NEW    cov: 620 ft: 3097 corp: 285/645Kb exec/s: 2643 rss: 5886Mb L: 2888 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1048576	pulse  cov: 620 ft: 3097 corp: 285/645Kb exec/s: 2723 rss: 6363Mb
-#1162663	NEW    cov: 620 ft: 3098 corp: 286/646Kb exec/s: 2794 rss: 7171Mb L: 1018 MS: 3 PersAutoDict-InsertRepeatedBytes-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1448207	NEW    cov: 620 ft: 3099 corp: 287/655Kb exec/s: 2896 rss: 7255Mb L: 10000 MS: 2 ShuffleBytes-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-Slowest unit: 29 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3d3668c46ebdd39f6518fede795a021e21783cb5
-Killed
-Execution time: 658 sec for test_oct25
-
-In file included from test_oct26.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3921637560
-INFO: Loaded 1 modules (5939 guards): [0x7b9420, 0x7bf0ec), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1314 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1315
-#1316	INITED cov: 686 ft: 3336 corp: 303/697Kb exec/s: 0 rss: 131Mb
-#8192	pulse  cov: 686 ft: 3336 corp: 303/697Kb exec/s: 2730 rss: 289Mb
-#16384	pulse  cov: 686 ft: 3336 corp: 303/697Kb exec/s: 3276 rss: 473Mb
-#32768	pulse  cov: 686 ft: 3336 corp: 303/697Kb exec/s: 3276 rss: 719Mb
-#46741	NEW    cov: 686 ft: 3337 corp: 304/705Kb exec/s: 3116 rss: 834Mb L: 7662 MS: 5 InsertByte-CopyPart-InsertByte-InsertByte-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#65536	pulse  cov: 686 ft: 3337 corp: 304/705Kb exec/s: 3276 rss: 975Mb
-#77697	NEW    cov: 686 ft: 3338 corp: 305/711Kb exec/s: 3237 rss: 1064Mb L: 6359 MS: 1 CrossOver-
-#131072	pulse  cov: 686 ft: 3338 corp: 305/711Kb exec/s: 3360 rss: 1454Mb
-#239152	NEW    cov: 686 ft: 3339 corp: 306/714Kb exec/s: 3516 rss: 2225Mb L: 3296 MS: 1 ShuffleBytes-
-#262144	pulse  cov: 686 ft: 3339 corp: 306/714Kb exec/s: 3495 rss: 2392Mb
-#524288	pulse  cov: 686 ft: 3339 corp: 306/714Kb exec/s: 3591 rss: 4280Mb
-#605529	NEW    cov: 686 ft: 3340 corp: 307/720Kb exec/s: 3583 rss: 4863Mb L: 5778 MS: 3 CMP-EraseBytes-ChangeBit- DE: "\xff\xff"-
-#630947	NEW    cov: 686 ft: 3344 corp: 308/724Kb exec/s: 3584 rss: 5050Mb L: 4204 MS: 1 ShuffleBytes-
-#652805	NEW    cov: 686 ft: 3347 corp: 309/727Kb exec/s: 3586 rss: 5209Mb L: 2713 MS: 4 CrossOver-ChangeBit-CopyPart-CrossOver-
-#1048576	pulse  cov: 686 ft: 3347 corp: 309/727Kb exec/s: 3506 rss: 6309Mb
-#1240617	NEW    cov: 686 ft: 3349 corp: 310/731Kb exec/s: 3484 rss: 6309Mb L: 4287 MS: 1 CopyPart-
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-144e62e82086077b1e417bbf09c23b78c7f24f0d
-Slowest unit: 19 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-73e22d24d05159e394246fcaf3fdc7f6b654e699
-Killed
-Execution time: 493 sec for test_oct26
-
-In file included from test_oct27.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3893206857
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1321 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1322
-#1323	INITED cov: 605 ft: 2959 corp: 259/535Kb exec/s: 0 rss: 126Mb
-#8192	pulse  cov: 605 ft: 2959 corp: 259/535Kb exec/s: 4096 rss: 270Mb
-#16384	pulse  cov: 605 ft: 2959 corp: 259/535Kb exec/s: 3276 rss: 442Mb
-#32768	pulse  cov: 605 ft: 2959 corp: 259/535Kb exec/s: 3276 rss: 692Mb
-#65536	pulse  cov: 605 ft: 2959 corp: 259/535Kb exec/s: 3449 rss: 939Mb
-#131072	pulse  cov: 605 ft: 2959 corp: 259/535Kb exec/s: 3360 rss: 1429Mb
-#247379	NEW    cov: 605 ft: 2960 corp: 260/541Kb exec/s: 3388 rss: 2297Mb L: 6749 MS: 1 ChangeBit-
-#262144	pulse  cov: 605 ft: 2960 corp: 260/541Kb exec/s: 3404 rss: 2407Mb
-#524288	pulse  cov: 605 ft: 2960 corp: 260/541Kb exec/s: 3382 rss: 4366Mb
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-dc9f678be46cc065f9f0648337efd4fcb9edb941
-Slowest unit: 20 s:
-Killed
-Execution time: 406 sec for test_oct27
-
-In file included from test_oct28.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2510702407
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1322 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1323
-#1324	INITED cov: 605 ft: 2961 corp: 261/538Kb exec/s: 0 rss: 127Mb
-#8192	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 4096 rss: 273Mb
-#16384	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3276 rss: 443Mb
-#32768	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3276 rss: 694Mb
-#65536	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3449 rss: 939Mb
-#131072	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3360 rss: 1427Mb
-#262144	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3404 rss: 2403Mb
-#524288	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 3382 rss: 4370Mb
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-dcec3b86667de6fe649ed98fc4fa72636089983b
-#1048576	pulse  cov: 605 ft: 2961 corp: 261/538Kb exec/s: 2545 rss: 7302Mb
-Slowest unit: 23 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3a45ac4fce3439de4324e862994cf9f5375a934d
-Killed
-Execution time: 734 sec for test_oct28
-
-In file included from test_oct29.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2581306503
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1322 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1323
-#1324	INITED cov: 562 ft: 2679 corp: 200/408Kb exec/s: 0 rss: 116Mb
-#8192	pulse  cov: 562 ft: 2679 corp: 200/408Kb exec/s: 4096 rss: 257Mb
-#16384	pulse  cov: 562 ft: 2679 corp: 200/408Kb exec/s: 3276 rss: 424Mb
-#32768	pulse  cov: 562 ft: 2679 corp: 200/408Kb exec/s: 3276 rss: 686Mb
-#65536	pulse  cov: 562 ft: 2679 corp: 200/408Kb exec/s: 3276 rss: 933Mb
-#131072	pulse  cov: 562 ft: 2679 corp: 200/408Kb exec/s: 3360 rss: 1425Mb
-#138410	NEW    cov: 562 ft: 2680 corp: 201/409Kb exec/s: 3375 rss: 1483Mb L: 1178 MS: 1 ChangeBit-
-#262144	pulse  cov: 562 ft: 2680 corp: 201/409Kb exec/s: 3360 rss: 2396Mb
-#524288	pulse  cov: 562 ft: 2680 corp: 201/409Kb exec/s: 3360 rss: 4342Mb
-#1048576	pulse  cov: 562 ft: 2680 corp: 201/409Kb exec/s: 3246 rss: 5996Mb
-Killed
-Execution time: 499 sec for test_oct29
-
-In file included from test_oct30.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3501076007
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1323 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1324
-#1325	INITED cov: 560 ft: 2677 corp: 207/424Kb exec/s: 0 rss: 116Mb
-#8192	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 4096 rss: 258Mb
-#16384	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3276 rss: 428Mb
-#32768	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3276 rss: 686Mb
-#65536	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3276 rss: 932Mb
-#131072	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3360 rss: 1419Mb
-#262144	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3360 rss: 2385Mb
-#524288	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 3382 rss: 4322Mb
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0f512ae596a27cf59e160eb64d17f525e2210648
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-6ee677875a29d54456fe43c593cdd0c322a7e417
-#1048576	pulse  cov: 560 ft: 2677 corp: 207/424Kb exec/s: 2166 rss: 6171Mb
-Slowest unit: 25 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-e35f29ec4fe0c348ffd295f329533f6117b76419
-Killed
-Execution time: 830 sec for test_oct30
-
-In file included from test_oct31.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2557052695
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1323 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1324
-#1325	INITED cov: 636 ft: 3016 corp: 257/529Kb exec/s: 0 rss: 129Mb
-#8192	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 2730 rss: 273Mb
-#16384	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3276 rss: 445Mb
-#32768	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3276 rss: 695Mb
-#65536	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3276 rss: 940Mb
-#131072	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3360 rss: 1441Mb
-#262144	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3360 rss: 2435Mb
-#524288	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3360 rss: 4420Mb
-#1048576	pulse  cov: 636 ft: 3016 corp: 257/529Kb exec/s: 3246 rss: 6010Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-cb44682e5575dcf0cef9ec0c3552452252a048b6
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-9a9949af156c7dc764e122db5b2509836e3a2c44
-Killed
-Execution time: 476 sec for test_oct31
-
-In file included from test_oct32.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2454982731
-INFO: Loaded 1 modules (5938 guards): [0x7b9420, 0x7bf0e8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1323 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1324
-#1325	INITED cov: 755 ft: 3883 corp: 324/731Kb exec/s: 0 rss: 139Mb
-#8192	pulse  cov: 755 ft: 3883 corp: 324/731Kb exec/s: 2730 rss: 307Mb
-#16384	pulse  cov: 755 ft: 3883 corp: 324/731Kb exec/s: 3276 rss: 507Mb
-#24813	NEW    cov: 755 ft: 3884 corp: 325/732Kb exec/s: 3101 rss: 683Mb L: 1047 MS: 3 ChangeBit-CMP-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#28291	NEW    cov: 755 ft: 3887 corp: 326/736Kb exec/s: 3143 rss: 721Mb L: 4308 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#28577	NEW    cov: 755 ft: 3888 corp: 327/739Kb exec/s: 3175 rss: 725Mb L: 2143 MS: 2 ChangeByte-ChangeBit-
-#32768	pulse  cov: 755 ft: 3888 corp: 327/739Kb exec/s: 2978 rss: 764Mb
-#65536	pulse  cov: 755 ft: 3888 corp: 327/739Kb exec/s: 3120 rss: 1075Mb
-#110921	NEW    cov: 755 ft: 3889 corp: 328/740Kb exec/s: 3081 rss: 1495Mb L: 1040 MS: 1 CopyPart-
-#118942	NEW    cov: 756 ft: 3890 corp: 329/742Kb exec/s: 3049 rss: 1569Mb L: 2143 MS: 2 CMP-ChangeBinInt- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 756 ft: 3890 corp: 329/742Kb exec/s: 3048 rss: 1683Mb
-#238068	NEW    cov: 756 ft: 3891 corp: 330/744Kb exec/s: 3091 rss: 2676Mb L: 2143 MS: 3 ShuffleBytes-ShuffleBytes-ChangeBit-
-#262144	pulse  cov: 756 ft: 3891 corp: 330/744Kb exec/s: 3084 rss: 2901Mb
-#369713	NEW    cov: 756 ft: 3893 corp: 331/748Kb exec/s: 3080 rss: 3902Mb L: 4399 MS: 3 PersAutoDict-InsertRepeatedBytes-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#397356	NEW    cov: 756 ft: 3907 corp: 332/750Kb exec/s: 3104 rss: 4154Mb L: 2346 MS: 1 ShuffleBytes-
-#446227	NEW    cov: 756 ft: 3908 corp: 333/755Kb exec/s: 3098 rss: 4599Mb L: 5083 MS: 2 CMP-ShuffleBytes- DE: "print_final_stat"-
-#524288	pulse  cov: 756 ft: 3908 corp: 333/755Kb exec/s: 3084 rss: 5289Mb
-#599651	NEW    cov: 756 ft: 3909 corp: 334/759Kb exec/s: 3075 rss: 5943Mb L: 3846 MS: 1 CopyPart-
-#691902	NEW    cov: 756 ft: 3913 corp: 335/761Kb exec/s: 3061 rss: 6195Mb L: 2207 MS: 2 ShuffleBytes-ShuffleBytes-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-13303e168f8542d850d5369ed3e3ef2ca5925ae7
-Killed
-Execution time: 385 sec for test_oct32
-
-In file included from test_oct33.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3382463036
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1334 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1335
-#1336	INITED cov: 649 ft: 3164 corp: 279/608Kb exec/s: 1336 rss: 126Mb
-#2048	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 1024 rss: 143Mb
-#4096	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 2048 rss: 186Mb
-#8192	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 2730 rss: 273Mb
-#16384	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 2730 rss: 450Mb
-#32768	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 2978 rss: 698Mb
-#65536	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 3120 rss: 951Mb
-#131072	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 3196 rss: 1459Mb
-#262144	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 3236 rss: 2473Mb
-#524288	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 3276 rss: 4494Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-48744fca296388688daa7146786150a6054c5f68
-#1048576	pulse  cov: 649 ft: 3164 corp: 279/608Kb exec/s: 2962 rss: 7103Mb
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-076f503b8b8447087c24e0ab52787dd3327135a0
-Killed
-Execution time: 639 sec for test_oct33
-
-In file included from test_oct34.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3349788783
-INFO: Loaded 1 modules (5935 guards): [0x7b9420, 0x7bf0dc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1334 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1335
-#1336	INITED cov: 789 ft: 3661 corp: 296/640Kb exec/s: 0 rss: 128Mb
-#8192	pulse  cov: 789 ft: 3661 corp: 296/640Kb exec/s: 2730 rss: 283Mb
-#14797	NEW    cov: 789 ft: 3669 corp: 297/642Kb exec/s: 2959 rss: 434Mb L: 2143 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#16384	pulse  cov: 789 ft: 3669 corp: 297/642Kb exec/s: 3276 rss: 468Mb
-#32768	pulse  cov: 789 ft: 3669 corp: 297/642Kb exec/s: 3276 rss: 704Mb
-#39272	NEW    cov: 789 ft: 3673 corp: 298/644Kb exec/s: 3570 rss: 754Mb L: 2143 MS: 1 CMP- DE: "\x01\x00"-
-#50248	NEW    cov: 789 ft: 3676 corp: 299/646Kb exec/s: 3589 rss: 835Mb L: 2143 MS: 2 ChangeByte-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#65536	pulse  cov: 789 ft: 3676 corp: 299/646Kb exec/s: 3449 rss: 953Mb
-#131072	pulse  cov: 789 ft: 3676 corp: 299/646Kb exec/s: 3542 rss: 1442Mb
-#213612	NEW    cov: 789 ft: 3678 corp: 300/648Kb exec/s: 3620 rss: 2054Mb L: 2207 MS: 1 ChangeBinInt-
-#220567	NEW    cov: 789 ft: 3679 corp: 301/650Kb exec/s: 3615 rss: 2106Mb L: 2212 MS: 1 ShuffleBytes-
-#262144	pulse  cov: 789 ft: 3679 corp: 301/650Kb exec/s: 3640 rss: 2415Mb
-#516578	NEW    cov: 789 ft: 3681 corp: 302/653Kb exec/s: 3637 rss: 4305Mb L: 2208 MS: 2 InsertByte-ChangeBinInt-
-#524288	pulse  cov: 789 ft: 3681 corp: 302/653Kb exec/s: 3640 rss: 4363Mb
-#580582	NEW    cov: 789 ft: 3682 corp: 303/655Kb exec/s: 3651 rss: 4781Mb L: 2143 MS: 1 CMP- DE: "\x01\x00\x00\x00"-
-#703339	NEW    cov: 789 ft: 3686 corp: 304/657Kb exec/s: 3625 rss: 5692Mb L: 2833 MS: 3 ChangeBinInt-ChangeByte-CMP- DE: "\x01\x00\x00\x00"-
-#741165	NEW    cov: 789 ft: 3687 corp: 305/660Kb exec/s: 3615 rss: 5974Mb L: 2154 MS: 4 ChangeBit-CMP-ChangeByte-ChangeBit- DE: "merge_control_file"-
-#853947	NEW    cov: 789 ft: 3688 corp: 306/664Kb exec/s: 3573 rss: 6192Mb L: 4223 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#965569	NEW    cov: 789 ft: 3693 corp: 307/668Kb exec/s: 3549 rss: 6192Mb L: 4308 MS: 3 ChangeBit-PersAutoDict-ChangeBinInt- DE: "\x01\x00"-
-#1048576	pulse  cov: 789 ft: 3693 corp: 307/668Kb exec/s: 3542 rss: 6192Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-448b5461c751e8dbef7a259782bb1450d86ec11b
-Killed
-Execution time: 444 sec for test_oct34
-
-In file included from test_oct35.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 1377908091
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1345 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1346
-#1347	INITED cov: 517 ft: 2535 corp: 203/420Kb exec/s: 0 rss: 115Mb
-#8192	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 4096 rss: 249Mb
-#16384	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3276 rss: 411Mb
-#32768	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3276 rss: 673Mb
-#65536	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3276 rss: 911Mb
-#131072	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3360 rss: 1380Mb
-#262144	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3318 rss: 2324Mb
-#524288	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 3360 rss: 4194Mb
-Slowest unit: 20 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-03e055894b5c3d7c7c83fd7fa4c9fc5d86a219ec
-Slowest unit: 32 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-03e055894b5c3d7c7c83fd7fa4c9fc5d86a219ec
-#1048576	pulse  cov: 517 ft: 2535 corp: 203/420Kb exec/s: 2570 rss: 6327Mb
-Killed
-Execution time: 777 sec for test_oct35
-
-In file included from test_oct36.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3375660199
-INFO: Loaded 1 modules (5931 guards): [0x7b9420, 0x7bf0cc), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1345 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1346
-#1347	INITED cov: 515 ft: 2533 corp: 200/412Kb exec/s: 0 rss: 115Mb
-#8192	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 4096 rss: 251Mb
-#16384	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 3276 rss: 414Mb
-#32768	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 3276 rss: 671Mb
-#65536	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 3276 rss: 905Mb
-#131072	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 3360 rss: 1375Mb
-#262144	pulse  cov: 515 ft: 2533 corp: 200/412Kb exec/s: 3318 rss: 2309Mb
-#419289	NEW    cov: 515 ft: 2534 corp: 201/413Kb exec/s: 3354 rss: 3432Mb L: 1256 MS: 2 ChangeBinInt-CopyPart-
-#524288	pulse  cov: 515 ft: 2534 corp: 201/413Kb exec/s: 3360 rss: 4180Mb
-#1048576	pulse  cov: 515 ft: 2534 corp: 201/413Kb exec/s: 3297 rss: 6268Mb
-Slowest unit: 21 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-bacc30f781cd07c9c0eaf5dd73aaf0f74b7875e4
-Killed
-Execution time: 558 sec for test_oct36
-
-In file included from test_oct37.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3979047877
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1346 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1347
-#1348	INITED cov: 866 ft: 3975 corp: 335/755Kb exec/s: 0 rss: 137Mb
-#8192	pulse  cov: 866 ft: 3975 corp: 335/755Kb exec/s: 2730 rss: 297Mb
-#16384	pulse  cov: 866 ft: 3975 corp: 335/755Kb exec/s: 3276 rss: 497Mb
-#32768	pulse  cov: 866 ft: 3975 corp: 335/755Kb exec/s: 3276 rss: 742Mb
-#65536	pulse  cov: 866 ft: 3975 corp: 335/755Kb exec/s: 3120 rss: 1033Mb
-#130412	NEW    cov: 866 ft: 3977 corp: 336/757Kb exec/s: 3180 rss: 1595Mb L: 2154 MS: 4 CMP-ShuffleBytes-ChangeByte-ChangeBinInt- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#131072	pulse  cov: 866 ft: 3977 corp: 336/757Kb exec/s: 3196 rss: 1601Mb
-#262144	pulse  cov: 866 ft: 3977 corp: 336/757Kb exec/s: 3360 rss: 2623Mb
-#293124	NEW    cov: 866 ft: 3978 corp: 337/760Kb exec/s: 3408 rss: 2864Mb L: 2143 MS: 1 ChangeBit-
-#383119	NEW    cov: 866 ft: 3979 corp: 338/762Kb exec/s: 3420 rss: 3562Mb L: 2143 MS: 1 ChangeBinInt-
-#524288	pulse  cov: 866 ft: 3979 corp: 338/762Kb exec/s: 3472 rss: 4663Mb
-#569579	NEW    cov: 866 ft: 3981 corp: 339/764Kb exec/s: 3473 rss: 5019Mb L: 2154 MS: 1 PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#768689	NEW    cov: 866 ft: 3984 corp: 340/766Kb exec/s: 3416 rss: 6447Mb L: 2155 MS: 1 CMP- DE: "\x00\x00"-
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-814d0ce124e5ca721bd3624c984d0625a634f4b8
-Killed
-Execution time: 416 sec for test_oct37
-
-In file included from test_oct38.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 3084709009
-INFO: Loaded 1 modules (5934 guards): [0x7b9420, 0x7bf0d8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1351 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1352
-#1353	INITED cov: 819 ft: 3956 corp: 340/771Kb exec/s: 0 rss: 135Mb
-#8192	pulse  cov: 819 ft: 3956 corp: 340/771Kb exec/s: 2730 rss: 293Mb
-#16384	pulse  cov: 819 ft: 3956 corp: 340/771Kb exec/s: 3276 rss: 483Mb
-#22422	NEW    cov: 819 ft: 3958 corp: 341/776Kb exec/s: 3203 rss: 623Mb L: 5319 MS: 4 InsertByte-ChangeBinInt-CMP-CrossOver- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#32768	pulse  cov: 819 ft: 3958 corp: 341/776Kb exec/s: 3276 rss: 723Mb
-#37205	NEW    cov: 819 ft: 3959 corp: 342/777Kb exec/s: 3382 rss: 756Mb L: 1040 MS: 2 ChangeBit-CopyPart-
-#65536	pulse  cov: 819 ft: 3959 corp: 342/777Kb exec/s: 3449 rss: 978Mb
-#131072	pulse  cov: 819 ft: 3959 corp: 342/777Kb exec/s: 3449 rss: 1484Mb
-#262144	pulse  cov: 819 ft: 3959 corp: 342/777Kb exec/s: 3542 rss: 2483Mb
-#524288	pulse  cov: 819 ft: 3959 corp: 342/777Kb exec/s: 3566 rss: 4482Mb
-#690131	NEW    cov: 819 ft: 3965 corp: 343/779Kb exec/s: 3539 rss: 5747Mb L: 2143 MS: 3 ChangeBit-ChangeByte-CopyPart-
-#754065	NEW    cov: 819 ft: 3966 corp: 344/781Kb exec/s: 3523 rss: 6235Mb L: 2154 MS: 2 ChangeBinInt-CMP- DE: "\x00\x00\x00\x00"-
-#794590	NEW    cov: 819 ft: 3967 corp: 345/783Kb exec/s: 3485 rss: 6417Mb L: 2155 MS: 2 ShuffleBytes-ChangeBinInt-
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-197ee50639c7bd739f807930b0a8caa4b091d9d3
-#836706	NEW    cov: 819 ft: 3968 corp: 346/793Kb exec/s: 3255 rss: 6462Mb L: 10000 MS: 3 ShuffleBytes-ShuffleBytes-ChangeBinInt-
-#916939	NEW    cov: 819 ft: 3970 corp: 347/795Kb exec/s: 3263 rss: 7114Mb L: 2143 MS: 1 ChangeBit-
-#1048576	pulse  cov: 819 ft: 3970 corp: 347/795Kb exec/s: 3256 rss: 7558Mb
-#1242209	NEW    cov: 819 ft: 3971 corp: 348/797Kb exec/s: 3243 rss: 7558Mb L: 2143 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00"-
-#1244429	NEW    cov: 819 ft: 3972 corp: 349/799Kb exec/s: 3240 rss: 7558Mb L: 2154 MS: 1 ChangeBinInt-
-Slowest unit: 24 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-070d65800bd92b61492433b83a7690e284785250
-Killed
-Execution time: 578 sec for test_oct38
-
-In file included from test_oct39.c:2:
-In file included from ../../opt_oct.h:38:
-In file included from ../../../elina_linearize/elina_generic.h:35:
-In file included from ../../../elina_linearize/elina_linearize.h:32:
-In file included from ../../../elina_linearize/elina_rat.h:45:
-../../../elina_linearize/elina_int.h:91:10: warning: shift count >= width of type [-Wshift-count-overflow]
-        *a = *a << (sizeof(long int)*8);
-                ^  ~~~~~~~~~~~~~~~~~~~~
-../../../elina_linearize/elina_int.h:149:16: warning: shift count >= width of type [-Wshift-count-overflow]
-    rep[0] = n >> (sizeof(long int)*8);
-               ^  ~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-INFO: Seed: 2332137294
-INFO: Loaded 1 modules (5938 guards): [0x7b9420, 0x7bf0e8), 
-Loading corpus dir: MY_CORPUS/
-Loaded 1024/1360 files from MY_CORPUS/
-Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1361
-#1362	INITED cov: 834 ft: 3872 corp: 340/804Kb exec/s: 0 rss: 138Mb
-#8192	pulse  cov: 834 ft: 3872 corp: 340/804Kb exec/s: 2730 rss: 309Mb
-#16384	pulse  cov: 834 ft: 3872 corp: 340/804Kb exec/s: 3276 rss: 517Mb
-#32768	pulse  cov: 834 ft: 3872 corp: 340/804Kb exec/s: 2978 rss: 757Mb
-#46013	NEW    cov: 834 ft: 3873 corp: 341/808Kb exec/s: 3067 rss: 880Mb L: 4308 MS: 1 ShuffleBytes-
-#65536	pulse  cov: 834 ft: 3873 corp: 341/808Kb exec/s: 2978 rss: 1057Mb
-#112484	NEW    cov: 834 ft: 3875 corp: 342/812Kb exec/s: 3040 rss: 1486Mb L: 4379 MS: 2 InsertRepeatedBytes-ShuffleBytes-
-#131072	pulse  cov: 834 ft: 3875 corp: 342/812Kb exec/s: 3048 rss: 1656Mb
-#138198	NEW    cov: 834 ft: 3876 corp: 343/816Kb exec/s: 3071 rss: 1723Mb L: 4308 MS: 1 ChangeBinInt-
-#154043	NEW    cov: 834 ft: 3877 corp: 344/819Kb exec/s: 3080 rss: 1870Mb L: 3035 MS: 1 ShuffleBytes-
-#164228	NEW    cov: 834 ft: 3878 corp: 345/824Kb exec/s: 3041 rss: 1964Mb L: 4308 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#173533	NEW    cov: 834 ft: 3884 corp: 346/828Kb exec/s: 3044 rss: 2041Mb L: 4308 MS: 1 ChangeBit-
-#203813	NEW    cov: 834 ft: 3885 corp: 347/829Kb exec/s: 3135 rss: 2294Mb L: 1040 MS: 1 ChangeBinInt-
-#216189	NEW    cov: 834 ft: 3887 corp: 348/832Kb exec/s: 3133 rss: 2395Mb L: 3847 MS: 2 InsertByte-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#233364	NEW    cov: 835 ft: 3898 corp: 349/837Kb exec/s: 3153 rss: 2539Mb L: 4308 MS: 2 ChangeBit-ChangeBinInt-
-#242691	NEW    cov: 835 ft: 3907 corp: 350/845Kb exec/s: 3151 rss: 2617Mb L: 8042 MS: 4 CopyPart-InsertByte-CMP-CMP- DE: "\x00\x00\x00\x00"-"\x01\x00\x00\x00\x00\x00\x00\x00"-
-#262144	pulse  cov: 835 ft: 3907 corp: 350/845Kb exec/s: 3158 rss: 2790Mb
-#269583	NEW    cov: 835 ft: 3909 corp: 351/848Kb exec/s: 3171 rss: 2855Mb L: 3846 MS: 1 ChangeBinInt-
-#281844	NEW    cov: 835 ft: 3910 corp: 352/852Kb exec/s: 3166 rss: 2961Mb L: 3846 MS: 2 CopyPart-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#294823	NEW    cov: 835 ft: 3916 corp: 353/856Kb exec/s: 3170 rss: 3073Mb L: 3846 MS: 1 ChangeBit-
-#310109	NEW    cov: 835 ft: 3946 corp: 354/860Kb exec/s: 3164 rss: 3206Mb L: 4288 MS: 2 InsertByte-ShuffleBytes-
-#320238	NEW    cov: 835 ft: 4008 corp: 355/862Kb exec/s: 3170 rss: 3296Mb L: 1875 MS: 1 CopyPart-
-#339068	NEW    cov: 835 ft: 4009 corp: 356/865Kb exec/s: 3198 rss: 3461Mb L: 3296 MS: 1 ChangeBinInt-
-#351238	NEW    cov: 835 ft: 4011 corp: 357/869Kb exec/s: 3193 rss: 3559Mb L: 3846 MS: 1 ChangeBit-
-#446293	NEW    cov: 835 ft: 4013 corp: 358/873Kb exec/s: 3210 rss: 4380Mb L: 4308 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#451468	NEW    cov: 835 ft: 4015 corp: 359/877Kb exec/s: 3201 rss: 4422Mb L: 4308 MS: 1 ShuffleBytes-
-#498431	NEW    cov: 835 ft: 4020 corp: 360/878Kb exec/s: 3215 rss: 4826Mb L: 1039 MS: 4 ChangeByte-ShuffleBytes-ChangeBinInt-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#506093	NEW    cov: 836 ft: 4025 corp: 361/882Kb exec/s: 3223 rss: 4892Mb L: 3846 MS: 1 ShuffleBytes-
-#512428	NEW    cov: 836 ft: 4026 corp: 362/887Kb exec/s: 3222 rss: 4947Mb L: 5028 MS: 1 EraseBytes-
-#524288	pulse  cov: 836 ft: 4026 corp: 362/887Kb exec/s: 3216 rss: 5052Mb
-#559008	NEW    cov: 836 ft: 4027 corp: 363/889Kb exec/s: 3231 rss: 5343Mb L: 1875 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00"-
-#652348	NEW    cov: 836 ft: 4029 corp: 364/891Kb exec/s: 3197 rss: 6146Mb L: 1875 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00"-
-#713658	NEW    cov: 836 ft: 4030 corp: 365/893Kb exec/s: 3185 rss: 6334Mb L: 2713 MS: 1 CopyPart-
-#743868	NEW    cov: 836 ft: 4034 corp: 366/897Kb exec/s: 3165 rss: 6334Mb L: 4308 MS: 1 ShuffleBytes-
-#748034	NEW    cov: 837 ft: 4045 corp: 367/902Kb exec/s: 3169 rss: 6334Mb L: 4429 MS: 2 InsertRepeatedBytes-ChangeBit-
-#899316	NEW    cov: 837 ft: 4048 corp: 368/906Kb exec/s: 3144 rss: 6334Mb L: 3846 MS: 4 PersAutoDict-CopyPart-ShuffleBytes-ChangeBinInt- DE: "\x00\x00\x00\x00"-
-#936954	NEW    cov: 837 ft: 4058 corp: 369/910Kb exec/s: 3133 rss: 6334Mb L: 4855 MS: 2 ChangeBit-CrossOver-
-#945723	NEW    cov: 837 ft: 4069 corp: 370/915Kb exec/s: 3131 rss: 6334Mb L: 4855 MS: 1 ChangeBinInt-
-#970620	NEW    cov: 837 ft: 4071 corp: 371/919Kb exec/s: 3131 rss: 6334Mb L: 3846 MS: 3 ChangeBit-ChangeBit-PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#980123	NEW    cov: 837 ft: 4075 corp: 372/922Kb exec/s: 3131 rss: 6334Mb L: 3296 MS: 1 CMP- DE: "\xff\xff\xff\xff"-
-#993859	NEW    cov: 837 ft: 4076 corp: 373/925Kb exec/s: 3125 rss: 6334Mb L: 3421 MS: 2 PersAutoDict-InsertRepeatedBytes- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1032419	NEW    cov: 837 ft: 4078 corp: 374/930Kb exec/s: 3119 rss: 6334Mb L: 4308 MS: 2 ChangeByte-PersAutoDict- DE: "\x00\x00\x00\x00"-
-#1048576	pulse  cov: 837 ft: 4078 corp: 374/930Kb exec/s: 3120 rss: 6334Mb
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0e543529dd2d5985fd2c02cfdea1f8a445eb3dbc
-Killed
-Execution time: 471 sec for test_oct39
+Execution time: 1169 sec for test_oct39
 

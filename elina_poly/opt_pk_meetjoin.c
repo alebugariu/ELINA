@@ -326,7 +326,7 @@ int elina_coeff_sgn(elina_coeff_t * coeff){
 
 opt_pk_array_t* opt_pk_meet_lincons_array_cons(elina_manager_t* man, bool destructive, opt_pk_array_t* oa, elina_lincons0_array_t* array)
 {
-  printf(".");
+  //printf(".");
   //printf("meet lincons input\n");
   //elina_lincons0_array_t arr2 = opt_pk_to_lincons_array(man,oa);
   //elina_lincons0_array_fprint(stdout,&arr2,NULL);
@@ -1755,5 +1755,4 @@ opt_pk_array_t* opt_pk_meet(elina_manager_t* man, bool destructive, opt_pk_array
 	#endif
 	return op;
 }
-
 

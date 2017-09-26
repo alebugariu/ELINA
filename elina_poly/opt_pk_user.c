@@ -186,7 +186,6 @@ void opt_vector_set_elina_lincons0(opt_pk_internal_t* opk,
   assert(cons->constyp == ELINA_CONS_EQ ||
 	 cons->constyp == ELINA_CONS_SUPEQ ||
 	 cons->constyp == ELINA_CONS_SUP);
-  //ORIGINAL CODE WITH BUG: assert(elina_linexpr0_is_linear(&cons->linexpr0));
   assert(elina_linexpr0_is_linear(cons->linexpr0));
 
   opt_vector_set_elina_linexpr0(opk, ov, cons->linexpr0, intdim+realdim,1);
@@ -283,7 +282,6 @@ bool opt_matrix_append_elina_lincons0_array(opt_pk_internal_t* opk,
   res = true;
   j = nbrows;
   for (i=0; i<array->size; i++){
-	//ORIGINAL CODE WITH THE BUG: assert(elina_linexpr0_is_linear(&array->p[i].linexpr0));
     assert(elina_linexpr0_is_linear(array->p[i].linexpr0));
     switch (array->p[i].constyp){
     case ELINA_CONS_EQ:
@@ -349,5 +347,4 @@ elina_lincons0_t opt_lincons0_of_vector(opt_pk_internal_t* opk,
   lincons.scalar = NULL;
   return lincons;
 }
-
 
