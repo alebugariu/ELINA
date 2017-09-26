@@ -1,7 +1,7 @@
 #
 #
 #  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
-#  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+#  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
 #  This software is distributed under GNU Lesser General Public License Version 3.0.
 #  For more information, see the ELINA project website at:
 #  http://elina.ethz.ch
@@ -62,7 +62,7 @@ elina_coeff_arith.o : elina_coeff_arith.h elina_coeff_arith.c
 elina_linexpr0_arith.o : elina_linexpr0_arith.h elina_linexpr0_arith.c
 	$(CC) -c $(CFLAGS) $(DFLAGS) $(INCLUDES) -o elina_linexpr0_arith.o elina_linexpr0_arith.c $(LIBS)
 
-elina_linearize.o : elina_linearize.h elina_linearize.c
+elina_linearize.o : elina_linearize.h elina_linearize.c elina_int.h
 	$(CC) -c $(CFLAGS) $(DFLAGS) $(INCLUDES) -o elina_linearize.o elina_linearize.c $(LIBS)
 
 elina_linearize_texpr.o : elina_linearize_texpr.h elina_linearize_texpr.c

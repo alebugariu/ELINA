@@ -60,7 +60,7 @@ void opt_poly_clear(opt_pk_t* opo)
   if(opo->F){
 	opt_matrix_free(opo->F);
   }
-  
+
   if(opo->satC){
 	opt_satmat_free(opo->satC);
   }
@@ -99,14 +99,14 @@ void opt_pk_free(elina_manager_t* man, opt_pk_array_t* op)
 {
   #if defined(TIMING)
  	 start_timing();
-   #endif 
+   #endif
   opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_FREE);
   opt_poly_array_clear(opk,op);
   free(op);
   op=NULL;
   #if defined(TIMING)
  	 record_timing(free_time);
-   #endif 
+   #endif
 }
 
 void opt_poly_copy(opt_pk_t *dst, opt_pk_t *src){
@@ -137,9 +137,9 @@ opt_pk_array_t* opt_pk_copy(elina_manager_t* man, opt_pk_array_t* src)
   opt_pk_t ** poly = (opt_pk_t **)malloc(num_comp*sizeof(opt_pk_t *));
   unsigned short int k;
   opt_pk_t ** spoly = src->poly;
-  for(k = 0; k < num_comp; k++){ 
+  for(k = 0; k < num_comp; k++){
 	poly[k] = opt_poly_alloc(spoly[num_comp-k-1]->intdim,spoly[num_comp-k-1]->realdim);
-	poly[k]->C = spoly[num_comp-k-1]->C ? opt_matrix_copy(spoly[num_comp-k-1]->C) : NULL;	
+	poly[k]->C = spoly[num_comp-k-1]->C ? opt_matrix_copy(spoly[num_comp-k-1]->C) : NULL;
         poly[k]->F = spoly[num_comp-k-1]->F ? opt_matrix_copy(spoly[num_comp-k-1]->F) : NULL;
 	poly[k]->satC = spoly[num_comp-k-1]->satC ? opt_satmat_copy(spoly[num_comp-k-1]->satC) : NULL;
 	poly[k]->satF = spoly[num_comp-k-1]->satF ? opt_satmat_copy(spoly[num_comp-k-1]->satF) : NULL;
@@ -148,9 +148,9 @@ opt_pk_array_t* opt_pk_copy(elina_manager_t* man, opt_pk_array_t* src)
 	poly[k]->status = spoly[num_comp-k-1]->status;
 	poly[k]->is_minimized = spoly[num_comp-k-1]->is_minimized;
   }
-  
+
   opt_pk_array_t * dst = opt_pk_array_alloc(poly,acl,maxcols);
-  
+
   #if defined(TIMING)
 		record_timing(copy_time);
   #endif
@@ -188,7 +188,7 @@ void opt_poly_chernikova(elina_manager_t* man,
 {
   opt_pk_internal_t* opk = (opt_pk_internal_t*)man->internal;
   if ((poly->C && poly->F) || (!poly->C && !poly->F)){
-    
+
     return;
   }
   else {
@@ -196,7 +196,7 @@ void opt_poly_chernikova(elina_manager_t* man,
       //if (!poly_is_conseps(pk,po) ){
 	opt_matrix_normalize_constraint(opk,poly->C,poly->intdim,poly->realdim);
       //}
-     
+
       opt_matrix_sort_rows(opk,poly->C);
       opt_cherni_minimize(opk,true,poly);
       if (opk->exn) goto poly_chernikova_exit0;
@@ -233,7 +233,7 @@ void opt_pk_convert(elina_manager_t *man, opt_pk_array_t * op, char *msg){
 	unsigned short int num_comp = acl->size;
 	if(num_comp==0){
 		return;
-	} 
+	}
 	unsigned short int k;
 	opt_pk_t ** poly = op->poly;
 	for(k=0; k < num_comp; k++){
@@ -320,7 +320,7 @@ void quasi_removal(opt_pk_internal_t *opk, opt_pk_t * o){
 				else{
                    			 rmap[j] = 1;
 					//opt_matrix_exch_rows(oc,j,nbcons);
-				}	
+				}
 				//opt_vector_print(pi,nbcolumns);
 				//opt_vector_print(pj,nbcolumns);
 			}
@@ -353,7 +353,7 @@ void quasi_removal(opt_pk_internal_t *opk, opt_pk_t * o){
     free(rmap);
    //opt_matrix_fprint(stdout,oc);
    oc->nbrows = nbcons;
-   o->nbeq = nbeq;	
+   o->nbeq = nbeq;
 
 }
 
@@ -369,7 +369,7 @@ size_t opt_pk_size(elina_manager_t* man, opt_pk_array_t* op)
   }
   else{
 	unsigned short int num_compa = acl->size;
-	opt_pk_t ** poly = op->poly; 
+	opt_pk_t ** poly = op->poly;
 	unsigned short int k;
 	for(k=0; k < num_compa; k++){
 		opt_pk_t * src = poly[k];
@@ -377,7 +377,7 @@ size_t opt_pk_size(elina_manager_t* man, opt_pk_array_t* op)
 		s1 = src->C ? src->C->nbrows : 0;
 		s2 = src->F ? src->F->nbrows : 0;
 		res =  res + (s1+s2)*(src->intdim + src->realdim);
-	} 
+	}
   }
   return res;
 }
@@ -409,7 +409,7 @@ char meet_cons_one_comp(opt_pk_internal_t *opk, opt_pk_t **poly_a, array_comp_li
 		opt_numint_t ** src_p = src_mat->p;
 		opt_numint_t ** dst_p = dst_mat->p;
 		size_t i1 = counter;
-		bool flag = false;		
+		bool flag = false;
 		for(i = 0; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -429,7 +429,7 @@ char meet_cons_one_comp(opt_pk_internal_t *opk, opt_pk_t **poly_a, array_comp_li
 				l++;
 			}
 			i1++;
-		}  
+		}
 		if(!flag){
 			is_pos_con = 0;
 		}
@@ -444,7 +444,7 @@ char meet_cons_one_comp(opt_pk_internal_t *opk, opt_pk_t **poly_a, array_comp_li
 /*******************
 	Combine inequalities
 ********************/
-void meet_cons_with_map(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa, 
+void meet_cons_with_map(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 		unsigned short int **ca_arr, size_t *counterC, char *map, char * exclusion_map){
 	array_comp_list_t *acla = oa->acl;
 	unsigned short int num_compa = acla->size;
@@ -471,7 +471,7 @@ void meet_cons_with_map(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **p
 		opt_numint_t ** dst_p = dst_mat->p;
 		size_t * counter = counterC;
 		size_t i1 = counter[ind];
-		bool flag = false;		
+		bool flag = false;
 		for(i = 0; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -491,7 +491,7 @@ void meet_cons_with_map(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **p
 				l++;
 			}
 			i1++;
-		}  
+		}
 		if(!flag){
 			map[ind] = 0;
 		}
@@ -500,12 +500,12 @@ void meet_cons_with_map(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **p
 		free(ca_a);
 		cla = cla->next;
 	}
-	
+
 }
 
 
 
-void meet_cons(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa, 
+void meet_cons(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 		unsigned short int **ca_arr, size_t *counterC, char *map){
 	array_comp_list_t *acla = oa->acl;
 	unsigned short int num_compa = acla->size;
@@ -528,7 +528,7 @@ void meet_cons(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsi
 		opt_numint_t ** dst_p = dst_mat->p;
 		size_t * counter = counterC;
 		size_t i1 = counter[ind];
-		bool flag = false;		
+		bool flag = false;
 		for(i = 0; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -548,7 +548,7 @@ void meet_cons(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsi
 				l++;
 			}
 			i1++;
-		}  
+		}
 		if(!flag){
 			map[ind] = 0;
 		}
@@ -557,7 +557,7 @@ void meet_cons(opt_pk_internal_t *opk, opt_pk_array_t *oa, opt_pk_t **poly, unsi
 		free(ca_a);
 		cla = cla->next;
 	}
-	
+
 }
 
 
@@ -577,8 +577,8 @@ size_t cartesian_product_vertices_one_comp(opt_pk_t **poly_a, array_comp_list_t 
 			continue;
 		}
 		opt_pk_t * src = poly_a[k];
-		
-		
+
+
 		opt_matrix_t * src_mat = src->F;
 		opt_matrix_t * dst_mat = dst->F;
 		opt_numint_t ** src_p = src_mat->p;
@@ -587,7 +587,7 @@ size_t cartesian_product_vertices_one_comp(opt_pk_t **poly_a, array_comp_list_t 
 		unsigned short int * ca_a = ca_arr[k];
 		size_t i1 = counter;
 		if(!num_vertex){
-			
+
 			for(i=0; i < num_vertex_a[k]; i++){
 				opt_numint_t * src_pi = src_p[i];
 				opt_numint_t * dst_pi = dst_p[i1];
@@ -610,7 +610,7 @@ size_t cartesian_product_vertices_one_comp(opt_pk_t **poly_a, array_comp_list_t 
 		else{
 			size_t start = counter - num_vertex;
 			size_t i2, i3 = start;
-			size_t end = counter;			
+			size_t end = counter;
 			for(i=0; i < num_vertex_a[k]; i++){
 				opt_numint_t * src_pi = src_p[i];
 				for(i2=start; i2 < end; i2++){
@@ -625,16 +625,16 @@ size_t cartesian_product_vertices_one_comp(opt_pk_t **poly_a, array_comp_list_t 
 					}
 					dst_pi[1] = lcm;
 					unsigned short int l = 0;
-					
-					
+
+
 					if(lcm1!=1){
-						
+
 						for(j=2; j < dst_mat->nbcolumns; j++){
 							dst_pi[j] = lcm1*dst_pi[j];
 						}
 					}
-					
-					
+
+
 					if(lcm2==1){
 						for(j = 0; j < comp_size; j++){
 							while(ca[l] != ca_a[j]){
@@ -653,21 +653,21 @@ size_t cartesian_product_vertices_one_comp(opt_pk_t **poly_a, array_comp_list_t 
 							l++;
 						}
 					}
-					i3++;	
+					i3++;
 				}
 			}
 			counter = i3;
 			dst_mat->nbrows = counter;
 		}
 		cla = cla->next;
-		
+
 	}
-	
+
 	return counter;
 }
 
-void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly, 
-				  unsigned short int *rmapa, unsigned short int ** ca_arr, 
+void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly,
+				  unsigned short int *rmapa, unsigned short int ** ca_arr,
 				  size_t * num_vertex_a, size_t *num_vertex, size_t *counterF, char * exclusion_map){
 	/*************************
 		Cartesian Product of Vertices from A
@@ -722,7 +722,7 @@ void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly,
 		else{
 			size_t start = counterF[ind] - num_vertex[ind];
 			size_t i2, i3 = start;
-			size_t end = counterF[ind];			
+			size_t end = counterF[ind];
 			for(i=0; i < num_vertex_a[k]; i++){
 				opt_numint_t * src_pi = src_p[i];
 				for(i2=start; i2 < end; i2++){
@@ -737,16 +737,16 @@ void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly,
 					}
 					dst_pi[1] = lcm;
 					unsigned short int l = 0;
-					
-					
+
+
 					if(lcm1!=1){
-						
+
 						for(j=2; j < dst_mat->nbcolumns; j++){
 							dst_pi[j] = lcm1*dst_pi[j];
 						}
 					}
-					
-					
+
+
 					if(lcm2==1){
 						for(j = 0; j < comp_size; j++){
 							while(ca[l] != ca_a[j]){
@@ -766,14 +766,14 @@ void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly,
 						}
 					}
 					i3++;
-							
+
 				}
 			}
 			counterF[ind] = i3;
 			dst_mat->nbrows = i3;
 		}
 		free(ca_a);
-		cla = cla->next;		
+		cla = cla->next;
 	}
 	
 }
@@ -782,8 +782,8 @@ void cartesian_product_vertices_with_map(opt_pk_array_t *oa, opt_pk_t ** poly,
 
 
 
-void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly, 
-				  unsigned short int *rmapa, unsigned short int ** ca_arr, 
+void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly,
+				  unsigned short int *rmapa, unsigned short int ** ca_arr,
 				  size_t * num_vertex_a, size_t *num_vertex, size_t *counterF){
 	/*************************
 		Cartesian Product of Vertices from A
@@ -812,7 +812,7 @@ void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly,
 		opt_numint_t ** src_p = src_mat->p;
 		opt_numint_t ** dst_p = dst_mat->p;
 		size_t i1 = counterF[ind];
-		
+
 		if(!num_vertex[ind]){
 			for(i=0; i < num_vertex_a[k]; i++){
 				opt_numint_t * src_pi = src_p[i];
@@ -836,7 +836,7 @@ void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly,
 		else{
 			size_t start = counterF[ind] - num_vertex[ind];
 			size_t i2, i3 = start;
-			size_t end = counterF[ind];			
+			size_t end = counterF[ind];
 			for(i=0; i < num_vertex_a[k]; i++){
 				opt_numint_t * src_pi = src_p[i];
 				for(i2=start; i2 < end; i2++){
@@ -851,16 +851,16 @@ void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly,
 					}
 					dst_pi[1] = lcm;
 					unsigned short int l = 0;
-					
-					
+
+
 					if(lcm1!=1){
-						
+
 						for(j=2; j < dst_mat->nbcolumns; j++){
 							dst_pi[j] = lcm1*dst_pi[j];
 						}
 					}
-					
-					
+
+
 					if(lcm2==1){
 						for(j = 0; j < comp_size; j++){
 							while(ca[l] != ca_a[j]){
@@ -880,17 +880,17 @@ void cartesian_product_vertices(opt_pk_array_t *oa, opt_pk_t ** poly,
 						}
 					}
 					i3++;
-							
+
 				}
 			}
 			counterF[ind] = i3;
 			dst_mat->nbrows = i3;
 		}
 		free(ca_a);
-		
-		cla = cla->next;		
+
+		cla = cla->next;
 	}
-	
+
 }
 
 //meet rays in one component
@@ -913,14 +913,14 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 			continue;
 		}
 		opt_pk_t * src = poly_a[k];
-		
+
 		unsigned short int * ca_a = ca_arr[k];
 		unsigned short int comp_size = cla->size;
 		opt_matrix_t * src_mat = src->F;
 		size_t nbconsa = nblinemap==NULL? src_mat->nbrows : src_mat->nbrows - nblinemap[k];
 		opt_numint_t ** src_p = src_mat->p;
 		opt_numint_t ** dst_p = dst_mat->p;
-		
+
 		for(i = num_vertex_a[k]; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -935,8 +935,8 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 				l++;
 			}
 			i1++;
-		}  
-		
+		}
+
 		cla = cla->next;
 	}
 	if(nblinemap){
@@ -947,7 +947,7 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 				continue;
 			}
 			opt_pk_t * src = poly_a[k];
-		
+
 			unsigned short int * ca_a = ca_arr[k];
 			unsigned short int comp_size = cla->size;
 			opt_matrix_t * src_mat = src->F;
@@ -955,7 +955,7 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 			size_t nbconsa = src_mat->nbrows;
 			opt_numint_t ** src_p = src_mat->p;
 			opt_numint_t ** dst_p = dst_mat->p;
-		
+
 			for(i = start; i < nbconsa; i++){
 				opt_numint_t * src_pi = src_p[i];
 				opt_numint_t * dst_pi = dst_p[i1];
@@ -970,8 +970,8 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 					l++;
 				}
 				i1++;
-			}  
-		
+			}
+
 			cla = cla->next;
 		}
 	}
@@ -980,7 +980,7 @@ void meet_rays_one_comp(opt_pk_t **poly_a, array_comp_list_t *acla, unsigned sho
 
 
 
-void meet_rays_with_map(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa, 
+void meet_rays_with_map(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 	       unsigned short int **ca_arr, size_t * num_vertex_a, size_t * counterF, char * exclusion_map){
 	/************************
 		Consider rays of A
@@ -1011,7 +1011,7 @@ void meet_rays_with_map(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int 
 		//size_t * counter = loop==0 ? counterF : counterC;
 		size_t * counter = counterF;
 		size_t i1 = counter[ind];
-				
+
 		for(i = num_vertex_a[k]; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -1026,7 +1026,7 @@ void meet_rays_with_map(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int 
 				l++;
 			}
 			i1++;
-		}  
+		}
 		counter[ind] = i1;
 		dst_mat->nbrows = counter[ind];
 		free(ca_a);
@@ -1036,7 +1036,7 @@ void meet_rays_with_map(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int 
 }
 
 
-void meet_rays(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa, 
+void meet_rays(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 	       unsigned short int **ca_arr, size_t * num_vertex_a, size_t * counterF){
 	/************************
 		Consider rays of A
@@ -1063,7 +1063,7 @@ void meet_rays(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 		//size_t * counter = loop==0 ? counterF : counterC;
 		size_t * counter = counterF;
 		size_t i1 = counter[ind];
-				
+
 		for(i = num_vertex_a[k]; i < nbconsa; i++){
 			opt_numint_t * src_pi = src_p[i];
 			opt_numint_t * dst_pi = dst_p[i1];
@@ -1081,7 +1081,7 @@ void meet_rays(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 				l++;
 			}
 			i1++;
-		}  
+		}
 		//}
 		counter[ind] = i1;
 		dst_mat->nbrows = counter[ind];
@@ -1089,7 +1089,7 @@ void meet_rays(opt_pk_array_t *oa, opt_pk_t **poly, unsigned short int *rmapa,
 		//size_t i1 = counterS[ind];
 		//size_t j1 = colmapS[ind];
 		//size_t nbconsa = poly_a[k]->C->nbrows;
-		
+
 		//for(i=0; i < nbconsa; i++){
 		//	opt_bitstring_copy(poly[ind]->satF->p[i1]+j1,poly_a[k]->satF->p[i],poly_a[k]->F->nbrows);
 		//	i1++;
@@ -1144,7 +1144,7 @@ void opt_poly_minimize(elina_manager_t* man, opt_pk_t* op){
 		}
 		size_t i,j;
 		//printf("nbeq: %d\n",nbeq);
-		
+
 		opt_matrix_rearrange(oc,nbeq);
 		//
 		size_t rank = opt_matrix_gauss_elimination(opk,oc,nbeq);
@@ -1165,7 +1165,7 @@ void opt_poly_minimize(elina_manager_t* man, opt_pk_t* op){
 		gauss_backsubstitute(opk,oc,rank);
 		//remove_redundancy(opk,op);
 		op->is_minimized = true;
-		
+
 	}
 	//printf("Minimize OUT:\n");
         //fflush(stdout);
@@ -1183,7 +1183,7 @@ void opt_pk_minimize(elina_manager_t* man, opt_pk_t* op)
       man->result.flag_exact = man->result.flag_best = false;
       return;
     }
-    
+
   }
   //assert(poly_check(pk,po));
   man->result.flag_exact = man->result.flag_best =
@@ -1238,10 +1238,10 @@ void opt_pk_array_canonicalize(elina_manager_t *man, opt_pk_array_t * o){
 /* ********************************************************************** */
 void opt_pk_fprint(FILE* stream, elina_manager_t *man, opt_pk_t* op,
 	       char** name_of_dim)
-{ 
+{
   opt_pk_internal_t *opk = (opt_pk_internal_t*)man->internal;
   opt_poly_minimize(man,op);
-  
+
   if (!op->C){
     assert(opk->exn == ELINA_EXC_NONE);
     fprintf(stream,"empty polyhedron of dim (%lu,%lu)\n",
@@ -1273,14 +1273,14 @@ void opt_pk_array_fprint(FILE* stream, elina_manager_t * man, opt_pk_array_t * o
 		return ;
 	}
 	unsigned short int num_comp = acl->size;
-	
+
 	comp_list_t * cl = acl->head;
 	unsigned short int k;
 	opt_pk_t ** poly = oa->poly;
 	for(k=0; k < num_comp; k++){
 		fprint_comp_list(stream,cl,maxcols);
 		opt_pk_t *oak = poly[k];
-		opt_pk_fprint(stream,man,oak,name_of_dim); 
+		opt_pk_fprint(stream,man,oak,name_of_dim);
 		cl = cl->next;
 	}*/
         #if defined(TIMING)
@@ -1310,12 +1310,11 @@ void opt_pk_array_fprint(FILE* stream, elina_manager_t * man, opt_pk_array_t * o
 		fprintf(stdout,"Conversion time: %g\n",opt_conversion_time);
 		fprintf(stdout,"Poly is unconstrained time: %g\n",poly_is_unconstrained_time);
 		fprintf(stdout,"join count: %lld\n",join_count);
-		double total_time = top_time + free_time + copy_time + bottom_time + remove_dimension_time + is_lequal_time + meet_time + join_time + widening_time + add_dimension_time 
-					+ permute_dimension_time + meet_lincons_time + bound_dimension_time + 
+		double total_time = top_time + free_time + copy_time + bottom_time + remove_dimension_time + is_lequal_time + meet_time + join_time + widening_time + add_dimension_time
+					+ permute_dimension_time + meet_lincons_time + bound_dimension_time +
 					forget_array_time + poly_to_box_time  + is_top_time + is_bottom_time + expand_time + fold_time + sat_lincons_time + assign_linexpr_time + substitute_linexpr_time +
 					poly_is_unconstrained_time;
 		fprintf(stdout,"Total OptOctagon Analysis: %g\n",total_time);
 		fflush(stdout);
 	#endif
 }
-

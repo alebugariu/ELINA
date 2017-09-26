@@ -533,13 +533,23 @@ void opt_vector_combine(opt_pk_internal_t* opk,
 {
     unsigned short int j;
     //ov3[0] = (ov1[0] | ov2[0]);
-    //printf("input\n");
-    //opt_vector_print(ov1,size);
-    //opt_vector_print(ov2,size);
-    //fflush(stdout);
+
     opk->vector_tmp[0] = opt_numint_gcd(ov1[k],ov2[k]);
+
     bool flag = false;
+    if(ov1[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
+	 printf("exception division\n");
+         fflush(stdout);
+         opk->exn = ELINA_EXC_OVERFLOW;
+         return ;
+    }
     opk->vector_tmp[1] = opt_numint_abs(ov1[k]/opk->vector_tmp[0]);
+    if(ov2[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
+	 printf("exception division\n");
+         fflush(stdout);
+         opk->exn = ELINA_EXC_OVERFLOW;
+         return ;
+    }
     opk->vector_tmp[2] = opt_numint_abs(ov2[k]/opk->vector_tmp[0]);
 
     // optimize the overflow detection by precomputing the division
@@ -561,6 +571,7 @@ void opt_vector_combine(opt_pk_internal_t* opk,
             else{
                 flag=flag || opt_int64_add(opk->vector_tmp[3],-opk->vector_tmp[4],&ov3[j]);
             }
+
         }
     }
 
@@ -585,9 +596,7 @@ void opt_vector_combine(opt_pk_internal_t* opk,
     //if (opk->max_coeff_size){
     
     //}
-    //printf("output\n");
-    //opt_vector_print(ov3,size);
-    //fflush(stdout);
+
 }
 
 
@@ -965,6 +974,7 @@ opt_numint_t opt_vector_product(opt_pk_internal_t* opk,
   size_t j;
   opt_numint_t prod = 0;
   bool flag = false;
+
   for (j=1; j<size; j++){
 	if((q2[j]!=0) && (q1[j]!=0)){
 		opk->vector_tmp[0] = opt_numint_abs(q2[j]);

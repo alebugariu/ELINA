@@ -428,4 +428,3 @@ elina_interval_t** opt_pk_to_box(elina_manager_t* man,
   #endif
   return interval;
 }
-
