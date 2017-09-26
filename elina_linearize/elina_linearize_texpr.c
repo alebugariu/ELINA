@@ -878,7 +878,7 @@ static elina_texpr_rtype_t elina_texpr0_node_intlinearize(elina_texpr0_node_t* n
   return n->type;
 }
 
-static elina_texpr_rtype_t elina_interval_intlinearize_texpr0_rec(elina_texpr0_t* expr,
+elina_texpr_rtype_t elina_interval_intlinearize_texpr0_rec(elina_texpr0_t* expr,
 			    elina_interval_t** env, size_t intdim,
 			    elina_linexpr0_t** dlres /* out */, elina_interval_t *ires /* out */
 			    ,elina_scalar_discr_t discr)

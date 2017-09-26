@@ -377,6 +377,8 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 		tmp[k]->C = opt_matrix_alloc(nbmapa[k]+1,comp_size+2,false);
 		tmp[k]->F = opt_matrix_alloc(nbgena[k]+2*num_vertex[k],comp_size+2,false);
 		poly[k]->C = opt_matrix_alloc(opk->dec - 1 + nbmapb[k],comp_size+2,false);
+		poly[k]->F=NULL;
+		poly[k]->satC = poly[k]->satF=NULL;
 		opt_matrix_fill_constraint_top(opk,poly[k]->C,0);
 		//satF_arr[k] = opt_satmat_alloc(nbmapa[k],opt_bitindex_size(nbgena[k]));
 		comp_size_arr[k] = comp_size;
@@ -464,6 +466,7 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 	}
 
 	clb = aclb->head;
+	char * exc_map = (char *)calloc(num_comp,sizeof(char));
 	for(kb=0; kb < num_compb; kb++){
 		opt_pk_t * obk = poly_b[kb];
 		opt_matrix_t * C = obk->C;
@@ -498,6 +501,10 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 					
 					//if(!is_disjoint(res,cla,maxcols)){
 						opt_build_satline(opk,F,npci,satline);
+						if(opk->exn){
+							opk->exn = ELINA_EXC_NONE;
+							exc_map[indb] = 1;
+						}
 					//}
 					//start = start + F->nbrows;
 					
@@ -523,16 +530,38 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 	}
 
 
+	cl = acl->head;
+
 	for(k=0; k < num_comp; k++){
-		poly[k]->C->nbrows = counter[k];
-
-		opt_poly_chernikova(man,poly[k],"widening result");
-
 		free(ca_arr[k]);
 		opt_poly_clear(tmp[k]);
 	}
+	k=0;
+	while( k < num_comp){
+		opt_pk_t *oak = poly[k];
+		if(exc_map[k]){
+			comp_list_t * tmp = cl;
+			cl = cl->next;
+			remove_comp_list(acl,tmp);
+			unsigned short int k1;
+			for(k1=k; k1 < num_comp - 1; k1++){
+				poly[k1] = poly[k1+1];
+			}
+			opt_poly_clear(oak);
+			num_comp--;
+		}
+		else{
+			poly[k]->C->nbrows = counter[k];
+			opt_poly_chernikova(man,poly[k],"widening result");
+			k++;
+			cl=cl->next;
+		}
+
+	}
+
         op->acl = acl;
 	op->poly = poly;
+	free(exc_map);
 	free(rmapa);
 	free(rmapb);
 	free(nbmapb);
