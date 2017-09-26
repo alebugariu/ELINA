@@ -216,10 +216,17 @@ void select_variable(opt_pk_internal_t * opk, elina_dim_t *tdim, size_t size, op
 	size_t * m = (size_t *)calloc(size,sizeof(size_t));
 	size_t nbcolumns = oc->nbcolumns;
 	size_t nbcons = oc->nbrows;
+	//printf("start %d\n",nbcons);
+	//fflush(stdout);
 	for(i = 0; i < nbcons; i++){
 		opt_numint_t *pi = oc->p[i];
+		//printf("pi: %p %d %d\n",pi,size,tdim[0]);
+		//fflush(stdout);
 		for(j = 0; j < size; j++){
+			//printf("pj: %d\n",tdim[j]);
+			//fflush(stdout);
 			opt_numint_t pj = pi[opk->dec + tdim[j]];
+
 			if(pj > 0){
 				p[j]++;
 			}
@@ -346,6 +353,7 @@ void opt_poly_projectforget_array(bool project,
 			      elina_manager_t *man,	
 			      opt_pk_t* op, opt_pk_t* oa, 
 			      elina_dim_t* tdim, size_t size, bool destructive){
+
 	opt_pk_internal_t* opk = opt_pk_init_from_manager(man,ELINA_FUNID_FORGET_ARRAY);
 	opt_matrix_t *ocp = destructive ? oa->C : opt_matrix_copy(oa->C);
 	if(!destructive){

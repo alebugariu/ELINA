@@ -88,6 +88,7 @@ size_t opt_cherni_conversion(opt_pk_internal_t* opk,
       //ray->p[i][0] = opt_vector_product_with_index(opk, ray->p[i],
 	//     con->p[k.index],nz);
        ray->p[i][0] = opt_vector_product(opk,ray->p[i],con->p[k.index],nbcols);
+       if (opk->exn) {goto cherni_conversion_exit0;}
       if (index_non_zero == nbrows && opt_numint_sgn(ray->p[i][0])){
 	index_non_zero = i;
       }
@@ -729,5 +730,4 @@ void opt_cherni_add_and_minimize(opt_pk_internal_t* opk,
   //opt_satmat_fprint(stdout,op->satF);
   //fflush(stdout);
 }
-
 
