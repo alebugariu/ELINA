@@ -1,5 +1,25 @@
-Dim: 2
-Number of constraints: 2
+Dim: 12
+Number of constraints: 12
+Type: e
+Values: 1, 0, 0, 1, 0
+Type: e
+Values: 1, 5, 0, -1, 0
+Type: e
+Values: 7, 0, -1, 1, 0
+Type: e
+Values: 1, 0, 1, -1, 0
+Type: e
+Values: 1, 2, 0, 1, 0
 Type: e
 Values: 1, 0, 1, 0, 0
-Type: s
+Type: e
+Values: 1, 0, 0, 1, 0
+Type: e
+Values: 1, 0, 1, 0, 0
+Type: e
+Values: 1, 0, 0, 1, 0
+Type: e
+Values: 1, 0, 1, 0, 0
+Type: e
+Values: 10, 0, 1, 0, 0
+Type: e

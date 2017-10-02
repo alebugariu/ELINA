@@ -1,22 +1,2 @@
-Dim: 10
-Number of constraints: 10
-Type: s
-Values: 0, 1, -1, -1, 33554686
-Type: s
-Values: 2, 9, -1, 1, 2
-Type: s
-Values: 8, 3, -1, 1, 2
-Type: e
-Values: 8, 1, 1, 1, 16777218
-Type: s
-Values: 7, 1, -1, 1, 2
-Type: s
-Values: 0, 5, -1, 1, 2
-Type: s
-Values: 0, 1, 0, 1, 2
-Type: e
-Values: 0, 8, -1, 1, 2
-Type: s
-Values: 2, 3, -1, 1, 2
-Type: s
-Values: 0, 1, -1, 1, 2
+Dim: 2
+Number of constraints: 2
