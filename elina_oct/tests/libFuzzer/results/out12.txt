@@ -1,9 +1,5 @@
-Dim: 2
-Number of constraints: 3
+Dim: 7
+Number of constraints: 7
 Type: e
-Values: 1, 0, -1, 0, 0
+Values: 1, 0, 0, 0, 0
 Type: e
-Values: 1, 0, -1, -1, -1
-Type: e
-Values: 1, 0, -1, -1, -1
-Number of constraints: 2

@@ -9,8 +9,3 @@ Type: e
 Values: 1, 0, 0, -1, -1
 Type: s
 Values: 1, 0, 1, 0, 0
-Number of constraints: 2
-Type: e
-Values: 1, 0, 0, -1, -1
-Type: s
-Values: 1, 0, 0, -1, -1

@@ -1,8 +1,15 @@
 Dim: 2
-Number of constraints: 7
+Number of constraints: 12
 Type: e
 Values: 1, 0, 0, 0, 0
 Type: e
 Values: 1, 0, 0, 0, 0
 Type: e
-Values: 1, 0, 0, 0, 0
+Values: 1, 0, 0, 1, 0
+Type: e
+Values: 1, 0, 1, 0, 0
+Type: e
+Values: 1, 0, 0, 1, 0
+Type: e
+Values: 1, 0, 1, 0, 0
+Type: e

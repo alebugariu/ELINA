@@ -1,3 +1,0 @@
-Dim: 16
-Number of constraints: 16
-Type: e

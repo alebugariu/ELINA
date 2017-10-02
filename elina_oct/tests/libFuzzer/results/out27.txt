@@ -1,3 +1,1 @@
-Dim: 2
-Number of constraints: 2
-Type: s
+Dim: 3
