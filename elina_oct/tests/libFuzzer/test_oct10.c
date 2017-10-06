@@ -8,7 +8,7 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	long dim;
+	int dim;
 	FILE *fp;
 	fp = fopen("out10.txt", "w+");
 
@@ -19,8 +19,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
 		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (create_octagon(&octagon1, man, top, dim, data, dataSize, &dataIndex,
+				fp)) {
 			opt_oct_t* octagon2;
 			if (create_octagon(&octagon2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
@@ -37,12 +37,29 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							opt_oct_join(man, false, octagon1,
 									opt_oct_join(man, false, octagon2,
 											octagon3)))) {
+						opt_oct_free(man, top);
+						opt_oct_free(man, bottom);
+						opt_oct_free(man, octagon1);
+						opt_oct_free(man, octagon2);
+						elina_manager_free(man);
 						fclose(fp);
 						return 1;
 					}
 				}
+				opt_oct_free(man, top);
+				opt_oct_free(man, bottom);
+				opt_oct_free(man, octagon1);
+				opt_oct_free(man, octagon2);
+				elina_manager_free(man);
 			}
+			opt_oct_free(man, top);
+			opt_oct_free(man, bottom);
+			opt_oct_free(man, octagon1);
+			elina_manager_free(man);
 		}
+		opt_oct_free(man, top);
+		opt_oct_free(man, bottom);
+		elina_manager_free(man);
 	}
 	fclose(fp);
 	return 0;
