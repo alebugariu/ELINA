@@ -10,1485 +10,1043 @@ clang -lstdc++  -fsanitize-coverage=trace-pc-guard -fPIC -O0 -DTHRESHOLD=0.75 -D
 number=`expr $number + 1` ; \
     	done; \
         true
-INFO: Seed: 3918182395
-INFO: Loaded 5 modules (5911 guards): [0x2b032022d110, 0x2b032022d600), [0x2b031fdea950, 0x2b031fdec43c), [0x2b031fbc1700, 0x2b031fbc2e38), [0x2b0320023370, 0x2b03200257e4), [0x661f70, 0x662044), 
+INFO: Seed: 1467498397
+INFO: Loaded 5 modules (5911 guards): [0x2b7584387110, 0x2b7584387600), [0x2b7583f44950, 0x2b7583f4643c), [0x2b7583d1b700, 0x2b7583d1ce38), [0x2b758417d370, 0x2b758417f7e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1466 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1467
-#1468	INITED cov: 249 ft: 475 corp: 41/99Kb exec/s: 0 rss: 36Mb
-#1596	NEW    cov: 249 ft: 476 corp: 42/101Kb exec/s: 0 rss: 36Mb L: 1741 MS: 3 InsertRepeatedBytes-CopyPart-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2451	NEW    cov: 249 ft: 478 corp: 43/101Kb exec/s: 0 rss: 36Mb L: 877 MS: 3 PersAutoDict-EraseBytes-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2722	NEW    cov: 250 ft: 505 corp: 44/103Kb exec/s: 0 rss: 36Mb L: 1699 MS: 4 ChangeBinInt-ChangeASCIIInt-CopyPart-ChangeByte-
-#7158	NEW    cov: 250 ft: 510 corp: 45/107Kb exec/s: 7158 rss: 47Mb L: 3926 MS: 4 ChangeASCIIInt-InsertRepeatedBytes-ChangeByte-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#12930	NEW    cov: 251 ft: 511 corp: 46/110Kb exec/s: 6465 rss: 63Mb L: 3322 MS: 1 ChangeByte-
-#16384	pulse  cov: 251 ft: 511 corp: 46/110Kb exec/s: 5461 rss: 73Mb
-#22546	NEW    cov: 251 ft: 536 corp: 47/118Kb exec/s: 5636 rss: 90Mb L: 7876 MS: 2 ChangeByte-CopyPart-
-#25868	NEW    cov: 251 ft: 537 corp: 48/119Kb exec/s: 5173 rss: 99Mb L: 1157 MS: 4 PersAutoDict-CopyPart-CrossOver-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#32768	pulse  cov: 251 ft: 537 corp: 48/119Kb exec/s: 4681 rss: 119Mb
-#41776	NEW    cov: 252 ft: 538 corp: 49/124Kb exec/s: 4641 rss: 145Mb L: 5458 MS: 2 InsertRepeatedBytes-CopyPart-
-#50347	NEW    cov: 252 ft: 539 corp: 50/128Kb exec/s: 5034 rss: 169Mb L: 3880 MS: 3 ShuffleBytes-ShuffleBytes-CopyPart-
-#65536	pulse  cov: 252 ft: 539 corp: 50/128Kb exec/s: 4681 rss: 212Mb
-#91063	NEW    cov: 253 ft: 540 corp: 51/133Kb exec/s: 4792 rss: 285Mb L: 5369 MS: 4 PersAutoDict-CopyPart-ChangeBinInt-InsertRepeatedBytes- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 253 ft: 540 corp: 51/133Kb exec/s: 4681 rss: 398Mb
-#163960	NEW    cov: 369 ft: 662 corp: 52/139Kb exec/s: 4554 rss: 492Mb L: 5425 MS: 1 ChangeBinInt-
-#164042	NEW    cov: 370 ft: 663 corp: 53/144Kb exec/s: 4556 rss: 493Mb L: 5425 MS: 3 ChangeByte-ChangeByte-ChangeBinInt-
-#167951	NEW    cov: 375 ft: 668 corp: 54/149Kb exec/s: 4539 rss: 506Mb L: 5426 MS: 2 ChangeBit-InsertByte-
-#175374	NEW    cov: 375 ft: 669 corp: 55/157Kb exec/s: 4615 rss: 531Mb L: 8284 MS: 5 InsertByte-InsertByte-InsertRepeatedBytes-PersAutoDict-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#179231	NEW    cov: 375 ft: 673 corp: 56/163Kb exec/s: 4595 rss: 543Mb L: 5425 MS: 2 ChangeBinInt-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#188132	NEW    cov: 403 ft: 817 corp: 57/168Kb exec/s: 4588 rss: 573Mb L: 5433 MS: 3 ChangeBit-ChangeBit-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#189327	NEW    cov: 405 ft: 819 corp: 58/170Kb exec/s: 4617 rss: 577Mb L: 1717 MS: 3 CMP-ChangeASCIIInt-PersAutoDict- DE: "\x01\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#199079	NEW    cov: 465 ft: 947 corp: 59/172Kb exec/s: 4524 rss: 610Mb L: 2662 MS: 5 EraseBytes-InsertRepeatedBytes-EraseBytes-ChangeBinInt-ChangeBit-
-#201336	NEW    cov: 468 ft: 980 corp: 60/175Kb exec/s: 4575 rss: 618Mb L: 2671 MS: 2 InsertByte-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#206835	NEW    cov: 472 ft: 1007 corp: 61/177Kb exec/s: 4596 rss: 637Mb L: 2662 MS: 1 ChangeBit-
-#223640	NEW    cov: 473 ft: 1008 corp: 62/180Kb exec/s: 4564 rss: 695Mb L: 2662 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#229408	NEW    cov: 473 ft: 1009 corp: 63/190Kb exec/s: 4588 rss: 716Mb L: 10000 MS: 4 CrossOver-EraseBytes-InsertByte-CrossOver-
-#234535	NEW    cov: 473 ft: 1014 corp: 64/192Kb exec/s: 4598 rss: 734Mb L: 2671 MS: 1 ChangeBinInt-
-#239547	NEW    cov: 474 ft: 1015 corp: 65/196Kb exec/s: 4606 rss: 751Mb L: 4161 MS: 3 ChangeByte-CopyPart-ChangeBit-
-#262144	pulse  cov: 474 ft: 1015 corp: 65/196Kb exec/s: 4599 rss: 829Mb
-#279027	NEW    cov: 475 ft: 1018 corp: 66/204Kb exec/s: 4574 rss: 888Mb L: 8025 MS: 3 ChangeBinInt-CopyPart-ChangeBit-
-#282665	NEW    cov: 475 ft: 1024 corp: 67/208Kb exec/s: 4633 rss: 900Mb L: 4020 MS: 1 CopyPart-
-#291680	NEW    cov: 475 ft: 1027 corp: 68/211Kb exec/s: 4629 rss: 931Mb L: 2662 MS: 1 ChangeBinInt-
-#363950	NEW    cov: 476 ft: 1043 corp: 69/213Kb exec/s: 4606 rss: 1180Mb L: 2662 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00"-
-#368955	NEW    cov: 477 ft: 1047 corp: 70/216Kb exec/s: 4611 rss: 1198Mb L: 2662 MS: 1 ChangeBit-
-#371325	NEW    cov: 477 ft: 1076 corp: 71/221Kb exec/s: 4641 rss: 1206Mb L: 5433 MS: 1 ChangeBit-
-#391672	NEW    cov: 477 ft: 1079 corp: 72/230Kb exec/s: 4607 rss: 1277Mb L: 9187 MS: 3 InsertRepeatedBytes-InsertRepeatedBytes-CopyPart-
-#414505	NEW    cov: 479 ft: 1094 corp: 73/233Kb exec/s: 4657 rss: 1357Mb L: 2662 MS: 1 CopyPart-
-#434047	NEW    cov: 479 ft: 1097 corp: 74/237Kb exec/s: 4617 rss: 1425Mb L: 3821 MS: 3 ChangeBinInt-ShuffleBytes-CopyPart-
-#442869	NEW    cov: 479 ft: 1098 corp: 75/239Kb exec/s: 4613 rss: 1457Mb L: 2666 MS: 5 ChangeByte-ShuffleBytes-ChangeByte-CopyPart-PersAutoDict- DE: "\x01\x00\x00\x00"-
-#471187	NEW    cov: 479 ft: 1099 corp: 76/247Kb exec/s: 4619 rss: 1556Mb L: 7560 MS: 3 ChangeASCIIInt-CopyPart-ChangeBinInt-
-#484555	NEW    cov: 479 ft: 1100 corp: 77/249Kb exec/s: 4659 rss: 1602Mb L: 2662 MS: 1 CopyPart-
-#524288	pulse  cov: 479 ft: 1100 corp: 77/249Kb exec/s: 4639 rss: 1742Mb
-#555585	NEW    cov: 479 ft: 1119 corp: 78/252Kb exec/s: 4629 rss: 1852Mb L: 2662 MS: 1 ChangeBit-
-#578300	NEW    cov: 479 ft: 1121 corp: 79/257Kb exec/s: 4663 rss: 1931Mb L: 5425 MS: 1 ChangeBit-
-#581652	NEW    cov: 479 ft: 1122 corp: 80/260Kb exec/s: 4653 rss: 1942Mb L: 2662 MS: 3 PersAutoDict-ShuffleBytes-ChangeBit- DE: "\x01\x00\x00\x00"-
-#653330	NEW    cov: 479 ft: 1123 corp: 81/262Kb exec/s: 4666 rss: 2192Mb L: 2662 MS: 1 ChangeByte-
-#662725	NEW    cov: 480 ft: 1131 corp: 82/265Kb exec/s: 4667 rss: 2225Mb L: 2662 MS: 1 CopyPart-
-#712692	NEW    cov: 480 ft: 1133 corp: 83/269Kb exec/s: 4658 rss: 2400Mb L: 3881 MS: 3 ChangeBit-InsertByte-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#786698	NEW    cov: 481 ft: 1151 corp: 84/271Kb exec/s: 4655 rss: 2653Mb L: 2662 MS: 4 ShuffleBytes-ChangeBit-ShuffleBytes-ChangeBinInt-
-#792321	NEW    cov: 481 ft: 1153 corp: 85/275Kb exec/s: 4660 rss: 2672Mb L: 3821 MS: 2 ShuffleBytes-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#805991	NEW    cov: 481 ft: 1163 corp: 86/280Kb exec/s: 4658 rss: 2719Mb L: 5433 MS: 2 ChangeBit-ChangeBit-
-#849235	NEW    cov: 481 ft: 1176 corp: 87/286Kb exec/s: 4666 rss: 2866Mb L: 5513 MS: 1 InsertRepeatedBytes-
-#863505	NEW    cov: 481 ft: 1184 corp: 88/289Kb exec/s: 4667 rss: 2915Mb L: 3266 MS: 1 EraseBytes-
-#869846	NEW    cov: 481 ft: 1185 corp: 89/293Kb exec/s: 4676 rss: 2936Mb L: 3887 MS: 2 ShuffleBytes-EraseBytes-
-#964901	NEW    cov: 481 ft: 1188 corp: 90/300Kb exec/s: 4683 rss: 3264Mb L: 7876 MS: 2 ChangeByte-CMP- DE: "\x01\x00\x00\x00"-
-#1029735	NEW    cov: 481 ft: 1189 corp: 91/303Kb exec/s: 4701 rss: 3487Mb L: 2671 MS: 1 ChangeBit-
-#1034758	NEW    cov: 481 ft: 1192 corp: 92/306Kb exec/s: 4703 rss: 3505Mb L: 2662 MS: 4 ChangeByte-CMP-ChangeBit-ChangeBit- DE: "\x00\x00"-
-#1036628	NEW    cov: 481 ft: 1193 corp: 93/308Kb exec/s: 4690 rss: 3511Mb L: 2670 MS: 4 CMP-CopyPart-ChangeBinInt-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1046191	NEW    cov: 481 ft: 1194 corp: 94/311Kb exec/s: 4691 rss: 3545Mb L: 2670 MS: 2 ChangeBit-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1048576	pulse  cov: 481 ft: 1194 corp: 94/311Kb exec/s: 4702 rss: 3553Mb
-#1147546	NEW    cov: 481 ft: 1197 corp: 95/313Kb exec/s: 4683 rss: 3903Mb L: 2670 MS: 2 ChangeByte-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1169785	NEW    cov: 481 ft: 1246 corp: 96/319Kb exec/s: 4697 rss: 3981Mb L: 5433 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1201025	NEW    cov: 481 ft: 1276 corp: 97/321Kb exec/s: 4691 rss: 4092Mb L: 2662 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1209410	NEW    cov: 481 ft: 1278 corp: 98/324Kb exec/s: 4687 rss: 4122Mb L: 2662 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1216445	NEW    cov: 484 ft: 1295 corp: 99/326Kb exec/s: 4696 rss: 4147Mb L: 2670 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1262121	NEW    cov: 484 ft: 1302 corp: 100/329Kb exec/s: 4691 rss: 4308Mb L: 2670 MS: 2 ChangeByte-ChangeBit-
-#1311406	NEW    cov: 484 ft: 1305 corp: 101/337Kb exec/s: 4683 rss: 4483Mb L: 7876 MS: 2 ShuffleBytes-ChangeBit-
-#1354765	NEW    cov: 484 ft: 1309 corp: 102/339Kb exec/s: 4687 rss: 4636Mb L: 2662 MS: 1 CopyPart-
-#1427260	NEW    cov: 490 ft: 1315 corp: 103/342Kb exec/s: 4694 rss: 4894Mb L: 2662 MS: 1 ChangeBit-
-#1457021	NEW    cov: 491 ft: 1321 corp: 104/345Kb exec/s: 4684 rss: 4999Mb L: 2662 MS: 2 ChangeBit-ChangeBinInt-
-#1470221	NEW    cov: 491 ft: 1325 corp: 105/347Kb exec/s: 4697 rss: 5046Mb L: 2662 MS: 2 ChangeBinInt-PersAutoDict- DE: "\x01\x00\x00\x00"-
-#1614141	NEW    cov: 491 ft: 1326 corp: 106/350Kb exec/s: 4692 rss: 5558Mb L: 2664 MS: 2 ChangeBinInt-CMP- DE: "\x01\x00"-
-#1774881	NEW    cov: 491 ft: 1330 corp: 107/352Kb exec/s: 4695 rss: 6120Mb L: 2662 MS: 2 ChangeBit-ChangeBinInt-
-#1841829	NEW    cov: 491 ft: 1344 corp: 108/357Kb exec/s: 4698 rss: 6355Mb L: 5222 MS: 5 CrossOver-ShuffleBytes-PersAutoDict-InsertRepeatedBytes-InsertRepeatedBytes- DE: "\x01\x00"-
-#1860196	NEW    cov: 491 ft: 1354 corp: 109/360Kb exec/s: 4697 rss: 6419Mb L: 2662 MS: 2 ChangeBit-CopyPart-
-#1901541	NEW    cov: 491 ft: 1355 corp: 110/363Kb exec/s: 4695 rss: 6564Mb L: 2670 MS: 2 ShuffleBytes-PersAutoDict- DE: "\x01\x00"-
-#1972520	NEW    cov: 491 ft: 1356 corp: 111/365Kb exec/s: 4696 rss: 6814Mb L: 2654 MS: 1 EraseBytes-
-#2097152	pulse  cov: 491 ft: 1356 corp: 111/365Kb exec/s: 4691 rss: 7252Mb
-#2233286	NEW    cov: 491 ft: 1375 corp: 112/368Kb exec/s: 4691 rss: 7726Mb L: 2662 MS: 2 PersAutoDict-ChangeBit- DE: "\x01\x00\x00\x00"-
-#2256160	NEW    cov: 493 ft: 1403 corp: 113/370Kb exec/s: 4690 rss: 7808Mb L: 2670 MS: 1 ChangeBit-
-#2312120	NEW    cov: 502 ft: 1418 corp: 114/373Kb exec/s: 4689 rss: 7921Mb L: 2662 MS: 1 CMP- DE: "\x01\x00\x00\x00"-
-#2316450	NEW    cov: 502 ft: 1422 corp: 115/376Kb exec/s: 4689 rss: 7921Mb L: 2670 MS: 1 InsertRepeatedBytes-
-#2420320	NEW    cov: 502 ft: 1434 corp: 116/378Kb exec/s: 4681 rss: 7921Mb L: 2662 MS: 1 PersAutoDict- DE: "\x01\x00"-
-#2458142	NEW    cov: 503 ft: 1435 corp: 117/384Kb exec/s: 4673 rss: 7921Mb L: 5433 MS: 3 ShuffleBytes-ChangeByte-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#2604332	NEW    cov: 503 ft: 1446 corp: 118/386Kb exec/s: 4667 rss: 7921Mb L: 2662 MS: 3 PersAutoDict-ChangeBinInt-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2646780	NEW    cov: 503 ft: 1447 corp: 119/389Kb exec/s: 4668 rss: 7921Mb L: 2662 MS: 1 ChangeBit-
-#2675191	NEW    cov: 503 ft: 1456 corp: 120/391Kb exec/s: 4668 rss: 7921Mb L: 2662 MS: 2 ChangeBinInt-PersAutoDict- DE: "\x01\x00"-
-#2678908	NEW    cov: 503 ft: 1457 corp: 121/394Kb exec/s: 4667 rss: 7921Mb L: 2662 MS: 4 ChangeByte-ChangeBinInt-ChangeBinInt-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2755710	NEW    cov: 504 ft: 1458 corp: 122/397Kb exec/s: 4662 rss: 7921Mb L: 2662 MS: 1 CopyPart-
-#2797406	NEW    cov: 504 ft: 1459 corp: 123/399Kb exec/s: 4662 rss: 7921Mb L: 2670 MS: 2 ChangeBinInt-ShuffleBytes-
-#2908506	NEW    cov: 504 ft: 1464 corp: 124/402Kb exec/s: 4661 rss: 7921Mb L: 2670 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00"-
-#2947655	NEW    cov: 504 ft: 1473 corp: 125/404Kb exec/s: 4656 rss: 7921Mb L: 2670 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#2971342	NEW    cov: 504 ft: 1475 corp: 126/407Kb exec/s: 4657 rss: 7921Mb L: 2662 MS: 3 ChangeBit-ChangeByte-ChangeBit-
-#3011654	NEW    cov: 504 ft: 1515 corp: 127/410Kb exec/s: 4654 rss: 7921Mb L: 2662 MS: 5 ChangeBit-CMP-ChangeBinInt-ChangeByte-PersAutoDict- DE: "\xff\xff\xff\xff"-"\x01\x00"-
-#3014760	NEW    cov: 504 ft: 1516 corp: 128/415Kb exec/s: 4652 rss: 7921Mb L: 5763 MS: 1 CopyPart-
-#3028755	NEW    cov: 504 ft: 1517 corp: 129/418Kb exec/s: 4652 rss: 7921Mb L: 2670 MS: 1 CopyPart-
-#3037180	NEW    cov: 504 ft: 1526 corp: 130/420Kb exec/s: 4651 rss: 7921Mb L: 2670 MS: 1 CopyPart-
-#3055423	NEW    cov: 504 ft: 1532 corp: 131/423Kb exec/s: 4650 rss: 7921Mb L: 2662 MS: 4 ChangeBit-ChangeBinInt-ShuffleBytes-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3159027	NEW    cov: 504 ft: 1533 corp: 132/426Kb exec/s: 4652 rss: 7921Mb L: 2670 MS: 3 ChangeBit-ShuffleBytes-PersAutoDict- DE: "\x01\x00\x00\x00"-
-#3201220	NEW    cov: 504 ft: 1534 corp: 133/428Kb exec/s: 4652 rss: 7921Mb L: 2662 MS: 1 ChangeBinInt-
-#3269246	NEW    cov: 506 ft: 1547 corp: 134/431Kb exec/s: 4650 rss: 7921Mb L: 2662 MS: 2 ChangeByte-ChangeBit-
-#3396301	NEW    cov: 506 ft: 1549 corp: 135/433Kb exec/s: 4646 rss: 7921Mb L: 2670 MS: 2 ChangeBit-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#3446351	NEW    cov: 507 ft: 1569 corp: 136/436Kb exec/s: 4650 rss: 7921Mb L: 2662 MS: 2 ShuffleBytes-ChangeBinInt-
-#3495240	NEW    cov: 507 ft: 1600 corp: 137/439Kb exec/s: 4647 rss: 7921Mb L: 2662 MS: 1 ChangeBinInt-
-#3503216	NEW    cov: 507 ft: 1605 corp: 138/441Kb exec/s: 4646 rss: 7921Mb L: 2662 MS: 2 ChangeBit-ChangeBit-
-#3535617	NEW    cov: 507 ft: 1607 corp: 139/444Kb exec/s: 4646 rss: 7921Mb L: 2662 MS: 3 ChangeByte-ChangeByte-ChangeByte-
-#3555935	NEW    cov: 507 ft: 1608 corp: 140/446Kb exec/s: 4648 rss: 7921Mb L: 2662 MS: 1 ChangeByte-
-#3585530	NEW    cov: 507 ft: 1611 corp: 141/449Kb exec/s: 4644 rss: 7921Mb L: 2662 MS: 1 CopyPart-
-#3597850	NEW    cov: 507 ft: 1629 corp: 142/452Kb exec/s: 4648 rss: 7921Mb L: 2662 MS: 1 ChangeBinInt-
-#3610549	NEW    cov: 507 ft: 1630 corp: 143/454Kb exec/s: 4646 rss: 7921Mb L: 2663 MS: 5 PersAutoDict-InsertByte-ChangeByte-ChangeBinInt-ChangeBit- DE: "\x00\x00"-
-#3622426	NEW    cov: 507 ft: 1632 corp: 144/462Kb exec/s: 4644 rss: 7921Mb L: 7884 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3714410	NEW    cov: 507 ft: 1633 corp: 145/465Kb exec/s: 4643 rss: 7921Mb L: 2662 MS: 1 ChangeBit-
-#3738816	NEW    cov: 507 ft: 1636 corp: 146/467Kb exec/s: 4638 rss: 7921Mb L: 2671 MS: 2 InsertByte-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3886891	NEW    cov: 507 ft: 1637 corp: 147/472Kb exec/s: 4638 rss: 7921Mb L: 5327 MS: 2 InsertRepeatedBytes-InsertRepeatedBytes-
-#4022075	NEW    cov: 507 ft: 1640 corp: 148/475Kb exec/s: 4639 rss: 7921Mb L: 2670 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#4022264	NEW    cov: 507 ft: 1642 corp: 149/478Kb exec/s: 4639 rss: 7921Mb L: 2983 MS: 5 ChangeByte-ChangeBit-ShuffleBytes-ShuffleBytes-CopyPart-
-#4174150	NEW    cov: 507 ft: 1643 corp: 150/481Kb exec/s: 4632 rss: 7921Mb L: 2670 MS: 1 ShuffleBytes-
-#4178943	NEW    cov: 507 ft: 1667 corp: 151/483Kb exec/s: 4632 rss: 7921Mb L: 2662 MS: 4 ShuffleBytes-ShuffleBytes-ShuffleBytes-ChangeBit-
-#4194304	pulse  cov: 507 ft: 1667 corp: 151/483Kb exec/s: 4634 rss: 7921Mb
-#4196145	NEW    cov: 507 ft: 1668 corp: 152/487Kb exec/s: 4631 rss: 7921Mb L: 4020 MS: 1 CopyPart-
-#4222710	NEW    cov: 507 ft: 1669 corp: 153/490Kb exec/s: 4635 rss: 7921Mb L: 2662 MS: 1 CopyPart-
-#4247335	NEW    cov: 507 ft: 1675 corp: 154/492Kb exec/s: 4631 rss: 7921Mb L: 2662 MS: 1 ChangeBinInt-
-#4267960	NEW    cov: 507 ft: 1676 corp: 155/495Kb exec/s: 4634 rss: 7921Mb L: 2670 MS: 1 CopyPart-
-#4273930	NEW    cov: 507 ft: 1705 corp: 156/497Kb exec/s: 4630 rss: 7921Mb L: 2662 MS: 1 ChangeBit-
-#4287795	NEW    cov: 507 ft: 1706 corp: 157/500Kb exec/s: 4630 rss: 7921Mb L: 2662 MS: 1 ChangeByte-
-Killed
-Execution time: 1086 sec for test_oct0
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 131072 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 104857 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 95325 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 91180 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 91180 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 92182 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 91678 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 91929 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 92182 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 92182 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 91584 rss: 31Mb
+#327125178	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 90842 rss: 31Mb
+Done 327125178 runs in 3601 second(s)
+stat::number_of_executed_units: 327125178
+stat::average_exec_per_sec:     90842
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct0
 
-INFO: Seed: 424214037
-INFO: Loaded 5 modules (5911 guards): [0x2af791cda110, 0x2af791cda600), [0x2af791897950, 0x2af79189943c), [0x2af79166e700, 0x2af79166fe38), [0x2af791ad0370, 0x2af791ad27e4), [0x661f60, 0x662034), 
+INFO: Seed: 3531691294
+INFO: Loaded 5 modules (5911 guards): [0x2b4065016110, 0x2b4065016600), [0x2b4064bd3950, 0x2b4064bd543c), [0x2b40649aa700, 0x2b40649abe38), [0x2b4064e0c370, 0x2b4064e0e7e4), [0x661f60, 0x662034), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1582 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1583
-#1584	INITED cov: 522 ft: 1732 corp: 111/307Kb exec/s: 0 rss: 37Mb
-#3140	NEW    cov: 523 ft: 1733 corp: 112/309Kb exec/s: 0 rss: 37Mb L: 2662 MS: 1 ChangeBit-
-#16384	pulse  cov: 523 ft: 1733 corp: 112/309Kb exec/s: 5461 rss: 84Mb
-#32768	pulse  cov: 523 ft: 1733 corp: 112/309Kb exec/s: 4681 rss: 142Mb
-#65536	pulse  cov: 523 ft: 1733 corp: 112/309Kb exec/s: 4681 rss: 258Mb
-#72566	NEW    cov: 524 ft: 1734 corp: 113/314Kb exec/s: 4535 rss: 283Mb L: 4348 MS: 2 EraseBytes-CopyPart-
-#131072	pulse  cov: 524 ft: 1734 corp: 113/314Kb exec/s: 4681 rss: 489Mb
-#196042	NEW    cov: 524 ft: 1735 corp: 114/316Kb exec/s: 4559 rss: 719Mb L: 2662 MS: 3 ShuffleBytes-ShuffleBytes-ChangeBinInt-
-#213828	NEW    cov: 524 ft: 1736 corp: 115/319Kb exec/s: 4549 rss: 782Mb L: 2662 MS: 4 ChangeBinInt-ChangeBinInt-ChangeByte-CopyPart-
-#262144	pulse  cov: 524 ft: 1736 corp: 115/319Kb exec/s: 4519 rss: 954Mb
-#357030	NEW    cov: 524 ft: 1738 corp: 116/322Kb exec/s: 4519 rss: 1290Mb L: 2662 MS: 1 ChangeBit-
-#524288	pulse  cov: 524 ft: 1738 corp: 116/322Kb exec/s: 4481 rss: 1884Mb
-#909306	NEW    cov: 524 ft: 1740 corp: 117/324Kb exec/s: 4479 rss: 3247Mb L: 2662 MS: 2 ChangeBinInt-ChangeBit-
-#1048576	pulse  cov: 524 ft: 1740 corp: 117/324Kb exec/s: 4481 rss: 3742Mb
-#1111280	NEW    cov: 524 ft: 1758 corp: 118/327Kb exec/s: 4480 rss: 3962Mb L: 2662 MS: 1 CopyPart-
-#1334136	NEW    cov: 524 ft: 1760 corp: 119/329Kb exec/s: 4476 rss: 4751Mb L: 2662 MS: 2 ChangeByte-CMP- DE: "\x01\x00\x00\x00"-
-#1353551	NEW    cov: 524 ft: 1761 corp: 120/332Kb exec/s: 4481 rss: 4812Mb L: 2662 MS: 2 ChangeBinInt-ChangeBinInt-
-#1443465	NEW    cov: 524 ft: 1763 corp: 121/335Kb exec/s: 4510 rss: 5093Mb L: 2670 MS: 1 ChangeBit-
-#1489555	NEW    cov: 524 ft: 1765 corp: 122/337Kb exec/s: 4527 rss: 5238Mb L: 2662 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00"-
-#1584230	NEW    cov: 524 ft: 1769 corp: 123/340Kb exec/s: 4552 rss: 5534Mb L: 2662 MS: 1 CopyPart-
-#1622945	NEW    cov: 524 ft: 1772 corp: 124/342Kb exec/s: 4571 rss: 5655Mb L: 2654 MS: 1 CopyPart-
-#1922310	NEW    cov: 524 ft: 1774 corp: 125/345Kb exec/s: 4643 rss: 6593Mb L: 2670 MS: 1 CopyPart-
-#2097152	pulse  cov: 524 ft: 1774 corp: 125/345Kb exec/s: 4670 rss: 7141Mb
-#2150349	NEW    cov: 524 ft: 1775 corp: 126/348Kb exec/s: 4674 rss: 7308Mb L: 2662 MS: 5 ChangeBinInt-ChangeBit-ChangeByte-PersAutoDict-PersAutoDict- DE: "\x01\x00\x00\x00"-"\x01\x00\x00\x00"-
-#2428640	NEW    cov: 524 ft: 1776 corp: 127/350Kb exec/s: 4715 rss: 8135Mb L: 2662 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#2439387	NEW    cov: 524 ft: 1778 corp: 128/353Kb exec/s: 4718 rss: 8135Mb L: 2670 MS: 3 ChangeBit-ChangeBinInt-CopyPart-
-#2524940	NEW    cov: 524 ft: 1818 corp: 129/360Kb exec/s: 4719 rss: 8135Mb L: 7876 MS: 1 CMP- DE: "\x01\x00"-
-#2534054	NEW    cov: 524 ft: 1822 corp: 130/366Kb exec/s: 4718 rss: 8135Mb L: 5735 MS: 5 ChangeBit-EraseBytes-ShuffleBytes-ChangeBinInt-InsertRepeatedBytes-
-#2758131	NEW    cov: 524 ft: 1823 corp: 131/369Kb exec/s: 4722 rss: 8135Mb L: 2670 MS: 2 ChangeBit-ChangeBit-
-#2959711	NEW    cov: 524 ft: 1825 corp: 132/371Kb exec/s: 4735 rss: 8135Mb L: 2662 MS: 2 PersAutoDict-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\x01\x00\x00\x00\x00\x00\x00\x00"-
-#3129645	NEW    cov: 524 ft: 1830 corp: 133/374Kb exec/s: 4734 rss: 8135Mb L: 2662 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#3170842	NEW    cov: 524 ft: 1831 corp: 134/377Kb exec/s: 4739 rss: 8135Mb L: 3104 MS: 3 CopyPart-EraseBytes-CrossOver-
-#3181595	NEW    cov: 524 ft: 1834 corp: 135/379Kb exec/s: 4741 rss: 8135Mb L: 2670 MS: 1 CMP- DE: "\x01\x00\x00\x00"-
-#3252475	NEW    cov: 524 ft: 1837 corp: 136/382Kb exec/s: 4741 rss: 8135Mb L: 2670 MS: 1 CopyPart-
-#3270631	NEW    cov: 524 ft: 1838 corp: 137/385Kb exec/s: 4740 rss: 8138Mb L: 2670 MS: 2 PersAutoDict-CopyPart- DE: "\x01\x00\x00\x00"-
-#3364566	NEW    cov: 524 ft: 1840 corp: 138/387Kb exec/s: 4745 rss: 8138Mb L: 2662 MS: 2 PersAutoDict-ChangeBinInt- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#3387986	NEW    cov: 524 ft: 1841 corp: 139/390Kb exec/s: 4745 rss: 8138Mb L: 2662 MS: 2 ChangeBit-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#3409080	NEW    cov: 524 ft: 1843 corp: 140/392Kb exec/s: 4748 rss: 8138Mb L: 2662 MS: 1 PersAutoDict- DE: "\x01\x00"-
-#3557046	NEW    cov: 524 ft: 1844 corp: 141/395Kb exec/s: 4749 rss: 8138Mb L: 2662 MS: 2 CMP-ChangeBit- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#3826371	NEW    cov: 524 ft: 1847 corp: 142/398Kb exec/s: 4753 rss: 8138Mb L: 2662 MS: 2 ChangeBinInt-CopyPart-
-#4106972	NEW    cov: 524 ft: 1848 corp: 143/400Kb exec/s: 4758 rss: 8138Mb L: 2670 MS: 3 CMP-CMP-ChangeBinInt- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\xff\xff\xff\xff\xff\xff\xff\xff"-
-#4130361	NEW    cov: 524 ft: 1851 corp: 144/406Kb exec/s: 4758 rss: 8138Mb L: 5994 MS: 2 ShuffleBytes-EraseBytes-
-#4194304	pulse  cov: 524 ft: 1851 corp: 144/406Kb exec/s: 4755 rss: 8138Mb
-#4445838	NEW    cov: 524 ft: 1852 corp: 145/409Kb exec/s: 4759 rss: 8138Mb L: 2662 MS: 4 ChangeByte-ChangeBinInt-ShuffleBytes-ChangeBinInt-
-#4502615	NEW    cov: 524 ft: 1853 corp: 146/411Kb exec/s: 4764 rss: 8138Mb L: 2662 MS: 1 ChangeBit-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-98c8f90caa4502cdc439bf9ba741ce148733e27b
-Slowest unit: 19 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-94446671e3f7204afc08cb227ac9d9ad2e35fdc7
-Killed
-Execution time: 1131 sec for test_oct1
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82342 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82493 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82266 rss: 31Mb
+#296019883	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82204 rss: 31Mb
+Done 296019883 runs in 3601 second(s)
+stat::number_of_executed_units: 296019883
+stat::average_exec_per_sec:     82204
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct1
 
-INFO: Seed: 2235080546
-INFO: Loaded 5 modules (5911 guards): [0x2b20bbe21110, 0x2b20bbe21600), [0x2b20bb9de950, 0x2b20bb9e043c), [0x2b20bb7b5700, 0x2b20bb7b6e38), [0x2b20bbc17370, 0x2b20bbc197e4), [0x661f60, 0x662034), 
+INFO: Seed: 1322134973
+INFO: Loaded 5 modules (5911 guards): [0x2ac82ac3d110, 0x2ac82ac3d600), [0x2ac82a7fa950, 0x2ac82a7fc43c), [0x2ac82a5d1700, 0x2ac82a5d2e38), [0x2ac82aa33370, 0x2ac82aa357e4), [0x661f60, 0x662034), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1617 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1618
-#1619	INITED cov: 547 ft: 1910 corp: 124/338Kb exec/s: 0 rss: 37Mb
-#4736	NEW    cov: 547 ft: 1912 corp: 125/341Kb exec/s: 4736 rss: 44Mb L: 2654 MS: 2 ChangeByte-ShuffleBytes-
-#8192	pulse  cov: 547 ft: 1912 corp: 125/341Kb exec/s: 4096 rss: 56Mb
-#16384	pulse  cov: 547 ft: 1912 corp: 125/341Kb exec/s: 4096 rss: 86Mb
-#25361	NEW    cov: 547 ft: 1914 corp: 126/343Kb exec/s: 4226 rss: 118Mb L: 2774 MS: 2 ChangeBit-CopyPart-
-#32768	pulse  cov: 547 ft: 1914 corp: 126/343Kb exec/s: 4681 rss: 145Mb
-#65073	NEW    cov: 547 ft: 1915 corp: 127/353Kb exec/s: 4338 rss: 261Mb L: 10000 MS: 4 InsertByte-InsertRepeatedBytes-ChangeByte-CrossOver-
-#65536	pulse  cov: 547 ft: 1915 corp: 127/353Kb exec/s: 4369 rss: 263Mb
-#81804	NEW    cov: 547 ft: 1917 corp: 128/356Kb exec/s: 4544 rss: 322Mb L: 2663 MS: 5 CMP-CMP-ShuffleBytes-InsertByte-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 547 ft: 1917 corp: 128/356Kb exec/s: 4369 rss: 499Mb
-#255610	NEW    cov: 547 ft: 1919 corp: 129/358Kb exec/s: 4407 rss: 948Mb L: 2662 MS: 1 ChangeBinInt-
-#262144	pulse  cov: 547 ft: 1919 corp: 129/358Kb exec/s: 4443 rss: 972Mb
-#415195	NEW    cov: 547 ft: 1921 corp: 130/361Kb exec/s: 4416 rss: 1521Mb L: 2662 MS: 1 ChangeBit-
-#485140	NEW    cov: 547 ft: 1927 corp: 131/364Kb exec/s: 4410 rss: 1774Mb L: 2662 MS: 1 ChangeBinInt-
-#524288	pulse  cov: 547 ft: 1927 corp: 131/364Kb exec/s: 4405 rss: 1915Mb
-#697876	NEW    cov: 547 ft: 1928 corp: 132/367Kb exec/s: 4389 rss: 2540Mb L: 3887 MS: 2 ChangeASCIIInt-ChangeBit-
-#699855	NEW    cov: 547 ft: 1929 corp: 133/370Kb exec/s: 4401 rss: 2547Mb L: 2662 MS: 1 CopyPart-
-#913756	NEW    cov: 547 ft: 1930 corp: 134/373Kb exec/s: 4393 rss: 3317Mb L: 2662 MS: 2 ChangeBinInt-ChangeBit-
-#1048576	pulse  cov: 547 ft: 1930 corp: 134/373Kb exec/s: 4405 rss: 3801Mb
-#1528125	NEW    cov: 547 ft: 1931 corp: 135/375Kb exec/s: 4391 rss: 5528Mb L: 2662 MS: 1 ChangeBit-
-#1717722	NEW    cov: 547 ft: 1932 corp: 136/378Kb exec/s: 4393 rss: 6209Mb L: 2728 MS: 3 ShuffleBytes-InsertRepeatedBytes-CopyPart-
-#1818467	NEW    cov: 547 ft: 1934 corp: 137/380Kb exec/s: 4392 rss: 6572Mb L: 2662 MS: 3 ShuffleBytes-ChangeByte-ChangeBit-
-#2028454	NEW    cov: 547 ft: 1936 corp: 138/383Kb exec/s: 4390 rss: 7327Mb L: 2662 MS: 5 ChangeBinInt-ShuffleBytes-PersAutoDict-ChangeBit-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2097152	pulse  cov: 547 ft: 1936 corp: 138/383Kb exec/s: 4387 rss: 7574Mb
-#2171113	NEW    cov: 547 ft: 1937 corp: 139/386Kb exec/s: 4394 rss: 7838Mb L: 2662 MS: 4 ChangeBit-PersAutoDict-CMP-ChangeBinInt- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\xff\xff"-
-#2343931	NEW    cov: 547 ft: 1939 corp: 140/388Kb exec/s: 4397 rss: 8111Mb L: 2662 MS: 2 ShuffleBytes-CopyPart-
-#2640030	NEW    cov: 547 ft: 1940 corp: 141/391Kb exec/s: 4414 rss: 8118Mb L: 2662 MS: 1 CopyPart-
-#2901695	NEW    cov: 547 ft: 1942 corp: 142/393Kb exec/s: 4416 rss: 8118Mb L: 2662 MS: 1 ChangeBit-
-#3229015	NEW    cov: 547 ft: 1943 corp: 143/396Kb exec/s: 4423 rss: 8118Mb L: 2662 MS: 1 ChangeBit-
-#3632966	NEW    cov: 547 ft: 1944 corp: 144/399Kb exec/s: 4430 rss: 8118Mb L: 2662 MS: 2 CMP-ChangeBit- DE: "\xff\xff\xff\xff"-
-#3905485	NEW    cov: 547 ft: 1945 corp: 145/401Kb exec/s: 4438 rss: 8118Mb L: 2662 MS: 1 ChangeBit-
-#3971095	NEW    cov: 547 ft: 1953 corp: 146/404Kb exec/s: 4441 rss: 8118Mb L: 2662 MS: 1 CopyPart-
-#4103215	NEW    cov: 547 ft: 1955 corp: 147/408Kb exec/s: 4445 rss: 8118Mb L: 3956 MS: 1 CopyPart-
-#4194304	pulse  cov: 547 ft: 1955 corp: 147/408Kb exec/s: 4447 rss: 8118Mb
-#4254835	NEW    cov: 547 ft: 1956 corp: 148/410Kb exec/s: 4450 rss: 8118Mb L: 2662 MS: 1 ChangeBinInt-
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-b6d260b09cd4ef1f8b5e0839af0400b07f2988f0
-Slowest unit: 17 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-e1044b7ab520ce99ddc80081e79eeaa45c8965e0
-Killed
-Execution time: 1378 sec for test_oct2
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81049 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81245 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81049 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81049 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80732 rss: 31Mb
+#290507563	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80674 rss: 31Mb
+Done 290507563 runs in 3601 second(s)
+stat::number_of_executed_units: 290507563
+stat::average_exec_per_sec:     80674
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct2
 
-INFO: Seed: 4106219215
-INFO: Loaded 5 modules (5916 guards): [0x2b0785967110, 0x2b0785967600), [0x2b0785524950, 0x2b078552643c), [0x2b07852fb700, 0x2b07852fce38), [0x2b078575d370, 0x2b078575f7e4), [0x661f60, 0x662048), 
+INFO: Seed: 3398933158
+INFO: Loaded 5 modules (5916 guards): [0x2b5e1ca43110, 0x2b5e1ca43600), [0x2b5e1c600950, 0x2b5e1c60243c), [0x2b5e1c3d7700, 0x2b5e1c3d8e38), [0x2b5e1c839370, 0x2b5e1c83b7e4), [0x661f60, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1641 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1642
-#1643	INITED cov: 526 ft: 1989 corp: 141/405Kb exec/s: 0 rss: 38Mb
-#16384	pulse  cov: 526 ft: 1989 corp: 141/405Kb exec/s: 5461 rss: 84Mb
-#32768	pulse  cov: 526 ft: 1989 corp: 141/405Kb exec/s: 4681 rss: 142Mb
-#49307	NEW    cov: 526 ft: 1995 corp: 142/407Kb exec/s: 4482 rss: 200Mb L: 2536 MS: 4 ShuffleBytes-ChangeBit-ChangeBinInt-InsertRepeatedBytes-
-#65536	pulse  cov: 526 ft: 1995 corp: 142/407Kb exec/s: 4681 rss: 257Mb
-#131072	pulse  cov: 526 ft: 1995 corp: 142/407Kb exec/s: 4519 rss: 485Mb
-#262144	pulse  cov: 526 ft: 1995 corp: 142/407Kb exec/s: 4443 rss: 946Mb
-#294484	NEW    cov: 526 ft: 2006 corp: 143/410Kb exec/s: 4461 rss: 1059Mb L: 2487 MS: 1 ShuffleBytes-
-#319117	NEW    cov: 527 ft: 2007 corp: 144/412Kb exec/s: 4432 rss: 1145Mb L: 2662 MS: 4 ChangeBit-ShuffleBytes-ShuffleBytes-ChangeBinInt-
-#447024	NEW    cov: 527 ft: 2009 corp: 145/416Kb exec/s: 4425 rss: 1592Mb L: 3966 MS: 1 ShuffleBytes-
-#449388	NEW    cov: 527 ft: 2015 corp: 146/426Kb exec/s: 4449 rss: 1601Mb L: 10000 MS: 5 InsertByte-EraseBytes-InsertByte-ShuffleBytes-CrossOver-
-#524288	pulse  cov: 527 ft: 2015 corp: 146/426Kb exec/s: 4443 rss: 1863Mb
-#575655	NEW    cov: 527 ft: 2016 corp: 147/428Kb exec/s: 4428 rss: 2044Mb L: 2662 MS: 2 ChangeBinInt-ShuffleBytes-
-#619065	NEW    cov: 527 ft: 2024 corp: 148/434Kb exec/s: 4421 rss: 2196Mb L: 5324 MS: 2 ChangeByte-CrossOver-
-#809079	NEW    cov: 527 ft: 2025 corp: 149/439Kb exec/s: 4421 rss: 2866Mb L: 5324 MS: 1 ShuffleBytes-
-#1048576	pulse  cov: 527 ft: 2025 corp: 149/439Kb exec/s: 4424 rss: 3710Mb
-#1052991	NEW    cov: 527 ft: 2026 corp: 150/442Kb exec/s: 4424 rss: 3726Mb L: 2755 MS: 3 InsertByte-EraseBytes-CopyPart-
-#1172575	NEW    cov: 527 ft: 2042 corp: 151/444Kb exec/s: 4424 rss: 4147Mb L: 2662 MS: 2 ShuffleBytes-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1548485	NEW    cov: 527 ft: 2043 corp: 152/448Kb exec/s: 4541 rss: 5326Mb L: 3966 MS: 2 ShuffleBytes-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#1843704	NEW    cov: 527 ft: 2061 corp: 153/451Kb exec/s: 4597 rss: 6250Mb L: 2662 MS: 1 ChangeBinInt-
-#2097152	pulse  cov: 527 ft: 2061 corp: 153/451Kb exec/s: 4650 rss: 7044Mb
-#2287651	NEW    cov: 527 ft: 2063 corp: 154/460Kb exec/s: 4678 rss: 7639Mb L: 10000 MS: 3 CopyPart-ChangeByte-ChangeBinInt-
-#2423064	NEW    cov: 527 ft: 2069 corp: 155/463Kb exec/s: 4686 rss: 8065Mb L: 2662 MS: 1 ChangeBinInt-
-#2679918	NEW    cov: 527 ft: 2070 corp: 156/472Kb exec/s: 4701 rss: 8141Mb L: 9630 MS: 5 InsertRepeatedBytes-InsertRepeatedBytes-CrossOver-EraseBytes-ChangeBinInt-
-#2868515	NEW    cov: 527 ft: 2072 corp: 157/475Kb exec/s: 4702 rss: 8143Mb L: 2662 MS: 2 ShuffleBytes-CopyPart-
-#2925241	NEW    cov: 527 ft: 2094 corp: 158/478Kb exec/s: 4702 rss: 8143Mb L: 2742 MS: 3 InsertRepeatedBytes-ChangeBinInt-CopyPart-
-#3017395	NEW    cov: 527 ft: 2097 corp: 159/480Kb exec/s: 4707 rss: 8143Mb L: 2662 MS: 2 ShuffleBytes-ChangeBit-
-#3033204	NEW    cov: 527 ft: 2098 corp: 160/483Kb exec/s: 4709 rss: 8143Mb L: 2662 MS: 1 ChangeBit-
-#3117107	NEW    cov: 527 ft: 2101 corp: 161/493Kb exec/s: 4708 rss: 8143Mb L: 10000 MS: 4 ChangeBinInt-ShuffleBytes-ChangeBinInt-CrossOver-
-#3343264	NEW    cov: 527 ft: 2103 corp: 162/495Kb exec/s: 4715 rss: 8143Mb L: 2742 MS: 1 ChangeBit-
-#3388146	NEW    cov: 527 ft: 2104 corp: 163/501Kb exec/s: 4718 rss: 8143Mb L: 5324 MS: 3 ChangeBit-ShuffleBytes-CopyPart-
-#3686799	NEW    cov: 527 ft: 2114 corp: 164/507Kb exec/s: 4720 rss: 8143Mb L: 6990 MS: 1 CrossOver-
-#3735539	NEW    cov: 527 ft: 2115 corp: 165/514Kb exec/s: 4722 rss: 8143Mb L: 6990 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3741814	NEW    cov: 527 ft: 2116 corp: 166/521Kb exec/s: 4718 rss: 8143Mb L: 7012 MS: 1 InsertRepeatedBytes-
-#3861659	NEW    cov: 527 ft: 2117 corp: 167/528Kb exec/s: 4709 rss: 8143Mb L: 6990 MS: 1 ChangeBit-
-#4074854	NEW    cov: 527 ft: 2119 corp: 168/530Kb exec/s: 4694 rss: 8143Mb L: 2662 MS: 1 ChangeBinInt-
-#4114781	NEW    cov: 527 ft: 2124 corp: 169/533Kb exec/s: 4691 rss: 8143Mb L: 2820 MS: 3 ChangeBit-InsertRepeatedBytes-ChangeBinInt-
-#4135788	NEW    cov: 527 ft: 2127 corp: 170/536Kb exec/s: 4689 rss: 8143Mb L: 2662 MS: 5 ChangeByte-ShuffleBytes-ShuffleBytes-ShuffleBytes-ChangeBit-
-#4194304	pulse  cov: 527 ft: 2127 corp: 170/536Kb exec/s: 4686 rss: 8143Mb
-#4525295	NEW    cov: 527 ft: 2128 corp: 171/541Kb exec/s: 4665 rss: 8143Mb L: 5324 MS: 2 ChangeBinInt-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#4527327	NEW    cov: 527 ft: 2129 corp: 172/544Kb exec/s: 4667 rss: 8143Mb L: 2662 MS: 4 CMP-ChangeBinInt-ChangeBinInt-PersAutoDict- DE: "\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#4539880	NEW    cov: 527 ft: 2130 corp: 173/546Kb exec/s: 4665 rss: 8143Mb L: 2663 MS: 2 InsertByte-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-ff491a1141ee160c07f1de0e6ce269a3b482909d
-Killed
-Execution time: 1258 sec for test_oct3
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82040 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82140 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81990 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82090 rss: 31Mb
+#295553633	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82075 rss: 31Mb
+Done 295553633 runs in 3601 second(s)
+stat::number_of_executed_units: 295553633
+stat::average_exec_per_sec:     82075
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct3
 
-INFO: Seed: 79065156
-INFO: Loaded 5 modules (5915 guards): [0x2af51d34e110, 0x2af51d34e600), [0x2af51cf0b950, 0x2af51cf0d43c), [0x2af51cce2700, 0x2af51cce3e38), [0x2af51d144370, 0x2af51d1467e4), [0x661f70, 0x662054), 
+INFO: Seed: 1167738070
+INFO: Loaded 5 modules (5915 guards): [0x2b6350cef110, 0x2b6350cef600), [0x2b63508ac950, 0x2b63508ae43c), [0x2b6350683700, 0x2b6350684e38), [0x2b6350ae5370, 0x2b6350ae77e4), [0x661f70, 0x662054), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1673 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1674
-#1675	INITED cov: 574 ft: 2151 corp: 152/457Kb exec/s: 0 rss: 38Mb
-#9911	NEW    cov: 574 ft: 2153 corp: 153/464Kb exec/s: 4955 rss: 63Mb L: 6990 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#16384	pulse  cov: 574 ft: 2153 corp: 153/464Kb exec/s: 5461 rss: 88Mb
-#32768	pulse  cov: 574 ft: 2153 corp: 153/464Kb exec/s: 4681 rss: 149Mb
-#38861	NEW    cov: 574 ft: 2154 corp: 154/471Kb exec/s: 4317 rss: 172Mb L: 7012 MS: 1 ChangeBinInt-
-#61466	NEW    cov: 574 ft: 2164 corp: 155/478Kb exec/s: 4390 rss: 257Mb L: 6990 MS: 1 CopyPart-
-#65536	pulse  cov: 574 ft: 2164 corp: 155/478Kb exec/s: 4369 rss: 272Mb
-#66212	NEW    cov: 574 ft: 2166 corp: 156/483Kb exec/s: 4414 rss: 275Mb L: 5324 MS: 2 ChangeBit-ChangeBit-
-#92133	NEW    cov: 574 ft: 2168 corp: 157/490Kb exec/s: 4387 rss: 372Mb L: 7006 MS: 3 PersAutoDict-CMP-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#97327	NEW    cov: 574 ft: 2170 corp: 158/495Kb exec/s: 4423 rss: 392Mb L: 5324 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#100321	NEW    cov: 575 ft: 2171 corp: 159/500Kb exec/s: 4361 rss: 403Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 575 ft: 2171 corp: 159/500Kb exec/s: 4369 rss: 519Mb
-#248986	NEW    cov: 575 ft: 2173 corp: 160/503Kb exec/s: 4292 rss: 963Mb L: 2662 MS: 1 ChangeBit-
-#262144	pulse  cov: 575 ft: 2173 corp: 160/503Kb exec/s: 4297 rss: 1012Mb
-#278196	NEW    cov: 575 ft: 2176 corp: 161/510Kb exec/s: 4279 rss: 1071Mb L: 6990 MS: 1 ChangeByte-
-#303373	NEW    cov: 575 ft: 2177 corp: 162/519Kb exec/s: 4333 rss: 1166Mb L: 9243 MS: 3 ShuffleBytes-InsertRepeatedBytes-CopyPart-
-#303452	NEW    cov: 575 ft: 2178 corp: 163/525Kb exec/s: 4335 rss: 1167Mb L: 7019 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#376173	NEW    cov: 575 ft: 2179 corp: 164/531Kb exec/s: 4274 rss: 1441Mb L: 5970 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#524288	pulse  cov: 575 ft: 2179 corp: 164/531Kb exec/s: 4297 rss: 1999Mb
-#546336	NEW    cov: 576 ft: 2180 corp: 165/538Kb exec/s: 4301 rss: 2083Mb L: 7012 MS: 1 ChangeBit-
-#583827	NEW    cov: 576 ft: 2181 corp: 166/541Kb exec/s: 4292 rss: 2224Mb L: 2670 MS: 2 ShuffleBytes-CopyPart-
-#753371	NEW    cov: 576 ft: 2186 corp: 167/546Kb exec/s: 4280 rss: 2865Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#782627	NEW    cov: 578 ft: 2188 corp: 168/553Kb exec/s: 4276 rss: 2976Mb L: 6990 MS: 2 CMP-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#900971	NEW    cov: 595 ft: 2220 corp: 169/561Kb exec/s: 4270 rss: 3424Mb L: 8755 MS: 1 CopyPart-
-#919932	NEW    cov: 595 ft: 2222 corp: 170/566Kb exec/s: 4278 rss: 3496Mb L: 5324 MS: 2 ChangeBinInt-CopyPart-
-#934162	NEW    cov: 595 ft: 2223 corp: 171/575Kb exec/s: 4265 rss: 3551Mb L: 8755 MS: 2 ShuffleBytes-ChangeBit-
-#957756	NEW    cov: 595 ft: 2224 corp: 172/584Kb exec/s: 4275 rss: 3642Mb L: 8755 MS: 1 ChangeByte-
-#979548	NEW    cov: 595 ft: 2225 corp: 173/592Kb exec/s: 4258 rss: 3726Mb L: 8862 MS: 3 InsertRepeatedBytes-PersAutoDict-ShuffleBytes- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#991293	NEW    cov: 595 ft: 2227 corp: 174/602Kb exec/s: 4254 rss: 3772Mb L: 9507 MS: 3 ChangeByte-ChangeBinInt-CopyPart-
-#1045531	NEW    cov: 595 ft: 2228 corp: 175/607Kb exec/s: 4267 rss: 3981Mb L: 5272 MS: 1 CopyPart-
-#1048576	pulse  cov: 595 ft: 2228 corp: 175/607Kb exec/s: 4262 rss: 3993Mb
-#1213776	NEW    cov: 595 ft: 2244 corp: 176/609Kb exec/s: 4258 rss: 4636Mb L: 2742 MS: 1 ChangeBit-
-#1504461	NEW    cov: 595 ft: 2245 corp: 177/616Kb exec/s: 4249 rss: 5759Mb L: 6990 MS: 1 CopyPart-
-#1545217	NEW    cov: 595 ft: 2246 corp: 178/619Kb exec/s: 4256 rss: 5917Mb L: 2662 MS: 2 ChangeByte-ChangeBit-
-#1632386	NEW    cov: 595 ft: 2248 corp: 179/621Kb exec/s: 4251 rss: 6252Mb L: 2662 MS: 1 ChangeBit-
-#1654732	NEW    cov: 595 ft: 2249 corp: 180/627Kb exec/s: 4253 rss: 6338Mb L: 5324 MS: 2 ShuffleBytes-ChangeBinInt-
-#1712579	NEW    cov: 598 ft: 2253 corp: 181/632Kb exec/s: 4260 rss: 6560Mb L: 5324 MS: 4 ChangeBinInt-ChangeByte-ChangeBinInt-ChangeBit-
-#1766957	NEW    cov: 598 ft: 2254 corp: 182/634Kb exec/s: 4257 rss: 6771Mb L: 2662 MS: 2 ChangeBit-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1837837	NEW    cov: 598 ft: 2255 corp: 183/637Kb exec/s: 4254 rss: 7045Mb L: 2670 MS: 2 CMP-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2041540	NEW    cov: 598 ft: 2256 corp: 184/639Kb exec/s: 4253 rss: 7834Mb L: 2028 MS: 5 ShuffleBytes-ChangeBinInt-InsertRepeatedBytes-ChangeByte-CrossOver-
-#2097152	pulse  cov: 598 ft: 2256 corp: 184/639Kb exec/s: 4253 rss: 8048Mb
-#2355889	NEW    cov: 598 ft: 2262 corp: 185/648Kb exec/s: 4229 rss: 8135Mb L: 8956 MS: 4 InsertRepeatedBytes-PersAutoDict-PersAutoDict-InsertRepeatedBytes- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-"\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2455281	NEW    cov: 598 ft: 2267 corp: 186/653Kb exec/s: 4225 rss: 8140Mb L: 5324 MS: 1 CMP- DE: "\x00\x00\x00\x00"-
-#2529701	NEW    cov: 599 ft: 2268 corp: 187/662Kb exec/s: 4223 rss: 8140Mb L: 8956 MS: 1 ChangeBit-
-#2759212	NEW    cov: 599 ft: 2269 corp: 188/664Kb exec/s: 4206 rss: 8140Mb L: 2663 MS: 2 ShuffleBytes-ChangeBinInt-
-#2966376	NEW    cov: 599 ft: 2270 corp: 189/669Kb exec/s: 4201 rss: 8140Mb L: 5324 MS: 1 ChangeBinInt-
-#3024006	NEW    cov: 599 ft: 2272 corp: 190/672Kb exec/s: 4194 rss: 8140Mb L: 2742 MS: 1 ChangeBit-
-#3483796	NEW    cov: 599 ft: 2273 corp: 191/675Kb exec/s: 4182 rss: 8140Mb L: 2662 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00"-
-#3830136	NEW    cov: 599 ft: 2277 corp: 192/680Kb exec/s: 4172 rss: 8140Mb L: 5324 MS: 1 CopyPart-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-babc2085cadd97ec3fce09df323c37ad70502e95
-Killed
-Execution time: 1060 sec for test_oct4
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81541 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81541 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81344 rss: 31Mb
+#292946848	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 81351 rss: 31Mb
+Done 292946848 runs in 3601 second(s)
+stat::number_of_executed_units: 292946848
+stat::average_exec_per_sec:     81351
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct4
 
-INFO: Seed: 4043259979
-INFO: Loaded 5 modules (5911 guards): [0x2aca43dc8110, 0x2aca43dc8600), [0x2aca43985950, 0x2aca4398743c), [0x2aca4375c700, 0x2aca4375de38), [0x2aca43bbe370, 0x2aca43bc07e4), [0x661f70, 0x662044), 
+INFO: Seed: 3233009054
+INFO: Loaded 5 modules (5911 guards): [0x2b6efb41c110, 0x2b6efb41c600), [0x2b6efafd9950, 0x2b6efafdb43c), [0x2b6efadb0700, 0x2b6efadb1e38), [0x2b6efb212370, 0x2b6efb2147e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1713 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1714
-#1715	INITED cov: 561 ft: 2119 corp: 153/423Kb exec/s: 0 rss: 39Mb
-#4651	NEW    cov: 561 ft: 2121 corp: 154/426Kb exec/s: 4651 rss: 44Mb L: 2662 MS: 1 ShuffleBytes-
-#5631	NEW    cov: 561 ft: 2122 corp: 155/429Kb exec/s: 5631 rss: 48Mb L: 2662 MS: 1 ChangeBit-
-#13003	NEW    cov: 561 ft: 2123 corp: 156/431Kb exec/s: 6501 rss: 76Mb L: 2670 MS: 2 ChangeBit-CopyPart-
-#16384	pulse  cov: 561 ft: 2123 corp: 156/431Kb exec/s: 5461 rss: 88Mb
-#32768	pulse  cov: 561 ft: 2123 corp: 156/431Kb exec/s: 4681 rss: 149Mb
-#65536	pulse  cov: 561 ft: 2123 corp: 156/431Kb exec/s: 4681 rss: 272Mb
-#131072	pulse  cov: 561 ft: 2123 corp: 156/431Kb exec/s: 4519 rss: 520Mb
-#262144	pulse  cov: 561 ft: 2123 corp: 156/431Kb exec/s: 4443 rss: 1014Mb
-#375938	NEW    cov: 561 ft: 2124 corp: 157/434Kb exec/s: 4422 rss: 1442Mb L: 2670 MS: 2 ChangeBit-ChangeByte-
-#523398	NEW    cov: 561 ft: 2133 corp: 158/442Kb exec/s: 4435 rss: 1994Mb L: 7923 MS: 2 ChangeBinInt-InsertRepeatedBytes-
-#524288	pulse  cov: 561 ft: 2133 corp: 158/442Kb exec/s: 4405 rss: 1998Mb
-#567822	NEW    cov: 561 ft: 2134 corp: 159/445Kb exec/s: 4436 rss: 2162Mb L: 3511 MS: 1 CrossOver-
-#813238	NEW    cov: 561 ft: 2137 corp: 160/448Kb exec/s: 4419 rss: 3084Mb L: 2742 MS: 2 ChangeBit-ChangeBit-
-#966923	NEW    cov: 561 ft: 2142 corp: 161/450Kb exec/s: 4415 rss: 3661Mb L: 2662 MS: 2 ShuffleBytes-ChangeBit-
-#1048576	pulse  cov: 561 ft: 2142 corp: 161/450Kb exec/s: 4405 rss: 3970Mb
-#1220447	NEW    cov: 561 ft: 2153 corp: 162/453Kb exec/s: 4405 rss: 4615Mb L: 2662 MS: 1 ChangeBit-
-#1632508	NEW    cov: 561 ft: 2154 corp: 163/455Kb exec/s: 4412 rss: 6169Mb L: 2662 MS: 2 ChangeBit-CopyPart-
-#2097152	pulse  cov: 561 ft: 2154 corp: 163/455Kb exec/s: 4405 rss: 7917Mb
-#2272933	NEW    cov: 561 ft: 2157 corp: 164/458Kb exec/s: 4396 rss: 8081Mb L: 2742 MS: 2 CMP-CopyPart- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2804867	NEW    cov: 561 ft: 2160 corp: 165/461Kb exec/s: 4459 rss: 8095Mb L: 2662 MS: 1 ChangeBit-
-#3899122	NEW    cov: 561 ft: 2161 corp: 166/463Kb exec/s: 4539 rss: 8106Mb L: 2742 MS: 1 PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#4194304	pulse  cov: 561 ft: 2161 corp: 166/463Kb exec/s: 4554 rss: 8106Mb
-Killed
-Execution time: 1183 sec for test_oct5
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83365 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83261 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83261 rss: 31Mb
+#299848528	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 83268 rss: 31Mb
+Done 299848528 runs in 3601 second(s)
+stat::number_of_executed_units: 299848528
+stat::average_exec_per_sec:     83268
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct5
 
-INFO: Seed: 1426801190
-INFO: Loaded 5 modules (5911 guards): [0x2ad990d7e110, 0x2ad990d7e600), [0x2ad99093b950, 0x2ad99093d43c), [0x2ad990712700, 0x2ad990713e38), [0x2ad990b74370, 0x2ad990b767e4), [0x661f70, 0x662044), 
+INFO: Seed: 1001830312
+INFO: Loaded 5 modules (5911 guards): [0x2aea75e14110, 0x2aea75e14600), [0x2aea759d1950, 0x2aea759d343c), [0x2aea757a8700, 0x2aea757a9e38), [0x2aea75c0a370, 0x2aea75c0c7e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1726 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1727
-#1728	INITED cov: 538 ft: 2059 corp: 153/426Kb exec/s: 0 rss: 39Mb
-#16384	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 5461 rss: 89Mb
-#32768	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4681 rss: 150Mb
-#65536	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4681 rss: 273Mb
-#131072	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4519 rss: 518Mb
-#262144	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4443 rss: 1005Mb
-#524288	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4443 rss: 1979Mb
-#1048576	pulse  cov: 538 ft: 2059 corp: 153/426Kb exec/s: 4424 rss: 3929Mb
-#1685542	NEW    cov: 538 ft: 2060 corp: 154/435Kb exec/s: 4423 rss: 6297Mb L: 10000 MS: 4 InsertRepeatedBytes-CrossOver-InsertRepeatedBytes-CrossOver-
-#1732764	NEW    cov: 538 ft: 2062 corp: 155/438Kb exec/s: 4420 rss: 6474Mb L: 2662 MS: 1 ChangeBit-
-#2097152	pulse  cov: 538 ft: 2062 corp: 155/438Kb exec/s: 4415 rss: 7834Mb
-#2155884	NEW    cov: 538 ft: 2063 corp: 156/448Kb exec/s: 4417 rss: 8053Mb L: 10000 MS: 1 ChangeBinInt-
-#2238464	NEW    cov: 538 ft: 2064 corp: 157/450Kb exec/s: 4415 rss: 8120Mb L: 2742 MS: 1 ChangeBit-
-#2833274	NEW    cov: 538 ft: 2068 corp: 158/453Kb exec/s: 4379 rss: 8120Mb L: 2662 MS: 1 ChangeBit-
-#3143879	NEW    cov: 538 ft: 2069 corp: 159/456Kb exec/s: 4366 rss: 8120Mb L: 2662 MS: 1 ChangeBinInt-
-Killed
-Execution time: 1035 sec for test_oct6
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83209 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82952 rss: 31Mb
+#298346018	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+Done 298346018 runs in 3601 second(s)
+stat::number_of_executed_units: 298346018
+stat::average_exec_per_sec:     82850
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct6
 
-INFO: Seed: 1573402030
-INFO: Loaded 5 modules (5912 guards): [0x2b16d6588110, 0x2b16d6588600), [0x2b16d6145950, 0x2b16d614743c), [0x2b16d5f1c700, 0x2b16d5f1de38), [0x2b16d637e370, 0x2b16d63807e4), [0x661f70, 0x662048), 
+INFO: Seed: 3066574138
+INFO: Loaded 5 modules (5912 guards): [0x2b1e16988110, 0x2b1e16988600), [0x2b1e16545950, 0x2b1e1654743c), [0x2b1e1631c700, 0x2b1e1631de38), [0x2b1e1677e370, 0x2b1e167807e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1732 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1733
-#1734	INITED cov: 600 ft: 2301 corp: 179/558Kb exec/s: 0 rss: 39Mb
-#4907	NEW    cov: 600 ft: 2309 corp: 180/564Kb exec/s: 4907 rss: 46Mb L: 6990 MS: 3 ChangeBinInt-ChangeByte-ChangeByte-
-#5726	NEW    cov: 600 ft: 2316 corp: 181/571Kb exec/s: 5726 rss: 49Mb L: 6991 MS: 2 InsertByte-ChangeBit-
-#16384	pulse  cov: 600 ft: 2316 corp: 181/571Kb exec/s: 5461 rss: 90Mb
-#28815	NEW    cov: 600 ft: 2321 corp: 182/576Kb exec/s: 4802 rss: 138Mb L: 5324 MS: 1 ChangeBinInt-
-#32768	pulse  cov: 600 ft: 2321 corp: 182/576Kb exec/s: 4681 rss: 153Mb
-#56574	NEW    cov: 600 ft: 2322 corp: 183/583Kb exec/s: 4351 rss: 246Mb L: 6991 MS: 5 InsertByte-ChangeBit-ChangeBit-CopyPart-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#65536	pulse  cov: 600 ft: 2322 corp: 183/583Kb exec/s: 4369 rss: 280Mb
-#93065	NEW    cov: 600 ft: 2324 corp: 184/588Kb exec/s: 4431 rss: 387Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#96353	NEW    cov: 600 ft: 2336 corp: 185/594Kb exec/s: 4379 rss: 400Mb L: 5935 MS: 4 InsertRepeatedBytes-PersAutoDict-CrossOver-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#120925	NEW    cov: 600 ft: 2340 corp: 186/599Kb exec/s: 4318 rss: 495Mb L: 5324 MS: 1 ChangeBinInt-
-#131072	pulse  cov: 600 ft: 2340 corp: 186/599Kb exec/s: 4369 rss: 535Mb
-#186155	NEW    cov: 600 ft: 2342 corp: 187/603Kb exec/s: 4329 rss: 748Mb L: 3167 MS: 1 CopyPart-
-#262144	pulse  cov: 600 ft: 2342 corp: 187/603Kb exec/s: 4297 rss: 1043Mb
-#358378	NEW    cov: 600 ft: 2343 corp: 188/608Kb exec/s: 4266 rss: 1415Mb L: 5324 MS: 4 ChangeByte-ChangeByte-ChangeBit-ChangeBit-
-#467471	NEW    cov: 600 ft: 2344 corp: 189/613Kb exec/s: 4288 rss: 1839Mb L: 5324 MS: 2 ChangeBit-ChangeBinInt-
-#524288	pulse  cov: 600 ft: 2344 corp: 189/613Kb exec/s: 4297 rss: 2061Mb
-#648619	NEW    cov: 600 ft: 2351 corp: 190/620Kb exec/s: 4295 rss: 2542Mb L: 7012 MS: 5 ShuffleBytes-ShuffleBytes-ShuffleBytes-ChangeByte-ChangeBit-
-#1048576	pulse  cov: 600 ft: 2351 corp: 190/620Kb exec/s: 4279 rss: 4106Mb
-#1061735	NEW    cov: 601 ft: 2352 corp: 191/622Kb exec/s: 4263 rss: 4157Mb L: 2662 MS: 1 ChangeBinInt-
-#1818795	NEW    cov: 601 ft: 2356 corp: 192/628Kb exec/s: 4269 rss: 7105Mb L: 5260 MS: 1 CopyPart-
-#1913563	NEW    cov: 601 ft: 2357 corp: 193/637Kb exec/s: 4271 rss: 7477Mb L: 10000 MS: 4 CMP-ChangeByte-CopyPart-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1992405	NEW    cov: 601 ft: 2358 corp: 194/643Kb exec/s: 4266 rss: 7783Mb L: 5935 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#1997741	NEW    cov: 601 ft: 2362 corp: 195/650Kb exec/s: 4268 rss: 7803Mb L: 6990 MS: 2 ChangeBinInt-ChangeBinInt-
-#2097152	pulse  cov: 601 ft: 2362 corp: 195/650Kb exec/s: 4279 rss: 8118Mb
-#3123264	NEW    cov: 601 ft: 2363 corp: 196/653Kb exec/s: 4302 rss: 8119Mb L: 2662 MS: 5 ChangeBinInt-ChangeByte-PersAutoDict-ChangeBinInt-CopyPart- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3262213	NEW    cov: 601 ft: 2367 corp: 197/662Kb exec/s: 4303 rss: 8119Mb L: 10000 MS: 4 PersAutoDict-EraseBytes-ShuffleBytes-CrossOver- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3270185	NEW    cov: 601 ft: 2368 corp: 198/668Kb exec/s: 4308 rss: 8119Mb L: 5324 MS: 1 CopyPart-
-#3647152	NEW    cov: 601 ft: 2370 corp: 199/674Kb exec/s: 4311 rss: 8119Mb L: 6990 MS: 3 ChangeByte-ChangeByte-ChangeBinInt-
-#3763153	NEW    cov: 601 ft: 2371 corp: 200/677Kb exec/s: 4310 rss: 8119Mb L: 2662 MS: 4 ShuffleBytes-ChangeBinInt-ShuffleBytes-ChangeBinInt-
-#3795083	NEW    cov: 601 ft: 2372 corp: 201/680Kb exec/s: 4312 rss: 8119Mb L: 2713 MS: 4 ShuffleBytes-ShuffleBytes-InsertRepeatedBytes-PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-Killed
-Execution time: 1186 sec for test_oct7
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81640 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81294 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81319 rss: 31Mb
+#292871413	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 81330 rss: 31Mb
+Done 292871413 runs in 3601 second(s)
+stat::number_of_executed_units: 292871413
+stat::average_exec_per_sec:     81330
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct7
 
-INFO: Seed: 2315208306
-INFO: Loaded 5 modules (5912 guards): [0x2b37c226c110, 0x2b37c226c600), [0x2b37c1e29950, 0x2b37c1e2b43c), [0x2b37c1c00700, 0x2b37c1c01e38), [0x2b37c2062370, 0x2b37c20647e4), [0x661f70, 0x662048), 
+INFO: Seed: 836332849
+INFO: Loaded 5 modules (5912 guards): [0x2b5238f6f110, 0x2b5238f6f600), [0x2b5238b2c950, 0x2b5238b2e43c), [0x2b5238903700, 0x2b5238904e38), [0x2b5238d65370, 0x2b5238d677e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1754 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1755
-#1756	INITED cov: 602 ft: 2371 corp: 189/608Kb exec/s: 0 rss: 39Mb
-#7780	NEW    cov: 602 ft: 2372 corp: 190/618Kb exec/s: 7780 rss: 57Mb L: 9913 MS: 4 ChangeBinInt-ChangeByte-EraseBytes-CopyPart-
-#16384	pulse  cov: 602 ft: 2372 corp: 190/618Kb exec/s: 5461 rss: 90Mb
-#32444	NEW    cov: 602 ft: 2374 corp: 191/623Kb exec/s: 4634 rss: 153Mb L: 5324 MS: 3 ShuffleBytes-CMP-ChangeBit- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#32768	pulse  cov: 602 ft: 2374 corp: 191/623Kb exec/s: 4681 rss: 154Mb
-#65536	pulse  cov: 602 ft: 2374 corp: 191/623Kb exec/s: 4681 rss: 266Mb
-#131072	pulse  cov: 602 ft: 2374 corp: 191/623Kb exec/s: 4681 rss: 492Mb
-#262144	pulse  cov: 602 ft: 2374 corp: 191/623Kb exec/s: 4766 rss: 944Mb
-#475742	NEW    cov: 602 ft: 2375 corp: 192/629Kb exec/s: 4805 rss: 1676Mb L: 5935 MS: 1 ChangeByte-
-#524288	pulse  cov: 602 ft: 2375 corp: 192/629Kb exec/s: 4809 rss: 1842Mb
-#812812	NEW    cov: 602 ft: 2376 corp: 193/631Kb exec/s: 4809 rss: 2830Mb L: 2742 MS: 1 ChangeBit-
-#1048576	pulse  cov: 602 ft: 2376 corp: 193/631Kb exec/s: 4832 rss: 3639Mb
-#1052458	NEW    cov: 602 ft: 2377 corp: 194/637Kb exec/s: 4827 rss: 3652Mb L: 5318 MS: 2 InsertRepeatedBytes-CopyPart-
-#1325247	NEW    cov: 602 ft: 2404 corp: 195/642Kb exec/s: 4836 rss: 4585Mb L: 5935 MS: 1 PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2097152	pulse  cov: 602 ft: 2404 corp: 195/642Kb exec/s: 4832 rss: 7224Mb
-#2252241	NEW    cov: 602 ft: 2405 corp: 196/651Kb exec/s: 4833 rss: 7755Mb L: 9369 MS: 5 EraseBytes-ShuffleBytes-CMP-ChangeBit-CopyPart- DE: "\x00\x00"-
-#2646132	NEW    cov: 602 ft: 2407 corp: 197/657Kb exec/s: 4759 rss: 8107Mb L: 5324 MS: 1 CopyPart-
-#3126417	NEW    cov: 602 ft: 2408 corp: 198/659Kb exec/s: 4687 rss: 8126Mb L: 2662 MS: 1 ChangeBit-
-#3236478	NEW    cov: 602 ft: 2410 corp: 199/662Kb exec/s: 4676 rss: 8126Mb L: 2742 MS: 2 ShuffleBytes-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3697030	NEW    cov: 602 ft: 2412 corp: 200/667Kb exec/s: 4621 rss: 8126Mb L: 5324 MS: 4 ChangeByte-PersAutoDict-ShuffleBytes-CopyPart- DE: "\x00\x00"-
-#4194304	pulse  cov: 602 ft: 2412 corp: 200/667Kb exec/s: 4573 rss: 8126Mb
-Killed
-Execution time: 974 sec for test_oct8
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83572 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83390 rss: 31Mb
+#300189543	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 83362 rss: 31Mb
+Done 300189543 runs in 3601 second(s)
+stat::number_of_executed_units: 300189543
+stat::average_exec_per_sec:     83362
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct8
 
-INFO: Seed: 2096060315
-INFO: Loaded 5 modules (5912 guards): [0x2b1f2b5eb110, 0x2b1f2b5eb600), [0x2b1f2b1a8950, 0x2b1f2b1aa43c), [0x2b1f2af7f700, 0x2b1f2af80e38), [0x2b1f2b3e1370, 0x2b1f2b3e37e4), [0x661f70, 0x662048), 
+INFO: Seed: 2904711154
+INFO: Loaded 5 modules (5912 guards): [0x2ae77911d110, 0x2ae77911d600), [0x2ae778cda950, 0x2ae778cdc43c), [0x2ae778ab1700, 0x2ae778ab2e38), [0x2ae778f13370, 0x2ae778f157e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1765 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1766
-#1767	INITED cov: 604 ft: 2385 corp: 181/589Kb exec/s: 0 rss: 39Mb
-#16384	pulse  cov: 604 ft: 2385 corp: 181/589Kb exec/s: 5461 rss: 91Mb
-#32768	pulse  cov: 604 ft: 2385 corp: 181/589Kb exec/s: 4681 rss: 155Mb
-#65536	pulse  cov: 604 ft: 2385 corp: 181/589Kb exec/s: 4369 rss: 282Mb
-#104619	NEW    cov: 604 ft: 2389 corp: 182/594Kb exec/s: 4359 rss: 434Mb L: 5324 MS: 2 ShuffleBytes-ChangeBit-
-#131072	pulse  cov: 604 ft: 2389 corp: 182/594Kb exec/s: 4369 rss: 538Mb
-#159149	NEW    cov: 604 ft: 2390 corp: 183/600Kb exec/s: 4301 rss: 647Mb L: 5324 MS: 2 ChangeByte-ChangeBit-
-#253578	NEW    cov: 604 ft: 2396 corp: 184/607Kb exec/s: 4297 rss: 1018Mb L: 7986 MS: 1 CrossOver-
-#262144	pulse  cov: 604 ft: 2396 corp: 184/607Kb exec/s: 4297 rss: 1052Mb
-#421531	NEW    cov: 604 ft: 2400 corp: 185/615Kb exec/s: 4301 rss: 1679Mb L: 8044 MS: 4 ChangeBit-InsertRepeatedBytes-ChangeBinInt-ChangeBinInt-
-#524288	pulse  cov: 604 ft: 2400 corp: 185/615Kb exec/s: 4297 rss: 2083Mb
-#1048576	pulse  cov: 604 ft: 2400 corp: 185/615Kb exec/s: 4279 rss: 4145Mb
-#1444775	NEW    cov: 604 ft: 2401 corp: 186/620Kb exec/s: 4287 rss: 5705Mb L: 5392 MS: 3 ChangeByte-InsertRepeatedBytes-ChangeBinInt-
-#1648089	NEW    cov: 604 ft: 2404 corp: 187/629Kb exec/s: 4280 rss: 6506Mb L: 8763 MS: 2 EraseBytes-CopyPart-
-#1651219	NEW    cov: 604 ft: 2405 corp: 188/634Kb exec/s: 4288 rss: 6519Mb L: 5316 MS: 2 ChangeBit-CrossOver-
-#1871419	NEW    cov: 604 ft: 2429 corp: 189/643Kb exec/s: 4282 rss: 7385Mb L: 9549 MS: 2 ChangeBinInt-CopyPart-
-#1890903	NEW    cov: 604 ft: 2431 corp: 190/653Kb exec/s: 4287 rss: 7462Mb L: 9549 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2097152	pulse  cov: 604 ft: 2431 corp: 190/653Kb exec/s: 4324 rss: 8134Mb
-#2597818	NEW    cov: 604 ft: 2434 corp: 191/658Kb exec/s: 4380 rss: 8134Mb L: 5324 MS: 1 ChangeBinInt-
-#2982186	NEW    cov: 604 ft: 2440 corp: 192/667Kb exec/s: 4411 rss: 8134Mb L: 9626 MS: 4 ChangeBinInt-ChangeBit-InsertRepeatedBytes-CopyPart-
-#3034328	NEW    cov: 604 ft: 2442 corp: 193/670Kb exec/s: 4416 rss: 8134Mb L: 2662 MS: 1 ChangeBinInt-
-#3148569	NEW    cov: 604 ft: 2460 corp: 194/678Kb exec/s: 4422 rss: 8134Mb L: 7986 MS: 2 ChangeBinInt-CopyPart-
-#3639608	NEW    cov: 604 ft: 2462 corp: 195/687Kb exec/s: 4443 rss: 8134Mb L: 9549 MS: 1 ChangeBit-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-8b4ade082a4abe9758a4e7d34296cfe3594b0f8b
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1e3b83c57721e40161b97a46fea1e7f7721905bc
-Slowest unit: 18 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-163b3b32cc87e1c38976a9a695e4b5a8236c9ea6
-Slowest unit: 41 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-87966895a1da3529fa0985bf620cb853d83b5c85
-Killed
-Execution time: 1600 sec for test_oct9
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82748 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82799 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82901 rss: 31Mb
+#298583293	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82916 rss: 31Mb
+Done 298583293 runs in 3601 second(s)
+stat::number_of_executed_units: 298583293
+stat::average_exec_per_sec:     82916
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct9
 
-INFO: Seed: 789907901
-INFO: Loaded 5 modules (5913 guards): [0x2abd108bd110, 0x2abd108bd600), [0x2abd1047a950, 0x2abd1047c43c), [0x2abd10251700, 0x2abd10252e38), [0x2abd106b3370, 0x2abd106b57e4), [0x661f70, 0x66204c), 
+INFO: Seed: 672662896
+INFO: Loaded 5 modules (5913 guards): [0x2b9299002110, 0x2b9299002600), [0x2b9298bbf950, 0x2b9298bc143c), [0x2b9298996700, 0x2b9298997e38), [0x2b9298df8370, 0x2b9298dfa7e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1779 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1780
-#1781	INITED cov: 546 ft: 2352 corp: 174/552Kb exec/s: 0 rss: 39Mb
-#16384	pulse  cov: 546 ft: 2352 corp: 174/552Kb exec/s: 5461 rss: 87Mb
-#17137	NEW    cov: 546 ft: 2355 corp: 175/555Kb exec/s: 5712 rss: 90Mb L: 3241 MS: 1 ChangeBinInt-
-#32744	NEW    cov: 546 ft: 2356 corp: 176/565Kb exec/s: 4677 rss: 149Mb L: 9557 MS: 3 CMP-ChangeBit-ChangeBinInt- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#32768	pulse  cov: 546 ft: 2356 corp: 176/565Kb exec/s: 4681 rss: 149Mb
-#36605	NEW    cov: 546 ft: 2358 corp: 177/574Kb exec/s: 4575 rss: 162Mb L: 10000 MS: 4 ChangeBit-ChangeByte-ChangeBinInt-ChangeBit-
-#65536	pulse  cov: 546 ft: 2358 corp: 177/574Kb exec/s: 4681 rss: 258Mb
-#131072	pulse  cov: 546 ft: 2358 corp: 177/574Kb exec/s: 4854 rss: 473Mb
-#139852	NEW    cov: 546 ft: 2362 corp: 178/580Kb exec/s: 4822 rss: 503Mb L: 5324 MS: 1 ChangeBit-
-#262144	pulse  cov: 546 ft: 2362 corp: 178/580Kb exec/s: 4854 rss: 909Mb
-#371108	NEW    cov: 546 ft: 2363 corp: 179/589Kb exec/s: 4819 rss: 1271Mb L: 9660 MS: 2 CopyPart-CopyPart-
-#524288	pulse  cov: 546 ft: 2363 corp: 179/589Kb exec/s: 4854 rss: 1776Mb
-#1048576	pulse  cov: 546 ft: 2363 corp: 179/589Kb exec/s: 4854 rss: 3512Mb
-#1965654	NEW    cov: 547 ft: 2372 corp: 180/599Kb exec/s: 4853 rss: 6551Mb L: 10000 MS: 3 ChangeByte-ShuffleBytes-ChangeByte-
-#2016729	NEW    cov: 587 ft: 2416 corp: 181/609Kb exec/s: 4859 rss: 6720Mb L: 10000 MS: 3 InsertByte-InsertByte-CrossOver-
-#2018411	NEW    cov: 600 ft: 2456 corp: 182/618Kb exec/s: 4851 rss: 6726Mb L: 10000 MS: 5 CMP-ShuffleBytes-ChangeBit-ShuffleBytes-ChangeBit- DE: "\x01\x00"-
-#2024827	NEW    cov: 600 ft: 2474 corp: 183/628Kb exec/s: 4855 rss: 6749Mb L: 10000 MS: 1 ChangeBit-
-#2039037	NEW    cov: 600 ft: 2476 corp: 184/638Kb exec/s: 4854 rss: 6802Mb L: 10000 MS: 1 ChangeByte-
-#2047771	NEW    cov: 600 ft: 2477 corp: 185/648Kb exec/s: 4852 rss: 6835Mb L: 10000 MS: 5 ChangeBinInt-PersAutoDict-ShuffleBytes-ShuffleBytes-ChangeByte- DE: "\x01\x00"-
-#2052431	NEW    cov: 600 ft: 2481 corp: 186/657Kb exec/s: 4852 rss: 6853Mb L: 10000 MS: 5 ChangeByte-CopyPart-ShuffleBytes-ChangeByte-ChangeBit-
-#2097152	pulse  cov: 600 ft: 2481 corp: 186/657Kb exec/s: 4854 rss: 7019Mb
-#2120017	NEW    cov: 600 ft: 2490 corp: 187/667Kb exec/s: 4851 rss: 7104Mb L: 10000 MS: 1 ChangeByte-
-#2192799	NEW    cov: 600 ft: 2492 corp: 188/677Kb exec/s: 4840 rss: 7380Mb L: 10000 MS: 3 ShuffleBytes-ShuffleBytes-ChangeBit-
-#2496590	NEW    cov: 600 ft: 2499 corp: 189/687Kb exec/s: 4810 rss: 8112Mb L: 10000 MS: 4 ShuffleBytes-ChangeBit-CMP-ChangeBinInt- DE: "\x00\x00"-
-#2595212	NEW    cov: 600 ft: 2509 corp: 190/696Kb exec/s: 4788 rss: 8112Mb L: 10000 MS: 1 ChangeBit-
-#2781448	NEW    cov: 601 ft: 2511 corp: 191/706Kb exec/s: 4754 rss: 8115Mb L: 10000 MS: 2 ChangeBinInt-ChangeBinInt-
-#2802316	NEW    cov: 601 ft: 2513 corp: 192/716Kb exec/s: 4749 rss: 8115Mb L: 10000 MS: 5 ChangeByte-ChangeBinInt-PersAutoDict-ChangeBit-ChangeBinInt- DE: "\x00\x00"-
-#2855818	NEW    cov: 601 ft: 2520 corp: 193/726Kb exec/s: 4743 rss: 8115Mb L: 10000 MS: 2 ShuffleBytes-ChangeBit-
-#2993967	NEW    cov: 601 ft: 2521 corp: 194/735Kb exec/s: 4722 rss: 8115Mb L: 10000 MS: 1 ChangeBit-
-#3101498	NEW    cov: 603 ft: 2532 corp: 195/745Kb exec/s: 4706 rss: 8115Mb L: 10000 MS: 2 ChangeBit-ChangeByte-
-#3128043	NEW    cov: 603 ft: 2536 corp: 196/755Kb exec/s: 4703 rss: 8115Mb L: 10000 MS: 2 ShuffleBytes-ChangeBinInt-
-#3128554	NEW    cov: 603 ft: 2537 corp: 197/765Kb exec/s: 4697 rss: 8115Mb L: 10000 MS: 3 ChangeByte-CopyPart-PersAutoDict- DE: "\x01\x00"-
-#3312024	NEW    cov: 603 ft: 2539 corp: 198/773Kb exec/s: 4671 rss: 8115Mb L: 8426 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#3719608	NEW    cov: 603 ft: 2540 corp: 199/783Kb exec/s: 4626 rss: 8115Mb L: 10000 MS: 2 ShuffleBytes-CopyPart-
-#3747222	NEW    cov: 603 ft: 2541 corp: 200/793Kb exec/s: 4626 rss: 8115Mb L: 10000 MS: 1 CMP- DE: "\x00\x00\x00\x00"-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-48930714a2b7f8d3407d2fa97a346e45f74764ee
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-4ee69f6c99fa1d579167a7c83e6f3817e3813ad3
-Slowest unit: 43 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c650ffdac38bb6fe3aff8169767ef6153d648794
-Killed
-Execution time: 1244 sec for test_oct10
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83261 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82468 rss: 31Mb
+#297142203	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82516 rss: 31Mb
+Done 297142203 runs in 3601 second(s)
+stat::number_of_executed_units: 297142203
+stat::average_exec_per_sec:     82516
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct10
 
-INFO: Seed: 48707800
-INFO: Loaded 5 modules (5911 guards): [0x2b00d073f110, 0x2b00d073f600), [0x2b00d02fc950, 0x2b00d02fe43c), [0x2b00d00d3700, 0x2b00d00d4e38), [0x2b00d0535370, 0x2b00d05377e4), [0x661f70, 0x662044), 
+INFO: Seed: 2737245322
+INFO: Loaded 5 modules (5911 guards): [0x2ac2de3d3110, 0x2ac2de3d3600), [0x2ac2ddf90950, 0x2ac2ddf9243c), [0x2ac2ddd67700, 0x2ac2ddd68e38), [0x2ac2de1c9370, 0x2ac2de1cb7e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1805 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1806
-#1807	INITED cov: 582 ft: 2259 corp: 164/476Kb exec/s: 0 rss: 40Mb
-#8192	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 4096 rss: 57Mb
-#16384	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 5461 rss: 88Mb
-#32768	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 4681 rss: 149Mb
-#65536	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 4681 rss: 271Mb
-#131072	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 4519 rss: 517Mb
-#262144	pulse  cov: 582 ft: 2259 corp: 164/476Kb exec/s: 4443 rss: 1007Mb
-#326309	NEW    cov: 582 ft: 2261 corp: 165/479Kb exec/s: 4409 rss: 1247Mb L: 2662 MS: 2 CMP-ChangeBinInt- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#524288	pulse  cov: 582 ft: 2261 corp: 165/479Kb exec/s: 4599 rss: 1905Mb
-#1048576	pulse  cov: 582 ft: 2261 corp: 165/479Kb exec/s: 4744 rss: 3642Mb
-#1095074	NEW    cov: 582 ft: 2262 corp: 166/489Kb exec/s: 4761 rss: 3796Mb L: 10000 MS: 1 ChangeBinInt-
-#2097152	pulse  cov: 582 ft: 2262 corp: 166/489Kb exec/s: 4832 rss: 7120Mb
-#2650440	NEW    cov: 582 ft: 2266 corp: 167/498Kb exec/s: 4827 rss: 8121Mb L: 10000 MS: 2 ChangeBinInt-CrossOver-
-#3877391	NEW    cov: 582 ft: 2267 corp: 168/508Kb exec/s: 4792 rss: 8121Mb L: 9558 MS: 3 ChangeByte-ChangeBit-CopyPart-
-#4194304	pulse  cov: 582 ft: 2267 corp: 168/508Kb exec/s: 4788 rss: 8121Mb
-#4337555	NEW    cov: 582 ft: 2277 corp: 169/513Kb exec/s: 4782 rss: 8121Mb L: 5935 MS: 2 ChangeBinInt-ChangeBinInt-
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-51ad521d4a46e9275e54ede0f459ad572c4ba190
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a5fd5665a28ce5d2e287e29833059ec78758a7c0
-Slowest unit: 33 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-ab508effd401983c8b9e96b7a4ae599a1703fa9b
-Killed
-Execution time: 1812 sec for test_oct11
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82342 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82392 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#296879973	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+Done 296879973 runs in 3601 second(s)
+stat::number_of_executed_units: 296879973
+stat::average_exec_per_sec:     82443
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct11
 
-INFO: Seed: 3795133285
-INFO: Loaded 5 modules (5913 guards): [0x2aea77703110, 0x2aea77703600), [0x2aea772c0950, 0x2aea772c243c), [0x2aea77097700, 0x2aea77098e38), [0x2aea774f9370, 0x2aea774fb7e4), [0x661f80, 0x66205c), 
+INFO: Seed: 531045675
+INFO: Loaded 5 modules (5913 guards): [0x2b1bde129110, 0x2b1bde129600), [0x2b1bddce6950, 0x2b1bddce843c), [0x2b1bddabd700, 0x2b1bddabee38), [0x2b1bddf1f370, 0x2b1bddf217e4), [0x661f80, 0x66205c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1810 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1811
-#1812	INITED cov: 648 ft: 2584 corp: 205/739Kb exec/s: 0 rss: 40Mb
-#8192	pulse  cov: 648 ft: 2584 corp: 205/739Kb exec/s: 4096 rss: 60Mb
-#16384	pulse  cov: 648 ft: 2584 corp: 205/739Kb exec/s: 5461 rss: 93Mb
-#32768	pulse  cov: 648 ft: 2584 corp: 205/739Kb exec/s: 4681 rss: 159Mb
-#58214	NEW    cov: 648 ft: 2585 corp: 206/744Kb exec/s: 4158 rss: 261Mb L: 5318 MS: 2 ChangeByte-ChangeByte-
-#65536	pulse  cov: 648 ft: 2585 corp: 206/744Kb exec/s: 4369 rss: 290Mb
-#75129	NEW    cov: 648 ft: 2586 corp: 207/749Kb exec/s: 4173 rss: 329Mb L: 5318 MS: 2 ChangeBinInt-CopyPart-
-#89649	NEW    cov: 648 ft: 2587 corp: 208/757Kb exec/s: 4269 rss: 386Mb L: 7775 MS: 2 CrossOver-InsertByte-
-#131072	pulse  cov: 648 ft: 2587 corp: 208/757Kb exec/s: 4228 rss: 553Mb
-#135346	NEW    cov: 648 ft: 2588 corp: 209/762Kb exec/s: 4229 rss: 571Mb L: 5318 MS: 4 ChangeBit-ShuffleBytes-ChangeBit-ChangeByte-
-#262144	pulse  cov: 648 ft: 2588 corp: 209/762Kb exec/s: 4228 rss: 1078Mb
-#524288	pulse  cov: 648 ft: 2588 corp: 209/762Kb exec/s: 4194 rss: 2128Mb
-#809773	NEW    cov: 648 ft: 2590 corp: 210/767Kb exec/s: 4195 rss: 3275Mb L: 5318 MS: 1 ChangeBit-
-#930433	NEW    cov: 648 ft: 2591 corp: 211/772Kb exec/s: 4191 rss: 3759Mb L: 5318 MS: 1 ChangeBinInt-
-#1048576	pulse  cov: 648 ft: 2591 corp: 211/772Kb exec/s: 4194 rss: 4235Mb
-#1085673	NEW    cov: 649 ft: 2592 corp: 212/777Kb exec/s: 4191 rss: 4382Mb L: 5316 MS: 1 CopyPart-
-#2097152	pulse  cov: 649 ft: 2592 corp: 212/777Kb exec/s: 4185 rss: 8059Mb
-#2597204	NEW    cov: 649 ft: 2593 corp: 213/783Kb exec/s: 4155 rss: 8059Mb L: 5367 MS: 2 InsertRepeatedBytes-CMP- DE: "\x00\x00"-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-925dae0fd6c91af67761b0b26b12ad80be5f86fa
-Killed
-Execution time: 1152 sec for test_oct12
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82595 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82620 rss: 31Mb
+#297398528	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82587 rss: 31Mb
+Done 297398528 runs in 3601 second(s)
+stat::number_of_executed_units: 297398528
+stat::average_exec_per_sec:     82587
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct12
 
-INFO: Seed: 818203724
-INFO: Loaded 5 modules (5913 guards): [0x2ab37a316110, 0x2ab37a316600), [0x2ab379ed3950, 0x2ab379ed543c), [0x2ab379caa700, 0x2ab379cabe38), [0x2ab37a10c370, 0x2ab37a10e7e4), [0x661f80, 0x66205c), 
+INFO: Seed: 2595920727
+INFO: Loaded 5 modules (5913 guards): [0x2b7dc9512110, 0x2b7dc9512600), [0x2b7dc90cf950, 0x2b7dc90d143c), [0x2b7dc8ea6700, 0x2b7dc8ea7e38), [0x2b7dc9308370, 0x2b7dc930a7e4), [0x661f80, 0x66205c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1818 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1819
-#1820	INITED cov: 662 ft: 2634 corp: 213/762Kb exec/s: 0 rss: 40Mb
-#8192	pulse  cov: 662 ft: 2634 corp: 213/762Kb exec/s: 4096 rss: 60Mb
-#16384	pulse  cov: 662 ft: 2634 corp: 213/762Kb exec/s: 5461 rss: 93Mb
-#32768	pulse  cov: 662 ft: 2634 corp: 213/762Kb exec/s: 4681 rss: 160Mb
-#65536	pulse  cov: 662 ft: 2634 corp: 213/762Kb exec/s: 4369 rss: 292Mb
-#131072	pulse  cov: 662 ft: 2634 corp: 213/762Kb exec/s: 4369 rss: 557Mb
-#238191	NEW    cov: 662 ft: 2635 corp: 214/769Kb exec/s: 4253 rss: 987Mb L: 7012 MS: 1 ChangeBinInt-
-#262144	pulse  cov: 662 ft: 2635 corp: 214/769Kb exec/s: 4228 rss: 1085Mb
-#352696	NEW    cov: 662 ft: 2654 corp: 215/778Kb exec/s: 4249 rss: 1451Mb L: 9549 MS: 1 CopyPart-
-#431196	NEW    cov: 662 ft: 2656 corp: 216/783Kb exec/s: 4269 rss: 1766Mb L: 5392 MS: 1 ChangeBit-
-#497602	NEW    cov: 662 ft: 2665 corp: 217/788Kb exec/s: 4253 rss: 2036Mb L: 5324 MS: 2 ShuffleBytes-ChangeBinInt-
-#524288	pulse  cov: 662 ft: 2665 corp: 217/788Kb exec/s: 4262 rss: 2144Mb
-#1048576	pulse  cov: 662 ft: 2665 corp: 217/788Kb exec/s: 4228 rss: 4278Mb
-#1489866	NEW    cov: 662 ft: 2668 corp: 218/798Kb exec/s: 4220 rss: 6081Mb L: 9549 MS: 1 CopyPart-
-#2097152	pulse  cov: 662 ft: 2668 corp: 218/798Kb exec/s: 4211 rss: 8141Mb
-#2623440	NEW    cov: 662 ft: 2669 corp: 219/801Kb exec/s: 4170 rss: 8141Mb L: 3821 MS: 5 ChangeBit-ShuffleBytes-ChangeByte-ShuffleBytes-ChangeBit-
-#3044287	NEW    cov: 662 ft: 2674 corp: 220/808Kb exec/s: 4147 rss: 8141Mb L: 6731 MS: 2 EraseBytes-CopyPart-
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-9fcb751b12355b611b9e69360f5c1327d3b8a630
-Slowest unit: 20 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-fb84801ea3e9136bbacf115cb9a033d0a19754c6
-Killed
-Execution time: 991 sec for test_oct13
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82697 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82519 rss: 31Mb
+#297110543	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82507 rss: 31Mb
+Done 297110543 runs in 3601 second(s)
+stat::number_of_executed_units: 297110543
+stat::average_exec_per_sec:     82507
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct13
 
-INFO: Seed: 1039125133
-INFO: Loaded 5 modules (5912 guards): [0x2aca5df27110, 0x2aca5df27600), [0x2aca5dae4950, 0x2aca5dae643c), [0x2aca5d8bb700, 0x2aca5d8bce38), [0x2aca5dd1d370, 0x2aca5dd1f7e4), [0x661f80, 0x662058), 
+INFO: Seed: 364636607
+INFO: Loaded 5 modules (5912 guards): [0x2ab5a6e77110, 0x2ab5a6e77600), [0x2ab5a6a34950, 0x2ab5a6a3643c), [0x2ab5a680b700, 0x2ab5a680ce38), [0x2ab5a6c6d370, 0x2ab5a6c6f7e4), [0x661f80, 0x662058), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1825 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1826
-#1827	INITED cov: 784 ft: 2961 corp: 203/737Kb exec/s: 0 rss: 40Mb
-#5508	NEW    cov: 784 ft: 2966 corp: 204/742Kb exec/s: 5508 rss: 50Mb L: 5324 MS: 1 CMP- DE: "\x01\x00"-
-#16384	pulse  cov: 784 ft: 2966 corp: 204/742Kb exec/s: 5461 rss: 92Mb
-#18244	NEW    cov: 784 ft: 2968 corp: 205/751Kb exec/s: 4561 rss: 99Mb L: 9507 MS: 2 CopyPart-ChangeBit-
-#23899	NEW    cov: 784 ft: 2970 corp: 206/753Kb exec/s: 4779 rss: 120Mb L: 2028 MS: 2 ChangeBit-ChangeBit-
-#31168	NEW    cov: 784 ft: 2972 corp: 207/758Kb exec/s: 5194 rss: 149Mb L: 5318 MS: 1 CMP- DE: "\x01\x00"-
-#32768	pulse  cov: 784 ft: 2972 corp: 207/758Kb exec/s: 4681 rss: 155Mb
-#38391	NEW    cov: 784 ft: 2973 corp: 208/763Kb exec/s: 4798 rss: 176Mb L: 5318 MS: 4 ChangeByte-ChangeByte-ChangeBinInt-CopyPart-
-#53853	NEW    cov: 784 ft: 2976 corp: 209/769Kb exec/s: 4895 rss: 235Mb L: 5318 MS: 1 ChangeBinInt-
-#65536	pulse  cov: 784 ft: 2976 corp: 209/769Kb exec/s: 4681 rss: 279Mb
-#131072	pulse  cov: 784 ft: 2976 corp: 209/769Kb exec/s: 4854 rss: 532Mb
-#237143	NEW    cov: 784 ft: 2977 corp: 210/774Kb exec/s: 4742 rss: 939Mb L: 5318 MS: 1 ChangeBit-
-#250760	NEW    cov: 784 ft: 2978 corp: 211/780Kb exec/s: 4731 rss: 991Mb L: 6503 MS: 3 ChangeBit-ChangeASCIIInt-ShuffleBytes-
-#262144	pulse  cov: 784 ft: 2978 corp: 211/780Kb exec/s: 4766 rss: 1035Mb
-#476188	NEW    cov: 784 ft: 2979 corp: 212/789Kb exec/s: 4714 rss: 1861Mb L: 9271 MS: 1 CopyPart-
-#524288	pulse  cov: 784 ft: 2979 corp: 212/789Kb exec/s: 4723 rss: 2047Mb
-#672123	NEW    cov: 784 ft: 2992 corp: 213/799Kb exec/s: 4700 rss: 2614Mb L: 9549 MS: 1 ChangeBinInt-
-#674665	NEW    cov: 784 ft: 2993 corp: 214/805Kb exec/s: 4717 rss: 2624Mb L: 6536 MS: 3 ShuffleBytes-ChangeByte-EraseBytes-
-#1048576	pulse  cov: 784 ft: 2993 corp: 214/805Kb exec/s: 4702 rss: 4084Mb
-#1103380	NEW    cov: 784 ft: 3005 corp: 215/810Kb exec/s: 4695 rss: 4300Mb L: 5316 MS: 3 ChangeBit-ChangeByte-CopyPart-
-#1136333	NEW    cov: 784 ft: 3028 corp: 216/819Kb exec/s: 4695 rss: 4430Mb L: 9549 MS: 1 ChangeBinInt-
-#1224488	NEW    cov: 784 ft: 3030 corp: 217/825Kb exec/s: 4691 rss: 4781Mb L: 5318 MS: 1 ChangeBit-
-#1415684	NEW    cov: 784 ft: 3031 corp: 218/830Kb exec/s: 4687 rss: 5543Mb L: 5421 MS: 2 ChangeBit-InsertRepeatedBytes-
-#1440320	NEW    cov: 784 ft: 3032 corp: 219/836Kb exec/s: 4676 rss: 5642Mb L: 6731 MS: 3 ChangeBinInt-PersAutoDict-ChangeBinInt- DE: "\x01\x00"-
-#1507499	NEW    cov: 784 ft: 3041 corp: 220/842Kb exec/s: 4681 rss: 5911Mb L: 5324 MS: 2 ChangeBit-ChangeBinInt-
-#1547628	NEW    cov: 784 ft: 3050 corp: 221/847Kb exec/s: 4675 rss: 6071Mb L: 5318 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1807589	NEW    cov: 784 ft: 3051 corp: 222/852Kb exec/s: 4634 rss: 7175Mb L: 5324 MS: 2 PersAutoDict-ChangeBit- DE: "\x01\x00"-
-#2097152	pulse  cov: 784 ft: 3051 corp: 222/852Kb exec/s: 4578 rss: 8136Mb
-#2098324	NEW    cov: 784 ft: 3052 corp: 223/859Kb exec/s: 4581 rss: 8136Mb L: 6731 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#2200173	NEW    cov: 784 ft: 3053 corp: 224/864Kb exec/s: 4564 rss: 8136Mb L: 5318 MS: 1 CopyPart-
-#2257201	NEW    cov: 784 ft: 3054 corp: 225/869Kb exec/s: 4550 rss: 8136Mb L: 5316 MS: 4 ChangeByte-ChangeBit-CMP-CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-"\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2734695	NEW    cov: 784 ft: 3060 corp: 226/874Kb exec/s: 4512 rss: 8136Mb L: 5324 MS: 3 CMP-ChangeByte-CopyPart- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#3030263	NEW    cov: 784 ft: 3062 corp: 227/879Kb exec/s: 4489 rss: 8138Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#3264866	NEW    cov: 784 ft: 3064 corp: 228/889Kb exec/s: 4478 rss: 8138Mb L: 9549 MS: 4 ChangeBit-ChangeBit-ChangeBit-ChangeBit-
-#3348028	NEW    cov: 784 ft: 3086 corp: 229/898Kb exec/s: 4469 rss: 8138Mb L: 9549 MS: 1 ChangeBinInt-
-#3491514	NEW    cov: 784 ft: 3087 corp: 230/905Kb exec/s: 4464 rss: 8138Mb L: 6731 MS: 2 ShuffleBytes-CopyPart-
-#3515438	NEW    cov: 784 ft: 3108 corp: 231/914Kb exec/s: 4461 rss: 8138Mb L: 9549 MS: 1 ChangeBinInt-
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-5538b1a9b33f9ac7bedb823ecbf867c681d683a1
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a4e19f09364f16223382503a8b201117ae1ce905
-Killed
-Execution time: 1479 sec for test_oct14
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80273 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80273 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80177 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80010 rss: 31Mb
+#288098573	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80005 rss: 31Mb
+Done 288098573 runs in 3601 second(s)
+stat::number_of_executed_units: 288098573
+stat::average_exec_per_sec:     80005
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct14
 
-INFO: Seed: 1945068313
-INFO: Loaded 5 modules (5911 guards): [0x2b123142a110, 0x2b123142a600), [0x2b1230fe7950, 0x2b1230fe943c), [0x2b1230dbe700, 0x2b1230dbfe38), [0x2b1231220370, 0x2b12312227e4), [0x661f70, 0x662044), 
+INFO: Seed: 2429157353
+INFO: Loaded 5 modules (5911 guards): [0x2b4047868110, 0x2b4047868600), [0x2b4047425950, 0x2b404742743c), [0x2b40471fc700, 0x2b40471fde38), [0x2b404765e370, 0x2b40476607e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1853 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1854
-#1855	INITED cov: 514 ft: 2124 corp: 167/490Kb exec/s: 0 rss: 40Mb
-#16384	pulse  cov: 514 ft: 2124 corp: 167/490Kb exec/s: 5461 rss: 87Mb
-#32768	pulse  cov: 514 ft: 2124 corp: 167/490Kb exec/s: 4681 rss: 147Mb
-#65536	pulse  cov: 514 ft: 2124 corp: 167/490Kb exec/s: 4369 rss: 267Mb
-#131072	pulse  cov: 514 ft: 2124 corp: 167/490Kb exec/s: 4519 rss: 507Mb
-#262144	pulse  cov: 514 ft: 2124 corp: 167/490Kb exec/s: 4443 rss: 987Mb
-#312429	NEW    cov: 514 ft: 2125 corp: 168/498Kb exec/s: 4463 rss: 1172Mb L: 8081 MS: 4 ShuffleBytes-ShuffleBytes-EraseBytes-ChangeBinInt-
-#524288	pulse  cov: 514 ft: 2125 corp: 168/498Kb exec/s: 4443 rss: 1950Mb
-#1048576	pulse  cov: 514 ft: 2125 corp: 168/498Kb exec/s: 4405 rss: 3872Mb
-#1708003	NEW    cov: 514 ft: 2126 corp: 169/501Kb exec/s: 4402 rss: 6288Mb L: 2742 MS: 2 ShuffleBytes-CopyPart-
-#2097152	pulse  cov: 514 ft: 2126 corp: 169/501Kb exec/s: 4405 rss: 7711Mb
-#4072808	NEW    cov: 514 ft: 2127 corp: 170/506Kb exec/s: 4323 rss: 8128Mb L: 5678 MS: 2 CopyPart-ChangeBinInt-
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0dd3a1ed7142ab5d1b3f4938780ee4f600d85c02
-Killed
-Execution time: 1293 sec for test_oct15
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81245 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81147 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81000 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80854 rss: 31Mb
+#290961993	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80800 rss: 31Mb
+Done 290961993 runs in 3601 second(s)
+stat::number_of_executed_units: 290961993
+stat::average_exec_per_sec:     80800
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct15
 
-INFO: Seed: 2059065599
-INFO: Loaded 5 modules (5911 guards): [0x2ae314aba110, 0x2ae314aba600), [0x2ae314677950, 0x2ae31467943c), [0x2ae31444e700, 0x2ae31444fe38), [0x2ae3148b0370, 0x2ae3148b27e4), [0x661f70, 0x662044), 
+INFO: Seed: 197791670
+INFO: Loaded 5 modules (5911 guards): [0x2ab8c90be110, 0x2ab8c90be600), [0x2ab8c8c7b950, 0x2ab8c8c7d43c), [0x2ab8c8a52700, 0x2ab8c8a53e38), [0x2ab8c8eb4370, 0x2ab8c8eb67e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1856 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1857
-#1858	INITED cov: 671 ft: 2606 corp: 177/551Kb exec/s: 0 rss: 41Mb
-#16384	pulse  cov: 671 ft: 2606 corp: 177/551Kb exec/s: 5461 rss: 96Mb
-#25479	NEW    cov: 671 ft: 2607 corp: 178/557Kb exec/s: 4246 rss: 134Mb L: 5513 MS: 1 ChangeByte-
-#32768	pulse  cov: 671 ft: 2607 corp: 178/557Kb exec/s: 4681 rss: 165Mb
-#65536	pulse  cov: 671 ft: 2607 corp: 178/557Kb exec/s: 4369 rss: 300Mb
-#131072	pulse  cov: 671 ft: 2607 corp: 178/557Kb exec/s: 4369 rss: 573Mb
-#131911	NEW    cov: 671 ft: 2609 corp: 179/561Kb exec/s: 4397 rss: 577Mb L: 4413 MS: 3 InsertByte-CrossOver-ChangeBit-
-#262144	pulse  cov: 671 ft: 2609 corp: 179/561Kb exec/s: 4297 rss: 1118Mb
-#524288	pulse  cov: 671 ft: 2609 corp: 179/561Kb exec/s: 4297 rss: 2214Mb
-#1048576	pulse  cov: 671 ft: 2609 corp: 179/561Kb exec/s: 4279 rss: 4398Mb
-#1083401	NEW    cov: 671 ft: 2611 corp: 180/567Kb exec/s: 4282 rss: 4543Mb L: 6536 MS: 3 ChangeByte-ChangeBinInt-ChangeBinInt-
-#1486824	NEW    cov: 671 ft: 2619 corp: 181/577Kb exec/s: 4272 rss: 6228Mb L: 9549 MS: 1 ChangeBit-
-#2097152	pulse  cov: 671 ft: 2619 corp: 181/577Kb exec/s: 4253 rss: 8060Mb
-#2140419	NEW    cov: 671 ft: 2620 corp: 182/579Kb exec/s: 4246 rss: 8060Mb L: 2662 MS: 1 CopyPart-
-#2472697	NEW    cov: 671 ft: 2622 corp: 183/589Kb exec/s: 4219 rss: 8060Mb L: 9586 MS: 4 ChangeBit-CopyPart-ChangeBinInt-ChangeBinInt-
-#2513239	NEW    cov: 671 ft: 2623 corp: 184/591Kb exec/s: 4216 rss: 8060Mb L: 2662 MS: 1 ChangeBit-
-#3150519	NEW    cov: 671 ft: 2624 corp: 185/594Kb exec/s: 4195 rss: 8060Mb L: 2662 MS: 1 ChangeBinInt-
-#3177819	NEW    cov: 671 ft: 2625 corp: 186/599Kb exec/s: 4192 rss: 8060Mb L: 5222 MS: 1 ChangeBit-
-#3569815	NEW    cov: 671 ft: 2648 corp: 187/609Kb exec/s: 4180 rss: 8060Mb L: 10000 MS: 2 ChangeByte-CrossOver-
-Killed
-Execution time: 1343 sec for test_oct16
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82544 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#298349608	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82851 rss: 31Mb
+Done 298349608 runs in 3601 second(s)
+stat::number_of_executed_units: 298349608
+stat::average_exec_per_sec:     82851
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct16
 
-INFO: Seed: 1559791741
-INFO: Loaded 5 modules (5912 guards): [0x2b1e9fec4110, 0x2b1e9fec4600), [0x2b1e9fa81950, 0x2b1e9fa8343c), [0x2b1e9f858700, 0x2b1e9f859e38), [0x2b1e9fcba370, 0x2b1e9fcbc7e4), [0x661f70, 0x662048), 
+INFO: Seed: 2261805903
+INFO: Loaded 5 modules (5912 guards): [0x2ad7ae3cf110, 0x2ad7ae3cf600), [0x2ad7adf8c950, 0x2ad7adf8e43c), [0x2ad7add63700, 0x2ad7add64e38), [0x2ad7ae1c5370, 0x2ad7ae1c77e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1866 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1867
-#1868	INITED cov: 747 ft: 3061 corp: 225/846Kb exec/s: 0 rss: 41Mb
-#2424	NEW    cov: 747 ft: 3062 corp: 226/851Kb exec/s: 0 rss: 41Mb L: 5324 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#8192	pulse  cov: 747 ft: 3062 corp: 226/851Kb exec/s: 4096 rss: 65Mb
-#16384	pulse  cov: 747 ft: 3062 corp: 226/851Kb exec/s: 4096 rss: 103Mb
-#32768	pulse  cov: 747 ft: 3062 corp: 226/851Kb exec/s: 4096 rss: 178Mb
-#65536	pulse  cov: 747 ft: 3062 corp: 226/851Kb exec/s: 4096 rss: 330Mb
-#77595	NEW    cov: 747 ft: 3064 corp: 227/860Kb exec/s: 4083 rss: 386Mb L: 9549 MS: 1 ChangeBinInt-
-#78985	NEW    cov: 747 ft: 3085 corp: 228/865Kb exec/s: 4157 rss: 392Mb L: 5318 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 747 ft: 3085 corp: 228/865Kb exec/s: 4096 rss: 630Mb
-#184986	NEW    cov: 747 ft: 3089 corp: 229/871Kb exec/s: 4110 rss: 880Mb L: 5316 MS: 2 ChangeBit-ChangeBit-
-#262144	pulse  cov: 747 ft: 3089 corp: 229/871Kb exec/s: 4096 rss: 1237Mb
-#384440	NEW    cov: 747 ft: 3093 corp: 230/876Kb exec/s: 4089 rss: 1802Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#465076	NEW    cov: 747 ft: 3111 corp: 231/885Kb exec/s: 4079 rss: 2175Mb L: 9549 MS: 2 ShuffleBytes-ChangeBit-
-#524288	pulse  cov: 747 ft: 3111 corp: 231/885Kb exec/s: 4096 rss: 2453Mb
-#539287	NEW    cov: 748 ft: 3112 corp: 232/890Kb exec/s: 4085 rss: 2524Mb L: 5316 MS: 3 ChangeBinInt-ChangeByte-ChangeBit-
-#572790	NEW    cov: 748 ft: 3113 corp: 233/897Kb exec/s: 4091 rss: 2680Mb L: 6781 MS: 1 CopyPart-
-#691416	NEW    cov: 748 ft: 3115 corp: 234/906Kb exec/s: 4091 rss: 3236Mb L: 9549 MS: 2 ChangeByte-CopyPart-
-#769770	NEW    cov: 748 ft: 3116 corp: 235/911Kb exec/s: 4072 rss: 3602Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#992055	NEW    cov: 748 ft: 3118 corp: 236/921Kb exec/s: 4065 rss: 4645Mb L: 9549 MS: 1 ChangeByte-
-#1048576	pulse  cov: 748 ft: 3118 corp: 236/921Kb exec/s: 4064 rss: 4908Mb
-#1142471	NEW    cov: 749 ft: 3120 corp: 237/930Kb exec/s: 4065 rss: 5349Mb L: 9325 MS: 2 InsertByte-CopyPart-
-#1460366	NEW    cov: 749 ft: 3122 corp: 238/939Kb exec/s: 4067 rss: 6839Mb L: 9549 MS: 2 ShuffleBytes-ChangeByte-
-#1664710	NEW    cov: 749 ft: 3123 corp: 239/944Kb exec/s: 4060 rss: 7796Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1846525	NEW    cov: 749 ft: 3125 corp: 240/954Kb exec/s: 4049 rss: 8131Mb L: 9549 MS: 1 CopyPart-
-#2097152	pulse  cov: 749 ft: 3125 corp: 240/954Kb exec/s: 4025 rss: 8131Mb
-#2165295	NEW    cov: 749 ft: 3127 corp: 241/959Kb exec/s: 4017 rss: 8131Mb L: 5284 MS: 1 CopyPart-
-#2628201	NEW    cov: 749 ft: 3128 corp: 242/962Kb exec/s: 3994 rss: 8131Mb L: 2662 MS: 2 ChangeBinInt-ChangeBinInt-
-#2661816	NEW    cov: 749 ft: 3129 corp: 243/969Kb exec/s: 3990 rss: 8131Mb L: 7210 MS: 2 CopyPart-ChangeBinInt-
-#2728188	NEW    cov: 749 ft: 3133 corp: 244/978Kb exec/s: 3988 rss: 8131Mb L: 9549 MS: 4 ChangeByte-ShuffleBytes-ChangeBinInt-ChangeBinInt-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-8b229a0fe6724b6a9c85d52eb86ab12a4394ae02
-Killed
-Execution time: 1174 sec for test_oct17
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83676 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82392 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#298542283	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82905 rss: 31Mb
+Done 298542283 runs in 3601 second(s)
+stat::number_of_executed_units: 298542283
+stat::average_exec_per_sec:     82905
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct17
 
-INFO: Seed: 3543241480
-INFO: Loaded 5 modules (5912 guards): [0x2b5f156e8110, 0x2b5f156e8600), [0x2b5f152a5950, 0x2b5f152a743c), [0x2b5f1507c700, 0x2b5f1507de38), [0x2b5f154de370, 0x2b5f154e07e4), [0x661f70, 0x662048), 
+INFO: Seed: 62071100
+INFO: Loaded 5 modules (5912 guards): [0x2b7bdf1ba110, 0x2b7bdf1ba600), [0x2b7bded77950, 0x2b7bded7943c), [0x2b7bdeb4e700, 0x2b7bdeb4fe38), [0x2b7bdefb0370, 0x2b7bdefb27e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1885 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1886
-#1887	INITED cov: 749 ft: 3116 corp: 242/928Kb exec/s: 0 rss: 42Mb
-#8192	pulse  cov: 749 ft: 3116 corp: 242/928Kb exec/s: 4096 rss: 65Mb
-#16384	pulse  cov: 749 ft: 3116 corp: 242/928Kb exec/s: 4096 rss: 104Mb
-#32768	pulse  cov: 749 ft: 3116 corp: 242/928Kb exec/s: 4096 rss: 182Mb
-#65536	pulse  cov: 749 ft: 3116 corp: 242/928Kb exec/s: 4096 rss: 338Mb
-#72850	NEW    cov: 749 ft: 3117 corp: 243/933Kb exec/s: 4047 rss: 373Mb L: 5284 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#85248	NEW    cov: 749 ft: 3120 corp: 244/942Kb exec/s: 4059 rss: 433Mb L: 9549 MS: 1 ChangeBit-
-#131072	pulse  cov: 749 ft: 3120 corp: 244/942Kb exec/s: 4096 rss: 651Mb
-#262144	pulse  cov: 749 ft: 3120 corp: 244/942Kb exec/s: 4096 rss: 1276Mb
-#371455	NEW    cov: 749 ft: 3122 corp: 245/947Kb exec/s: 4037 rss: 1797Mb L: 5318 MS: 3 ChangeBinInt-ShuffleBytes-CopyPart-
-#524288	pulse  cov: 749 ft: 3122 corp: 245/947Kb exec/s: 4064 rss: 2527Mb
-#717633	NEW    cov: 749 ft: 3123 corp: 246/957Kb exec/s: 4054 rss: 3448Mb L: 9549 MS: 1 ChangeBit-
-#1048576	pulse  cov: 749 ft: 3123 corp: 246/957Kb exec/s: 4064 rss: 5021Mb
-#1072428	NEW    cov: 749 ft: 3124 corp: 247/965Kb exec/s: 4062 rss: 5134Mb L: 8558 MS: 1 CopyPart-
-#1317564	NEW    cov: 749 ft: 3133 corp: 248/974Kb exec/s: 4054 rss: 6301Mb L: 9549 MS: 2 ChangeBinInt-ChangeByte-
-#1676785	NEW    cov: 749 ft: 3135 corp: 249/984Kb exec/s: 4050 rss: 8017Mb L: 9549 MS: 3 ShuffleBytes-ChangeByte-ChangeBit-
-#1920018	NEW    cov: 749 ft: 3136 corp: 250/989Kb exec/s: 4025 rss: 8082Mb L: 5324 MS: 1 ChangeBinInt-
-#2097152	pulse  cov: 749 ft: 3136 corp: 250/989Kb exec/s: 4002 rss: 8082Mb
-#2300608	NEW    cov: 749 ft: 3139 corp: 251/994Kb exec/s: 3987 rss: 8083Mb L: 5316 MS: 1 CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2351145	NEW    cov: 749 ft: 3140 corp: 252/999Kb exec/s: 3991 rss: 8083Mb L: 5284 MS: 3 ChangeBinInt-ChangeBit-PersAutoDict- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2933818	NEW    cov: 749 ft: 3142 corp: 253/1005Kb exec/s: 4035 rss: 8125Mb L: 5318 MS: 1 ChangeBinInt-
-Killed
-Execution time: 823 sec for test_oct18
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82799 rss: 31Mb
+#297995833	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82753 rss: 31Mb
+Done 297995833 runs in 3601 second(s)
+stat::number_of_executed_units: 297995833
+stat::average_exec_per_sec:     82753
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct18
 
-INFO: Seed: 3729377880
-INFO: Loaded 5 modules (5912 guards): [0x2b6006f99110, 0x2b6006f99600), [0x2b6006b56950, 0x2b6006b5843c), [0x2b600692d700, 0x2b600692ee38), [0x2b6006d8f370, 0x2b6006d917e4), [0x661f70, 0x662048), 
+INFO: Seed: 2127083435
+INFO: Loaded 5 modules (5912 guards): [0x2ac3e4482110, 0x2ac3e4482600), [0x2ac3e403f950, 0x2ac3e404143c), [0x2ac3e3e16700, 0x2ac3e3e17e38), [0x2ac3e4278370, 0x2ac3e427a7e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1896 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1897
-#1898	INITED cov: 742 ft: 3046 corp: 233/878Kb exec/s: 0 rss: 42Mb
-#8192	pulse  cov: 742 ft: 3046 corp: 233/878Kb exec/s: 4096 rss: 66Mb
-#16384	pulse  cov: 742 ft: 3046 corp: 233/878Kb exec/s: 4096 rss: 106Mb
-#32768	pulse  cov: 742 ft: 3046 corp: 233/878Kb exec/s: 4096 rss: 183Mb
-#56650	NEW    cov: 742 ft: 3047 corp: 234/883Kb exec/s: 4046 rss: 298Mb L: 5284 MS: 2 ShuffleBytes-ChangeBit-
-#65536	pulse  cov: 742 ft: 3047 corp: 234/883Kb exec/s: 3855 rss: 340Mb
-#131072	pulse  cov: 742 ft: 3047 corp: 234/883Kb exec/s: 3855 rss: 658Mb
-#262144	pulse  cov: 742 ft: 3047 corp: 234/883Kb exec/s: 3855 rss: 1288Mb
-#387174	NEW    cov: 742 ft: 3049 corp: 235/893Kb exec/s: 3833 rss: 1890Mb L: 9549 MS: 1 ChangeBinInt-
-#524288	pulse  cov: 742 ft: 3049 corp: 235/893Kb exec/s: 3744 rss: 2216Mb
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-99e85098d39d088ee4394cc75442e8372fa87214
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-99d579fde72f4a7bf2577da23edbd98e6a8e32f6
-Slowest unit: 30 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-4116da27dfa25799fd8753b401b3fa1f9bf59b5d
-#886225	NEW    cov: 742 ft: 3050 corp: 236/899Kb exec/s: 1834 rss: 2682Mb L: 6440 MS: 2 ShuffleBytes-CopyPart-
-#1048576	pulse  cov: 742 ft: 3050 corp: 236/899Kb exec/s: 1993 rss: 2689Mb
-#1169065	NEW    cov: 742 ft: 3052 corp: 237/904Kb exec/s: 2098 rss: 3271Mb L: 5324 MS: 2 ShuffleBytes-ChangeBit-
-#1527526	NEW    cov: 742 ft: 3053 corp: 238/909Kb exec/s: 2328 rss: 4226Mb L: 5324 MS: 3 CMP-ShuffleBytes-CopyPart- DE: "\x00\x00\x00\x00"-
-#1657067	NEW    cov: 742 ft: 3055 corp: 239/914Kb exec/s: 2391 rss: 4226Mb L: 5324 MS: 4 ChangeByte-CopyPart-ChangeBinInt-CopyPart-
-Slowest unit: 42 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-7f577f6cb84bcac2226c638f71b506a68fc518cb
-Killed
-Execution time: 1004 sec for test_oct19
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81492 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81516 rss: 31Mb
+#293372368	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 81469 rss: 31Mb
+Done 293372368 runs in 3601 second(s)
+stat::number_of_executed_units: 293372368
+stat::average_exec_per_sec:     81469
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct19
 
-INFO: Seed: 200574507
-INFO: Loaded 5 modules (5913 guards): [0x2b3aa0492110, 0x2b3aa0492600), [0x2b3aa004f950, 0x2b3aa005143c), [0x2b3a9fe26700, 0x2b3a9fe27e38), [0x2b3aa0288370, 0x2b3aa028a7e4), [0x661f70, 0x66204c), 
+INFO: Seed: 4191305856
+INFO: Loaded 5 modules (5913 guards): [0x2ad0a7c9d110, 0x2ad0a7c9d600), [0x2ad0a785a950, 0x2ad0a785c43c), [0x2ad0a7631700, 0x2ad0a7632e38), [0x2ad0a7a93370, 0x2ad0a7a957e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1902 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1903
-#1904	INITED cov: 682 ft: 2809 corp: 214/808Kb exec/s: 0 rss: 42Mb
-#8192	pulse  cov: 682 ft: 2809 corp: 214/808Kb exec/s: 4096 rss: 66Mb
-#16384	pulse  cov: 682 ft: 2809 corp: 214/808Kb exec/s: 4096 rss: 105Mb
-#19031	NEW    cov: 682 ft: 2835 corp: 215/818Kb exec/s: 3806 rss: 119Mb L: 10000 MS: 2 ShuffleBytes-ChangeBit-
-#32768	pulse  cov: 682 ft: 2835 corp: 215/818Kb exec/s: 4096 rss: 186Mb
-#34256	NEW    cov: 684 ft: 2840 corp: 216/828Kb exec/s: 3806 rss: 194Mb L: 10000 MS: 1 ChangeBinInt-
-#65536	pulse  cov: 684 ft: 2840 corp: 216/828Kb exec/s: 3855 rss: 346Mb
-#89688	NEW    cov: 684 ft: 2843 corp: 217/838Kb exec/s: 3737 rss: 466Mb L: 10000 MS: 3 ChangeBit-ShuffleBytes-CopyPart-
-#131072	pulse  cov: 684 ft: 2843 corp: 217/838Kb exec/s: 3744 rss: 669Mb
-#161713	NEW    cov: 684 ft: 2847 corp: 218/847Kb exec/s: 3760 rss: 819Mb L: 10000 MS: 3 CopyPart-ChangeByte-CopyPart-
-#213084	NEW    cov: 684 ft: 2859 corp: 219/857Kb exec/s: 3738 rss: 1072Mb L: 10000 MS: 4 ChangeByte-ChangeByte-ShuffleBytes-ShuffleBytes-
-#255553	NEW    cov: 684 ft: 2860 corp: 220/867Kb exec/s: 3758 rss: 1281Mb L: 10000 MS: 3 ChangeBinInt-ChangeBit-ChangeBinInt-
-#262144	pulse  cov: 684 ft: 2860 corp: 220/867Kb exec/s: 3744 rss: 1313Mb
-#373183	NEW    cov: 684 ft: 2870 corp: 221/877Kb exec/s: 3658 rss: 1857Mb L: 10000 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#423686	NEW    cov: 685 ft: 2872 corp: 222/886Kb exec/s: 3621 rss: 2107Mb L: 10000 MS: 1 ChangeBit-
-#492971	NEW    cov: 685 ft: 2874 corp: 223/896Kb exec/s: 3572 rss: 2450Mb L: 10000 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#502041	NEW    cov: 685 ft: 2875 corp: 224/906Kb exec/s: 3560 rss: 2498Mb L: 10000 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#524288	pulse  cov: 685 ft: 2875 corp: 224/906Kb exec/s: 3566 rss: 2608Mb
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-b6ded62a1feed3104ee89f807127ca3728dc2e8d
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-de8e0f902913a00a78d33b05b6bb2ba9aa55ddc5
-Slowest unit: 18 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-6d468afedcf3cb8801224816b0e4fd4ad93e72af
-#649362	NEW    cov: 685 ft: 2878 corp: 225/916Kb exec/s: 1520 rss: 3113Mb L: 10000 MS: 2 ChangeByte-ChangeByte-
-#695984	NEW    cov: 685 ft: 2879 corp: 226/926Kb exec/s: 1581 rss: 3113Mb L: 10000 MS: 4 ShuffleBytes-ChangeBit-ChangeByte-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#711951	NEW    cov: 688 ft: 2892 corp: 227/935Kb exec/s: 1603 rss: 3113Mb L: 10000 MS: 1 ChangeBit-
-#735606	NEW    cov: 688 ft: 2893 corp: 228/945Kb exec/s: 1631 rss: 3113Mb L: 10000 MS: 1 ChangeBinInt-
-#740031	NEW    cov: 689 ft: 2902 corp: 229/955Kb exec/s: 1637 rss: 3113Mb L: 10000 MS: 1 ChangeBinInt-
-#743968	NEW    cov: 690 ft: 2905 corp: 230/963Kb exec/s: 1642 rss: 3113Mb L: 8027 MS: 3 ChangeBinInt-EraseBytes-ChangeBinInt-
-#747330	NEW    cov: 690 ft: 2907 corp: 231/972Kb exec/s: 1646 rss: 3113Mb L: 10000 MS: 5 ChangeByte-ChangeBit-ChangeByte-ChangeBinInt-ChangeBit-
-#890220	NEW    cov: 690 ft: 2916 corp: 232/982Kb exec/s: 1805 rss: 3786Mb L: 10000 MS: 5 ChangeByte-ChangeBit-ChangeByte-ChangeBit-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#907187	NEW    cov: 690 ft: 2917 corp: 233/992Kb exec/s: 1821 rss: 3873Mb L: 10000 MS: 2 PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1043677	NEW    cov: 690 ft: 2929 corp: 234/1002Kb exec/s: 1950 rss: 4576Mb L: 9928 MS: 2 ChangeByte-CrossOver-
-#1047481	NEW    cov: 690 ft: 2931 corp: 235/1011Kb exec/s: 1950 rss: 4596Mb L: 9928 MS: 1 ChangeBit-
-#1048576	pulse  cov: 690 ft: 2931 corp: 235/1011Kb exec/s: 1952 rss: 4601Mb
-#1054496	NEW    cov: 725 ft: 2977 corp: 236/1021Kb exec/s: 1960 rss: 4632Mb L: 9928 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1073719	NEW    cov: 725 ft: 2978 corp: 237/1031Kb exec/s: 1973 rss: 4676Mb L: 10000 MS: 4 ChangeByte-ChangeByte-ChangeByte-CopyPart-
-#1203656	NEW    cov: 725 ft: 2979 corp: 238/1041Kb exec/s: 2064 rss: 4676Mb L: 10000 MS: 1 ChangeBinInt-
-#1397498	NEW    cov: 725 ft: 2985 corp: 239/1050Kb exec/s: 2180 rss: 4676Mb L: 10000 MS: 3 ShuffleBytes-ChangeBinInt-ChangeBit-
-#1473948	NEW    cov: 725 ft: 2991 corp: 240/1060Kb exec/s: 2216 rss: 4676Mb L: 10000 MS: 3 ChangeBit-PersAutoDict-ChangeBit- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1484312	NEW    cov: 725 ft: 2993 corp: 241/1070Kb exec/s: 2222 rss: 4676Mb L: 10000 MS: 2 ChangeBinInt-ChangeBit-
-#1538703	NEW    cov: 725 ft: 3001 corp: 242/1080Kb exec/s: 2246 rss: 4676Mb L: 10000 MS: 3 ChangeBinInt-ChangeBinInt-PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Killed
-Execution time: 710 sec for test_oct20
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82748 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82595 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82595 rss: 31Mb
+#297489068	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82612 rss: 31Mb
+Done 297489068 runs in 3601 second(s)
+stat::number_of_executed_units: 297489068
+stat::average_exec_per_sec:     82612
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct20
 
-INFO: Seed: 1885462469
-INFO: Loaded 5 modules (5911 guards): [0x2b24d6958110, 0x2b24d6958600), [0x2b24d6515950, 0x2b24d651743c), [0x2b24d62ec700, 0x2b24d62ede38), [0x2b24d674e370, 0x2b24d67507e4), [0x661f70, 0x662044), 
+INFO: Seed: 1961267013
+INFO: Loaded 5 modules (5911 guards): [0x2b4feb82d110, 0x2b4feb82d600), [0x2b4feb3ea950, 0x2b4feb3ec43c), [0x2b4feb1c1700, 0x2b4feb1c2e38), [0x2b4feb623370, 0x2b4feb6257e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1929 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1930
-#1931	INITED cov: 700 ft: 2726 corp: 182/583Kb exec/s: 0 rss: 42Mb
-#8192	pulse  cov: 700 ft: 2726 corp: 182/583Kb exec/s: 4096 rss: 62Mb
-#16384	pulse  cov: 700 ft: 2726 corp: 182/583Kb exec/s: 4096 rss: 97Mb
-#32768	pulse  cov: 700 ft: 2726 corp: 182/583Kb exec/s: 4096 rss: 169Mb
-#65536	pulse  cov: 700 ft: 2726 corp: 182/583Kb exec/s: 4096 rss: 312Mb
-#131072	pulse  cov: 700 ft: 2726 corp: 182/583Kb exec/s: 4096 rss: 595Mb
-#199333	NEW    cov: 700 ft: 2727 corp: 183/586Kb exec/s: 4068 rss: 892Mb L: 2742 MS: 2 ChangeBinInt-ChangeBit-
-#262144	pulse  cov: 700 ft: 2727 corp: 183/586Kb exec/s: 4096 rss: 1163Mb
-#524288	pulse  cov: 700 ft: 2727 corp: 183/586Kb exec/s: 3912 rss: 2300Mb
-#548608	NEW    cov: 700 ft: 2731 corp: 184/596Kb exec/s: 3890 rss: 2406Mb L: 10000 MS: 1 ChangeBit-
-#1048576	pulse  cov: 700 ft: 2731 corp: 184/596Kb exec/s: 2904 rss: 4310Mb
-#1359483	NEW    cov: 700 ft: 2747 corp: 185/605Kb exec/s: 3068 rss: 4736Mb L: 9549 MS: 1 ChangeBit-
-#1371188	NEW    cov: 700 ft: 2748 corp: 186/614Kb exec/s: 3074 rss: 4736Mb L: 9549 MS: 1 ChangeBinInt-
-#1520007	NEW    cov: 700 ft: 2767 corp: 187/624Kb exec/s: 3127 rss: 4736Mb L: 9549 MS: 5 ChangeBinInt-ChangeByte-ShuffleBytes-CopyPart-ChangeBit-
-#1541835	NEW    cov: 700 ft: 2769 corp: 188/634Kb exec/s: 3133 rss: 4736Mb L: 10000 MS: 3 EraseBytes-ChangeBit-CrossOver-
-#1546283	NEW    cov: 700 ft: 2770 corp: 189/643Kb exec/s: 3130 rss: 4736Mb L: 10000 MS: 1 CopyPart-
-#1851916	NEW    cov: 700 ft: 2773 corp: 190/649Kb exec/s: 2519 rss: 4736Mb L: 5488 MS: 4 ShuffleBytes-EraseBytes-ShuffleBytes-CopyPart-
-#1963997	NEW    cov: 700 ft: 2774 corp: 191/654Kb exec/s: 2574 rss: 4736Mb L: 5455 MS: 5 ShuffleBytes-ChangeBinInt-ChangeBit-EraseBytes-ChangeBinInt-
-#2097152	pulse  cov: 700 ft: 2774 corp: 191/654Kb exec/s: 2634 rss: 4736Mb
-#2193059	NEW    cov: 700 ft: 2778 corp: 192/663Kb exec/s: 2667 rss: 4736Mb L: 9549 MS: 2 ChangeBit-CopyPart-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-817f7995f5fbeb285077ae1f1d844a2e89d02b16
-Slowest unit: 34 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-9e93712990ac48d30501214f5c595cf522579d03
-Killed
-Execution time: 1239 sec for test_oct21
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 85598 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84733 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82748 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82190 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 77515 rss: 31Mb
+#279860163	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 77717 rss: 31Mb
+Done 279860163 runs in 3601 second(s)
+stat::number_of_executed_units: 279860163
+stat::average_exec_per_sec:     77717
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct21
 
-INFO: Seed: 125076917
-INFO: Loaded 5 modules (5913 guards): [0x2b52a92ae110, 0x2b52a92ae600), [0x2b52a8e6b950, 0x2b52a8e6d43c), [0x2b52a8c42700, 0x2b52a8c43e38), [0x2b52a90a4370, 0x2b52a90a67e4), [0x661f80, 0x66205c), 
+INFO: Seed: 4042524620
+INFO: Loaded 5 modules (5913 guards): [0x2ac2e5366110, 0x2ac2e5366600), [0x2ac2e4f23950, 0x2ac2e4f2543c), [0x2ac2e4cfa700, 0x2ac2e4cfbe38), [0x2ac2e515c370, 0x2ac2e515e7e4), [0x661f80, 0x66205c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1939 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1940
-#1941	INITED cov: 764 ft: 3055 corp: 241/935Kb exec/s: 0 rss: 42Mb
-#8192	pulse  cov: 764 ft: 3055 corp: 241/935Kb exec/s: 4096 rss: 66Mb
-#16384	pulse  cov: 764 ft: 3055 corp: 241/935Kb exec/s: 4096 rss: 107Mb
-#32768	pulse  cov: 764 ft: 3055 corp: 241/935Kb exec/s: 4096 rss: 186Mb
-#65536	pulse  cov: 764 ft: 3055 corp: 241/935Kb exec/s: 3855 rss: 342Mb
-#131072	pulse  cov: 764 ft: 3055 corp: 241/935Kb exec/s: 3855 rss: 656Mb
-#194383	NEW    cov: 764 ft: 3056 corp: 242/940Kb exec/s: 3811 rss: 958Mb L: 5284 MS: 2 ChangeByte-CMP- DE: "\x01\x00"-
-#262144	pulse  cov: 764 ft: 3056 corp: 242/940Kb exec/s: 3971 rss: 1243Mb
-#524288	pulse  cov: 764 ft: 3056 corp: 242/940Kb exec/s: 3971 rss: 2355Mb
-#768475	NEW    cov: 764 ft: 3057 corp: 243/949Kb exec/s: 3961 rss: 3063Mb L: 8747 MS: 4 ChangeByte-CopyPart-ShuffleBytes-CopyPart-
-#871307	NEW    cov: 764 ft: 3072 corp: 244/958Kb exec/s: 3942 rss: 3092Mb L: 9549 MS: 1 ChangeBit-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c69e3bb9de1a62daa426e801dff8650cdd71fd46
-Slowest unit: 20 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1221733ae2c3421c4d68800db0ca5cd7a93be57d
-Slowest unit: 39 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0d3655035d756c3895111bab66373dd7df20a6ba
-#1048576	pulse  cov: 764 ft: 3072 corp: 244/958Kb exec/s: 1625 rss: 3490Mb
-#1751435	NEW    cov: 764 ft: 3073 corp: 245/965Kb exec/s: 2141 rss: 4735Mb L: 6832 MS: 4 ChangeBit-InsertRepeatedBytes-ChangeBinInt-ChangeBinInt-
-Killed
-Execution time: 1209 sec for test_oct22
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80082 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80562 rss: 31Mb
+#290079343	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80555 rss: 31Mb
+Done 290079343 runs in 3601 second(s)
+stat::number_of_executed_units: 290079343
+stat::average_exec_per_sec:     80555
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct22
 
-INFO: Seed: 2606608686
-INFO: Loaded 5 modules (5913 guards): [0x2b6a79df4110, 0x2b6a79df4600), [0x2b6a799b1950, 0x2b6a799b343c), [0x2b6a79788700, 0x2b6a79789e38), [0x2b6a79bea370, 0x2b6a79bec7e4), [0x661f80, 0x66205c), 
+INFO: Seed: 1816569429
+INFO: Loaded 5 modules (5913 guards): [0x2b522d8ec110, 0x2b522d8ec600), [0x2b522d4a9950, 0x2b522d4ab43c), [0x2b522d280700, 0x2b522d281e38), [0x2b522d6e2370, 0x2b522d6e47e4), [0x661f80, 0x66205c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1943 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1944
-#1945	INITED cov: 805 ft: 3262 corp: 245/966Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 805 ft: 3262 corp: 245/966Kb exec/s: 4096 rss: 65Mb
-#16384	pulse  cov: 805 ft: 3262 corp: 245/966Kb exec/s: 4096 rss: 105Mb
-#32768	pulse  cov: 805 ft: 3262 corp: 245/966Kb exec/s: 4096 rss: 186Mb
-#65536	pulse  cov: 805 ft: 3262 corp: 245/966Kb exec/s: 3855 rss: 346Mb
-#131072	pulse  cov: 805 ft: 3262 corp: 245/966Kb exec/s: 3855 rss: 663Mb
-#135411	NEW    cov: 805 ft: 3267 corp: 246/975Kb exec/s: 3761 rss: 683Mb L: 9549 MS: 1 ChangeBinInt-
-#255067	NEW    cov: 805 ft: 3268 corp: 247/985Kb exec/s: 3696 rss: 1259Mb L: 9549 MS: 1 ChangeBit-
-#262144	pulse  cov: 805 ft: 3268 corp: 247/985Kb exec/s: 3692 rss: 1294Mb
-#426945	NEW    cov: 805 ft: 3269 corp: 248/990Kb exec/s: 3618 rss: 2092Mb L: 5316 MS: 4 ShuffleBytes-ChangeBit-CopyPart-CMP- DE: "\x01\x00"-
-#524288	pulse  cov: 805 ft: 3269 corp: 248/990Kb exec/s: 3640 rss: 2509Mb
-#532342	NEW    cov: 805 ft: 3270 corp: 249/995Kb exec/s: 3621 rss: 2543Mb L: 5318 MS: 1 ChangeBit-
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-ade0826627969c72e31cc7ce869f90f592bb2e4c
-#829663	NEW    cov: 805 ft: 3271 corp: 250/1000Kb exec/s: 2079 rss: 3631Mb L: 5284 MS: 2 ChangeByte-PersAutoDict- DE: "\x01\x00"-
-#894312	NEW    cov: 805 ft: 3274 corp: 251/1010Kb exec/s: 2160 rss: 3908Mb L: 9549 MS: 1 PersAutoDict- DE: "\x01\x00"-
-#1048576	pulse  cov: 805 ft: 3274 corp: 251/1010Kb exec/s: 2325 rss: 4572Mb
-#1214922	NEW    cov: 805 ft: 3277 corp: 252/1015Kb exec/s: 2464 rss: 4731Mb L: 5324 MS: 1 ChangeBit-
-#1334487	NEW    cov: 806 ft: 3278 corp: 253/1020Kb exec/s: 2546 rss: 4731Mb L: 5318 MS: 1 PersAutoDict- DE: "\x01\x00"-
-#2097152	pulse  cov: 806 ft: 3278 corp: 253/1020Kb exec/s: 2589 rss: 4890Mb
-Killed
-Execution time: 1050 sec for test_oct23
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82342 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82418 rss: 31Mb
+#296849673	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82435 rss: 31Mb
+Done 296849673 runs in 3601 second(s)
+stat::number_of_executed_units: 296849673
+stat::average_exec_per_sec:     82435
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct23
 
-INFO: Seed: 2276262802
-INFO: Loaded 5 modules (5912 guards): [0x2add04baa110, 0x2add04baa600), [0x2add04767950, 0x2add0476943c), [0x2add0453e700, 0x2add0453fe38), [0x2add049a0370, 0x2add049a27e4), [0x661f80, 0x662058), 
+INFO: Seed: 3890085070
+INFO: Loaded 5 modules (5912 guards): [0x2b07cd890110, 0x2b07cd890600), [0x2b07cd44d950, 0x2b07cd44f43c), [0x2b07cd224700, 0x2b07cd225e38), [0x2b07cd686370, 0x2b07cd6887e4), [0x661f80, 0x662058), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1951 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1952
-#1953	INITED cov: 753 ft: 3128 corp: 238/955Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 753 ft: 3128 corp: 238/955Kb exec/s: 4096 rss: 67Mb
-#14624	NEW    cov: 753 ft: 3130 corp: 239/960Kb exec/s: 4874 rss: 99Mb L: 5284 MS: 1 ChangeByte-
-#16384	pulse  cov: 753 ft: 3130 corp: 239/960Kb exec/s: 4096 rss: 108Mb
-#17170	NEW    cov: 753 ft: 3131 corp: 240/965Kb exec/s: 4292 rss: 111Mb L: 5318 MS: 2 ChangeBit-ChangeBinInt-
-#32768	pulse  cov: 753 ft: 3131 corp: 240/965Kb exec/s: 4096 rss: 190Mb
-#65536	pulse  cov: 753 ft: 3131 corp: 240/965Kb exec/s: 3855 rss: 355Mb
-#73665	NEW    cov: 753 ft: 3140 corp: 241/972Kb exec/s: 3877 rss: 395Mb L: 6731 MS: 1 CMP- DE: "\x01\x00\x00\x00"-
-#131072	pulse  cov: 753 ft: 3140 corp: 241/972Kb exec/s: 4096 rss: 650Mb
-#190061	NEW    cov: 753 ft: 3142 corp: 242/981Kb exec/s: 4131 rss: 911Mb L: 9549 MS: 2 ChangeBit-ChangeBit-
-#218718	NEW    cov: 753 ft: 3148 corp: 243/986Kb exec/s: 4206 rss: 1039Mb L: 5324 MS: 4 ChangeBit-ChangeBinInt-ChangeBit-ChangeBit-
-#232303	NEW    cov: 753 ft: 3149 corp: 244/991Kb exec/s: 4223 rss: 1099Mb L: 5284 MS: 4 ShuffleBytes-ChangeBinInt-ChangeByte-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#262144	pulse  cov: 753 ft: 3149 corp: 244/991Kb exec/s: 4161 rss: 1240Mb
-#317045	NEW    cov: 753 ft: 3151 corp: 245/998Kb exec/s: 4171 rss: 1498Mb L: 6731 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00"-
-#524288	pulse  cov: 753 ft: 3151 corp: 245/998Kb exec/s: 3971 rss: 2471Mb
-#656215	NEW    cov: 753 ft: 3152 corp: 246/1003Kb exec/s: 3906 rss: 3098Mb L: 5324 MS: 1 PersAutoDict- DE: "\x01\x00\x00\x00"-
-#777906	NEW    cov: 753 ft: 3156 corp: 247/1012Kb exec/s: 3870 rss: 3254Mb L: 9549 MS: 2 ShuffleBytes-ChangeBit-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1786311944e887f8a717c0b1a5ab1502521d6fc8
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-6a6b71550e0e9e33a4b1e5a219490ac558cea325
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0c5a1156c522ef00ce0bb8b3bc8559158b198694
-#1048576	pulse  cov: 753 ft: 3156 corp: 247/1012Kb exec/s: 2279 rss: 3275Mb
-Killed
-Execution time: 876 sec for test_oct24
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81591 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82140 rss: 31Mb
+#295926878	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82179 rss: 31Mb
+Done 295926878 runs in 3601 second(s)
+stat::number_of_executed_units: 295926878
+stat::average_exec_per_sec:     82179
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct24
 
-INFO: Seed: 3261309954
-INFO: Loaded 5 modules (5915 guards): [0x2b98d656f110, 0x2b98d656f600), [0x2b98d612c950, 0x2b98d612e43c), [0x2b98d5f03700, 0x2b98d5f04e38), [0x2b98d6365370, 0x2b98d63677e4), [0x661f70, 0x662054), 
+INFO: Seed: 1666378821
+INFO: Loaded 5 modules (5915 guards): [0x2b70c8943110, 0x2b70c8943600), [0x2b70c8500950, 0x2b70c850243c), [0x2b70c82d7700, 0x2b70c82d8e38), [0x2b70c8739370, 0x2b70c873b7e4), [0x661f70, 0x662054), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1960 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1961
-#1962	INITED cov: 621 ft: 2712 corp: 238/942Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 621 ft: 2712 corp: 238/942Kb exec/s: 4096 rss: 63Mb
-#16384	pulse  cov: 621 ft: 2712 corp: 238/942Kb exec/s: 4096 rss: 99Mb
-#27543	NEW    cov: 621 ft: 2713 corp: 239/945Kb exec/s: 3934 rss: 148Mb L: 2755 MS: 1 ChangeBinInt-
-#32768	pulse  cov: 621 ft: 2713 corp: 239/945Kb exec/s: 4096 rss: 171Mb
-#34379	NEW    cov: 621 ft: 2715 corp: 240/955Kb exec/s: 4297 rss: 178Mb L: 9928 MS: 2 ChangeByte-ChangeBinInt-
-#39603	NEW    cov: 621 ft: 2725 corp: 241/964Kb exec/s: 3960 rss: 201Mb L: 9928 MS: 1 ChangeByte-
-#65536	pulse  cov: 621 ft: 2725 corp: 241/964Kb exec/s: 4096 rss: 317Mb
-#131072	pulse  cov: 621 ft: 2725 corp: 241/964Kb exec/s: 3971 rss: 608Mb
-#262144	pulse  cov: 621 ft: 2725 corp: 241/964Kb exec/s: 3912 rss: 1193Mb
-#299924	NEW    cov: 621 ft: 2727 corp: 242/974Kb exec/s: 3946 rss: 1359Mb L: 9928 MS: 2 ChangeBinInt-ChangeBinInt-
-#428986	NEW    cov: 621 ft: 2758 corp: 243/982Kb exec/s: 3830 rss: 1927Mb L: 8375 MS: 4 ShuffleBytes-ChangeBinInt-EraseBytes-CopyPart-
-#429693	NEW    cov: 621 ft: 2761 corp: 244/990Kb exec/s: 3836 rss: 1930Mb L: 8375 MS: 1 ChangeBinInt-
-#432493	NEW    cov: 621 ft: 2767 corp: 245/998Kb exec/s: 3827 rss: 1943Mb L: 8375 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#487959	NEW    cov: 621 ft: 2772 corp: 246/1007Kb exec/s: 3842 rss: 2166Mb L: 8375 MS: 2 ChangeByte-ChangeBit-
-#524288	pulse  cov: 621 ft: 2772 corp: 246/1007Kb exec/s: 3855 rss: 2311Mb
-#537013	NEW    cov: 621 ft: 2773 corp: 247/1015Kb exec/s: 3863 rss: 2363Mb L: 8375 MS: 1 ChangeBit-
-#694754	NEW    cov: 621 ft: 2775 corp: 248/1023Kb exec/s: 3859 rss: 2997Mb L: 8375 MS: 2 ChangeBinInt-ChangeBit-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-63ce6a322899f34b6e43a5719d0d583249566be8
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-26349bffd503a77fbd8a6824e4e6c4055f947657
-Slowest unit: 44 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-482e3cf298f4241147df41472eb0f08abf9f3ecf
-Slowest unit: 59 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-87de101523c09bb4a768de4a09cc9c402388ec2a
-#1048576	pulse  cov: 621 ft: 2775 corp: 248/1023Kb exec/s: 1833 rss: 4243Mb
-#1752400	NEW    cov: 621 ft: 2777 corp: 249/1032Kb exec/s: 2349 rss: 4928Mb L: 8714 MS: 3 CopyPart-InsertByte-InsertRepeatedBytes-
-#1802849	NEW    cov: 621 ft: 2788 corp: 250/1040Kb exec/s: 2375 rss: 4928Mb L: 8375 MS: 2 ChangeBinInt-PersAutoDict- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-Killed
-Execution time: 1131 sec for test_oct25
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81890 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81640 rss: 31Mb
+#293796098	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 81587 rss: 31Mb
+Done 293796098 runs in 3601 second(s)
+stat::number_of_executed_units: 293796098
+stat::average_exec_per_sec:     81587
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct25
 
-INFO: Seed: 1853804490
-INFO: Loaded 5 modules (5915 guards): [0x2b236b0d6110, 0x2b236b0d6600), [0x2b236ac93950, 0x2b236ac9543c), [0x2b236aa6a700, 0x2b236aa6be38), [0x2b236aecc370, 0x2b236aece7e4), [0x661f70, 0x662054), 
+INFO: Seed: 3740184131
+INFO: Loaded 5 modules (5915 guards): [0x2b154507d110, 0x2b154507d600), [0x2b1544c3a950, 0x2b1544c3c43c), [0x2b1544a11700, 0x2b1544a12e38), [0x2b1544e73370, 0x2b1544e757e4), [0x661f70, 0x662054), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1972 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1973
-#1974	INITED cov: 684 ft: 2949 corp: 253/1049Kb exec/s: 0 rss: 44Mb
-#8192	pulse  cov: 684 ft: 2949 corp: 253/1049Kb exec/s: 4096 rss: 66Mb
-#12276	NEW    cov: 684 ft: 2952 corp: 254/1059Kb exec/s: 4092 rss: 84Mb L: 10000 MS: 2 ShuffleBytes-ChangeBit-
-#13953	NEW    cov: 688 ft: 2958 corp: 255/1069Kb exec/s: 4651 rss: 92Mb L: 10000 MS: 4 ChangeBit-ShuffleBytes-CMP-ChangeBit- DE: "\x01\x00\x00\x00"-
-#13971	NEW    cov: 688 ft: 2961 corp: 256/1079Kb exec/s: 4657 rss: 92Mb L: 10000 MS: 2 CopyPart-ChangeByte-
-#16384	pulse  cov: 688 ft: 2961 corp: 256/1079Kb exec/s: 4096 rss: 102Mb
-#32768	pulse  cov: 688 ft: 2961 corp: 256/1079Kb exec/s: 4096 rss: 169Mb
-#60775	NEW    cov: 688 ft: 2964 corp: 257/1088Kb exec/s: 4341 rss: 285Mb L: 9928 MS: 1 ChangeBit-
-#65536	pulse  cov: 688 ft: 2964 corp: 257/1088Kb exec/s: 4369 rss: 305Mb
-#100005	NEW    cov: 688 ft: 2965 corp: 258/1091Kb exec/s: 4348 rss: 449Mb L: 2755 MS: 1 CopyPart-
-#114995	NEW    cov: 688 ft: 2967 corp: 259/1099Kb exec/s: 4422 rss: 511Mb L: 8027 MS: 1 ChangeBit-
-#131072	pulse  cov: 688 ft: 2967 corp: 259/1099Kb exec/s: 4369 rss: 579Mb
-#262144	pulse  cov: 688 ft: 2967 corp: 259/1099Kb exec/s: 4297 rss: 1122Mb
-#524288	pulse  cov: 688 ft: 2967 corp: 259/1099Kb exec/s: 4096 rss: 2210Mb
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-9caa932e987a3b79253a52d1ddbf51cd0c92a55c
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-b4b0f4acc6ff85b74d99794fbcfb37e13cce315b
-Slowest unit: 21 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-29d579620c6fbf140d71d22911f9116561821975
-Slowest unit: 25 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-1624c3639993493e8d3d2c74eaa5f1dd68ddbead
-#718620	NEW    cov: 688 ft: 2969 corp: 260/1104Kb exec/s: 1454 rss: 2915Mb L: 5324 MS: 1 CMP- DE: "\x01\x00"-
-#761484	NEW    cov: 688 ft: 2970 corp: 261/1114Kb exec/s: 1510 rss: 2915Mb L: 10000 MS: 5 ChangeBit-ChangeBinInt-ShuffleBytes-ShuffleBytes-PersAutoDict- DE: "\x01\x00"-
-#815980	NEW    cov: 688 ft: 2971 corp: 262/1122Kb exec/s: 1578 rss: 2929Mb L: 8375 MS: 1 ChangeBit-
-#877065	NEW    cov: 688 ft: 2972 corp: 263/1130Kb exec/s: 1651 rss: 3182Mb L: 8027 MS: 1 ChangeByte-
-#1048576	pulse  cov: 688 ft: 2972 corp: 263/1130Kb exec/s: 1836 rss: 3896Mb
-#1125690	NEW    cov: 688 ft: 2974 corp: 264/1139Kb exec/s: 1911 rss: 4216Mb L: 9321 MS: 1 CopyPart-
-#1178425	NEW    cov: 688 ft: 2975 corp: 265/1147Kb exec/s: 1960 rss: 4435Mb L: 8027 MS: 1 ChangeBit-
-#1366655	NEW    cov: 688 ft: 2976 corp: 266/1156Kb exec/s: 2105 rss: 4494Mb L: 9177 MS: 1 CopyPart-
-#1436296	NEW    cov: 688 ft: 2983 corp: 267/1164Kb exec/s: 2156 rss: 4494Mb L: 8768 MS: 2 InsertRepeatedBytes-CopyPart-
-#1526841	NEW    cov: 688 ft: 2984 corp: 268/1172Kb exec/s: 2216 rss: 4494Mb L: 8027 MS: 2 ChangeByte-ChangeBinInt-
-#1701591	NEW    cov: 688 ft: 2985 corp: 269/1182Kb exec/s: 2318 rss: 4494Mb L: 9549 MS: 2 ChangeBinInt-ChangeBit-
-#1941777	NEW    cov: 688 ft: 2986 corp: 270/1184Kb exec/s: 1852 rss: 4494Mb L: 2487 MS: 3 ChangeBinInt-ChangeBinInt-CMP- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2097152	pulse  cov: 688 ft: 2986 corp: 270/1184Kb exec/s: 1934 rss: 4494Mb
-#2381890	NEW    cov: 688 ft: 2993 corp: 271/1193Kb exec/s: 2062 rss: 4551Mb L: 9549 MS: 1 ChangeBinInt-
-Killed
-Execution time: 1571 sec for test_oct26
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82901 rss: 31Mb
+#298492198	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82891 rss: 31Mb
+Done 298492198 runs in 3601 second(s)
+stat::number_of_executed_units: 298492198
+stat::average_exec_per_sec:     82891
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct26
 
-INFO: Seed: 1353225130
-INFO: Loaded 5 modules (5912 guards): [0x2b3ceb150110, 0x2b3ceb150600), [0x2b3cead0d950, 0x2b3cead0f43c), [0x2b3ceaae4700, 0x2b3ceaae5e38), [0x2b3ceaf46370, 0x2b3ceaf487e4), [0x661f70, 0x662048), 
+INFO: Seed: 1511534382
+INFO: Loaded 5 modules (5912 guards): [0x2ae54cd93110, 0x2ae54cd93600), [0x2ae54c950950, 0x2ae54c95243c), [0x2ae54c727700, 0x2ae54c728e38), [0x2ae54cb89370, 0x2ae54cb8b7e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1990 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1991
-#1992	INITED cov: 608 ft: 2672 corp: 230/856Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 608 ft: 2672 corp: 230/856Kb exec/s: 4096 rss: 63Mb
-#16384	pulse  cov: 608 ft: 2672 corp: 230/856Kb exec/s: 4096 rss: 98Mb
-#32768	pulse  cov: 608 ft: 2672 corp: 230/856Kb exec/s: 4096 rss: 168Mb
-#65536	pulse  cov: 608 ft: 2672 corp: 230/856Kb exec/s: 3855 rss: 311Mb
-#103068	NEW    cov: 608 ft: 2673 corp: 231/861Kb exec/s: 3964 rss: 472Mb L: 5324 MS: 1 CMP- DE: "\x01\x00\x00\x00\x00\x00\x00\x00"-
-#131072	pulse  cov: 608 ft: 2673 corp: 231/861Kb exec/s: 3971 rss: 580Mb
-#262144	pulse  cov: 608 ft: 2673 corp: 231/861Kb exec/s: 4161 rss: 1087Mb
-#524288	pulse  cov: 608 ft: 2673 corp: 231/861Kb exec/s: 4128 rss: 2092Mb
-#647868	NEW    cov: 608 ft: 2674 corp: 232/866Kb exec/s: 4100 rss: 2569Mb L: 5316 MS: 1 ChangeByte-
-#665843	NEW    cov: 608 ft: 2675 corp: 233/869Kb exec/s: 4110 rss: 2639Mb L: 2755 MS: 1 ChangeBit-
-Slowest unit: 17 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-24cd9b852e821cf8ba4a7c6808dec31f46b223e6
-Slowest unit: 21 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a3a3ff9d7d6ebc1e95bf4db6d61d1f06d27f8af7
-#1048576	pulse  cov: 608 ft: 2675 corp: 233/869Kb exec/s: 1941 rss: 3029Mb
-#1142845	NEW    cov: 608 ft: 2689 corp: 234/878Kb exec/s: 2033 rss: 3391Mb L: 9549 MS: 3 CMP-ChangeByte-CopyPart- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-Killed
-Execution time: 908 sec for test_oct27
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82646 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82443 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82291 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82140 rss: 31Mb
+#295655758	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82103 rss: 31Mb
+Done 295655758 runs in 3601 second(s)
+stat::number_of_executed_units: 295655758
+stat::average_exec_per_sec:     82103
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct27
 
-INFO: Seed: 1567359423
-INFO: Loaded 5 modules (5912 guards): [0x2b0c8d26f110, 0x2b0c8d26f600), [0x2b0c8ce2c950, 0x2b0c8ce2e43c), [0x2b0c8cc03700, 0x2b0c8cc04e38), [0x2b0c8d065370, 0x2b0c8d0677e4), [0x661f70, 0x662048), 
+INFO: Seed: 3606142659
+INFO: Loaded 5 modules (5912 guards): [0x2b6ecf0c6110, 0x2b6ecf0c6600), [0x2b6ecec83950, 0x2b6ecec8543c), [0x2b6ecea5a700, 0x2b6ecea5be38), [0x2b6eceebc370, 0x2b6eceebe7e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1994 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1995
-#1996	INITED cov: 608 ft: 2686 corp: 229/846Kb exec/s: 0 rss: 44Mb
-#8192	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 4096 rss: 63Mb
-#16384	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 4096 rss: 100Mb
-#32768	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 4096 rss: 174Mb
-#65536	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 4096 rss: 321Mb
-#131072	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 3971 rss: 612Mb
-#262144	pulse  cov: 608 ft: 2686 corp: 229/846Kb exec/s: 3971 rss: 1198Mb
-#303368	NEW    cov: 608 ft: 2687 corp: 230/848Kb exec/s: 3939 rss: 1382Mb L: 2755 MS: 2 ShuffleBytes-ChangeBit-
-#524288	pulse  cov: 608 ft: 2687 corp: 230/848Kb exec/s: 3799 rss: 2362Mb
-Slowest unit: 90 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-b73985f6c6ebe8f4e33fc394376b518a253047ba
-#1048576	pulse  cov: 608 ft: 2687 corp: 230/848Kb exec/s: 1811 rss: 4317Mb
-Killed
-Execution time: 893 sec for test_oct28
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83781 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83964 rss: 31Mb
+#302287493	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 83945 rss: 31Mb
+Done 302287493 runs in 3601 second(s)
+stat::number_of_executed_units: 302287493
+stat::average_exec_per_sec:     83945
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct28
 
-INFO: Seed: 1589616622
-INFO: Loaded 5 modules (5911 guards): [0x2b08753b0110, 0x2b08753b0600), [0x2b0874f6d950, 0x2b0874f6f43c), [0x2b0874d44700, 0x2b0874d45e38), [0x2b08751a6370, 0x2b08751a87e4), [0x661f70, 0x662044), 
+INFO: Seed: 1384869159
+INFO: Loaded 5 modules (5911 guards): [0x2b21345e2110, 0x2b21345e2600), [0x2b213419f950, 0x2b21341a143c), [0x2b2133f76700, 0x2b2133f77e38), [0x2b21343d8370, 0x2b21343da7e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1995 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 1996
-#1997	INITED cov: 564 ft: 2317 corp: 175/554Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 564 ft: 2317 corp: 175/554Kb exec/s: 4096 rss: 62Mb
-#16384	pulse  cov: 564 ft: 2317 corp: 175/554Kb exec/s: 4096 rss: 96Mb
-#32768	pulse  cov: 564 ft: 2317 corp: 175/554Kb exec/s: 4096 rss: 163Mb
-#65536	pulse  cov: 564 ft: 2317 corp: 175/554Kb exec/s: 4096 rss: 297Mb
-#102066	NEW    cov: 564 ft: 2321 corp: 176/563Kb exec/s: 4082 rss: 448Mb L: 9549 MS: 4 CopyPart-ShuffleBytes-ShuffleBytes-ChangeBinInt-
-#131072	pulse  cov: 564 ft: 2321 corp: 176/563Kb exec/s: 4228 rss: 566Mb
-#262144	pulse  cov: 564 ft: 2321 corp: 176/563Kb exec/s: 4096 rss: 1110Mb
-#393594	NEW    cov: 564 ft: 2330 corp: 177/569Kb exec/s: 4099 rss: 1650Mb L: 5455 MS: 1 ChangeBit-
-#524288	pulse  cov: 564 ft: 2330 corp: 177/569Kb exec/s: 4002 rss: 2191Mb
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-4424ce73f3118e6ebe0bc5ba126a9263ee5b9ffd
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3d9b83475d1989229edb2bbb85e94f9e4a42e737
-#1048576	pulse  cov: 564 ft: 2330 corp: 177/569Kb exec/s: 1765 rss: 3767Mb
-#1179652	NEW    cov: 564 ft: 2331 corp: 178/578Kb exec/s: 1884 rss: 4311Mb L: 9549 MS: 4 ChangeBit-ShuffleBytes-ChangeByte-ChangeBinInt-
-#1661516	NEW    cov: 564 ft: 2345 corp: 179/581Kb exec/s: 2206 rss: 4617Mb L: 2662 MS: 3 CMP-ChangeBinInt-ChangeBinInt- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-02d816e6c670ebf709dccc5428e75fadac7bfe41
-Slowest unit: 38 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-9885d0728c08237d164062a0f9ca9ffeb58177e5
-Killed
-Execution time: 966 sec for test_oct29
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 85598 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84733 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84733 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84519 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84307 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84149 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83964 rss: 31Mb
+#302148653	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 83906 rss: 31Mb
+Done 302148653 runs in 3601 second(s)
+stat::number_of_executed_units: 302148653
+stat::average_exec_per_sec:     83906
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct29
 
-INFO: Seed: 3081627991
-INFO: Loaded 5 modules (5911 guards): [0x2ba685934110, 0x2ba685934600), [0x2ba6854f1950, 0x2ba6854f343c), [0x2ba6852c8700, 0x2ba6852c9e38), [0x2ba68572a370, 0x2ba68572c7e4), [0x661f70, 0x662044), 
+INFO: Seed: 3452678423
+INFO: Loaded 5 modules (5911 guards): [0x2b4acc101110, 0x2b4acc101600), [0x2b4acbcbe950, 0x2b4acbcc043c), [0x2b4acba95700, 0x2b4acba96e38), [0x2b4acbef7370, 0x2b4acbef97e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/1999 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2000
-#2001	INITED cov: 562 ft: 2342 corp: 183/587Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4096 rss: 63Mb
-#16384	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4096 rss: 98Mb
-#32768	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4096 rss: 166Mb
-#65536	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4369 rss: 301Mb
-#131072	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4228 rss: 574Mb
-#262144	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4161 rss: 1127Mb
-#524288	pulse  cov: 562 ft: 2342 corp: 183/587Kb exec/s: 4002 rss: 2221Mb
-#673569	NEW    cov: 562 ft: 2343 corp: 184/597Kb exec/s: 3916 rss: 2847Mb L: 10000 MS: 3 ChangeBinInt-CopyPart-CrossOver-
-Slowest unit: 16 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-bdae380b3f142478395a15278bc39a356c040fb7
-#1048576	pulse  cov: 562 ft: 2343 corp: 184/597Kb exec/s: 1899 rss: 4418Mb
-#1630619	NEW    cov: 562 ft: 2345 corp: 185/600Kb exec/s: 2309 rss: 4811Mb L: 2662 MS: 3 ChangeByte-ShuffleBytes-CopyPart-
-#2097152	pulse  cov: 562 ft: 2345 corp: 185/600Kb exec/s: 2302 rss: 4811Mb
-Killed
-Execution time: 1258 sec for test_oct30
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 85598 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 85598 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84733 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84947 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84947 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 85001 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 84840 rss: 31Mb
+#305274753	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 84774 rss: 31Mb
+Done 305274753 runs in 3601 second(s)
+stat::number_of_executed_units: 305274753
+stat::average_exec_per_sec:     84774
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct30
 
-INFO: Seed: 3869073271
-INFO: Loaded 5 modules (5912 guards): [0x2b7520faf110, 0x2b7520faf600), [0x2b7520b6c950, 0x2b7520b6e43c), [0x2b7520943700, 0x2b7520944e38), [0x2b7520da5370, 0x2b7520da77e4), [0x661f80, 0x662058), 
+INFO: Seed: 1227824138
+INFO: Loaded 5 modules (5912 guards): [0x2ba42df53110, 0x2ba42df53600), [0x2ba42db10950, 0x2ba42db1243c), [0x2ba42d8e7700, 0x2ba42d8e8e38), [0x2ba42dd49370, 0x2ba42dd4b7e4), [0x661f80, 0x662058), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2001 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2002
-#2003	INITED cov: 639 ft: 2748 corp: 232/860Kb exec/s: 0 rss: 44Mb
-#8192	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 4096 rss: 64Mb
-#16384	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 4096 rss: 100Mb
-#32768	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 4096 rss: 175Mb
-#65536	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 4096 rss: 322Mb
-#131072	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 3971 rss: 615Mb
-#262144	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 3971 rss: 1201Mb
-#524288	pulse  cov: 639 ft: 2748 corp: 232/860Kb exec/s: 3883 rss: 2371Mb
-#1019800	NEW    cov: 639 ft: 2749 corp: 233/865Kb exec/s: 3749 rss: 3324Mb L: 5324 MS: 2 ChangeBinInt-ChangeBit-
-#1048576	pulse  cov: 639 ft: 2749 corp: 233/865Kb exec/s: 3744 rss: 3324Mb
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-8f0a454ba2b06038d39b0f286af4be4e5c7ddc2f
-#1422859	NEW    cov: 639 ft: 2750 corp: 234/870Kb exec/s: 2630 rss: 4579Mb L: 5210 MS: 1 CopyPart-
-#1553201	NEW    cov: 639 ft: 2753 corp: 235/880Kb exec/s: 2701 rss: 5069Mb L: 9824 MS: 3 ShuffleBytes-CopyPart-CopyPart-
-Slowest unit: 21 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-481452b47c6198baa6633e309a29ea52a2a262da
-Killed
-Execution time: 998 sec for test_oct31
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81049 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80854 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80756 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80756 rss: 31Mb
+#290722688	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80733 rss: 31Mb
+Done 290722688 runs in 3601 second(s)
+stat::number_of_executed_units: 290722688
+stat::average_exec_per_sec:     80733
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct31
 
-INFO: Seed: 296351427
-INFO: Loaded 5 modules (5913 guards): [0x2ad2e5fed110, 0x2ad2e5fed600), [0x2ad2e5baa950, 0x2ad2e5bac43c), [0x2ad2e5981700, 0x2ad2e5982e38), [0x2ad2e5de3370, 0x2ad2e5de57e4), [0x661f70, 0x66204c), 
+INFO: Seed: 3295908078
+INFO: Loaded 5 modules (5913 guards): [0x2b7274db2110, 0x2b7274db2600), [0x2b727496f950, 0x2b727497143c), [0x2b7274746700, 0x2b7274747e38), [0x2b7274ba8370, 0x2b7274baa7e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2004 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2005
-#2006	INITED cov: 692 ft: 3233 corp: 253/1029Kb exec/s: 0 rss: 44Mb
-#2595	NEW    cov: 692 ft: 3234 corp: 254/1035Kb exec/s: 0 rss: 44Mb L: 6533 MS: 4 ShuffleBytes-InsertByte-EraseBytes-CopyPart-
-#8192	pulse  cov: 692 ft: 3234 corp: 254/1035Kb exec/s: 4096 rss: 66Mb
-#16384	pulse  cov: 692 ft: 3234 corp: 254/1035Kb exec/s: 4096 rss: 104Mb
-#32768	pulse  cov: 692 ft: 3234 corp: 254/1035Kb exec/s: 4096 rss: 182Mb
-#65536	pulse  cov: 692 ft: 3234 corp: 254/1035Kb exec/s: 3855 rss: 337Mb
-#86171	NEW    cov: 694 ft: 3237 corp: 255/1043Kb exec/s: 3916 rss: 435Mb L: 8375 MS: 5 ShuffleBytes-ChangeBinInt-ShuffleBytes-ChangeByte-ChangeBit-
-#131072	pulse  cov: 694 ft: 3237 corp: 255/1043Kb exec/s: 3855 rss: 646Mb
-#262144	pulse  cov: 694 ft: 3237 corp: 255/1043Kb exec/s: 3855 rss: 1263Mb
-#456422	NEW    cov: 694 ft: 3238 corp: 256/1051Kb exec/s: 3803 rss: 2168Mb L: 8375 MS: 1 ChangeBit-
-#524288	pulse  cov: 694 ft: 3238 corp: 256/1051Kb exec/s: 3744 rss: 2488Mb
-#563620	NEW    cov: 694 ft: 3240 corp: 257/1055Kb exec/s: 3732 rss: 2673Mb L: 3373 MS: 4 InsertByte-ChangeByte-CopyPart-EraseBytes-
-#709954	NEW    cov: 694 ft: 3241 corp: 258/1062Kb exec/s: 3678 rss: 3362Mb L: 7902 MS: 3 ChangeBinInt-CopyPart-ChangeBit-
-#760457	NEW    cov: 694 ft: 3242 corp: 259/1071Kb exec/s: 3656 rss: 3393Mb L: 8375 MS: 1 CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-8f2253a8e486831d7e0c47b20a5401ecb1f049dd
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-33918c456f549ade8399969949380653d3dc90f3
-#980792	NEW    cov: 694 ft: 3244 corp: 260/1080Kb exec/s: 1908 rss: 4268Mb L: 9321 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1048576	pulse  cov: 694 ft: 3244 corp: 260/1080Kb exec/s: 1971 rss: 4589Mb
-#1353982	NEW    cov: 694 ft: 3245 corp: 261/1088Kb exec/s: 2201 rss: 5440Mb L: 8375 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Killed
-Execution time: 765 sec for test_oct32
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83313 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83313 rss: 31Mb
+#300028623	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 83318 rss: 31Mb
+Done 300028623 runs in 3601 second(s)
+stat::number_of_executed_units: 300028623
+stat::average_exec_per_sec:     83318
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct32
 
-INFO: Seed: 883499304
-INFO: Loaded 5 modules (5913 guards): [0x2b62c5472110, 0x2b62c5472600), [0x2b62c502f950, 0x2b62c503143c), [0x2b62c4e06700, 0x2b62c4e07e38), [0x2b62c5268370, 0x2b62c526a7e4), [0x661f70, 0x66204c), 
+INFO: Seed: 1069278884
+INFO: Loaded 5 modules (5913 guards): [0x2b15362ab110, 0x2b15362ab600), [0x2b1535e68950, 0x2b1535e6a43c), [0x2b1535c3f700, 0x2b1535c40e38), [0x2b15360a1370, 0x2b15360a37e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2012 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2013
-#2014	INITED cov: 653 ft: 2811 corp: 237/920Kb exec/s: 0 rss: 44Mb
-#8192	pulse  cov: 653 ft: 2811 corp: 237/920Kb exec/s: 4096 rss: 63Mb
-#16384	pulse  cov: 653 ft: 2811 corp: 237/920Kb exec/s: 4096 rss: 100Mb
-#32768	pulse  cov: 653 ft: 2811 corp: 237/920Kb exec/s: 4096 rss: 174Mb
-#65536	pulse  cov: 653 ft: 2811 corp: 237/920Kb exec/s: 3855 rss: 320Mb
-#131072	pulse  cov: 653 ft: 2811 corp: 237/920Kb exec/s: 3971 rss: 612Mb
-#175670	NEW    cov: 653 ft: 2812 corp: 238/923Kb exec/s: 3903 rss: 814Mb L: 3373 MS: 1 ChangeBinInt-
-#262144	pulse  cov: 653 ft: 2812 corp: 238/923Kb exec/s: 3855 rss: 1201Mb
-#524288	pulse  cov: 653 ft: 2812 corp: 238/923Kb exec/s: 3771 rss: 2370Mb
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-c68cae866e85b6317b5a8f9bfb6a65707b905ebb
-Slowest unit: 18 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-7a1153ab363ffe1ae7939ae89b5059ccaf6f0632
-Slowest unit: 48 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-bf69bf5db0acc2f66438e2b2c01a2c69b16e7bf4
-Slowest unit: 90 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-ab2e4f61e62a1560011f63a88140dd0cbffed5e1
-#1048576	pulse  cov: 653 ft: 2812 corp: 238/923Kb exec/s: 1330 rss: 4098Mb
-#1656376	NEW    cov: 653 ft: 2813 corp: 239/929Kb exec/s: 1734 rss: 5015Mb L: 5284 MS: 1 ChangeBit-
-Killed
-Execution time: 1174 sec for test_oct33
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80562 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80611 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80538 rss: 31Mb
+#289882728	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80500 rss: 31Mb
+Done 289882728 runs in 3601 second(s)
+stat::number_of_executed_units: 289882728
+stat::average_exec_per_sec:     80500
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct33
 
-INFO: Seed: 3355827021
-INFO: Loaded 5 modules (5913 guards): [0x2b87b4982110, 0x2b87b4982600), [0x2b87b453f950, 0x2b87b454143c), [0x2b87b4316700, 0x2b87b4317e38), [0x2b87b4778370, 0x2b87b477a7e4), [0x661f70, 0x66204c), 
+INFO: Seed: 3137305799
+INFO: Loaded 5 modules (5913 guards): [0x2b3e8a39a110, 0x2b3e8a39a600), [0x2b3e89f57950, 0x2b3e89f5943c), [0x2b3e89d2e700, 0x2b3e89d2fe38), [0x2b3e8a190370, 0x2b3e8a1927e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2014 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2015
-#2016	INITED cov: 730 ft: 3119 corp: 242/943Kb exec/s: 0 rss: 44Mb
-#8192	pulse  cov: 730 ft: 3119 corp: 242/943Kb exec/s: 4096 rss: 67Mb
-#16384	pulse  cov: 730 ft: 3119 corp: 242/943Kb exec/s: 4096 rss: 106Mb
-#32768	pulse  cov: 730 ft: 3119 corp: 242/943Kb exec/s: 4096 rss: 186Mb
-#65536	pulse  cov: 730 ft: 3119 corp: 242/943Kb exec/s: 3855 rss: 340Mb
-#67853	NEW    cov: 730 ft: 3120 corp: 243/948Kb exec/s: 3769 rss: 351Mb L: 5210 MS: 2 ShuffleBytes-ChangeBinInt-
-#116739	NEW    cov: 730 ft: 3122 corp: 244/957Kb exec/s: 3891 rss: 583Mb L: 9060 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#131072	pulse  cov: 730 ft: 3122 corp: 244/957Kb exec/s: 3855 rss: 651Mb
-#165088	NEW    cov: 730 ft: 3123 corp: 245/966Kb exec/s: 3839 rss: 814Mb L: 9349 MS: 2 ShuffleBytes-InsertRepeatedBytes-
-#262144	pulse  cov: 730 ft: 3123 corp: 245/966Kb exec/s: 3799 rss: 1277Mb
-#332054	NEW    cov: 730 ft: 3128 corp: 246/973Kb exec/s: 3816 rss: 1611Mb L: 6440 MS: 3 ChangeByte-ShuffleBytes-ChangeBit-
-#524288	pulse  cov: 730 ft: 3128 corp: 246/973Kb exec/s: 3692 rss: 2526Mb
-Slowest unit: 10 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0b7e0bcd6b7efd449c34347aa771765f8317ad8e
-Slowest unit: 19 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-2403feb06cb0302741da5d9d148b3d4dfabca851
-#740957	NEW    cov: 730 ft: 3129 corp: 247/978Kb exec/s: 1764 rss: 3248Mb L: 5210 MS: 1 ChangeBinInt-
-#872462	NEW    cov: 730 ft: 3130 corp: 248/983Kb exec/s: 1921 rss: 3248Mb L: 5284 MS: 1 CopyPart-
-#1048576	pulse  cov: 730 ft: 3130 corp: 248/983Kb exec/s: 2092 rss: 3523Mb
-#1144683	NEW    cov: 730 ft: 3131 corp: 249/992Kb exec/s: 2176 rss: 3982Mb L: 9445 MS: 2 CopyPart-CrossOver-
-#1169078	NEW    cov: 730 ft: 3164 corp: 250/997Kb exec/s: 2193 rss: 4098Mb L: 5324 MS: 2 ChangeBinInt-CMP- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-#1320498	NEW    cov: 730 ft: 3166 corp: 251/1003Kb exec/s: 2292 rss: 4173Mb L: 5318 MS: 2 ShuffleBytes-CopyPart-
-#1334798	NEW    cov: 730 ft: 3167 corp: 252/1008Kb exec/s: 2301 rss: 4173Mb L: 5210 MS: 2 ShuffleBytes-ChangeBinInt-
-#1373442	NEW    cov: 730 ft: 3171 corp: 253/1013Kb exec/s: 2320 rss: 4173Mb L: 5324 MS: 1 PersAutoDict- DE: "\x00\x00\x00\x00\x00\x00\x00\x00"-
-Killed
-Execution time: 789 sec for test_oct34
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82850 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82748 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82722 rss: 31Mb
+#297770673	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82691 rss: 31Mb
+Done 297770673 runs in 3601 second(s)
+stat::number_of_executed_units: 297770673
+stat::average_exec_per_sec:     82691
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct34
 
-INFO: Seed: 3452362197
-INFO: Loaded 5 modules (5911 guards): [0x2b683e61d110, 0x2b683e61d600), [0x2b683e1da950, 0x2b683e1dc43c), [0x2b683dfb1700, 0x2b683dfb2e38), [0x2b683e413370, 0x2b683e4157e4), [0x661f70, 0x662044), 
+INFO: Seed: 914944729
+INFO: Loaded 5 modules (5911 guards): [0x2ac579fba110, 0x2ac579fba600), [0x2ac579b77950, 0x2ac579b7943c), [0x2ac57994e700, 0x2ac57994fe38), [0x2ac579db0370, 0x2ac579db27e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2025 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2026
-#2027	INITED cov: 519 ft: 2196 corp: 180/584Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 60Mb
-#16384	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 93Mb
-#32768	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 158Mb
-#65536	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 290Mb
-#131072	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 548Mb
-#262144	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4096 rss: 1069Mb
-#524288	pulse  cov: 519 ft: 2196 corp: 180/584Kb exec/s: 4002 rss: 2105Mb
-#988769	NEW    cov: 519 ft: 2197 corp: 181/587Kb exec/s: 4035 rss: 3948Mb L: 2662 MS: 2 ChangeBit-ChangeBit-
-#1048576	pulse  cov: 519 ft: 2197 corp: 181/587Kb exec/s: 4032 rss: 4187Mb
-#1058944	NEW    cov: 519 ft: 2199 corp: 182/592Kb exec/s: 4041 rss: 4228Mb L: 5455 MS: 1 ChangeBit-
-Slowest unit: 14 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-908f333109cb12e986a00e5a5547c8817c680079
-Slowest unit: 33 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-438e164147a2eec46c1816f204c576f984ba3921
-#2097152	pulse  cov: 519 ft: 2199 corp: 182/592Kb exec/s: 2481 rss: 4574Mb
-#2243716	NEW    cov: 519 ft: 2202 corp: 183/598Kb exec/s: 2549 rss: 4574Mb L: 5455 MS: 3 CMP-ChangeBit-ChangeBinInt- DE: "\x01\x00"-
-Killed
-Execution time: 1309 sec for test_oct35
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83468 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83261 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82748 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82697 rss: 31Mb
+#298068283	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82773 rss: 31Mb
+Done 298068283 runs in 3601 second(s)
+stat::number_of_executed_units: 298068283
+stat::average_exec_per_sec:     82773
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct35
 
-INFO: Seed: 3659404158
-INFO: Loaded 5 modules (5911 guards): [0x2af4f184d110, 0x2af4f184d600), [0x2af4f140a950, 0x2af4f140c43c), [0x2af4f11e1700, 0x2af4f11e2e38), [0x2af4f1643370, 0x2af4f16457e4), [0x661f70, 0x662044), 
+INFO: Seed: 2983922622
+INFO: Loaded 5 modules (5911 guards): [0x2b312403b110, 0x2b312403b600), [0x2b3123bf8950, 0x2b3123bfa43c), [0x2b31239cf700, 0x2b31239d0e38), [0x2b3123e31370, 0x2b3123e337e4), [0x661f70, 0x662044), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2028 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2029
-#2030	INITED cov: 517 ft: 2200 corp: 178/561Kb exec/s: 0 rss: 43Mb
-#8192	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4096 rss: 60Mb
-#16384	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4096 rss: 94Mb
-#32768	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4096 rss: 159Mb
-#65536	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4096 rss: 292Mb
-#131072	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4228 rss: 551Mb
-#262144	pulse  cov: 517 ft: 2200 corp: 178/561Kb exec/s: 4161 rss: 1075Mb
-#355691	NEW    cov: 517 ft: 2206 corp: 179/567Kb exec/s: 4135 rss: 1450Mb L: 5455 MS: 1 ChangeBinInt-
-#449021	NEW    cov: 517 ft: 2210 corp: 180/572Kb exec/s: 4082 rss: 1823Mb L: 5455 MS: 1 ChangeBit-
-#487404	NEW    cov: 517 ft: 2217 corp: 181/580Kb exec/s: 4028 rss: 1978Mb L: 8284 MS: 4 EraseBytes-ChangeByte-CrossOver-ChangeBit-
-#524288	pulse  cov: 517 ft: 2217 corp: 181/580Kb exec/s: 4002 rss: 2126Mb
-#1048576	pulse  cov: 517 ft: 2217 corp: 181/580Kb exec/s: 3196 rss: 3354Mb
-#1222343	NEW    cov: 517 ft: 2219 corp: 182/585Kb exec/s: 3294 rss: 4059Mb L: 5456 MS: 3 InsertByte-CMP-ChangeBit- DE: "\xff\xff\xff\xff\xff\xff\xff\xff"-
-#2097152	pulse  cov: 517 ft: 2219 corp: 182/585Kb exec/s: 3653 rss: 5117Mb
-#2117381	NEW    cov: 517 ft: 2220 corp: 183/593Kb exec/s: 3656 rss: 5117Mb L: 8081 MS: 1 CMP- DE: "\x01\x00"-
-Killed
-Execution time: 679 sec for test_oct36
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83886 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 83055 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82040 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82342 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82291 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82291 rss: 31Mb
+#296410788	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82313 rss: 31Mb
+Done 296410788 runs in 3601 second(s)
+stat::number_of_executed_units: 296410788
+stat::average_exec_per_sec:     82313
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct36
 
-INFO: Seed: 1347747722
-INFO: Loaded 5 modules (5912 guards): [0x2b448a76b110, 0x2b448a76b600), [0x2b448a328950, 0x2b448a32a43c), [0x2b448a0ff700, 0x2b448a100e38), [0x2b448a561370, 0x2b448a5637e4), [0x661f80, 0x662058), 
+INFO: Seed: 755147028
+INFO: Loaded 5 modules (5912 guards): [0x2b44f5681110, 0x2b44f5681600), [0x2b44f523e950, 0x2b44f524043c), [0x2b44f5015700, 0x2b44f5016e38), [0x2b44f5477370, 0x2b44f54797e4), [0x661f80, 0x662058), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2033 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2034
-#2035	INITED cov: 797 ft: 3348 corp: 246/1001Kb exec/s: 0 rss: 45Mb
-#8192	pulse  cov: 797 ft: 3348 corp: 246/1001Kb exec/s: 4096 rss: 68Mb
-#16384	pulse  cov: 797 ft: 3348 corp: 246/1001Kb exec/s: 4096 rss: 109Mb
-#32768	pulse  cov: 797 ft: 3348 corp: 246/1001Kb exec/s: 4096 rss: 190Mb
-#63533	NEW    cov: 797 ft: 3350 corp: 247/1011Kb exec/s: 3970 rss: 342Mb L: 9949 MS: 3 ChangeBit-CopyPart-ChangeBit-
-#65536	pulse  cov: 797 ft: 3350 corp: 247/1011Kb exec/s: 3855 rss: 351Mb
-#131072	pulse  cov: 797 ft: 3350 corp: 247/1011Kb exec/s: 3855 rss: 672Mb
-#262144	pulse  cov: 797 ft: 3350 corp: 247/1011Kb exec/s: 3855 rss: 1312Mb
-#524288	pulse  cov: 797 ft: 3350 corp: 247/1011Kb exec/s: 3744 rss: 2589Mb
-#528472	NEW    cov: 797 ft: 3352 corp: 248/1016Kb exec/s: 3748 rss: 2610Mb L: 5284 MS: 2 CopyPart-ChangeBit-
-#664626	NEW    cov: 797 ft: 3353 corp: 249/1025Kb exec/s: 3754 rss: 3278Mb L: 9549 MS: 1 ChangeBit-
-#1048576	pulse  cov: 797 ft: 3353 corp: 249/1025Kb exec/s: 3758 rss: 4679Mb
-Slowest unit: 13 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-dca7e17111a54792fc96c272d9474390e99c62a0
-Slowest unit: 15 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-a6e46792cd26e817b1fc4d30e43bcea9addfb429
-Killed
-Execution time: 610 sec for test_oct37
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79891 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79512 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79701 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79607 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79371 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 79442 rss: 31Mb
+#286088653	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 79447 rss: 31Mb
+Done 286088653 runs in 3601 second(s)
+stat::number_of_executed_units: 286088653
+stat::average_exec_per_sec:     79447
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct37
 
-INFO: Seed: 2081793483
-INFO: Loaded 5 modules (5912 guards): [0x2ad9d3bd7110, 0x2ad9d3bd7600), [0x2ad9d3794950, 0x2ad9d379643c), [0x2ad9d356b700, 0x2ad9d356ce38), [0x2ad9d39cd370, 0x2ad9d39cf7e4), [0x661f70, 0x662048), 
+INFO: Seed: 2821303192
+INFO: Loaded 5 modules (5912 guards): [0x2b45df453110, 0x2b45df453600), [0x2b45df010950, 0x2b45df01243c), [0x2b45dede7700, 0x2b45dede8e38), [0x2b45df249370, 0x2b45df24b7e4), [0x661f70, 0x662048), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2036 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2037
-#2038	INITED cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 0 rss: 45Mb
-#8192	pulse  cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 4096 rss: 66Mb
-#16384	pulse  cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 4096 rss: 104Mb
-#32768	pulse  cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 4096 rss: 182Mb
-#65536	pulse  cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 3855 rss: 340Mb
-#131072	pulse  cov: 752 ft: 3280 corp: 261/1041Kb exec/s: 3855 rss: 651Mb
-#219370	NEW    cov: 752 ft: 3300 corp: 262/1047Kb exec/s: 3848 rss: 1073Mb L: 6273 MS: 2 CrossOver-EraseBytes-
-#262144	pulse  cov: 752 ft: 3300 corp: 262/1047Kb exec/s: 3855 rss: 1277Mb
-#524288	pulse  cov: 752 ft: 3300 corp: 262/1047Kb exec/s: 3692 rss: 2530Mb
-#525241	NEW    cov: 752 ft: 3304 corp: 263/1056Kb exec/s: 3698 rss: 2535Mb L: 9549 MS: 2 ChangeBinInt-ChangeBinInt-
-#747416	NEW    cov: 752 ft: 3307 corp: 264/1061Kb exec/s: 2299 rss: 3384Mb L: 5324 MS: 2 ShuffleBytes-ChangeBinInt-
-#898750	NEW    cov: 752 ft: 3309 corp: 265/1066Kb exec/s: 2462 rss: 4109Mb L: 5324 MS: 1 CopyPart-
-#1048576	pulse  cov: 752 ft: 3309 corp: 265/1066Kb exec/s: 2589 rss: 4828Mb
-#1502835	NEW    cov: 752 ft: 3310 corp: 266/1076Kb exec/s: 2824 rss: 5068Mb L: 9549 MS: 1 ChangeBinInt-
-#1508857	NEW    cov: 752 ft: 3311 corp: 267/1081Kb exec/s: 2825 rss: 5068Mb L: 5284 MS: 3 ShuffleBytes-ChangeByte-CopyPart-
-#1525978	NEW    cov: 752 ft: 3314 corp: 268/1090Kb exec/s: 2831 rss: 5068Mb L: 9578 MS: 4 ChangeBinInt-InsertRepeatedBytes-ShuffleBytes-ChangeBinInt-
-Slowest unit: 11 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-3239c080cffe45e4865081f7655aa4282a2b61e7
-Slowest unit: 26 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-2b7aaa5a97b83b122d62da137b87eda8a45a4153
-Killed
-Execution time: 725 sec for test_oct38
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81049 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80854 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80951 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81000 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80829 rss: 31Mb
+#291030163	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 80819 rss: 31Mb
+Done 291030163 runs in 3601 second(s)
+stat::number_of_executed_units: 291030163
+stat::average_exec_per_sec:     80819
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct38
 
-INFO: Seed: 1822016836
-INFO: Loaded 5 modules (5913 guards): [0x2b75d94a9110, 0x2b75d94a9600), [0x2b75d9066950, 0x2b75d906843c), [0x2b75d8e3d700, 0x2b75d8e3ee38), [0x2b75d929f370, 0x2b75d92a17e4), [0x661f70, 0x66204c), 
+INFO: Seed: 594873104
+INFO: Loaded 5 modules (5913 guards): [0x2b49a2ded110, 0x2b49a2ded600), [0x2b49a29aa950, 0x2b49a29ac43c), [0x2b49a2781700, 0x2b49a2782e38), [0x2b49a2be3370, 0x2b49a2be57e4), [0x661f70, 0x66204c), 
 Loading corpus dir: MY_CORPUS/
-Loaded 1024/2043 files from MY_CORPUS/
 Loading corpus dir: SEED_CORPUS/
-#0	READ units: 2044
-#2045	INITED cov: 767 ft: 3327 corp: 265/1139Kb exec/s: 0 rss: 45Mb
-#3966	NEW    cov: 767 ft: 3329 corp: 266/1146Kb exec/s: 3966 rss: 47Mb L: 8027 MS: 1 CopyPart-
-#8192	pulse  cov: 767 ft: 3329 corp: 266/1146Kb exec/s: 4096 rss: 67Mb
-#16384	pulse  cov: 767 ft: 3329 corp: 266/1146Kb exec/s: 4096 rss: 107Mb
-#24296	NEW    cov: 767 ft: 3334 corp: 267/1154Kb exec/s: 4049 rss: 147Mb L: 8027 MS: 1 ChangeBinInt-
-#32768	pulse  cov: 767 ft: 3334 corp: 267/1154Kb exec/s: 4096 rss: 187Mb
-#65536	pulse  cov: 767 ft: 3334 corp: 267/1154Kb exec/s: 3855 rss: 345Mb
-#131072	pulse  cov: 767 ft: 3334 corp: 267/1154Kb exec/s: 3855 rss: 658Mb
-#171996	NEW    cov: 767 ft: 3335 corp: 268/1161Kb exec/s: 3909 rss: 854Mb L: 6404 MS: 1 EraseBytes-
-#189027	NEW    cov: 767 ft: 3336 corp: 269/1168Kb exec/s: 3857 rss: 937Mb L: 8027 MS: 2 ChangeByte-ChangeBinInt-
-#223297	NEW    cov: 767 ft: 3337 corp: 270/1174Kb exec/s: 3849 rss: 1103Mb L: 5284 MS: 2 ShuffleBytes-CopyPart-
-#228763	NEW    cov: 767 ft: 3338 corp: 271/1183Kb exec/s: 3877 rss: 1129Mb L: 10000 MS: 3 ShuffleBytes-ChangeBinInt-ChangeBinInt-
-#262144	pulse  cov: 767 ft: 3338 corp: 271/1183Kb exec/s: 3855 rss: 1291Mb
-#304696	NEW    cov: 767 ft: 3339 corp: 272/1191Kb exec/s: 3856 rss: 1497Mb L: 8027 MS: 1 ChangeBit-
-#385697	NEW    cov: 767 ft: 3341 corp: 273/1200Kb exec/s: 3781 rss: 1885Mb L: 9321 MS: 2 ChangeByte-ChangeBinInt-
-#524288	pulse  cov: 767 ft: 3341 corp: 273/1200Kb exec/s: 3718 rss: 2551Mb
-#533991	NEW    cov: 767 ft: 3345 corp: 274/1210Kb exec/s: 3708 rss: 2599Mb L: 10000 MS: 1 ChangeBinInt-
-#594662	NEW    cov: 767 ft: 3346 corp: 275/1219Kb exec/s: 3693 rss: 2895Mb L: 9705 MS: 2 ChangeByte-CopyPart-
-#678873	NEW    cov: 767 ft: 3349 corp: 276/1226Kb exec/s: 3649 rss: 3300Mb L: 6974 MS: 3 InsertRepeatedBytes-ChangeByte-CopyPart-
-Slowest unit: 12 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-2b7e79d6360a799b88e18ec81cfced6e1b8f007b
-Slowest unit: 20 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-0515f8f134f2f0318ec526504cc86019fbc44b71
-Slowest unit: 29 s:
-artifact_prefix='./'; Test unit written to ./slow-unit-26c68cf1d60e70193bab46a6cc90f6729b015909
-#967367	NEW    cov: 767 ft: 3350 corp: 277/1234Kb exec/s: 1209 rss: 4281Mb L: 8027 MS: 2 ChangeBinInt-ChangeBit-
-#1048576	pulse  cov: 767 ft: 3350 corp: 277/1234Kb exec/s: 1277 rss: 4673Mb
-#1099448	NEW    cov: 767 ft: 3360 corp: 278/1239Kb exec/s: 1316 rss: 4920Mb L: 5284 MS: 3 ChangeBinInt-ChangeByte-ChangeBinInt-
-#1290502	NEW    cov: 767 ft: 3361 corp: 279/1247Kb exec/s: 1453 rss: 5160Mb L: 8027 MS: 2 ChangeBinInt-ChangeBit-
-#1360195	NEW    cov: 767 ft: 3362 corp: 280/1255Kb exec/s: 1498 rss: 5160Mb L: 8431 MS: 5 CopyPart-ChangeBinInt-ChangeBinInt-ShuffleBytes-ChangeByte-
-#1559278	NEW    cov: 767 ft: 3363 corp: 281/1265Kb exec/s: 1615 rss: 5160Mb L: 10000 MS: 3 ChangeBit-ChangeByte-ShuffleBytes-
-#1600423	NEW    cov: 767 ft: 3364 corp: 282/1274Kb exec/s: 1638 rss: 5160Mb L: 9550 MS: 3 InsertByte-ShuffleBytes-CopyPart-
-Killed
-Execution time: 1072 sec for test_oct39
+#0	READ units: 202
+#203	INITED cov: 11 ft: 11 corp: 3/114b exec/s: 0 rss: 31Mb
+#262144	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#524288	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 87381 rss: 31Mb
+#1048576	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#2097152	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 80659 rss: 31Mb
+#4194304	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82241 rss: 31Mb
+#8388608	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81442 rss: 31Mb
+#16777216	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#33554432	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#67108864	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81940 rss: 31Mb
+#134217728	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 81840 rss: 31Mb
+#268435456	pulse  cov: 11 ft: 11 corp: 3/114b exec/s: 82090 rss: 31Mb
+#295807663	DONE   cov: 11 ft: 11 corp: 3/114b exec/s: 82145 rss: 31Mb
+Done 295807663 runs in 3601 second(s)
+stat::number_of_executed_units: 295807663
+stat::average_exec_per_sec:     82145
+stat::new_units_added:          0
+stat::slowest_unit_time_sec:    0
+stat::peak_rss_mb:              31
+Execution time: 3601 sec for test_oct39
 
