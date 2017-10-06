@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(long dim, long v1, long v2, long coeff1,
+elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 		long coeff2, long scalar_value) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
@@ -27,7 +27,7 @@ elina_linexpr0_t * create_linexpr0(long dim, long v1, long v2, long coeff1,
 	return linexpr0;
 }
 
-bool create_constraints(elina_lincons0_array_t *lincons0, long dim,
+bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	size_t i;
 	long nbcons = MIN_NBCONS;
@@ -42,6 +42,8 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long dim,
 	fprintf(fp, "Number of constraints: %ld\n", nbcons);
 	fflush(fp);
 	*lincons0 = elina_lincons0_array_make(nbcons);
+	//fprintf(stdout, "Number of constraints: %ld\n", nbcons);
+	//fflush(stdout);
 	for (i = 0; i < nbcons; i++) {
 		elina_constyp_t type;
 		if (!make_fuzzable(&type, sizeof(type), data, dataSize, dataIndex)) //type
@@ -81,22 +83,30 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long dim,
 				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 				fuzzableValues[4]);
 		fflush(fp);
+		//fprintf(stdout, "Values: %ld, %ld, %ld, %ld, %ld\n", fuzzableValues[0],
+			//	fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
+			//	fuzzableValues[4]);
+		//fprintf(stdout, "Type: %c\n", type == 0 ? 'e' : 's');
+		//fflush(stdout);
 		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, fuzzableValues[0],
 				fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 				fuzzableValues[4]);
 		lincons0->p[i].linexpr0 = linexpr0;
 	}
+	//fprintf(stdout, "*************************************************\n");
+	//fflush(stdout);
 	return true;
 }
 
 bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
-		long dim, const long *data, size_t dataSize, unsigned int *dataIndex,
+		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
 	}
 	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
+	elina_lincons0_array_clear(&constraints);
 	return true;
 }
 
@@ -119,11 +129,11 @@ bool assume_fuzzable(bool condition) {
 	return condition;
 }
 
-bool make_fuzzable_dimension(long *dim, const long *data, size_t dataSize,
+bool make_fuzzable_dimension(int *dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
 	if (make_fuzzable(dim, sizeof(int), data, dataSize, dataIndex)) {
 		if (assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)) {
-			fprintf(fp, "Dim: %ld\n", *dim);
+			fprintf(fp, "Dim: %d\n", *dim);
 			fflush(fp);
 			return true;
 		}

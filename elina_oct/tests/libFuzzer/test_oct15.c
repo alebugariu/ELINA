@@ -8,7 +8,7 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	long dim;
+	int dim;
 	FILE *fp;
 	fp = fopen("out15.txt", "w+");
 
@@ -26,6 +26,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			//bottom meet x == bottom
 			if (!opt_oct_is_eq(man, opt_oct_meet(man, false, bottom, octagon1),
 					bottom)) {
+				opt_oct_free(man, top);
+				opt_oct_free(man, bottom);
+				opt_oct_free(man, octagon1);
+				elina_manager_free(man);
 				fclose(fp);
 				return 1;
 			}
