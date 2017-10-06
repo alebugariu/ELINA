@@ -1,2 +1,0 @@
-Dim: 2
-Number of constraints: 2

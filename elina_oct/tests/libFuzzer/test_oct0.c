@@ -23,6 +23,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			// bottom <= x
 			if (!opt_oct_is_leq(man, bottom, octagon1)) {
 				fclose(fp);
+				printf("Error");
+				fflush(stdout);
 				return 1;
 			}
 		}

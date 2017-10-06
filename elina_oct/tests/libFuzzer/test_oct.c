@@ -13,20 +13,17 @@ elina_linexpr0_t * create_linexpr0(long dim, long v1, long v2, long coeff1,
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
 	cst = &linexpr0->cst;
 
-	elina_scalar_reinit(cst->val.scalar, ELINA_SCALAR_DOUBLE);
-	cst->val.scalar->val.dbl = (double) scalar_value;
+	elina_scalar_set_to_int(cst->val.scalar, scalar_value, ELINA_SCALAR_DOUBLE);
 
 	elina_linterm_t * linterm = &linexpr0->p.linterm[0];
 	linterm->dim = v1;
 	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff1;
+	elina_scalar_set_to_int(coeff->val.scalar, coeff1, ELINA_SCALAR_DOUBLE);
 
 	linterm = &linexpr0->p.linterm[1];
 	linterm->dim = v2;
 	coeff = &linterm->coeff;
-	elina_scalar_reinit(coeff->val.scalar, ELINA_SCALAR_DOUBLE);
-	coeff->val.scalar->val.dbl = (double) coeff2;
+	elina_scalar_set_to_int(coeff->val.scalar, coeff2, ELINA_SCALAR_DOUBLE);
 	return linexpr0;
 }
 
@@ -124,7 +121,7 @@ bool assume_fuzzable(bool condition) {
 
 bool make_fuzzable_dimension(long *dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
-	if (make_fuzzable(dim, sizeof(long), data, dataSize, dataIndex)) {
+	if (make_fuzzable(dim, sizeof(int), data, dataSize, dataIndex)) {
 		if (assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)) {
 			fprintf(fp, "Dim: %ld\n", *dim);
 			fflush(fp);
