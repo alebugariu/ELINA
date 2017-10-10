@@ -30,8 +30,8 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 }
 
 int main(int argc, char **argv) {
-	long dim = 8;
-	long nbcons = 4;
+	int dim = 2;
+	long nbcons = 2;
 
 	elina_manager_t * man = opt_pk_manager_alloc(false);
 	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
@@ -42,20 +42,12 @@ int main(int argc, char **argv) {
 	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
 	lincons0.p[0].constyp = ELINA_CONS_EQ;
 	lincons0.p[1].constyp = ELINA_CONS_EQ;
-	lincons0.p[2].constyp = ELINA_CONS_EQ;
-	lincons0.p[3].constyp = ELINA_CONS_EQ;
-	long values1[9] = {4919131752989212603, -4919131752989213884, 206414982921147, -8970181431921507453, -8970181431921507453, 35341435779, -1145356032, 52842235627813819, 0};
+	long values1[3] = {-4919131752989213765, 0, 0};
 	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
 	lincons0.p[0].linexpr0 = linexpr0;
-	long values2[9] = {0, 3377699720527872, 4683743612465315840, -4919131752989213765, -4919131752989213765, -4919131752989213765, 283674000014267, 3072, 0};
+	long values2[3] = {-4919131752989213765, 864691128488689664, 8589934592};
 	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
 	lincons0.p[1].linexpr0 = linexpr1;
-	long values3[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, values3);
-	lincons0.p[2].linexpr0 = linexpr2;
-	long values4[9] = {51539607552, -4919266699716329472, -4919131752989213765, -4919131752989213765, -4919131752989213765, 864691132783656960, 0, 0, 0};
-	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, values3);
-	lincons0.p[3].linexpr0 = linexpr3;
 
 	if (create_polyhedron(&polyhedron1, man, top, dim, lincons0)) {
 		printf("bottom <= polyhedron: ");
