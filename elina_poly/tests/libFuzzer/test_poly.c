@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(long dim, long *values) {
+elina_linexpr0_t * create_linexpr0(int dim, long *values) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
 			dim);
@@ -22,7 +22,7 @@ elina_linexpr0_t * create_linexpr0(long dim, long *values) {
 	return linexpr0;
 }
 
-bool create_constraints(elina_lincons0_array_t *lincons0, long dim,
+bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	size_t i, j;
 	long nbcons = MIN_NBCONS;
@@ -69,7 +69,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long dim,
 }
 
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
-		opt_pk_array_t * top, long dim, const long *data, size_t dataSize,
+		opt_pk_array_t * top, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
@@ -98,11 +98,11 @@ bool assume_fuzzable(bool condition) {
 	return condition;
 }
 
-bool make_fuzzable_dimension(long *dim, const long *data, size_t dataSize,
+bool make_fuzzable_dimension(int *dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
 	if (make_fuzzable(dim, sizeof(int), data, dataSize, dataIndex)) {
 		if (assume_fuzzable(*dim > MIN_DIM && *dim < MAX_DIM)) {
-			fprintf(fp, "Dim: %ld\n", *dim);
+			fprintf(fp, "Dim: %d\n", *dim);
 			fflush(fp);
 			return true;
 		}

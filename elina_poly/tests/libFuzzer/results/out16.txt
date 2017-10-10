@@ -1,0 +1,6 @@
+Dim: 2
+Number of constraints: 2
+Type: e
+Values: -4919132559297740800, 8589934779, -4953678115130834932
+Type: e
+Values: 0, 0, 0
