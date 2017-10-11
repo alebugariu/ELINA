@@ -1,0 +1,13 @@
+Dim: 2
+Number of constraints: 3
+Type: e
+Values: -1099511627776, 255, 63771674411008
+Type: e
+Values: 0, 1099511627520, 0
+Type: e
+Values: 0, 0, 0
+Number of constraints: 2
+Type: e
+Values: 7306638987634933760, 30518463188655986, 0
+Type: s
+Values: 512, 0, 0
