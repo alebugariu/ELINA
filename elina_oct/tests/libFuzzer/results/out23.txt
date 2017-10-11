@@ -1,0 +1,42 @@
+Dim: 13
+Number of constraints: 13
+Type: e
+Values: 10, 6, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: e
+Values: 0, 1, 1, 0, 0
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: e
+Values: 3, 4, 1, 1, 0
+Type: s
+Values: 1, 2, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: s
+Values: 0, 2, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: s
+Values: 0, 2, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: s
+Values: 0, 2, 1, 1, 72057594037927936
+Type: e
+Values: 1, 2, 1, 1, 72057594037927936
+Number of constraints: 13
+Type: e
+Values: 0, 6, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: e
+Values: 0, 1, 1, 0, 0
+Type: e
+Values: 0, 3, 0, 1, 0
+Type: e
+Values: 2, 5, 1, 1, 0
+Type: s
+Values: 1, 2, 1, 1, 72057594037927936
+Type: e

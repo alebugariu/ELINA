@@ -1,0 +1,4 @@
+Dim: 7
+Number of constraints: 7
+Type: e
+Values: 0, 6, 0, 0, 0

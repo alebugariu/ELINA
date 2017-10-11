@@ -1,0 +1,10 @@
+Dim: 13
+Number of constraints: 13
+Type: e
+Values: 0, 6, 1, 1, 72057594037927936
+Type: e
+Values: 0, 1, 0, 1, 0
+Type: e
+Values: 0, 1, 1, 0, 0
+Type: e
+Values: 0, 1, 0, 1, 0

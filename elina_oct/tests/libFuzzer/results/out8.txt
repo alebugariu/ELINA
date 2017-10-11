@@ -1,0 +1,29 @@
+Dim: 2
+Number of constraints: 16
+Type: e
+Values: 1, 0, 0, 0, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 1, 0, 0, 0, 0
+Type: s
+Values: 0, 1, 0, 0, 16777359
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 1, 0, 0, 0, 0
+Type: e
+Values: 0, 1, 0, 0, 72057594054705295
+Type: e
+Values: 0, 1, 0, 0, 72057594054705295
+Type: e
+Values: 0, 1, 0, 0, 16777359
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
