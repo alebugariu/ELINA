@@ -25,7 +25,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			//meet == glb, join == lub
 			//join is idempotent
 			if (!opt_oct_is_eq(man,
-					opt_oct_join(man, false, octagon1, octagon1), octagon1)) {
+					opt_oct_join(man, DESTRUCTIVE, octagon1, octagon1), octagon1)) {
 				opt_oct_free(man, top);
 				opt_oct_free(man, bottom);
 				opt_oct_free(man, octagon1);

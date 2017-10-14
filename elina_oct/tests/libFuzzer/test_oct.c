@@ -105,7 +105,7 @@ bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
 	}
-	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
+	*octagon = opt_oct_meet_lincons_array(man, DESTRUCTIVE, top, &constraints);
 	elina_lincons0_array_clear(&constraints);
 	return true;
 }

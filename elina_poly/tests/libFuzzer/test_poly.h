@@ -5,6 +5,7 @@
 #define MAX_DIM 20
 #define MIN_NBCONS 1
 #define MAX_NBCONS 50
+#define DESTRUCTIVE false
 
 #include "opt_pk.h"
 
