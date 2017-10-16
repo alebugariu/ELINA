@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(long dim, long *values) {
+elina_linexpr0_t * create_linexpr0(int dim, long *values) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
 			dim);
@@ -23,13 +23,13 @@ elina_linexpr0_t * create_linexpr0(long dim, long *values) {
 }
 
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
-		opt_pk_array_t * top, long dim, elina_lincons0_array_t constraints) {
+		opt_pk_array_t * top, int dim, elina_lincons0_array_t constraints) {
 	*polyhedron = opt_pk_meet_lincons_array(man, false, top, &constraints);
 	return true;
 }
 
 int main(int argc, char **argv) {
-	long dim = 2;
+	int dim = 2;
 	long nbcons = 2;
 
 	elina_manager_t * man = opt_pk_manager_alloc(false);
