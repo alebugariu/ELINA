@@ -19,18 +19,26 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
 				&dataIndex, fp)) {
 
-			//meet == glb, join == lub
-			//bottom meet x == bottom
-			if (!opt_pk_is_eq(man, opt_pk_meet(man, DESTRUCTIVE, bottom, polyhedron1),
-					bottom)) {
-				opt_pk_free(man, top);
-				opt_pk_free(man, bottom);
-				opt_pk_free(man, polyhedron1);
-				elina_manager_free(man);
-				fclose(fp);
-				return 1;
+			opt_pk_array_t* meetbottom1 = opt_pk_meet(man, DESTRUCTIVE, bottom,
+					polyhedron1);
+			opt_pk_internal_t * meetbottom1_internal = opt_pk_init_from_manager(man,
+					ELINA_FUNID_MEET);
+
+			if (meetbottom1_internal->exn != ELINA_EXC_OVERFLOW) {
+				//meet == glb, join == lub
+				//bottom meet x == bottom
+				if (!opt_pk_is_eq(man, meetbottom1, bottom)) {
+					opt_pk_free(man, top);
+					opt_pk_free(man, bottom);
+					opt_pk_free(man, polyhedron1);
+					opt_pk_free(man, meetbottom1);
+					elina_manager_free(man);
+					fclose(fp);
+					return 1;
+				}
 			}
 			opt_pk_free(man, polyhedron1);
+			opt_pk_free(man, meetbottom1);
 		}
 		opt_pk_free(man, top);
 		opt_pk_free(man, bottom);

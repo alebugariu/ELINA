@@ -23,30 +23,35 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					&dataIndex, fp)) {
 				opt_pk_array_t* lub = opt_pk_join(man, DESTRUCTIVE, polyhedron1,
 						polyhedron2);
+				opt_pk_internal_t * lub_internal = opt_pk_init_from_manager(man,
+						ELINA_FUNID_JOIN);
 
-				opt_pk_array_t* bound;
-				if (create_polyhedron(&bound, man, top, dim, data, dataSize,
-						&dataIndex, fp)) {
-					//meet == glb, join == lub
-					//join is the least upper bound
-					if (assume_fuzzable(
-							opt_pk_is_leq(man, polyhedron1, bound))) {
+				if (lub_internal->exn != ELINA_EXC_OVERFLOW) {
+
+					opt_pk_array_t* bound;
+					if (create_polyhedron(&bound, man, top, dim, data, dataSize,
+							&dataIndex, fp)) {
+						//meet == glb, join == lub
+						//join is the least upper bound
 						if (assume_fuzzable(
-								opt_pk_is_leq(man, polyhedron2, bound))) {
-							if (!opt_pk_is_leq(man, lub, bound)) {
-								opt_pk_free(man, top);
-								opt_pk_free(man, bottom);
-								opt_pk_free(man, polyhedron1);
-								opt_pk_free(man, polyhedron2);
-								opt_pk_free(man, bound);
-								opt_pk_free(man, lub);
-								elina_manager_free(man);
-								fclose(fp);
-								return 1;
+								opt_pk_is_leq(man, polyhedron1, bound))) {
+							if (assume_fuzzable(
+									opt_pk_is_leq(man, polyhedron2, bound))) {
+								if (!opt_pk_is_leq(man, lub, bound)) {
+									opt_pk_free(man, top);
+									opt_pk_free(man, bottom);
+									opt_pk_free(man, polyhedron1);
+									opt_pk_free(man, polyhedron2);
+									opt_pk_free(man, bound);
+									opt_pk_free(man, lub);
+									elina_manager_free(man);
+									fclose(fp);
+									return 1;
+								}
 							}
 						}
+						opt_pk_free(man, bound);
 					}
-					opt_pk_free(man, bound);
 				}
 				opt_pk_free(man, polyhedron2);
 				opt_pk_free(man, lub);

@@ -22,21 +22,36 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
 					&dataIndex, fp)) {
 
-				//meet == glb, join == lub
-				//join absorbtion
-				if (!opt_pk_is_eq(man,
-						opt_pk_join(man, DESTRUCTIVE, polyhedron1,
-								opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
-										polyhedron2)), polyhedron1)) {
-					opt_pk_free(man, top);
-					opt_pk_free(man, bottom);
-					opt_pk_free(man, polyhedron1);
-					opt_pk_free(man, polyhedron2);
-					elina_manager_free(man);
-					fclose(fp);
-					return 1;
+				opt_pk_array_t* meet12 = opt_pk_meet(man, DESTRUCTIVE,
+						polyhedron1, polyhedron2);
+				opt_pk_internal_t * meet12_internal = opt_pk_init_from_manager(
+						man, ELINA_FUNID_MEET);
+
+				opt_pk_array_t* join12 = opt_pk_join(man, DESTRUCTIVE,
+						polyhedron1, meet12);
+				opt_pk_internal_t * join12_internal = opt_pk_init_from_manager(
+						man, ELINA_FUNID_JOIN);
+
+				if (meet12_internal->exn != ELINA_EXC_OVERFLOW
+						&& join12_internal->exn != ELINA_EXC_OVERFLOW) {
+
+					//meet == glb, join == lub
+					//join absorbtion
+					if (!opt_pk_is_eq(man, join12, polyhedron1)) {
+						opt_pk_free(man, top);
+						opt_pk_free(man, bottom);
+						opt_pk_free(man, polyhedron1);
+						opt_pk_free(man, polyhedron2);
+						opt_pk_free(man, meet12);
+						opt_pk_free(man, join12);
+						elina_manager_free(man);
+						fclose(fp);
+						return 1;
+					}
 				}
 				opt_pk_free(man, polyhedron2);
+				opt_pk_free(man, meet12);
+				opt_pk_free(man, join12);
 			}
 			opt_pk_free(man, polyhedron1);
 		}

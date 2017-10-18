@@ -26,17 +26,25 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				//join is compatible (direct)
 				if (assume_fuzzable(
 						opt_pk_is_leq(man, polyhedron1, polyhedron2))) {
-					if (!opt_pk_is_eq(man,
-							opt_pk_join(man, DESTRUCTIVE, polyhedron1, polyhedron2),
-							polyhedron2)) {
-						opt_pk_free(man, top);
-						opt_pk_free(man, bottom);
-						opt_pk_free(man, polyhedron1);
-						opt_pk_free(man, polyhedron2);
-						elina_manager_free(man);
-						fclose(fp);
-						return 1;
+
+					opt_pk_array_t* join12 = opt_pk_join(man, DESTRUCTIVE,
+							polyhedron1, polyhedron2);
+					opt_pk_internal_t * join12_internal =
+							opt_pk_init_from_manager(man, ELINA_FUNID_JOIN);
+
+					if (join12_internal->exn != ELINA_EXC_OVERFLOW) {
+						if (!opt_pk_is_eq(man, join12, polyhedron2)) {
+							opt_pk_free(man, top);
+							opt_pk_free(man, bottom);
+							opt_pk_free(man, polyhedron1);
+							opt_pk_free(man, polyhedron2);
+							opt_pk_free(man, join12_internal);
+							elina_manager_free(man);
+							fclose(fp);
+							return 1;
+						}
 					}
+					opt_pk_free(man, join12_internal);
 				}
 				opt_pk_free(man, polyhedron2);
 			}
