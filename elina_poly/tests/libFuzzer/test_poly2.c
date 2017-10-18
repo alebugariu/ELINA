@@ -19,7 +19,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				&dataIndex, fp)) {
 
 			// <= is reflexive
-			if (!opt_pk_is_leq(man, polyhedron1, polyhedron1)) {
+			if (opt_pk_is_leq(man, polyhedron1, polyhedron1) == false) {
 				opt_pk_free(man, top);
 				opt_pk_free(man, polyhedron1);
 				elina_manager_free(man);

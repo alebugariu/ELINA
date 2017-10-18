@@ -1,18 +1,1 @@
-Dim: 8
-Number of constraints: 8
-Type: s
-Values: -1, 16777215, 65, -9223372036854775808, 0, 0, 0, 0, -4919132559297740800
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 0, 0, 0
+Dim: 2

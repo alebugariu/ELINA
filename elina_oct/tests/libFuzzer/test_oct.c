@@ -126,7 +126,7 @@ bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 }
 
 bool assume_fuzzable(bool condition) {
-	return condition;
+	return (condition == true); // it can also be top, in case of overflow
 }
 
 bool make_fuzzable_dimension(int *dim, const long *data, size_t dataSize,

@@ -25,25 +25,53 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				if (create_polyhedron(&polyhedron3, man, top, dim, data,
 						dataSize, &dataIndex, fp)) {
 
-					//meet == glb, join == lub
-					//meet is associative
-					if (!opt_pk_is_eq(man,
-							opt_pk_meet(man, DESTRUCTIVE,
-									opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
-											polyhedron2), polyhedron3),
-							opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
-									opt_pk_meet(man, DESTRUCTIVE, polyhedron2,
-											polyhedron3)))) {
-						opt_pk_free(man, top);
-						opt_pk_free(man, bottom);
-						opt_pk_free(man, polyhedron1);
-						opt_pk_free(man, polyhedron2);
-						opt_pk_free(man, polyhedron3);
-						elina_manager_free(man);
-						fclose(fp);
-						return 1;
+					opt_pk_array_t* meet12 = opt_pk_meet(man, DESTRUCTIVE,
+							polyhedron1, polyhedron2);
+					opt_pk_internal_t * meet12_internal =
+							opt_pk_init_from_manager(man, ELINA_FUNID_MEET);
+
+					opt_pk_array_t* meet12_3 = opt_pk_meet(man, DESTRUCTIVE,
+							meet12, polyhedron3);
+					opt_pk_internal_t * meet12_3_internal =
+							opt_pk_init_from_manager(man, ELINA_FUNID_MEET);
+
+					opt_pk_array_t* meet23 = opt_pk_meet(man, DESTRUCTIVE,
+							polyhedron2, polyhedron3);
+					opt_pk_internal_t * meet23_internal =
+							opt_pk_init_from_manager(man, ELINA_FUNID_MEET);
+
+					opt_pk_array_t* meet1_23 = opt_pk_meet(man, DESTRUCTIVE,
+							polyhedron1, meet23);
+					opt_pk_internal_t * meet1_23_internal =
+							opt_pk_init_from_manager(man, ELINA_FUNID_MEET);
+
+					if (meet12_internal->exn != ELINA_EXC_OVERFLOW
+							&& meet12_3_internal->exn != ELINA_EXC_OVERFLOW
+							&& meet23_internal->exn != ELINA_EXC_OVERFLOW
+							&& meet1_23_internal->exn != ELINA_EXC_OVERFLOW) {
+
+						//meet == glb, join == lub
+						//meet is associative
+						if (!opt_pk_is_eq(man, meet12_3, meet1_23)) {
+							opt_pk_free(man, top);
+							opt_pk_free(man, bottom);
+							opt_pk_free(man, polyhedron1);
+							opt_pk_free(man, polyhedron2);
+							opt_pk_free(man, polyhedron3);
+							opt_pk_free(man, meet12);
+							opt_pk_free(man, meet12_3);
+							opt_pk_free(man, meet23);
+							opt_pk_free(man, meet1_23);
+							elina_manager_free(man);
+							fclose(fp);
+							return 1;
+						}
 					}
 					opt_pk_free(man, polyhedron3);
+					opt_pk_free(man, meet12);
+					opt_pk_free(man, meet12_3);
+					opt_pk_free(man, meet23);
+					opt_pk_free(man, meet1_23);
 				}
 				opt_pk_free(man, polyhedron2);
 			}
