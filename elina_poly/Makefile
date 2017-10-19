@@ -44,7 +44,7 @@ INSTALLd = install -d
 
 SOINST = liboptpoly.so
 
-OPTPOLYH = opt_mf_qsort.h opt_pk_matrix.h  opt_pk_internal.h opt_pk_test.h opt_pk_config.h opt_pk.h
+OPTPOLYH = opt_mf_qsort.h opt_pk_matrix.h  opt_pk_internal.h opt_pk_test.h opt_pk_config.h opt_pk.h rdtsc.h
 
 all : liboptpoly.so elina_test_poly
 

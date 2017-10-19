@@ -8,6 +8,7 @@
 #define DESTRUCTIVE false
 
 #include "opt_pk.h"
+#include "opt_pk_internal.h"
 
 //for widening
 #define K 100

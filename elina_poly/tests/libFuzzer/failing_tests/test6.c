@@ -1,5 +1,6 @@
 #include <time.h>
 #include "opt_pk.h"
+#include "opt_pk_internal.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -26,7 +27,12 @@ elina_linexpr0_t * create_linexpr0(int dim, long *values) {
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 		opt_pk_array_t * top, int dim, elina_lincons0_array_t constraints) {
 	*polyhedron = opt_pk_meet_lincons_array(man, false, top, &constraints);
-	return true;
+	opt_pk_internal_t * internal_pk = opt_pk_init_from_manager(man,
+			ELINA_FUNID_MEET_LINCONS_ARRAY);
+	if (internal_pk->exn != ELINA_EXC_OVERFLOW) {
+		return true;
+	}
+	return false;
 }
 
 int main(int argc, char **argv) {
@@ -57,19 +63,21 @@ int main(int argc, char **argv) {
 	long values3[3] = { 3377699720528059, 0, 0 };
 	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, values3);
 	lincons0.p[2].linexpr0 = linexpr2;
-	long values4[3] = {144321603058777019, 8796093070267, -4919131752997257216};
+	long values4[3] =
+			{ 144321603058777019, 8796093070267, -4919131752997257216 };
 	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, values4);
 	lincons0.p[3].linexpr0 = linexpr3;
-	long values5[3] = {  -4919131752804664389, 52841437921524667, 51539607552};
+	long values5[3] = { -4919131752804664389, 52841437921524667, 51539607552 };
 	elina_linexpr0_t * linexpr4 = create_linexpr0(dim, values5);
 	lincons0.p[4].linexpr0 = linexpr4;
-	long values6[3] = { -4919335965799236677, 144128382215389184, 2};
+	long values6[3] = { -4919335965799236677, 144128382215389184, 2 };
 	elina_linexpr0_t * linexpr5 = create_linexpr0(dim, values6);
 	lincons0.p[5].linexpr0 = linexpr5;
-	long values7[3] = {  0, 137438953472, 0 };
+	long values7[3] = { 0, 137438953472, 0 };
 	elina_linexpr0_t * linexpr6 = create_linexpr0(dim, values7);
 	lincons0.p[6].linexpr0 = linexpr6;
-	long values8[3] = { -4919131752997257216, -4919131752989213765, -4919131752989213765 };
+	long values8[3] = { -4919131752997257216, -4919131752989213765,
+			-4919131752989213765 };
 	elina_linexpr0_t * linexpr7 = create_linexpr0(dim, values8);
 	lincons0.p[7].linexpr0 = linexpr7;
 

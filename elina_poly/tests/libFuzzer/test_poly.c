@@ -75,8 +75,14 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
 	}
-	*polyhedron = opt_pk_meet_lincons_array(man, DESTRUCTIVE, top, &constraints);
-	return true;
+	*polyhedron = opt_pk_meet_lincons_array(man, DESTRUCTIVE, top,
+			&constraints);
+	opt_pk_internal_t * internal_pk = opt_pk_init_from_manager(man,
+			ELINA_FUNID_MEET_LINCONS_ARRAY);
+	if (internal_pk->exn != ELINA_EXC_OVERFLOW) {
+		return true;
+	}
+	return false;
 }
 
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
@@ -95,7 +101,7 @@ bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 }
 
 bool assume_fuzzable(bool condition) {
-	return condition;
+	return (condition == true); // it can also be top, in case of overflow
 }
 
 bool make_fuzzable_dimension(int *dim, const long *data, size_t dataSize,
