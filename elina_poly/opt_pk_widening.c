@@ -241,28 +241,28 @@ comp_list_t * vector_to_comp_list(opt_pk_internal_t *opk, opt_numint_t *v, unsig
 		Standard Polyhedra widening with generators
 **************************/
 
-void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_array_t *oa, opt_pk_array_t *ob){
+void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t **res, opt_pk_array_t *oa, opt_pk_array_t *ob){
 	opt_pk_internal_t * opk = opt_pk_init_from_manager(man,ELINA_FUNID_WIDENING);
 	unsigned short int maxcols = oa->maxcols;
 	array_comp_list_t * acla = oa->acl;
 	if(oa->is_bottom || !acla){
-		op = opt_pk_copy(man,ob);
+		*res = opt_pk_copy(man,ob);
 		return;
 	}
 	unsigned short int num_compa = acla->size;
 	if(num_compa==0){
-		opt_poly_set_top(opk,op);
+		opt_poly_set_top(opk,*res);
 		return;
 	}
 	
 	array_comp_list_t * aclb = ob->acl;
 	if(ob->is_bottom || !aclb){
-		op = opt_pk_copy(man,oa);
+		*res = opt_pk_copy(man,oa);
 		return;
 	}
 	unsigned short int num_compb = aclb->size;
 	if(num_compb==0){
-		opt_poly_set_top(opk,op);
+		opt_poly_set_top(opk,*res);
 		return;
 	}
 	unsigned short int k, ka, kb;
@@ -277,11 +277,11 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 		if(opk->exn){
 			opk->exn = ELINA_EXC_NONE;
 			man->result.flag_best = man->result.flag_exact = false;
-			opt_poly_set_top(opk,op);
+			opt_poly_set_top(opk,*res);
 			return;
 		}
 		if(!oak->C && !oak->F){
-			op = opt_pk_copy(man,ob);
+			*res = opt_pk_copy(man,ob);
 			return;
 		}
 	}
@@ -296,7 +296,7 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 		if(opk->exn){
 			opk->exn = ELINA_EXC_NONE;
 			man->result.flag_best = man->result.flag_exact = false;
-			opt_poly_set_top(opk,op);
+			opt_poly_set_top(opk,*res);
 			return;
 		}
 	}
@@ -536,31 +536,32 @@ void opt_poly_widening_gen(elina_manager_t *man, opt_pk_array_t *op, opt_pk_arra
 		free(ca_arr[k]);
 		opt_poly_clear(tmp[k]);
 	}
-	k=0;
-	while( k < num_comp){
-		opt_pk_t *oak = poly[k];
+	unsigned short int k1=0;
+	unsigned short int bound = num_comp;
+	for(k=0; k < num_comp; k++){
+		opt_pk_t *oak = poly[k1];
 		if(exc_map[k]){
 			comp_list_t * tmp = cl;
 			cl = cl->next;
 			remove_comp_list(acl,tmp);
-			unsigned short int k1;
-			for(k1=k; k1 < num_comp - 1; k1++){
-				poly[k1] = poly[k1+1];
+			unsigned short int k2;
+			for(k2=k1; k2 < bound - 1; k2++){
+				poly[k2] = poly[k2+1];
 			}
 			opt_poly_clear(oak);
-			num_comp--;
+			bound--;
 		}
 		else{
-			poly[k]->C->nbrows = counter[k];
-			opt_poly_chernikova(man,poly[k],"widening result");
-			k++;
+			poly[k1]->C->nbrows = counter[k1];
+			opt_poly_chernikova(man,poly[k1],"widening result");
+			k1++;
 			cl=cl->next;
 		}
 
 	}
 
-        op->acl = acl;
-	op->poly = poly;
+        (*res)->acl = acl;
+	(*res)->poly = poly;
 	free(exc_map);
 	free(rmapa);
 	free(rmapb);
@@ -583,9 +584,10 @@ opt_pk_array_t* opt_pk_widening(elina_manager_t* man, opt_pk_array_t* oa, opt_pk
    	#endif 
 	opt_pk_array_t *op;
 	op = opt_pk_array_alloc(NULL,NULL,oa->maxcols);
-	opt_poly_widening_gen(man,op,oa,ob);
+	opt_poly_widening_gen(man,&op,oa,ob);
 	#if defined(TIMING)
  	    record_timing(widening_time);
    	#endif 
+
 	return op;
 }

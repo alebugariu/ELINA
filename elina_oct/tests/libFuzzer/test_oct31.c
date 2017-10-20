@@ -28,7 +28,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				//meet == glb, join == lub
 				//widening approximates join
 				if (!opt_oct_is_leq(man,
-						opt_oct_join(man, false, octagon1, octagon2),
+						opt_oct_join(man, DESTRUCTIVE, octagon1, octagon2),
 						opt_oct_widening(man, octagon1, octagon2))) {
 					opt_oct_free(man, top);
 					opt_oct_free(man, bottom);

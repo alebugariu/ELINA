@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
-elina_linexpr0_t * create_linexpr0(long dim, long *values) {
+elina_linexpr0_t * create_linexpr0(int dim, long *values) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
 			dim);
@@ -24,34 +24,37 @@ elina_linexpr0_t * create_linexpr0(long dim, long *values) {
 }
 
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
-		opt_pk_array_t * top, long dim, elina_lincons0_array_t constraints) {
+		opt_pk_array_t * top, int dim, elina_lincons0_array_t constraints) {
 	*polyhedron = opt_pk_meet_lincons_array(man, false, top, &constraints);
 	return true;
 }
 
 int main(int argc, char **argv) {
 	int dim = 2;
-	long nbcons = 2;
+		long nbcons = 2;
 
-	elina_manager_t * man = opt_pk_manager_alloc(false);
-	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
-	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
+		elina_manager_t * man = opt_pk_manager_alloc(false);
+		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
+		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
 
-	opt_pk_array_t* polyhedron1;
+		opt_pk_array_t* polyhedron1;
 
-	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
-	lincons0.p[0].constyp = ELINA_CONS_EQ;
-	lincons0.p[1].constyp = ELINA_CONS_EQ;
-	long values1[3] = {-4919131752989213765, 0, 0};
-	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
-	lincons0.p[0].linexpr0 = linexpr0;
-	long values2[3] = {-4919131752989213765, 864691128488689664, 8589934592};
-	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
-	lincons0.p[1].linexpr0 = linexpr1;
+		elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
+		lincons0.p[0].constyp = ELINA_CONS_EQ;
+		lincons0.p[1].constyp = ELINA_CONS_EQ;
+		long values1[3] = { -4919131752989213765, 0, 0 };
+		elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
+		lincons0.p[0].linexpr0 = linexpr0;
+		long values2[3] = { -4919131752989213765, 864691128488689664, 8589934592 };
+		elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
+		lincons0.p[1].linexpr0 = linexpr1;
 
-	if (create_polyhedron(&polyhedron1, man, top, dim, lincons0)) {
-		printf("widening(bottom, polyhedron) == polyhedron: ");
-		printf("%d\n", opt_pk_is_eq(man, opt_pk_widening(man, bottom, polyhedron1), polyhedron1));
-	}
-	return 0;
+		if (create_polyhedron(&polyhedron1, man, top, dim, lincons0)) {
+			printf("bottom widening polyhedron = polyhedron: ");
+			printf("%d\n",
+					opt_pk_is_eq(man, opt_pk_widening(man, bottom, polyhedron1),
+							polyhedron1));
+		}
+		return 0;
 }
+

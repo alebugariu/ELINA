@@ -29,7 +29,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				//meet is compatible (direct)
 				if (assume_fuzzable(opt_oct_is_leq(man, octagon1, octagon2))) {
 					if (!(opt_oct_is_eq(man,
-							opt_oct_meet(man, false, octagon1, octagon2),
+							opt_oct_meet(man, DESTRUCTIVE, octagon1, octagon2),
 							octagon1))) {
 						opt_oct_free(man, top);
 						opt_oct_free(man, bottom);
