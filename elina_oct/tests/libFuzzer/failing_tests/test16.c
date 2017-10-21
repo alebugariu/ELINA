@@ -80,6 +80,10 @@ int main(int argc, char **argv) {
 		print_opt_hmat(oo_result->mat, dim);
 		printf("top meet octagon == octagon: ");
 		printf("%d\n", (opt_oct_is_eq(man, meet_result, octagon1)));
+		printf("top meet octagon <= octagon: ");
+		printf("%d\n", (opt_oct_is_leq(man, meet_result, octagon1)));
+		printf("octagon <= top meet octagon: ");
+		printf("%d\n", (opt_oct_is_leq(man, octagon1, meet_result)));
 	}
 	return 0;
 }

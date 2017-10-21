@@ -33,7 +33,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							opt_pk_init_from_manager(man, ELINA_FUNID_MEET);
 
 					if (meet12_internal->exn != ELINA_EXC_OVERFLOW) {
-						if (!(opt_pk_is_eq(man, meet12, polyhedron1))) {
+						if (opt_pk_is_eq(man, meet12, polyhedron1) == false) {
 							opt_pk_free(man, top);
 							opt_pk_free(man, bottom);
 							opt_pk_free(man, polyhedron1);

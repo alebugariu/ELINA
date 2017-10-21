@@ -21,9 +21,9 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			if (assume_fuzzable(opt_pk_is_leq(man, bottom, polyhedron1))) {
 				//meet == glb, join == lub
 				//bottom widening x == x
-				if (!opt_pk_is_eq(man,
+				if (opt_pk_is_eq(man,
 						opt_pk_widening(man, bottom, polyhedron1),
-						polyhedron1)) {
+						polyhedron1) == false) {
 					opt_pk_free(man, top);
 					opt_pk_free(man, bottom);
 					opt_pk_free(man, polyhedron1);

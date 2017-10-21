@@ -35,7 +35,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						&& meet12_internal->exn != ELINA_EXC_OVERFLOW) {
 					//meet == glb, join == lub
 					//meet absorbtion
-					if (!opt_pk_is_eq(man, meet12, polyhedron1)) {
+					if (opt_pk_is_eq(man, meet12, polyhedron1) == false) {
 						opt_pk_free(man, top);
 						opt_pk_free(man, bottom);
 						opt_pk_free(man, polyhedron1);
