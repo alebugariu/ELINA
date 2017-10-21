@@ -28,13 +28,12 @@ elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 		int dim, elina_lincons0_array_t constraints) {
 	*octagon = opt_oct_meet_lincons_array(man, false, top, &constraints);
-	printf("Create octagon: %d %d\n", (*octagon)->dim, (*octagon)->intdim);
 	return true;
 }
 
 int main(int argc, char **argv) {
-	int dim = 2;
-	long nbcons = 16;
+	int dim = 7;
+	long nbcons = 7;
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);

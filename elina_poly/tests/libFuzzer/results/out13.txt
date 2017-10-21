@@ -1,15 +1,8 @@
 Dim: 2
 Number of constraints: 3
-Type: s
-Values: 1099511629824, 0, 63771674411008
 Type: e
 Values: 0, 0, 0
 Type: e
-Values: 310450341960, 216173894493537023, 0
-Number of constraints: 3
-Type: s
-Values: -1099511627776, 255, 63771674411008
+Values: 1125899906842631, -9223372036854775808, 0
 Type: e
-Values: 0, 252, 0
-Type: s
-Values: 512, 2621440, 2
+Values: 0, 0, 0

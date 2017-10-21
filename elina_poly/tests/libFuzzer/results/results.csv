@@ -1,34 +1,21 @@
 test case,execution time (seconds),execution time (minutes),initial coverage,final coverage,number of executed units,new units added,status
-test_poly0,31,0.5166666666666667,35,35,205121,0,PASS
-test_poly1,31,0.5166666666666667,35,35,228831,0,PASS
-test_poly2,1,0.016666666666666666,-,35,4026,0,libFuzzer: deadly signal
-test_poly3,48,0.8,40,40,35277,0,libFuzzer: timeout
-test_poly4,31,0.5166666666666667,39,39,224706,0,PASS
-test_poly5,1,0.016666666666666666,-,39,4026,0,libFuzzer: deadly signal
-test_poly6,31,0.5166666666666667,35,35,226776,0,PASS
-test_poly7,31,0.5166666666666667,36,36,225416,0,PASS
-test_poly8,31,0.5166666666666667,36,36,221441,0,PASS
-test_poly9,1,0.016666666666666666,-,36,2274,0,libFuzzer: deadly signal
-test_poly10,2,0.03333333333333333,37,37,15048,0,libFuzzer: deadly signal
-test_poly11,0,0.0,-,37,3678,0,libFuzzer: deadly signal
-test_poly12,0,0.0,-,37,2119,0,libFuzzer: deadly signal
-test_poly13,1,0.016666666666666666,-,37,2276,0,libFuzzer: deadly signal
-test_poly14,0,0.0,-,37,2119,0,libFuzzer: deadly signal
-test_poly15,31,0.5166666666666667,35,35,211476,0,PASS
-test_poly16,0,0.0,-,35,1543,0,libFuzzer: deadly signal
-test_poly17,31,0.5166666666666667,36,36,224291,0,PASS
-test_poly18,31,0.5166666666666667,36,36,219056,0,PASS
-test_poly19,1,0.016666666666666666,-,36,2119,0,libFuzzer: deadly signal
-test_poly20,0,0.0,-,36,2496,0,libFuzzer: deadly signal
-test_poly21,1,0.016666666666666666,-,36,1535,0,libFuzzer: deadly signal
-test_poly22,0,0.0,-,36,2119,0,libFuzzer: deadly signal
-test_poly23,1,0.016666666666666666,-,36,2296,0,libFuzzer: deadly signal
-test_poly24,0,0.0,-,36,1490,0,libFuzzer: deadly signal
-test_poly25,31,0.5166666666666667,39,39,192946,0,PASS
-test_poly26,0,0.0,-,39,2497,0,libFuzzer: deadly signal
-test_poly27,31,0.5166666666666667,37,37,206691,0,PASS
-test_poly28,31,0.5166666666666667,37,37,217391,0,PASS
-test_poly29,31,0.5166666666666667,36,36,216466,0,PASS
-test_poly30,1,0.016666666666666666,-,36,4026,0,libFuzzer: deadly signal
-test_poly31,31,0.5166666666666667,37,37,210956,0,PASS
-test_poly32,31,0.5166666666666667,37,37,196706,0,PASS
+test_poly0,5403,90.05,793,793,17937,17,libFuzzer: timeout
+test_poly1,5403,90.05,853,853,223225,248,libFuzzer: timeout
+test_poly2,5403,90.05,912,912,17461,9,libFuzzer: timeout
+test_poly3,5403,90.05,921,922,48917,43,libFuzzer: timeout
+test_poly4,5404,90.06666666666666,933,933,56533,37,libFuzzer: timeout
+test_poly5,0,0.0,-,933,1507,0,libFuzzer: deadly signal
+test_poly6,5403,90.05,889,889,146570,84,libFuzzer: timeout
+test_poly7,5403,90.05,1054,1054,22122,10,libFuzzer: timeout
+test_poly8,5403,90.05,1054,1054,58001,23,libFuzzer: timeout
+test_poly9,1,0.016666666666666666,-,1054,2209,0,libFuzzer: deadly signal
+test_poly10,2,0.03333333333333333,-,1054,3723,0,libFuzzer: deadly signal
+test_poly11,0,0.0,-,1054,-,-,PASS
+test_poly12,1,0.016666666666666666,-,1054,2207,0,libFuzzer: deadly signal
+test_poly13,5403,90.05,1072,1072,14889,8,libFuzzer: timeout
+test_poly14,0,0.0,-,1072,2482,0,libFuzzer: deadly signal
+test_poly15,5403,90.05,800,800,76862,21,libFuzzer: timeout
+test_poly16,1,0.016666666666666666,-,800,1551,0,libFuzzer: deadly signal
+test_poly17,5403,90.05,970,971,22276,10,libFuzzer: timeout
+test_poly18,5403,90.05,974,974,17983,7,libFuzzer: timeout
+test_poly19,0,0.0,-,974,2312,0,libFuzzer: deadly signal
