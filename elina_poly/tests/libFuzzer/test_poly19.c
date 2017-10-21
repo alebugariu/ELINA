@@ -36,7 +36,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 					//meet == glb, join == lub
 					//meet is commutative
-					if (!opt_pk_is_eq(man, meet12, meet21)) {
+					if (opt_pk_is_eq(man, meet12, meet21) == false) {
 						opt_pk_free(man, top);
 						opt_pk_free(man, bottom);
 						opt_pk_free(man, polyhedron1);
