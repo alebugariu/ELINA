@@ -1,0 +1,7 @@
+Dim: 3
+Number of constraints: 7
+Type: s
+Values: 1, 2, 1, 1, 72057594037927936
+Type: s
+Values: 0, 2, 1, 1, 72057594037927936
+Type: s
