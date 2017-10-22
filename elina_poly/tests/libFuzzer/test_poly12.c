@@ -38,7 +38,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							opt_pk_free(man, bottom);
 							opt_pk_free(man, polyhedron1);
 							opt_pk_free(man, polyhedron2);
-							opt_pk_free(man, join12_internal);
+							opt_pk_free(man, join12);
 							elina_manager_free(man);
 							fclose(fp);
 							return 1;
