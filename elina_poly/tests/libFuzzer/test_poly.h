@@ -14,9 +14,12 @@
 #define K 100
 #define R(i) i < K
 
-bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man, opt_pk_array_t * top,
-		int dim, const long *data, size_t dataSize,
+bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
+		opt_pk_array_t * top, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp);
+
+bool create_assignment_expression(elina_linexpr0_t ** expression, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 		unsigned int *dataIndex);

@@ -13,6 +13,7 @@ elina_oct/tests/libFuzzer/oom-*
 elina_oct/tests/libFuzzer/out*.txt
 elina_oct/tests/libFuzzer/failing_tests/test*
 elina_poly/tests/libFuzzer/test*
+!elina_poly/tests/libFuzzer/test*.c
 elina_poly/tests/libFuzzer/out*.txt
 elina_poly/tests/libFuzzer/crash-*
 elina_poly/tests/libFuzzer/slow-*
