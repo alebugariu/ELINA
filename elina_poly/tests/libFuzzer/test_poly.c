@@ -85,6 +85,32 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 	return false;
 }
 
+bool create_assignment_expression(elina_linexpr0_t ** expression, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	long fuzzableValues[MAX_DIM + 1];
+	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	//we cannot have all the coefficients 0
+	long sum = 0;
+	int j;
+	for (j = 0; j < dim; j++) {
+		sum += fuzzableValues[j];
+	}
+	if (sum == 0) {
+		return false;
+	}
+	fprintf(fp, "Assignment expression: ");
+	for (j = 0; j < dim; j++) {
+		fprintf(fp, "%ld, ", fuzzableValues[j]);
+	}
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
+	fflush(fp);
+	*expression = create_linexpr0(dim, fuzzableValues);
+	return true;
+}
+
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 		unsigned int *dataIndex) {
 	int numberOfElements = dataSize / sizeof(long);

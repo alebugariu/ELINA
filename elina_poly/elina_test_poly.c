@@ -350,76 +350,29 @@ void test_sat_lincons(unsigned short int dim, size_t nbcons) {
 	elina_manager_free(man);
 }
 
-elina_linexpr0_t * create_linexpr0(unsigned short int dim, int *values) {
-	elina_coeff_t *cst, *coeff;
-	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
-			dim);
-	cst = &linexpr0->cst;
-	elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_DOUBLE);
-
-	size_t i;
-	for (i = 0; i < dim; i++) {
-		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
-		linterm->dim = i;
-		coeff = &linterm->coeff;
-		elina_scalar_set_to_int(coeff->val.scalar, values[i],
-				ELINA_SCALAR_DOUBLE);
-	}
-	return linexpr0;
-}
-
-void test_1(void) {
-	int dim = 2;
-	int nbcons = 2;
-
-	elina_manager_t * man = opt_pk_manager_alloc(false);
-	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
-
-	opt_pk_array_t* polyhedron1;
-
-	elina_lincons0_array_t lincons0 = elina_lincons0_array_make(nbcons);
-	lincons0.p[0].constyp = ELINA_CONS_EQ;
-	lincons0.p[1].constyp = ELINA_CONS_EQ;
-	int values1[3] = { 1834972265, 285212770, 286331153 };
-	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
-	lincons0.p[0].linexpr0 = linexpr0;
-	int values2[3] = { 2019885056, 1601463137, 1769239137 };
-	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
-	lincons0.p[1].linexpr0 = linexpr1;
-
-	polyhedron1 = opt_pk_meet_lincons_array(man, false, top, &lincons0);
-	elina_lincons0_array_t arr = opt_pk_to_lincons_array(man,polyhedron1);
-	elina_lincons0_array_fprint(stdout,&arr,NULL);
-	elina_lincons0_array_clear(&arr);
-	// x <= top
-	printf("polyhedron <= top: ");
-	printf("%d\n", opt_pk_is_leq(man, polyhedron1, top));
-}
-
 int main(int argc, char **argv) {
-	/*if(argc < 3){
-	 printf("The test requires two positive integers: (a) Number of variables and (b) Number of constraints");
-	 return 0;
-	 }
+	if (argc < 3) {
+		printf(
+				"The test requires two positive integers: (a) Number of variables and (b) Number of constraints");
+		return 0;
+	}
 
-	 unsigned short int dim = atoi(argv[1]);
-	 size_t nbcons = atoi(argv[2]);
-	 if(dim <=0 || nbcons <=0){
-	 printf("The Input parameters should be positive\n");
-	 return 0;
-	 }
-	 printf("Testing Meet\n");
-	 test_meetjoin(dim,nbcons,true);
-	 printf("Testing Join\n");
-	 test_meetjoin(dim,nbcons,false);
-	 printf("Testing Assign\n");
-	 test_assign(dim,nbcons);
-	 printf("Testing Fold\n");
-	 test_fold(dim,nbcons);
-	 printf("Testing Expand\n");
-	 test_expand(dim,nbcons);
-	 printf("Testing Sat Lincons\n ");
-	 test_sat_lincons(dim,nbcons); */
-	printf("Polyhedron less equal top\n ");
-	test_1();
+	unsigned short int dim = atoi(argv[1]);
+	size_t nbcons = atoi(argv[2]);
+	if (dim <= 0 || nbcons <= 0) {
+		printf("The Input parameters should be positive\n");
+		return 0;
+	}
+	printf("Testing Meet\n");
+	test_meetjoin(dim, nbcons, true);
+	printf("Testing Join\n");
+	test_meetjoin(dim, nbcons, false);
+	printf("Testing Assign\n");
+	test_assign(dim, nbcons);
+	printf("Testing Fold\n");
+	test_fold(dim, nbcons);
+	printf("Testing Expand\n");
+	test_expand(dim, nbcons);
+	printf("Testing Sat Lincons\n ");
+	test_sat_lincons(dim, nbcons);
 }
