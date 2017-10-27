@@ -1,0 +1,12 @@
+Dim: 2
+Number of constraints: 2
+Type: e
+Values: 7596844060615114752, -4971767573639241868, 1086045115
+Type: e
+Values: 0, 0, 0
+Number of constraints: 2
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Assignment expression: 0, 3472275312702652416, 808464432

@@ -1,4 +1,8 @@
-Dim: 3
+Dim: 2
 Number of constraints: 3
-Type: s
-Values: 2147483648, 1099511627520, 0, 14848
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 16777209, -9223372036854775808, 0
+Type: e
+Values: 0, 0, 0
