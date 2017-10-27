@@ -31,3 +31,5 @@ test_poly29,5403,90.05,38,38,30346,3,libFuzzer: timeout
 test_poly30,1,0.016666666666666666,-,38,1532,0,libFuzzer: deadly signal
 test_poly31,5403,90.05,41,41,2489962,12,libFuzzer: timeout
 test_poly32,5403,90.05,39,39,144577,1,libFuzzer: timeout
+test_poly33,5403,90.05,48,48,53440,4,libFuzzer: timeout
+test_poly34,0,0.0,-,48,1774,0,libFuzzer: deadly signal
