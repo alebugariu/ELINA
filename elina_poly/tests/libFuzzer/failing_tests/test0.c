@@ -17,7 +17,6 @@ elina_linexpr0_t * create_linexpr0(int dim, long *values) {
 		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
 		linterm->dim = i;
 		coeff = &linterm->coeff;
-		fflush(NULL);
 		elina_scalar_set_to_int(coeff->val.scalar, values[i],
 				ELINA_SCALAR_DOUBLE);
 	}
@@ -55,18 +54,21 @@ int main(int argc, char **argv) {
 			35341435779, -1145356032, 52842235627813819, 0 };
 	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
 	lincons0.p[0].linexpr0 = linexpr0;
+
 	long values2[9] = { 0, 3377699720527872, 4683743612465315840,
 			-4919131752989213765, -4919131752989213765, -4919131752989213765,
 			283674000014267, 3072, 0 };
 	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
 	lincons0.p[1].linexpr0 = linexpr1;
+
 	long values3[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	elina_linexpr0_t * linexpr2 = create_linexpr0(dim, values3);
 	lincons0.p[2].linexpr0 = linexpr2;
+
 	long values4[9] = { 51539607552, -4919266699716329472, -4919131752989213765,
 			-4919131752989213765, -4919131752989213765, 864691132783656960, 0,
 			0, 0 };
-	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, values3);
+	elina_linexpr0_t * linexpr3 = create_linexpr0(dim, values4);
 	lincons0.p[3].linexpr0 = linexpr3;
 
 	if (create_polyhedron(&polyhedron1, man, top, dim, lincons0)) {
