@@ -1,0 +1,4 @@
+Dim: 2
+Assigned to variable: 0
+Assignment expression: 0, 0, 0
+Assigned to variable: 0

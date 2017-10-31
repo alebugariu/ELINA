@@ -18,7 +18,10 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 		opt_pk_array_t * top, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp);
 
-bool create_assignment(elina_linexpr0_t*** assignmentArray, elina_dim_t** tdim,
+bool create_variable(int *assignedToVariable, int dim, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp);
+
+bool create_assignment(elina_linexpr0_t*** assignmentArray, int assignedToVariable, elina_dim_t** tdim,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp);
 
