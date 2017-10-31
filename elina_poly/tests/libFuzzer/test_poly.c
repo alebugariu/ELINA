@@ -85,7 +85,21 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 	return false;
 }
 
-bool create_assignment(elina_linexpr0_t*** assignmentArray, elina_dim_t ** tdim,
+bool create_variable(int *assignedToVariable, int dim, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
+	if (!make_fuzzable(assignedToVariable, sizeof(int), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	if (!assume_fuzzable(*assignedToVariable >= 0 && *assignedToVariable < dim)) {
+		return false;
+	}
+	fprintf(fp, "Assigned to variable: %d\n", *assignedToVariable);
+	fflush(fp);
+	return true;
+}
+
+bool create_assignment(elina_linexpr0_t*** assignmentArray, int assignedToVariable, elina_dim_t ** tdim,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
 	long fuzzableValues[MAX_DIM + 1];
@@ -105,14 +119,6 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray, elina_dim_t ** tdim,
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
 
-	int assignedToVariable;
-	if (!make_fuzzable(&assignedToVariable, sizeof(int), data, dataSize,
-			dataIndex)) {
-		return false;
-	}
-	if (!assume_fuzzable(assignedToVariable >= 0 && assignedToVariable < dim)) {
-		return false;
-	}
 	*tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
 	*tdim[0] = assignedToVariable;
 	fprintf(fp, "Assigned to variable: %d\n", assignedToVariable);

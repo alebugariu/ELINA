@@ -1,12 +1,8 @@
 Dim: 2
-Number of constraints: 2
+Number of constraints: 3
+Type: s
+Values: -1099511627776, 255, 63771674411008
+Type: s
+Values: 280375465082880, 16777215, 63771674411008
 Type: e
-Values: 7596844060615114752, -4971767573639241868, 1086045115
-Type: e
-Values: 0, 0, 0
-Number of constraints: 2
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
-Assignment expression: 0, 3472275312702652416, 808464432
+Values: 249, -9223372036854775808, 0
