@@ -5,24 +5,34 @@
 #define MAX_DIM 20
 #define MIN_NBCONS 1
 #define MAX_NBCONS 50
-#define DESTRUCTIVE false
-#define FROM_TOP 1
-#define TOP_OR_BOTTOM 2
-#define RANDOM_PROGRAM 3
-#define CONSTUCTION_METHOD FROM_TOP
+#define MIN_NBOPS 0
+#define MAX_NBOPS 5
 
-#include "opt_pk.h"
-#include "opt_pk_internal.h"
+#define DESTRUCTIVE false
+
+#define FROM_TOP 1
+#define WITH_ASSIGNMENT 2
+#define RANDOM_PROGRAM 3
+#define CONSTRUCTION_METHOD WITH_ASSIGNMENT
+
+#define TOP 1
+#define BOTTOM 2
+
+#define ASSIGN 1
+#define PROJECT 2
 
 //for widening
 #define K 100
 #define R(i) i < K
 
+#include "opt_pk.h"
+#include "opt_pk_internal.h"
+
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 		opt_pk_array_t * top, opt_pk_array_t * bottom, int dim,
 		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
-bool create_variable(int *assignedToVariable, int dim, const long *data,
+bool create_variable(int *variable, bool assign, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool create_assignment(elina_linexpr0_t*** assignmentArray,
