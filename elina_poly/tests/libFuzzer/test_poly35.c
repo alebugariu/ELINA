@@ -18,8 +18,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		// assignment should return bottom if the current set of constraints is bottom
 
 		int assignedToVariable;
-		if (create_variable(&assignedToVariable, dim, data, dataSize, &dataIndex,
-				fp)) {
+		if (create_variable(&assignedToVariable, dim, data, dataSize,
+				&dataIndex, fp)) {
 
 			elina_linexpr0_t** assignmentArray;
 			elina_dim_t * tdim;
@@ -40,12 +40,16 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						opt_pk_free(man, top);
 						opt_pk_free(man, bottom);
 						opt_pk_free(man, assign_result1);
+						free(assignmentArray);
+						free(tdim);
 						elina_manager_free(man);
 						fclose(fp);
 						return 1;
 					}
 				}
 				opt_pk_free(man, assign_result1);
+				free(assignmentArray);
+				free(tdim);
 			}
 		}
 		opt_pk_free(man, top);

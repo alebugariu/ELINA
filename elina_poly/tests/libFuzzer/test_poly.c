@@ -68,9 +68,9 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 	return true;
 }
 
-bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
-		opt_pk_array_t * top, int dim, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp) {
+bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
+		elina_manager_t* man, opt_pk_array_t * top, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
 		return false;
@@ -85,13 +85,40 @@ bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 	return false;
 }
 
-bool create_variable(int *assignedToVariable, int dim, const long *data, size_t dataSize,
+bool create_polyhedron_from_top_or_bottom(opt_pk_array_t** polyhedron,
+		elina_manager_t* man, opt_pk_array_t * top, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	elina_lincons0_array_t constraints;
+	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
+		return false;
+	}
+
+	opt_pk_internal_t * internal_pk = opt_pk_init_from_manager(man,
+			ELINA_FUNID_MEET_LINCONS_ARRAY);
+	if (internal_pk->exn != ELINA_EXC_OVERFLOW) {
+		return true;
+	}
+	return false;
+}
+
+bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
+		opt_pk_array_t * top, opt_pk_array_t * bottom, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
+	if (CONSTUCTION_METHOD == FROM_TOP) {
+		return create_polyhedron_from_top(polyhedron, man, top, dim, data,
+				dataSize, dataIndex, fp);
+	}
+	return false;
+}
+
+bool create_variable(int *assignedToVariable, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	if (!make_fuzzable(assignedToVariable, sizeof(int), data, dataSize,
 			dataIndex)) {
 		return false;
 	}
-	if (!assume_fuzzable(*assignedToVariable >= 0 && *assignedToVariable < dim)) {
+	if (!assume_fuzzable(
+			*assignedToVariable >= 0 && *assignedToVariable < dim)) {
 		return false;
 	}
 	fprintf(fp, "Assigned to variable: %d\n", *assignedToVariable);
@@ -99,9 +126,9 @@ bool create_variable(int *assignedToVariable, int dim, const long *data, size_t 
 	return true;
 }
 
-bool create_assignment(elina_linexpr0_t*** assignmentArray, int assignedToVariable, elina_dim_t ** tdim,
-		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
-		FILE *fp) {
+bool create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	long fuzzableValues[MAX_DIM + 1];
 	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
 			dataIndex)) {

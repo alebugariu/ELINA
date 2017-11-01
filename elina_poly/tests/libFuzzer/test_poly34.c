@@ -16,8 +16,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data,
+				dataSize, &dataIndex, fp)) {
 			if (opt_pk_is_eq(man, polyhedron1, bottom) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
@@ -28,8 +28,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					elina_linexpr0_t** assignmentArray;
 					elina_dim_t * tdim;
 
-					if (create_assignment(&assignmentArray, assignedToVariable, &tdim, dim, data,
-							dataSize, &dataIndex, fp)) {
+					if (create_assignment(&assignmentArray, assignedToVariable,
+							&tdim, dim, data, dataSize, &dataIndex, fp)) {
 
 						opt_pk_array_t* assign_result1 =
 								opt_pk_assign_linexpr_array(man, DESTRUCTIVE,
@@ -47,12 +47,16 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 								opt_pk_free(man, bottom);
 								opt_pk_free(man, polyhedron1);
 								opt_pk_free(man, assign_result1);
+								free(assignmentArray);
+								free(tdim);
 								elina_manager_free(man);
 								fclose(fp);
 								return 1;
 							}
 						}
 						opt_pk_free(man, assign_result1);
+						free(assignmentArray);
+						free(tdim);
 					}
 				}
 				opt_pk_free(man, polyhedron1);

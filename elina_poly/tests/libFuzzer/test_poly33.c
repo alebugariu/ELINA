@@ -13,13 +13,14 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		elina_manager_t * man = opt_pk_manager_alloc(false);
 		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
+		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data,
+				dataSize, &dataIndex, fp)) {
 			opt_pk_array_t* polyhedron2;
-			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
-					&dataIndex, fp)) {
+			if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data,
+					dataSize, &dataIndex, fp)) {
 
 				// assignment is monotone
 				if (assume_fuzzable(
@@ -60,10 +61,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 								if (opt_pk_is_leq(man, assign_result1,
 										assign_result2) == false) {
 									opt_pk_free(man, top);
+									opt_pk_free(man, bottom);
 									opt_pk_free(man, polyhedron1);
 									opt_pk_free(man, polyhedron2);
 									opt_pk_free(man, assign_result1);
 									opt_pk_free(man, assign_result2);
+									free(assignmentArray);
+									free(tdim);
 									elina_manager_free(man);
 									fclose(fp);
 									return 1;
@@ -71,6 +75,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							}
 							opt_pk_free(man, assign_result1);
 							opt_pk_free(man, assign_result2);
+							free(assignmentArray);
+							free(tdim);
 						}
 					}
 				}
@@ -79,6 +85,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			opt_pk_free(man, polyhedron1);
 		}
 		opt_pk_free(man, top);
+		opt_pk_free(man, bottom);
 		elina_manager_free(man);
 	}
 	fclose(fp);

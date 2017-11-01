@@ -16,8 +16,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data,
+				dataSize, &dataIndex, fp)) {
 
 			// assign(x) less equal project(x)
 
@@ -51,6 +51,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							opt_pk_free(man, polyhedron1);
 							opt_pk_free(man, assign_result1);
 							opt_pk_free(man, project_result1);
+							free(assignmentArray);
+							free(tdim);
 							elina_manager_free(man);
 							fclose(fp);
 							return 1;
@@ -58,6 +60,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					}
 					opt_pk_free(man, assign_result1);
 					opt_pk_free(man, project_result1);
+					free(assignmentArray);
+					free(tdim);
 				}
 			}
 			opt_pk_free(man, polyhedron1);
