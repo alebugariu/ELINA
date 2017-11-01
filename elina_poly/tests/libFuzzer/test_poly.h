@@ -6,6 +6,10 @@
 #define MIN_NBCONS 1
 #define MAX_NBCONS 50
 #define DESTRUCTIVE false
+#define FROM_TOP 1
+#define TOP_OR_BOTTOM 2
+#define RANDOM_PROGRAM 3
+#define CONSTUCTION_METHOD FROM_TOP
 
 #include "opt_pk.h"
 #include "opt_pk_internal.h"
@@ -15,15 +19,15 @@
 #define R(i) i < K
 
 bool create_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
-		opt_pk_array_t * top, int dim, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp);
+		opt_pk_array_t * top, opt_pk_array_t * bottom, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
-bool create_variable(int *assignedToVariable, int dim, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp);
+bool create_variable(int *assignedToVariable, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
-bool create_assignment(elina_linexpr0_t*** assignmentArray, int assignedToVariable, elina_dim_t** tdim,
-		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
-		FILE *fp);
+bool create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t** tdim, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 		unsigned int *dataIndex);
