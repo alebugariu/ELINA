@@ -1,8 +1,9 @@
 Dim: 2
-Number of constraints: 3
+Number of constraints: 2
 Type: e
 Values: 0, 0, 0
 Type: e
-Values: 34359738375, -9223372036854775808, 0
-Type: e
-Values: 0, 0, 0
+Values: 12303291, -307587573726069951, -4919131752989213765
+Assigned to variable: 0
+Assignment expression: 3026418949592973312, 0, 0
+Assigned to variable: 0
