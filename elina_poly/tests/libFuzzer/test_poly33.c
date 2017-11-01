@@ -27,7 +27,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						opt_pk_is_leq(man, polyhedron1, polyhedron2))) {
 
 					int assignedToVariable;
-					if (create_variable(&assignedToVariable, dim, data,
+					if (create_variable(&assignedToVariable, true, dim, data,
 							dataSize, &dataIndex, fp)) {
 						elina_linexpr0_t** assignmentArray;
 						elina_dim_t * tdim;

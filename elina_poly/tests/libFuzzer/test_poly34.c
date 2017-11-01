@@ -28,7 +28,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					elina_linexpr0_t** assignmentArray;
 					elina_dim_t * tdim;
 
-					if (create_assignment(&assignmentArray, assignedToVariable,
+					if (create_assignment(&assignmentArray, true, assignedToVariable,
 							&tdim, dim, data, dataSize, &dataIndex, fp)) {
 
 						opt_pk_array_t* assign_result1 =
