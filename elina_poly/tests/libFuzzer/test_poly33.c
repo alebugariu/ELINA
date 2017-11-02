@@ -22,6 +22,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data,
 					dataSize, &dataIndex, fp)) {
 
+				fprintf(stdout, "***************************************\n");
+				fflush(stdout);
 				// assignment is monotone
 				if (assume_fuzzable(
 						opt_pk_is_leq(man, polyhedron1, polyhedron2))) {
