@@ -7,6 +7,8 @@
 #define MAX_NBCONS 50
 #define MIN_NBOPS 0
 #define MAX_NBOPS 5
+#define MIN_VALUE -9999
+#define MAX_VALUE 9999
 
 #define DESTRUCTIVE false
 
@@ -20,6 +22,8 @@
 
 #define ASSIGN 1
 #define PROJECT 2
+#define MEET 3
+#define JOIN 4
 
 //for widening
 #define K 100

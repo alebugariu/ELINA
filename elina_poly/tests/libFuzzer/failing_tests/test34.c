@@ -60,11 +60,11 @@ int main(int argc, char **argv) {
 			elina_linexpr0_t** expr_array = (elina_linexpr0_t**) malloc(
 					sizeof(elina_linexpr0_t*));
 
-			long assignemnt_values[3] = { -4919131752989213765,
+			long assignment_values[3] = { -4919131752989213765,
 					-4919131752989213765, 144115191225498555 };
 
 			elina_linexpr0_t* expression = create_linexpr0(dim,
-					assignemnt_values);
+					assignment_values);
 			expr_array[0] = expression;
 			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
 			tdim[0] = 1;

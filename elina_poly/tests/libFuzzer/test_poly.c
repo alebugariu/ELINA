@@ -56,7 +56,15 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 	}
 	fprintf(fp, "Values: ");
 	for (i = 0; i < dim; i++) {
+		if (!assume_fuzzable(
+				fuzzableValues[i] >= MIN_VALUE && fuzzableValues[i] <= MAX_VALUE)) {
+			return false;
+		}
 		fprintf(fp, "%ld, ", fuzzableValues[i]);
+	}
+	if (!assume_fuzzable(
+			fuzzableValues[i] >= MIN_VALUE && fuzzableValues[i] <= MAX_VALUE)) {
+		return false;
 	}
 	fprintf(fp, "%ld\n", fuzzableValues[i]);
 	fflush(fp);
@@ -64,14 +72,8 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 	return true;
 }
 
-bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
+bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
 		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
-	long nbcons;
-
-	if (!create_number_of_constraints(&nbcons, dim, data, dataSize, dataIndex,
-			fp)) {
-		return false;
-	}
 	*lincons0 = elina_lincons0_array_make(nbcons);
 	elina_linexpr0_t* constraint;
 	elina_constyp_t type;
@@ -90,8 +92,14 @@ bool create_constraints(elina_lincons0_array_t *lincons0, int dim,
 bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
 		elina_manager_t* man, opt_pk_array_t * top, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	long nbcons;
+	if (!create_number_of_constraints(&nbcons, dim, data, dataSize, dataIndex,
+			fp)) {
+		return false;
+	}
 	elina_lincons0_array_t constraints;
-	if (!create_constraints(&constraints, dim, data, dataSize, dataIndex, fp)) {
+	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
+			dataIndex, fp)) {
 		return false;
 	}
 	*polyhedron = opt_pk_meet_lincons_array(man, DESTRUCTIVE, top,
@@ -101,6 +109,7 @@ bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
 	if (internal_pk->exn != ELINA_EXC_OVERFLOW) {
 		return true;
 	}
+	elina_lincons0_array_clear(&constraints);
 	return false;
 }
 
@@ -115,20 +124,19 @@ bool create_polyhedron_from_bottom(opt_pk_array_t** polyhedron,
 			fp)) {
 		return false;
 	}
+	elina_lincons0_array_t constraints;
+	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
+			dataIndex, fp)) {
+		return false;
+	}
 
-	elina_linexpr0_t* constraint;
-	elina_constyp_t type;
 	size_t i;
 	for (i = 0; i < nbcons; i++) {
-		if (!create_a_constraint(&constraint, &type, dim, data, dataSize,
-				dataIndex, fp)) {
-			return false;
-		}
-		elina_lincons0_array_t constraints = elina_lincons0_array_make(1);
-		constraints.p[0].constyp = type;
-		constraints.p[0].linexpr0 = constraint;
+		elina_lincons0_array_t a_constraint = elina_lincons0_array_make(1);
+		a_constraint.p[0].constyp = constraints.p[i].constyp;
+		a_constraint.p[0].linexpr0 = constraints.p[i].linexpr0;
 		opt_pk_array_t* meet_result = opt_pk_meet_lincons_array(man,
-		DESTRUCTIVE, top, &constraints);
+		DESTRUCTIVE, top, &a_constraint);
 		opt_pk_internal_t * internal_pk = opt_pk_init_from_manager(man,
 				ELINA_FUNID_MEET_LINCONS_ARRAY);
 		if (internal_pk->exn == ELINA_EXC_OVERFLOW) {
@@ -140,7 +148,7 @@ bool create_polyhedron_from_bottom(opt_pk_array_t** polyhedron,
 			return false;
 		}
 	}
-	free(constraint);
+	elina_lincons0_array_clear(&constraints);
 	return true;
 }
 
@@ -160,12 +168,16 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 
 	bool result;
 	if (top_or_bottom == TOP) {
+		fprintf(fp, "Started with top!\n");
+		fflush(fp);
 		result = create_polyhedron_from_top(polyhedron, man, top, dim, data,
 				dataSize, dataIndex, fp);
 		if (result == false) {
 			return false;
 		}
 	} else if (top_or_bottom == BOTTOM) {
+		fprintf(fp, "Started with bottom!\n");
+		fflush(fp);
 		result = create_polyhedron_from_bottom(polyhedron, man, top, bottom,
 				dim, data, dataSize, dataIndex, fp);
 		if (result == false) {
@@ -195,12 +207,15 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 
 		if (operator == ASSIGN) {
 			int assignedToVariable;
+			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
+					dataIndex, fp)) {
+				return false;
+			}
 			elina_linexpr0_t** assignmentArray;
 			elina_dim_t * tdim;
 
 			if (create_assignment(&assignmentArray, assignedToVariable, &tdim,
 					dim, data, dataSize, dataIndex, fp)) {
-
 				opt_pk_array_t* assign_result = opt_pk_assign_linexpr_array(man,
 				DESTRUCTIVE, *polyhedron, tdim, assignmentArray, 1,
 				NULL);
@@ -211,9 +226,9 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 					return false;
 				}
 				*polyhedron = assign_result;
+				free(assignmentArray);
+				free(tdim);
 			}
-			free(assignmentArray);
-			free(tdim);
 		}
 
 		else if (operator == PROJECT) {
@@ -228,6 +243,84 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 			DESTRUCTIVE, *polyhedron, tdim, 1, false);
 			*polyhedron = project_result;
 			free(tdim);
+		}
+	}
+
+	return true;
+}
+
+bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
+		elina_manager_t* man, opt_pk_array_t * top, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+
+	*polyhedron = top;
+
+	int nbops;
+	if (!make_fuzzable(&nbops, sizeof(int), data, dataSize, dataIndex)) {
+		return false;
+	}
+	if (!assume_fuzzable(nbops >= MIN_NBOPS && nbops <= MAX_NBOPS)) {
+		return false;
+	}
+
+	fprintf(fp, "Number of operators: %d\n", nbops);
+	fflush(fp);
+	size_t i;
+	for (i = 0; i < nbops; i++) {
+		int operator;
+		if (!make_fuzzable(&operator, sizeof(int), data, dataSize, dataIndex)) {
+			return false;
+		}
+		if (!assume_fuzzable(operator == ASSIGN || operator == PROJECT)) {
+			return false;
+		}
+
+		if (operator == ASSIGN) {
+			int assignedToVariable;
+			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
+					dataIndex, fp)) {
+				return false;
+			}
+			elina_linexpr0_t** assignmentArray;
+			elina_dim_t * tdim;
+
+			if (create_assignment(&assignmentArray, assignedToVariable, &tdim,
+					dim, data, dataSize, dataIndex, fp)) {
+				opt_pk_array_t* assign_result = opt_pk_assign_linexpr_array(man,
+				DESTRUCTIVE, *polyhedron, tdim, assignmentArray, 1,
+				NULL);
+				opt_pk_internal_t * assign_internal = opt_pk_init_from_manager(
+						man, ELINA_FUNID_ASSIGN_LINEXPR_ARRAY);
+
+				if (assign_internal->exn == ELINA_EXC_OVERFLOW) {
+					return false;
+				}
+				*polyhedron = assign_result;
+				free(assignmentArray);
+				free(tdim);
+			}
+		}
+
+		else if (operator == PROJECT) {
+			int projectedVariable;
+			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
+					dataIndex, fp)) {
+				return false;
+			}
+			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
+			tdim[0] = projectedVariable;
+			opt_pk_array_t* project_result = opt_pk_forget_array(man,
+			DESTRUCTIVE, *polyhedron, tdim, 1, false);
+			*polyhedron = project_result;
+			free(tdim);
+		}
+
+		else if (operator == MEET) {
+
+		}
+
+		else if (operator == JOIN) {
+
 		}
 	}
 
