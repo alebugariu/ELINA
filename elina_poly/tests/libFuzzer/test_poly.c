@@ -37,8 +37,8 @@ bool create_number_of_constraints(long *nbcons, int dim, const long *data,
 }
 
 bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
-		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
-		FILE *fp) {
+		int dim, unsigned char randomVariable, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	size_t i;
 	if (!make_fuzzable(type, sizeof(*type), data, dataSize, dataIndex)) {
 		return false;
@@ -57,13 +57,17 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 	fprintf(fp, "Values: ");
 	for (i = 0; i < dim; i++) {
 		if (!assume_fuzzable(
-				fuzzableValues[i] >= MIN_VALUE && fuzzableValues[i] <= MAX_VALUE)) {
+				!(randomVariable <= VAR_THRESHOLD)
+						&& (fuzzableValues[i] >= MIN_VALUE
+								&& fuzzableValues[i] <= MAX_VALUE))) {
 			return false;
 		}
 		fprintf(fp, "%ld, ", fuzzableValues[i]);
 	}
 	if (!assume_fuzzable(
-			fuzzableValues[i] >= MIN_VALUE && fuzzableValues[i] <= MAX_VALUE)) {
+			!(randomVariable <= VAR_THRESHOLD)
+					&& (fuzzableValues[i] >= MIN_VALUE
+							&& fuzzableValues[i] <= MAX_VALUE))) {
 		return false;
 	}
 	fprintf(fp, "%ld\n", fuzzableValues[i]);
@@ -73,18 +77,33 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 }
 
 bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
-		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+		unsigned char randomVariable, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
 	*lincons0 = elina_lincons0_array_make(nbcons);
 	elina_linexpr0_t* constraint;
 	elina_constyp_t type;
 	size_t i;
 	for (i = 0; i < nbcons; i++) {
-		if (!create_a_constraint(&constraint, &type, dim, data, dataSize,
-				dataIndex, fp)) {
+		if (!create_a_constraint(&constraint, &type, dim, randomVariable, data,
+				dataSize, dataIndex, fp)) {
 			return false;
 		}
 		lincons0->p[i].constyp = type;
 		lincons0->p[i].linexpr0 = constraint;
+	}
+	return true;
+}
+
+bool create_random_variable(unsigned char *randomVariable, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	if (!make_fuzzable(randomVariable, sizeof(unsigned char), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	if (!assume_fuzzable(
+			*randomVariable >= MIN_RANDOM_VARIABLE
+					&& *randomVariable <= MAX_RANDOM_VARIABLE)) {
+		return false;
 	}
 	return true;
 }
@@ -97,9 +116,16 @@ bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
 			fp)) {
 		return false;
 	}
+
+	unsigned char randomVariable;
+	if (!create_random_variable(&randomVariable, dim, data, dataSize, dataIndex,
+			fp)) {
+		return false;
+	}
+
 	elina_lincons0_array_t constraints;
-	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
-			dataIndex, fp)) {
+	if (!create_constraints(&constraints, nbcons, dim, randomVariable, data,
+			dataSize, dataIndex, fp)) {
 		return false;
 	}
 	*polyhedron = opt_pk_meet_lincons_array(man, DESTRUCTIVE, top,
@@ -124,9 +150,16 @@ bool create_polyhedron_from_bottom(opt_pk_array_t** polyhedron,
 			fp)) {
 		return false;
 	}
+
+	unsigned char randomVariable;
+	if (!create_random_variable(&randomVariable, dim, data, dataSize, dataIndex,
+			fp)) {
+		return false;
+	}
+
 	elina_lincons0_array_t constraints;
-	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
-			dataIndex, fp)) {
+	if (!create_constraints(&constraints, nbcons, dim, randomVariable, data,
+			dataSize, dataIndex, fp)) {
 		return false;
 	}
 
@@ -360,6 +393,12 @@ bool create_variable(int *variable, bool assign, int dim, const long *data,
 bool create_assignment(elina_linexpr0_t*** assignmentArray,
 		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	unsigned char randomVariable;
+	if (!create_random_variable(&randomVariable, dim, data, dataSize, dataIndex,
+			fp)) {
+		return false;
+	}
+
 	long fuzzableValues[MAX_DIM + 1];
 	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
 			dataIndex)) {
@@ -368,7 +407,19 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 	int j;
 	fprintf(fp, "Assignment expression: ");
 	for (j = 0; j < dim; j++) {
+		if (!assume_fuzzable(
+				!(randomVariable <= VAR_THRESHOLD)
+						&& (fuzzableValues[j] >= MIN_VALUE
+								&& fuzzableValues[j] <= MAX_VALUE))) {
+			return false;
+		}
 		fprintf(fp, "%ld, ", fuzzableValues[j]);
+	}
+	if (!assume_fuzzable(
+			!(randomVariable <= VAR_THRESHOLD)
+					&& (fuzzableValues[j] >= MIN_VALUE
+							&& fuzzableValues[j] <= MAX_VALUE))) {
+		return false;
 	}
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);

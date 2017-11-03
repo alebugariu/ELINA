@@ -9,6 +9,9 @@
 #define MAX_NBOPS 5
 #define MIN_VALUE -9999
 #define MAX_VALUE 9999
+#define MIN_RANDOM_VARIABLE 0
+#define MAX_RANDOM_VARIABLE 15
+#define VAR_THRESHOLD 12
 
 #define DESTRUCTIVE false
 
