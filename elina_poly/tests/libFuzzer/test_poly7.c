@@ -13,12 +13,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		elina_manager_t * man = opt_pk_manager_alloc(false);
 		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
+		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
+		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data, dataSize,
 				&dataIndex, fp)) {
 			opt_pk_array_t* polyhedron2;
-			if (create_polyhedron(&polyhedron2, man, top, dim, data, dataSize,
+			if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data, dataSize,
 					&dataIndex, fp)) {
 
 				opt_pk_array_t* join12 = opt_pk_join(man, DESTRUCTIVE,
@@ -32,6 +33,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					//x <= x join y
 					if (opt_pk_is_leq(man, polyhedron1, join12) == false) {
 						opt_pk_free(man, top);
+						opt_pk_free(man, bottom);
 						opt_pk_free(man, polyhedron1);
 						opt_pk_free(man, polyhedron2);
 						opt_pk_free(man, join12);
@@ -46,6 +48,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			opt_pk_free(man, polyhedron1);
 		}
 		opt_pk_free(man, top);
+		opt_pk_free(man, bottom);
 		elina_manager_free(man);
 	}
 	fclose(fp);
