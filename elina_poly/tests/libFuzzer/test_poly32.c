@@ -18,13 +18,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, dim, data, dataSize,
+		if (create_polyhedron(&polyhedron1, man, top, bottom,dim, data, dataSize,
 				&dataIndex, fp)) {
 			opt_pk_array_t* wideningResult;
 			int i = 0;
 			while (true) {
 				opt_pk_array_t* polyhedron2;
-				if (create_polyhedron(&polyhedron2, man, top, dim, data,
+				if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data,
 						dataSize, &dataIndex, fp)) {
 					wideningResult = opt_pk_widening(man, polyhedron1,
 							opt_pk_join(man, DESTRUCTIVE, polyhedron1, polyhedron2));
