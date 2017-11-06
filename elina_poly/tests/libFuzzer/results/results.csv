@@ -10,10 +10,7 @@ test_poly7,10805,180.08333333333334,454,465,15688010,91,PASS
 test_poly8,10806,180.1,465,465,22497613,27,PASS
 test_poly9,1,0.016666666666666666,-,465,4882,0,libFuzzer: deadly signal
 test_poly10,466,7.766666666666667,459,460,1422792,11,libFuzzer: deadly signal
-test_poly8,10807,180.11666666666667,-,465,22806816,28,PASS
-test_poly9,2,0.03333333333333333,-,465,4884,0,libFuzzer: deadly signal
-test_poly10,837,13.95,459,460,3005404,24,libFuzzer: deadly signal
-test_poly11,7800,130.0,452,459,-,-,KILLED
+test_poly11,7800,130.0,452,459,22806816,28,KILLED
 test_poly12,4,0.06666666666666667,-,448,4600,0,libFuzzer: deadly signal
 test_poly13,26,0.43333333333333335,453,453,55951,0,libFuzzer: deadly signal
 test_poly14,7365,122.75,453,454,15280558,80,libFuzzer: deadly signal
