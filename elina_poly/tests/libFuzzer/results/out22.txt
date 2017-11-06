@@ -1,13 +1,29 @@
 Dim: 2
-Number of constraints: 3
-Type: s
-Values: -1099511627776, 255, 63771674411008
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: 5208492444341520456, 5208492444341520456, 5208492444341520456
+Started with bottom!
 Number of constraints: 2
-Type: s
-Values: -1, -1, -1
 Type: e
-Values: 0, 0, 0
+Values: 255, 0, 1024
+Type: e
+Values: 39, 0, 0
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 0, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 255, 0, 0
+Successfully created!
+Started with bottom!
+Number of constraints: 2
+Type: e
+Values: 255, 0, 1024
+Type: e
+Values: 39, 0, 0
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 5, 0, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 255, 0, 0
+Successfully created!

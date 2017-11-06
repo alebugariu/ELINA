@@ -1,8 +1,25 @@
 Dim: 2
-Number of constraints: 3
+Started with top!
+Number of constraints: 2
 Type: s
-Values: -1099511627776, 255, 63771674411008
+Values: 255, -256, 255
 Type: s
-Values: 280375465082880, 16777215, 63771674411008
-Type: e
-Values: 150994945, -9223372036854775808, 0
+Values: 6695, 42, 253
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: -198, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: -198, -1, -1
+Successfully created!
+Started with top!
+Number of constraints: 2
+Type: s
+Values: 255, -256, 255
+Type: s
+Values: 6695, 42, 253
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: -198, -1, -1

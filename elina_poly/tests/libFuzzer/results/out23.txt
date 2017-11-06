@@ -1,8 +1,14 @@
 Dim: 2
-Number of constraints: 3
+Started with bottom!
+Number of constraints: 9
 Type: e
-Values: 0, 0, 0
+Values: 0, -256, 255
 Type: e
-Values: 3, -9223372036854775808, 0
+Values: -1024, 1279, 0
 Type: e
-Values: 0, 0, 0
+Values: -1, -1, -1
+Type: e
+Values: 0, -256, 255
+Type: e
+Values: -1024, 255, 0
+Type: e

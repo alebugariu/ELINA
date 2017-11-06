@@ -1,4 +1,9 @@
 Dim: 2
+Started with bottom!
 Number of constraints: 2
 Type: e
-Values: 187, -9223372036854775767, 52635820644892672
+Values: 255, 0, 1024
+Type: e
+Values: 0, 0, 0
+Number of operators: 2
+ASSIGN

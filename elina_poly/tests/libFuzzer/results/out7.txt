@@ -1,8 +1,9 @@
 Dim: 2
-Number of constraints: 3
-Type: s
-Values: -16492674416640, 255, 63771674411008
+Started with bottom!
+Number of constraints: 2
 Type: e
-Values: 1728053287, -9223372036854775808, 0
+Values: 255, 0, -2048
 Type: e
-Values: 0, 0, 0
+Values: 0, 39, 0
+Number of operators: 0
+Successfully created!

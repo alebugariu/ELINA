@@ -1,18 +1,43 @@
 Dim: 2
-Number of constraints: 3
-Type: e
-Values: 0, 1099511627520, 0
-Type: e
-Values: 0, 8589934592, 606930418728959
-Type: e
-Values: 0, 9288674231451648, -72057594004373504
+Started with bottom!
 Number of constraints: 2
 Type: e
-Values: 606930418728959, 11258999118757632, -72055395014672126
+Values: 255, 0, -2048
 Type: e
-Values: 7668058320836127338, 7668058320836127338, 7668058320836127338
+Values: 39, 0, 1792
+Number of operators: 2
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 5, 0, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 0, 0
+Successfully created!
+Started with bottom!
 Number of constraints: 2
 Type: e
-Values: 0, 36283883716608, -281474976579584
+Values: 255, 0, -2048
 Type: e
-Values: 0, 562949953421312, 17592236375810
+Values: 39, 0, 1792
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 5, 0, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 0, 0
+Successfully created!
+Started with bottom!
+Number of constraints: 2
+Type: e
+Values: 33, 0, -2048
+Type: e
+Values: 255, 0, -2048
+Number of operators: 2
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 5, 0, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 2048, 0, 0
+Successfully created!

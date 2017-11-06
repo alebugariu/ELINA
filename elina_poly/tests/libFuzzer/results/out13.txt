@@ -1,8 +1,23 @@
 Dim: 2
-Number of constraints: 3
+Started with bottom!
+Number of constraints: 2
 Type: e
-Values: 0, 0, 0
+Values: 255, 0, -2048
 Type: e
-Values: 1125899906842631, -9223372036854775808, 0
+Values: 39, 0, 1792
+Number of operators: 2
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 5, 1024, 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 0, 0
+Successfully created!
+Started with bottom!
+Number of constraints: 2
 Type: e
-Values: 0, 0, 0
+Values: 0, 0, 3584
+Type: e
+Values: 39, 0, 1792
+Number of operators: 0
+Successfully created!
