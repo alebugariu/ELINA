@@ -1,5 +1,0 @@
-test case,execution time (seconds),execution time (minutes),initial coverage,final coverage,number of executed units,new units added,status
-test_poly33,46,0.7666666666666667,71,76,164429,174,libFuzzer: deadly signal
-test_poly34,5403,90.05,53,53,52500,0,libFuzzer: timeout
-test_poly35,10802,180.03333333333333,30,30,78943408,0,PASS
-test_poly36,5403,90.05,85,85,142398,33,libFuzzer: timeout
