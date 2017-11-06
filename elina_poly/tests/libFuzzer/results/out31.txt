@@ -8,7 +8,7 @@ Values: 39, 0, 1792
 Number of operators: 2
 ASSIGN
 Assigned to variable: 1
-Assignment expression: 0, 0, 0
+Assignment expression: 5, 1024, 0
 ASSIGN
 Assigned to variable: 0
 Assignment expression: 0, 0, 0
