@@ -1,3 +1,13 @@
 Dim: 2
+<<<<<<< HEAD
 Started with bottom!
 Number of constraints: 2
+=======
+Number of constraints: 3
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 4294967295, 7, -9223372036854775808
+Type: e
+Values: 5714873654208057167, 5714873654208057167, 0
+>>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

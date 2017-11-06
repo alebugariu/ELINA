@@ -1,1 +1,19 @@
 Dim: 2
+<<<<<<< HEAD
+=======
+Number of constraints: 2
+Type: e
+Values: -4919131752989213765, 0, 0
+Type: e
+Values: 0, 0, 0
+Number of constraints: 2
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 0, 0, 0
+Number of constraints: 2
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 187, -9223372036854775808, 0
+>>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

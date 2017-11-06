@@ -1,4 +1,5 @@
 Dim: 2
+<<<<<<< HEAD
 Started with bottom!
 Number of constraints: 2
 Type: e
@@ -41,3 +42,22 @@ ASSIGN
 Assigned to variable: 0
 Assignment expression: 2048, 0, 0
 Successfully created!
+=======
+Number of constraints: 3
+Type: e
+Values: 0, 1099511627520, 0
+Type: e
+Values: 0, 8589934592, 606930418728959
+Type: e
+Values: 0, 9288674231451648, -72057594004373504
+Number of constraints: 2
+Type: e
+Values: 606930418728959, 11258999118757632, -72055395014672126
+Type: e
+Values: 7668058320836127338, 7668058320836127338, 7668058320836127338
+Number of constraints: 2
+Type: e
+Values: 0, 36283883716608, -281474976579584
+Type: e
+Values: 0, 562949953421312, 17592236375810
+>>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

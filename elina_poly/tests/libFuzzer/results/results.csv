@@ -1,4 +1,5 @@
 test case,execution time (seconds),execution time (minutes),initial coverage,final coverage,number of executed units,new units added,status
+<<<<<<< HEAD
 test_poly0,10804,180.06666666666666,453,453,49456080,15,PASS
 test_poly1,10805,180.08333333333334,453,453,49570908,23,PASS
 test_poly2,10805,180.08333333333334,462,462,47211095,13,PASS
@@ -39,3 +40,39 @@ test_poly33,188,3.1333333333333333,456,456,392987,5,libFuzzer: deadly signal
 test_poly34,519,8.65,453,453,1226101,12,libFuzzer: deadly signal
 test_poly35,10801,180.01666666666668,53,53,44106445,12,PASS
 test_poly36,9434,157.23333333333332,454,456,-,-,KILLED
+=======
+test_poly0,5403,90.05,793,793,17937,17,libFuzzer: timeout
+test_poly1,5403,90.05,853,853,223225,248,libFuzzer: timeout
+test_poly2,5403,90.05,912,912,17461,9,libFuzzer: timeout
+test_poly3,5403,90.05,921,922,48917,43,libFuzzer: timeout
+test_poly4,5404,90.06666666666666,933,933,56533,37,libFuzzer: timeout
+test_poly5,0,0.0,-,933,1507,0,libFuzzer: deadly signal
+test_poly6,5403,90.05,889,889,146570,84,libFuzzer: timeout
+test_poly7,5403,90.05,1054,1054,22122,10,libFuzzer: timeout
+test_poly8,5403,90.05,1054,1054,58001,23,libFuzzer: timeout
+test_poly9,1,0.016666666666666666,-,1054,2209,0,libFuzzer: deadly signal
+test_poly10,2,0.03333333333333333,-,1054,3723,0,libFuzzer: deadly signal
+test_poly11,0,0.0,-,1054,-,-,PASS
+test_poly12,1,0.016666666666666666,-,1054,2207,0,libFuzzer: deadly signal
+test_poly13,5403,90.05,1072,1072,14889,8,libFuzzer: timeout
+test_poly14,0,0.0,-,1072,2482,0,libFuzzer: deadly signal
+test_poly15,5403,90.05,800,800,76862,21,libFuzzer: timeout
+test_poly16,1,0.016666666666666666,-,800,1551,0,libFuzzer: deadly signal
+test_poly17,5403,90.05,970,971,22276,10,libFuzzer: timeout
+test_poly18,5403,90.05,974,974,17983,7,libFuzzer: timeout
+test_poly20,27,0.45,41,41,137184,37,libFuzzer: deadly signal
+test_poly21,0,0.0,-,41,1556,0,libFuzzer: deadly signal
+test_poly22,0,0.0,-,41,2332,0,libFuzzer: deadly signal
+test_poly23,5403,90.05,41,41,13434,3,libFuzzer: timeout
+test_poly24,1,0.016666666666666666,-,41,1507,0,libFuzzer: deadly signal
+test_poly25,5403,90.05,43,43,3721732,72,libFuzzer: timeout
+test_poly26,5403,90.05,43,43,4800059,17,libFuzzer: timeout
+test_poly27,0,0.0,-,43,2392,0,libFuzzer: deadly signal
+test_poly28,0,0.0,-,43,2392,0,libFuzzer: deadly signal
+test_poly29,5403,90.05,38,38,30346,3,libFuzzer: timeout
+test_poly30,1,0.016666666666666666,-,38,1532,0,libFuzzer: deadly signal
+test_poly31,5403,90.05,41,41,2489962,12,libFuzzer: timeout
+test_poly32,5403,90.05,39,39,144577,1,libFuzzer: timeout
+test_poly33,5403,90.05,48,48,53440,4,libFuzzer: timeout
+test_poly34,0,0.0,-,48,1774,0,libFuzzer: deadly signal
+>>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

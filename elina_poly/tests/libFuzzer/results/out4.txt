@@ -1,4 +1,5 @@
 Dim: 2
+<<<<<<< HEAD
 Started with top!
 Number of constraints: 2
 Type: s
@@ -23,3 +24,12 @@ Number of operators: 2
 ASSIGN
 Assigned to variable: 0
 Assignment expression: -198, -1, -1
+=======
+Number of constraints: 3
+Type: s
+Values: -1099511627776, 255, 63771674411008
+Type: s
+Values: 280375465082880, 16777215, 63771674411008
+Type: e
+Values: 150994945, -9223372036854775808, 0
+>>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d
