@@ -660,7 +660,14 @@ bool opt_pk_is_eq(elina_manager_t* man, opt_pk_array_t* oa, opt_pk_array_t* ob) 
 				return false;
 			}
 			bool res2 = opt_pk_is_leq(man, ob, oa);
-			bool res = res1 && res2;
+			bool res;
+
+			// FIX TO PROPAGATE THE OVERFLOW RESULT
+			if(res1 == top || res2 == top) {
+				res = top;
+			} else {
+				res = res1 && res2;
+			}
 			return res;
 		}
 	}
