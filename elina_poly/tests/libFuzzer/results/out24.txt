@@ -1,5 +1,4 @@
 Dim: 2
-<<<<<<< HEAD
 Started with bottom!
 Number of constraints: 2
 Type: e
@@ -16,10 +15,3 @@ Type: e
 Values: 0, 0, 0
 Number of operators: 0
 Successfully created!
-=======
-Number of constraints: 2
-Type: e
-Values: -4919131752989213765, 0, 0
-Type: e
-Values: -4919131752989213765, 864691128488689664, 8589934592
->>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

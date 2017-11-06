@@ -1,5 +1,4 @@
 Dim: 2
-<<<<<<< HEAD
 Started with top!
 Number of constraints: 2
 Type: e
@@ -14,10 +13,3 @@ ASSIGN
 Assigned to variable: 1
 Assignment expression: -4097, -1, -1
 Successfully created!
-=======
-Number of constraints: 2
-Type: e
-Values: -3617008641903833651, -3617008641903833651, -3617008641903833651
-Type: e
-Values: 72340172838076673, 588238737703169, 17592186045440
->>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

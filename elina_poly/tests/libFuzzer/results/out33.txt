@@ -1,5 +1,4 @@
 Dim: 2
-<<<<<<< HEAD
 Started with bottom!
 Number of constraints: 2
 Type: e
@@ -29,11 +28,3 @@ Projected variable: 1
 Successfully created!
 Assigned to variable: 1
 Assignment expression: 5, 16, 0
-=======
-Number of constraints: 2
-Type: e
-Values: 0, 0, -4919266699716329472
-Type: e
-Values: -4919131751915471941, 52842235627813819, 131072
-Number of operators: 2
->>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d

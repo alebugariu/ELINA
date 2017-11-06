@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Dim: 2
 Started with bottom!
 Number of constraints: 4
@@ -10,23 +9,3 @@ Type: e
 Values: 0, 0, 0
 Type: e
 Values: -1, -1, -3
-=======
-Dim: 8
-Number of constraints: 8
-Type: e
-Values: -1, -1, 566248488304639, -1, -1, -1, -1, -1, -1
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 48059, 0, 0
-Type: e
-Values: -1, -1, -1, -1, -1, -1, -1, -1, -1
-Type: e
-Values: 0, 0, 128, 0, 0, -4971973988617027584, 187, 0, -9223372036854775808
-Type: e
-Values: -1, -1, -1, -1, -1, -1, -1, -1, -1
-Type: e
-Values: 0, 0, 0, 0, 0, 0, 206411833278464, 0, 0
-Type: e
-Values: -4294967296, -1, -1, -1, -1, -1, -1, -1, -1
-Type: e
-Values: -1, -1, -1, -1, -1, -1, -1, -1, -1
->>>>>>> d9f36ca8fde8e4e8f88fa40b16659362e84b361d
