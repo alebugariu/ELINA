@@ -84,26 +84,30 @@ int main(int argc, char **argv) {
 	long values1[3] = { 255, 0, 1024 };
 	elina_linexpr0_t * linexpr0 = create_linexpr0(dim, values1);
 	lincons0.p[0].linexpr0 = linexpr0;
-	long values2[3] = { 40, 0, 0 };
+	long values2[3] = { 39, 0, 0 };
 	elina_linexpr0_t * linexpr1 = create_linexpr0(dim, values2);
 	lincons0.p[1].linexpr0 = linexpr1;
 
 	if (create_polyhedron_from_bottom(&polyhedron1, man, top, bottom, dim,
 			nbcons, lincons0)) {
-		long assignment_values0[3] = { 0, 0, 0 };
+		long assignment_values0[3] = { 5, 0, 0 };
 		polyhedron1 = assign(dim, man, polyhedron1, assignment_values0, 0);
 
-		long assignment_values1[3] = { 255, 0, 0 };
+		long assignment_values1[3] = { 0, 0, 0 };
 		polyhedron1 = assign(dim, man, polyhedron1, assignment_values1, 0);
 
 		fprintf(stdout, "Successfully created!\n");
+		elina_lincons0_array_t a = opt_pk_to_lincons_array(man, polyhedron1);
+		elina_lincons0_array_print(&a, NULL);
+		printf("is bottom: ");
+		printf("%d\n", opt_pk_is_bottom(man, polyhedron1));
 		fflush(stdout);
-		if (opt_pk_is_eq(man, polyhedron1, bottom) == false) {
-			long assignment_values2[3] = { 0, 0, 0 };
+		if (opt_pk_is_bottom(man, polyhedron1) == false) {
+			long assignment_values2[3] = { 5, 0, 0 };
 			polyhedron1 = assign(dim, man, polyhedron1, assignment_values2, 0);
-			//this test case doesn't fail
+			//the result of the assignment is bottom, even if the initial polyhedron is not bottom
 			printf("assignment result == bottom: ");
-			printf("%d\n", opt_pk_is_eq(man, polyhedron1, bottom));
+			printf("%d\n", opt_pk_is_bottom(man, polyhedron1));
 		}
 	}
 	return 0;
