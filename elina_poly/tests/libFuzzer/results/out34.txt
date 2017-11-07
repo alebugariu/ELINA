@@ -4,14 +4,14 @@ Number of constraints: 2
 Type: e
 Values: 255, 0, 1024
 Type: e
-Values: 40, 0, 0
+Values: 39, 0, 0
 Number of operators: 2
 ASSIGN
 Assigned to variable: 0
-Assignment expression: 0, 0, 0
+Assignment expression: 5, 0, 0
 ASSIGN
 Assigned to variable: 0
-Assignment expression: 255, 0, 0
+Assignment expression: 0, 0, 0
 Successfully created!
 Assigned to variable: 0
-Assignment expression: 0, 0, 0
+Assignment expression: 5, 0, 0
