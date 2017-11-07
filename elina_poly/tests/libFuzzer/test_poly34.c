@@ -18,7 +18,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		opt_pk_array_t* polyhedron1;
 		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data,
 				dataSize, &dataIndex, fp)) {
-			if (opt_pk_is_eq(man, polyhedron1, bottom) == false) {
+			if (opt_pk_is_bottom(man, polyhedron1) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
 
@@ -41,7 +41,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 						if (assign1_internal->exn != ELINA_EXC_OVERFLOW) {
 
-							if (opt_pk_is_eq(man, assign_result1, bottom)
+							if (opt_pk_is_bottom(man, assign_result1)
 									== true) {
 								opt_pk_free(man, top);
 								opt_pk_free(man, bottom);

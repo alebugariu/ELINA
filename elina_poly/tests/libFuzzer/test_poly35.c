@@ -36,7 +36,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 				if (assign1_internal->exn != ELINA_EXC_OVERFLOW) {
 
-					if (opt_pk_is_eq(man, assign_result1, bottom) == false) {
+					if (opt_pk_is_bottom(man, assign_result1) == false) {
 						opt_pk_free(man, top);
 						opt_pk_free(man, bottom);
 						opt_pk_free(man, assign_result1);

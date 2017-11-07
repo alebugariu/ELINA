@@ -33,7 +33,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 					opt_pk_array_t* assign_result1 =
 							opt_pk_assign_linexpr_array(man,
-							DESTRUCTIVE, bottom, tdim, assignmentArray, 1,
+							DESTRUCTIVE, polyhedron1, tdim, assignmentArray, 1,
 							NULL);
 					opt_pk_internal_t * assign1_internal =
 							opt_pk_init_from_manager(man,
