@@ -1,25 +1,28 @@
 Dim: 2
 Started with top!
 Number of constraints: 2
-Type: s
-Values: 255, -256, 255
-Type: s
-Values: 6695, 42, 253
+Type: e
+Values: 39, -224, 255
+Type: e
+Values: 8231, 42, 0
 Number of operators: 2
 ASSIGN
 Assigned to variable: 0
-Assignment expression: -198, -1, -1
+Assignment expression: 187, 1024, 0
 ASSIGN
-Assigned to variable: 0
-Assignment expression: -198, -1, -1
+Assigned to variable: 1
+Assignment expression: -8193, 511, -256
 Successfully created!
 Started with top!
 Number of constraints: 2
-Type: s
-Values: 255, -256, 255
-Type: s
-Values: 6695, 42, 253
+Type: e
+Values: 39, -224, 255
+Type: e
+Values: 8231, 42, 0
 Number of operators: 2
 ASSIGN
 Assigned to variable: 0
-Assignment expression: -198, -1, -1
+Assignment expression: 187, 1024, 0
+PROJECT
+Projected variable: 1
+Successfully created!

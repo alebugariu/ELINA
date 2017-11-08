@@ -1,17 +1,17 @@
 Dim: 2
-Started with bottom!
+Started with top!
 Number of constraints: 2
 Type: e
-Values: 255, 0, 1024
-Type: e
-Values: 39, 0, 0
+Values: 4, -256, 255
+Type: s
+Values: 39, 42, 0
 Number of operators: 0
 Successfully created!
-Started with bottom!
+Started with top!
 Number of constraints: 2
 Type: e
-Values: 0, 0, 0
-Type: e
-Values: 0, 0, 0
+Values: 4, -256, 255
+Type: s
+Values: 39, 42, 0
 Number of operators: 0
 Successfully created!

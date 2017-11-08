@@ -1,17 +1,29 @@
 Dim: 2
 Started with top!
-Number of constraints: 2
+Number of constraints: 13
 Type: e
-Values: 4, -256, 255
-Type: s
-Values: 39, 42, 0
-Number of operators: 2
-ASSIGN
-Assigned to variable: 0
-Assignment expression: -1531, 1279, 0
-ASSIGN
-Assigned to variable: 0
-Assignment expression: -1, -1, -1
-Successfully created!
-Started with top!
-Number of constraints: 2
+Values: -1, -1, -256
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -256, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, 255
+Type: e
+Values: -3, -1, -1
+Type: e
+Values: 0, 256, 0
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, 511
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: 0, 0, 0

@@ -5,24 +5,3 @@ Type: e
 Values: 251, -224, 255
 Type: e
 Values: 8231, 42, 0
-Number of operators: 2
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 251, 1028, 0
-ASSIGN
-Assigned to variable: 1
-Assignment expression: -4097, -1, -1
-Successfully created!
-Started with bottom!
-Number of constraints: 2
-Type: e
-Values: 255, 0, 1024
-Type: e
-Values: 39, 0, 0
-Number of operators: 2
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 0, 0
-PROJECT
-Projected variable: 0
-Successfully created!
