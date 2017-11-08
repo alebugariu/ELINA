@@ -1,11 +1,7 @@
 Dim: 2
 Started with bottom!
-Number of constraints: 4
+Number of constraints: 2
 Type: e
-Values: 0, -256, 255
+Values: 0, 0, 1024
 Type: e
-Values: -4, 0, 0
-Type: e
-Values: 0, 0, 0
-Type: e
-Values: -1, -1, -3
+Values: 227, 

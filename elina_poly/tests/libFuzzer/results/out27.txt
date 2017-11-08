@@ -19,11 +19,5 @@ Type: e
 Values: 39, -224, 255
 Type: e
 Values: 8231, 42, 0
-Number of operators: 2
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 187, 1024, 0
-ASSIGN
-Assigned to variable: 1
-Assignment expression: -1, -1, -1
+Number of operators: 0
 Successfully created!

@@ -1,2 +1,4 @@
-Dim: 2
-Started with bottom!
+Dim: 10
+Started with top!
+Number of constraints: 10
+Number of constraints: 10

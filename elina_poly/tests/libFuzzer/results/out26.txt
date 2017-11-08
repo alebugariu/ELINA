@@ -1,1 +1,3 @@
 Dim: 2
+Started with top!
+Number of constraints: 2

@@ -27,4 +27,4 @@ PROJECT
 Projected variable: 1
 Successfully created!
 Assigned to variable: 1
-Assignment expression: 5, 199, 0
+Assignment expression: -1, -1, -1
