@@ -245,9 +245,11 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 	for (i = 0; i < nbops; i++) {
 		int operator;
 		if (!make_fuzzable(&operator, sizeof(int), data, dataSize, dataIndex)) {
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
 		if (!assume_fuzzable(operator == ASSIGN || operator == PROJECT)) {
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
 
@@ -258,6 +260,7 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 			int assignedToVariable;
 			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
 					dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			elina_linexpr0_t** assignmentArray;
@@ -265,6 +268,7 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 
 			if (!create_assignment(&assignmentArray, assignedToVariable, &tdim,
 					dim, data, dataSize, dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			opt_pk_array_t* assign_result = opt_pk_assign_linexpr_array(man,
@@ -274,6 +278,7 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 					ELINA_FUNID_ASSIGN_LINEXPR_ARRAY);
 
 			if (assign_internal->exn == ELINA_EXC_OVERFLOW) {
+				opt_pk_free(man, *polyhedron);
 				free(assignmentArray);
 				free(tdim);
 				opt_pk_free(man, assign_result);
@@ -290,6 +295,7 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 			int projectedVariable;
 			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
 					dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
@@ -327,11 +333,13 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 	for (i = 0; i < nbops; i++) {
 		int operator;
 		if (!make_fuzzable(&operator, sizeof(int), data, dataSize, dataIndex)) {
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
 		if (!assume_fuzzable(
 				operator == ASSIGN || operator == PROJECT || operator == MEET
 						|| operator == JOIN)) {
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
 
@@ -342,6 +350,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			int assignedToVariable;
 			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
 					dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			elina_linexpr0_t** assignmentArray;
@@ -349,6 +358,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 
 			if (!create_assignment(&assignmentArray, assignedToVariable, &tdim,
 					dim, data, dataSize, dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			opt_pk_array_t* assign_result = opt_pk_assign_linexpr_array(man,
@@ -358,6 +368,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 					ELINA_FUNID_ASSIGN_LINEXPR_ARRAY);
 
 			if (assign_internal->exn == ELINA_EXC_OVERFLOW) {
+				opt_pk_free(man, *polyhedron);
 				free(assignmentArray);
 				free(tdim);
 				opt_pk_free(man, assign_result);
@@ -374,6 +385,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			int projectedVariable;
 			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
 					dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
@@ -390,6 +402,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			opt_pk_array_t *other;
 			if (!create_polyhedron_from_top(&other, man, top, dim, data,
 					dataSize, dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			*polyhedron = opt_pk_meet(man, DESTRUCTIVE, *polyhedron, other);
@@ -401,6 +414,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			opt_pk_array_t *other;
 			if (!create_polyhedron_from_top(&other, man, top, dim, data,
 					dataSize, dataIndex, fp)) {
+				opt_pk_free(man, *polyhedron);
 				return false;
 			}
 			*polyhedron = opt_pk_join(man, DESTRUCTIVE, *polyhedron, other);
