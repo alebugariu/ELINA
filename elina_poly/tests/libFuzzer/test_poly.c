@@ -86,6 +86,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
 	for (i = 0; i < nbcons; i++) {
 		if (!create_a_constraint(&constraint, &type, dim, randomVariable, data,
 				dataSize, dataIndex, fp)) {
+			elina_lincons0_array_clear(lincons0);
 			return false;
 		}
 		lincons0->p[i].constyp = type;
@@ -136,6 +137,7 @@ bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
 		return true;
 	}
 	elina_lincons0_array_clear(&constraints);
+	opt_pk_free(man, *polyhedron);
 	return false;
 }
 
@@ -168,18 +170,24 @@ bool create_polyhedron_from_bottom(opt_pk_array_t** polyhedron,
 		elina_lincons0_array_t a_constraint = elina_lincons0_array_make(1);
 		a_constraint.p[0].constyp = constraints.p[i].constyp;
 		a_constraint.p[0].linexpr0 = constraints.p[i].linexpr0;
+
 		opt_pk_array_t* meet_result = opt_pk_meet_lincons_array(man,
 		DESTRUCTIVE, top, &a_constraint);
 		opt_pk_internal_t * internal_pk = opt_pk_init_from_manager(man,
 				ELINA_FUNID_MEET_LINCONS_ARRAY);
 		if (internal_pk->exn == ELINA_EXC_OVERFLOW) {
+			opt_pk_free(man, meet_result);
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
 		*polyhedron = opt_pk_join(man, DESTRUCTIVE, *polyhedron, meet_result);
 		internal_pk = opt_pk_init_from_manager(man, ELINA_FUNID_JOIN);
 		if (internal_pk->exn == ELINA_EXC_OVERFLOW) {
+			opt_pk_free(man, meet_result);
+			opt_pk_free(man, *polyhedron);
 			return false;
 		}
+		opt_pk_free(man, meet_result);
 	}
 	elina_lincons0_array_clear(&constraints);
 	return true;
@@ -266,6 +274,9 @@ bool create_polyhedron_with_assignment(opt_pk_array_t** polyhedron,
 					ELINA_FUNID_ASSIGN_LINEXPR_ARRAY);
 
 			if (assign_internal->exn == ELINA_EXC_OVERFLOW) {
+				free(assignmentArray);
+				free(tdim);
+				opt_pk_free(man, assign_result);
 				return false;
 			}
 			*polyhedron = assign_result;
@@ -347,6 +358,9 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 					ELINA_FUNID_ASSIGN_LINEXPR_ARRAY);
 
 			if (assign_internal->exn == ELINA_EXC_OVERFLOW) {
+				free(assignmentArray);
+				free(tdim);
+				opt_pk_free(man, assign_result);
 				return false;
 			}
 			*polyhedron = assign_result;

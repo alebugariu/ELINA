@@ -538,15 +538,15 @@ void opt_vector_combine(opt_pk_internal_t* opk,
 
     bool flag = false;
     if(ov1[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
-	 printf("exception division\n");
-         fflush(stdout);
+	 //printf("exception division\n");
+       //  fflush(stdout);
          opk->exn = ELINA_EXC_OVERFLOW;
          return ;
     }
     opk->vector_tmp[1] = opt_numint_abs(ov1[k]/opk->vector_tmp[0]);
     if(ov2[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
-	 printf("exception division\n");
-         fflush(stdout);
+	 //printf("exception division\n");
+       //  fflush(stdout);
          opk->exn = ELINA_EXC_OVERFLOW;
          return ;
     }
@@ -577,8 +577,8 @@ void opt_vector_combine(opt_pk_internal_t* opk,
 
     ov3[k] = 0;
     if(flag){
-             printf("exception \n");
-             fflush(stdout);
+             //printf("exception \n");
+             //fflush(stdout);
              opk->exn = ELINA_EXC_OVERFLOW;
              return ;
     }
@@ -784,8 +784,8 @@ opt_numint_t opt_vector_product_strict(opt_pk_internal_t* opk,
   }
 
   if(flag){
-      printf("exception vector product strict\n");
-      fflush(stdout);
+      //printf("exception vector product strict\n");
+      //fflush(stdout);
       opk->exn = ELINA_EXC_OVERFLOW;
   }
   return prod;
@@ -993,8 +993,8 @@ opt_numint_t opt_vector_product(opt_pk_internal_t* opk,
   }
 
   if(flag){
-             printf("exception vector product\n");
-             fflush(stdout);
+             //printf("exception vector product\n");
+             //fflush(stdout);
              opk->exn = ELINA_EXC_OVERFLOW;
 
   }
@@ -1039,8 +1039,8 @@ opt_numint_t opt_vector_product_with_index(opt_pk_internal_t* opk,
 
   }
   if(flag){
-      printf("exception vector product\n");
-      fflush(stdout);
+      //printf("exception vector product\n");
+      //fflush(stdout);
       opk->exn = ELINA_EXC_OVERFLOW;
 
   }
