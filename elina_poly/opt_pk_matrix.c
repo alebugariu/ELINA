@@ -944,8 +944,8 @@ size_t  opt_matrix_assign_variable(opt_pk_internal_t* opk,opt_matrix_t *nmat,
   }
   nmat->nbrows = i1;
   if(flag){
-             printf("exception assign variable\n");
-             fflush(stdout);
+             //printf("exception assign variable\n");
+             //fflush(stdout);
              opk->exn = ELINA_EXC_OVERFLOW;
              return nbline;
   }
@@ -1117,6 +1117,7 @@ opt_matrix_t* opt_matrix_substitute_variable(opt_pk_internal_t* opk,
        opt_numint_t abs_tab = opt_numint_abs(tab[0]);
        opt_numint_t x1 = INT64_MAX/abs_tab;
        opt_numint_t x2 = INT64_MIN/abs_tab;
+
 	for (j=1; j<mat->nbcolumns; j++) {
 	  if (j!=var){
 	    if (den){
@@ -1134,6 +1135,7 @@ opt_matrix_t* opt_matrix_substitute_variable(opt_pk_internal_t* opk,
 	     }
 	  }
 	}
+
 	/* var column */
 	opt_numint_t abs_tab_var = opt_numint_abs(tab[var]);
        	opt_numint_t x1_var = INT64_MAX/abs_tab_var;
