@@ -65,9 +65,7 @@ bool opt_pk_is_bottom(elina_manager_t* man, opt_pk_array_t* op) {
 				opt_poly_chernikova(man, op_k, NULL);
 				if (opk->exn) {
 					man->result.flag_exact = man->result.flag_best = false;
-					if (opk->exn != ELINA_EXC_OVERFLOW) {
-						opk->exn = ELINA_EXC_NONE;
-					}
+					opk->exn = ELINA_EXC_NONE;
 					record_timing(is_bottom_time);
 					return false;
 				}
@@ -224,6 +222,7 @@ unsigned short int * insertion_sort(unsigned short int *arr,
 
 bool opt_generators_sat_vector(opt_pk_internal_t* opk, opt_matrix_t* F,
 opt_numint_t* tab, bool is_strict) {
+
 	size_t i;
 	if (opt_numint_sgn(tab[0]) == 0) {
 		/* 1. constraint is an equality */
@@ -234,9 +233,7 @@ opt_numint_t* tab, bool is_strict) {
 					F->nbcolumns);
 
 			if (opk->exn) {
-				if (opk->exn != ELINA_EXC_OVERFLOW) {
-					opk->exn = ELINA_EXC_NONE;
-				}
+				opk->exn = ELINA_EXC_NONE;
 				return top;
 			}
 			if (opt_numint_sgn(prod)) {
@@ -257,9 +254,7 @@ opt_numint_t* tab, bool is_strict) {
 			opt_numint_t prod;
 			prod = opt_vector_product_strict(opk, F->p[i], tab, F->nbcolumns);
 			if (opk->exn) {
-				if (opk->exn != ELINA_EXC_OVERFLOW) {
-					opk->exn = ELINA_EXC_NONE;
-				}
+				opk->exn = ELINA_EXC_NONE;
 				return top;
 			}
 			sign = opt_numint_sgn(prod);
@@ -323,9 +318,7 @@ bool opt_pk_is_leq_gen(elina_manager_t * man, opt_pk_array_t *oa,
 			opt_poly_obtain_F(man, poly_a[ka], "is leq first argument");
 
 		if (opk->exn) {
-			if (opk->exn != ELINA_EXC_OVERFLOW) {
-				opk->exn = ELINA_EXC_NONE;
-			}
+			opk->exn = ELINA_EXC_NONE;
 			return false;
 		}
 		if (!poly_a[ka]->F) { /* pa is empty */
@@ -344,9 +337,7 @@ bool opt_pk_is_leq_gen(elina_manager_t * man, opt_pk_array_t *oa,
 			opt_poly_obtain_C(man, poly_b[kb], "is leq second argument");
 
 		if (opk->exn) {
-			if (opk->exn != ELINA_EXC_OVERFLOW) {
-				opk->exn = ELINA_EXC_NONE;
-			}
+			opk->exn = ELINA_EXC_NONE;
 			return false;
 		}
 		if (!poly_b[kb]->C) {/* pb is empty */
@@ -598,6 +589,9 @@ bool opt_pk_is_leq(elina_manager_t *man, opt_pk_array_t *oa, opt_pk_array_t *ob)
 #endif
 		return false;
 	}
+	if (ob->acl->size == 0) {
+		return true;
+	}
 	bool res = opt_pk_is_leq_gen(man, oa, ob);
 #if defined(TIMING)
 	record_timing(is_lequal_time);
@@ -660,14 +654,7 @@ bool opt_pk_is_eq(elina_manager_t* man, opt_pk_array_t* oa, opt_pk_array_t* ob) 
 				return false;
 			}
 			bool res2 = opt_pk_is_leq(man, ob, oa);
-			bool res;
-
-			// FIX TO PROPAGATE THE OVERFLOW RESULT
-			if(res1 == top || res2 == top) {
-				res = top;
-			} else {
-				res = res1 && res2;
-			}
+			bool res = res1 && res2;
 			return res;
 		}
 	}
@@ -711,9 +698,7 @@ bool opt_pk_is_dimension_unconstrained(elina_manager_t* man, opt_pk_array_t* oa,
 
 	opt_poly_chernikova(man, oak, NULL);
 	if (opk->exn) {
-		if (opk->exn != ELINA_EXC_OVERFLOW) {
-			opk->exn = ELINA_EXC_NONE;
-		}
+		opk->exn = ELINA_EXC_NONE;
 #if defined(TIMING)
 		record_timing(poly_is_unconstrained_time);
 #endif
@@ -917,9 +902,7 @@ bool opt_pk_sat_lincons(elina_manager_t* man, opt_pk_array_t* oa,
 			opt_poly_obtain_F(man, oak, NULL);
 		}
 		if (opk->exn) {
-			if (opk->exn != ELINA_EXC_OVERFLOW) {
-				opk->exn = ELINA_EXC_NONE;
-			}
+			opk->exn = ELINA_EXC_NONE;
 			return false;
 		}
 		if (!oak->C && !oak->F) { /* one of the factor is empty */
@@ -1071,9 +1054,7 @@ bool opt_pk_sat_tcons(elina_manager_t* man, opt_pk_array_t* oa,
 			opt_poly_obtain_F(man, oak, "sat tcons input");
 		}
 		if (opk->exn) {
-			if (opk->exn != ELINA_EXC_OVERFLOW) {
-				opk->exn = ELINA_EXC_NONE;
-			}
+			opk->exn = ELINA_EXC_NONE;
 			return false;
 		}
 		if (!oak->F) { /* the factor is empty */
