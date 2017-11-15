@@ -339,7 +339,7 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			return false;
 		}
 		if (!assume_fuzzable(
-				operator == ASSIGN || operator == PROJECT || operator == MEET
+				operator == ASSIGN || operator == MEET
 						|| operator == JOIN)) {
 			if (!opt_pk_is_top(man, *polyhedron)) {
 				opt_pk_free(man, *polyhedron);
@@ -386,25 +386,6 @@ bool create_polyhedron_as_random_program(opt_pk_array_t** polyhedron,
 			}
 			*polyhedron = assign_result;
 			free(assignmentArray);
-			free(tdim);
-			break;
-		}
-		case PROJECT: {
-			fprintf(fp, "PROJECT\n");
-			fflush(fp);
-			int projectedVariable;
-			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
-					dataIndex, fp)) {
-				if (!opt_pk_is_top(man, *polyhedron)) {
-					opt_pk_free(man, *polyhedron);
-				}
-				return false;
-			}
-			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
-			tdim[0] = projectedVariable;
-			opt_pk_array_t* project_result = opt_pk_forget_array(man,
-			DESTRUCTIVE, *polyhedron, tdim, 1, false);
-			*polyhedron = project_result;
 			free(tdim);
 			break;
 		}

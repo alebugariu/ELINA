@@ -392,7 +392,7 @@ bool create_octagon_as_random_program(opt_oct_t** octagon, elina_manager_t* man,
 			return false;
 		}
 		if (!assume_fuzzable(
-				operator == ASSIGN || operator == PROJECT || operator == MEET
+				operator == ASSIGN || operator == MEET
 						|| operator == JOIN || operator == WIDENING)) {
 			if (!opt_oct_is_top(man, *octagon)) {
 				opt_oct_free(man, *octagon);
@@ -426,24 +426,6 @@ bool create_octagon_as_random_program(opt_oct_t** octagon, elina_manager_t* man,
 			DESTRUCTIVE, *octagon, tdim, assignmentArray, 1,
 			NULL);
 			free(assignmentArray);
-			free(tdim);
-			break;
-		}
-		case PROJECT: {
-			fprintf(fp, "PROJECT\n");
-			fflush(fp);
-			int projectedVariable;
-			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
-					dataIndex, fp)) {
-				if (!opt_oct_is_top(man, *octagon)) {
-					opt_oct_free(man, *octagon);
-				}
-				return false;
-			}
-			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
-			tdim[0] = projectedVariable;
-			*octagon = opt_oct_forget_array(man,
-			DESTRUCTIVE, *octagon, tdim, 1, false);
 			free(tdim);
 			break;
 		}
