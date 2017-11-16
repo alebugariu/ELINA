@@ -18,6 +18,7 @@ with open(output_file, 'w') as results_fp:
     writer = csv.writer(results_fp)
     columns = [
         'test case',
+	'seed',
         'execution time (seconds)',
         'execution time (minutes)',
         'initial coverage',
@@ -42,7 +43,10 @@ with open(output_file, 'w') as results_fp:
                 elif last_line is not None:
                    cov = last_line.split('cov: ')[1].split()[0]
                    results['final coverage']=int(cov.strip())
-                if line.startswith('#') and 'INITED' in line:
+		if line.startswith('INFO') and 'Seed' in line:
+		   seed = line.split(':')[2]
+		   results['seed']=int(seed.strip()) 
+                elif line.startswith('#') and 'INITED' in line:
                    cov = line.split('cov: ')[1].split()[0]
                    results['initial coverage']=int(cov.strip())
  		elif 'Killed' in line:
