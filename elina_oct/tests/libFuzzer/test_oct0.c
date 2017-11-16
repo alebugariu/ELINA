@@ -22,9 +22,9 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				&dataIndex, fp)) {
 			// bottom <= x
 			if (!opt_oct_is_leq(man, bottom, octagon1)) {
-				//opt_oct_free(man, top);
-				//opt_oct_free(man, bottom);
-				//opt_oct_free(man, octagon1);
+				opt_oct_free(man, top);
+				opt_oct_free(man, bottom);
+				opt_oct_free(man, octagon1);
 				elina_manager_free(man);
 				fclose(fp);
 				return 1;

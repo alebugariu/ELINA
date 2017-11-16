@@ -27,6 +27,24 @@ elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 	return linexpr0;
 }
 
+elina_linexpr0_t * create_assignment_linexpr0(int dim, long *values) {
+	elina_coeff_t *cst, *coeff;
+	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
+			dim);
+	cst = &linexpr0->cst;
+	elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_DOUBLE);
+
+	size_t i;
+	for (i = 0; i < dim; i++) {
+		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
+		linterm->dim = i;
+		coeff = &linterm->coeff;
+		elina_scalar_set_to_int(coeff->val.scalar, values[i],
+				ELINA_SCALAR_DOUBLE);
+	}
+	return linexpr0;
+}
+
 bool create_number_of_constraints(long *nbcons, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	if (!make_fuzzable(nbcons, sizeof(nbcons), data, dataSize, dataIndex)) {
@@ -132,43 +150,34 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 		return false;
 	}
 
-	fprintf(fp, "Assignment expression: ");
-	fflush(fp);
-	long assignmentValues[5];
-	if (!make_fuzzable(assignmentValues, 5 * sizeof(long), data, dataSize,
+	long fuzzableValues[MAX_DIM + 1];
+	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
 			dataIndex)) {
 		return false;
 	}
-	if (!assume_fuzzable(
-			assignmentValues[0] < dim && assignmentValues[1] < dim
-					&& assignmentValues[0] != assignmentValues[1]
-					&& assignmentValues[0] >= 0 && assignmentValues[1] >= 0)) {
-		return false;
-	}
-	if (!assume_fuzzable(
-			assignmentValues[2] == 1 || assignmentValues[2] == -1
-					|| assignmentValues[2] == 0)) {
-		return false;
-	}
-	if (!assume_fuzzable(
-			assignmentValues[3] == 1 || assignmentValues[3] == -1
-					|| assignmentValues[3] == 0)) {
-		return false;
+	int j;
+	fprintf(fp, "Assignment expression: ");
+	fflush(fp);
+	for (j = 0; j < dim; j++) {
+		if (!assume_fuzzable(
+				!(randomVariable <= VAR_THRESHOLD)
+						&& (fuzzableValues[j] >= MIN_VALUE
+								&& fuzzableValues[j] <= MAX_VALUE))) {
+			return false;
+		}
+		fprintf(fp, "%ld, ", fuzzableValues[j]);
+		fflush(fp);
 	}
 	if (!assume_fuzzable(
 			!(randomVariable <= VAR_THRESHOLD)
-					&& (assignmentValues[4] >= MIN_VALUE
-							&& assignmentValues[4] <= MAX_VALUE))) {
+					&& (fuzzableValues[j] >= MIN_VALUE
+							&& fuzzableValues[j] <= MAX_VALUE))) {
 		return false;
 	}
-	fprintf(fp, "Values: %ld, %ld, %ld, %ld, %ld\n", assignmentValues[0],
-			assignmentValues[1], assignmentValues[2], assignmentValues[3],
-			assignmentValues[4]);
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
 
-	elina_linexpr0_t* expression = create_linexpr0(dim, assignmentValues[0],
-			assignmentValues[1], assignmentValues[2], assignmentValues[3],
-			assignmentValues[4]);
+	elina_linexpr0_t* expression = create_assignment_linexpr0(dim, fuzzableValues);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
 
