@@ -1,8 +1,5 @@
 Dim: 2
-Started with bottom!
+Started with top!
 Number of constraints: 2
 Type: e
-Values: 255, 256, 1024
-Type: e
-Values: 0, 0, -256
-Number of operators: 2
+Values: 6, 

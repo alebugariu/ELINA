@@ -1,1 +1,25 @@
 Dim: 2
+Started with bottom!
+Number of constraints: 20
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -2049, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1
+Type: e
+Values: -1, -1, -1

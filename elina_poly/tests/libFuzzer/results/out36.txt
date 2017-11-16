@@ -4,7 +4,7 @@ Number of constraints: 2
 Type: s
 Values: 4, -256, 255
 Type: s
-Values: 0, 42, 253
+Values: 8231, 42, 253
 Number of operators: 2
 ASSIGN
 Assigned to variable: 0

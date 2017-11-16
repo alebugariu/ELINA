@@ -1,29 +1,9 @@
 Dim: 2
 Started with top!
-Number of constraints: 13
-Type: e
-Values: -1, -1, -256
-Type: e
+Number of constraints: 2
+Type: s
+Values: 4, -256, 255
+Type: s
 Values: -1, -1, -1
-Type: e
-Values: -256, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, 255
-Type: e
-Values: -3, -1, -1
-Type: e
-Values: 0, 256, 0
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, 511
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: 0, 0, 0
+Number of operators: 0
+Successfully created!

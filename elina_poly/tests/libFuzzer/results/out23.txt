@@ -1,2 +1,23 @@
 Dim: 2
-Started with bottom!
+Started with top!
+Number of constraints: 2
+Type: e
+Values: 0, 0, 0
+Type: e
+Values: 8231, 42, 0
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 8379, 1024, 0
+ASSIGN
+Assigned to variable: 1
+Assignment expression: -8193, 511, -256
+Successfully created!
+Started with top!
+Number of constraints: 2
+Type: s
+Values: 8231, -224, 255
+Type: e
+Values: 0, 0, 0
+Number of operators: 0
+Successfully created!

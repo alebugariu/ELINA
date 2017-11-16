@@ -1,6 +1,0 @@
-Dim: 2
-Started with bottom!
-Number of constraints: 13
-Type: e
-Values: -1, -1, -256
-Type: e

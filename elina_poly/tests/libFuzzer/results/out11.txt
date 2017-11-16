@@ -1,7 +1,0 @@
-Dim: 2
-Started with bottom!
-Number of constraints: 4
-Type: e
-Values: 0, -256, 255
-Type: e
-Values: 0, 

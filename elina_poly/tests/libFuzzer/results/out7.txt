@@ -1,9 +1,15 @@
 Dim: 2
-Started with bottom!
+Started with top!
 Number of constraints: 2
 Type: e
-Values: -1, -1, -17
+Values: 39, -224, 255
 Type: e
-Values: -1, -1, -1
-Number of operators: 5
+Values: 8231, 42, 0
+Number of operators: 2
 ASSIGN
+Assigned to variable: 0
+Assignment expression: 187, 1024, 0
+ASSIGN
+Assigned to variable: 1
+Assignment expression: -1, 511, -256
+Successfully created!

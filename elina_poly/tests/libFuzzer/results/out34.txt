@@ -1,15 +1,7 @@
 Dim: 2
-Started with bottom!
-Number of constraints: 8
+Started with top!
+Number of constraints: 2
 Type: e
-Values: -1, -1, -1
+Values: 255, 256, 1024
 Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
-Type: e
-Values: -1, -1, -1
+Values: 0, -1, -1

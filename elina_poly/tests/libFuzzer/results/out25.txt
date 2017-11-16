@@ -1,0 +1,13 @@
+Dim: 2
+Started with bottom!
+Number of constraints: 2
+Type: e
+Values: 255, 0, 1024
+Type: e
+Values: 227, 1024, 0
+Number of operators: 4
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 4608, 40, 0
+ASSIGN
+Assigned to variable: 0
