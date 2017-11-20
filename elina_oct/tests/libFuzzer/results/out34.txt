@@ -1,5 +1,28 @@
-Dim: 7
+Dim: 4
+Number of operators: 5
+MEET
 Number of constraints: 7
-Type: e
-Values: 6, 2, 1, 1, 72057594037927936
 Type: s
+Values: 1, 0, 0, 1, 0
+Type: s
+Values: 1, 2, -1, 1, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 3, 0, 1, 0, 0
+Type: e
+Values: 1, 0, -1, 1, 0
+Type: s
+Values: 0, 3, 0, 1, 0
+Type: e
+Values: 0, 1, 1, -1, -1
+WIDENING
+Number of constraints: 7
+Type: s
+Values: 1, 0, 0, 1, 0
+Type: s
+Values: 1, 2, -1, 1, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 3, 0, 1, 0, 0

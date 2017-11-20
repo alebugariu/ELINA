@@ -1,0 +1,14 @@
+Dim: 4
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 0, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 3, 0, -1, -1
+Successfully created!
+Number of operators: 1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 0, 1, 0
+Successfully created!

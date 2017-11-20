@@ -1,1 +1,6 @@
 Dim: 3
+Number of operators: 1
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1025, 0, 1
+Successfully created!

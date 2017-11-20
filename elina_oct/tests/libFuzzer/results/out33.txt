@@ -1,7 +1,4 @@
-Dim: 3
-Number of constraints: 7
-Type: s
-Values: 1, 0, 0, 1, 72057594037927936
-Type: e
-Values: 0, 1, 0, 1, 0
-Type: s
+Dim: 2
+Number of operators: 2
+ASSIGN
+Assigned to variable: 1

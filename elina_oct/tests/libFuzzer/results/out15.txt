@@ -1,5 +1,0 @@
-Dim: 3
-Number of constraints: 3
-Type: s
-Values: 0, 2, 1, 1, 141581913285459968
-Type: e

@@ -1,31 +1,14 @@
-Dim: 7
-Number of constraints: 7
-Type: e
-Values: 6, 0, 1, 1, 72057594037927936
-Type: e
-Values: 0, 3, 0, 1, 0
-Type: e
-Values: 0, 5, 0, 0, 0
-Type: e
-Values: 0, 1, 0, 1, 0
-Type: e
-Values: 0, 1, 1, 1, 65530
-Type: e
-Values: 6, 2, 1, 1, 72057594037927936
-Type: e
-Values: 0, 3, 0, 1, 0
-Number of constraints: 7
-Type: s
-Values: 0, 2, 1, 1, 72057594037927936
-Type: e
-Values: 0, 1, 0, 1, 0
-Type: e
-Values: 0, 3, 0, 1, 0
-Type: e
-Values: 0, 5, 0, 1, 0
-Type: e
-Values: 0, 1, 0, 1, 0
-Type: e
-Values: 0, 1, 1, 1, 0
-Type: e
-Values: 6, 2, 1, 1, 72057594037927936
+Dim: 3
+Number of operators: 1
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1025, 0, 1
+Successfully created!
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 42, 0, -197
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 1
+Successfully created!

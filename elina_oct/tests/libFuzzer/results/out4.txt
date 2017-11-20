@@ -1,0 +1,35 @@
+Dim: 4
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+Successfully created!
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+Successfully created!

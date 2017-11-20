@@ -1,7 +1,14 @@
 Dim: 3
-Number of constraints: 8
-Type: e
-Values: 1, 2, 1, 1, 72057594037927936
-Type: s
-Values: 0, 2, 1, 1, 72057594037927936
-Type: e
+Number of operators: 1
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 200, 1
+Successfully created!
+Number of operators: 2
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 0, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: -1, -1, -223, -1
+Successfully created!

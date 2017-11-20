@@ -1,2 +1,5 @@
-Dim: 2
-Number of constraints: 2
+Dim: 4
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1

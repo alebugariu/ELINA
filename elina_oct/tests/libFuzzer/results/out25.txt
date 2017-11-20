@@ -1,4 +1,8 @@
-Dim: 3
-Number of constraints: 4
-Type: s
-Values: 0, 2, 1, 1, 72057594037927936
+Dim: 4
+Number of operators: 5
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 0, 0

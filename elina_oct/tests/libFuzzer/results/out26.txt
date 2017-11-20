@@ -1,9 +1,0 @@
-Dim: 7
-Number of constraints: 7
-Type: e
-Values: 6, 2, 1, 1, 72057594037927936
-Type: e
-Values: 0, 3, 1, 1, 0
-Type: s
-Values: 0, 2, 1, 1, 72057594037927936
-Type: e

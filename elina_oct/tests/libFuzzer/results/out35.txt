@@ -1,4 +1,3 @@
-Dim: 3
-Number of constraints: 3
-Type: s
-Values: 1, 0, 0, -1, 72057594037927936
+Dim: 2
+Number of operators: 3
+MEET

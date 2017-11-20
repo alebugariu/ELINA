@@ -1,7 +1,35 @@
-Dim: 3
-Number of constraints: 7
-Type: s
-Values: 1, 2, 1, 1, 72057594037927936
-Type: s
-Values: 0, 2, 1, 1, 72057594037927936
-Type: s
+Dim: 4
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+Successfully created!
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 1
+Assignment expression: 0, 1, 1, -1, -1
+ASSIGN
+Assigned to variable: 3
+Assignment expression: 1, 1, 0, 0, 0
+Successfully created!

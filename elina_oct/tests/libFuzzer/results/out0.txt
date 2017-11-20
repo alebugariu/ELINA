@@ -1,1 +1,2 @@
-Dim: 3
+Dim: 2
+Number of operators: 3
