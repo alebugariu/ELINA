@@ -78,7 +78,8 @@ extern "C" {
 	extern double fold_time;
 	extern double sat_lincons_time;
 	extern double assign_linexpr_time;
-    extern double narrowing_time;
+	extern double oct_is_unconstrained_time;
+        extern double narrowing_time;
 #endif
 
 #define min fmin

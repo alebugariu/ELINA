@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -55,12 +55,7 @@ bool opt_oct_is_top(elina_manager_t* man, opt_oct_t* o)
 bool opt_oct_is_leq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 {
   opt_oct_internal_t* pr = opt_oct_init_from_manager(man,ELINA_FUNID_IS_LEQ,0);
-   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim)){
-	   printf("%d %d\n", o1->dim , o2->dim );
-	   printf("%d %d\n", o1->intdim , o2->intdim );
-	   return false;
-
-   }
+   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim))return false;
   if (pr->funopt->algorithm>=0){ opt_oct_cache_closure(pr,o1);}
   if (!o1->closed && !o1->m) {
     /* a1 definitively empty */
@@ -78,7 +73,17 @@ bool opt_oct_is_leq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
   else {
     opt_oct_mat_t *oo1 = o1->closed ? o1->closed : o1->m;
     opt_oct_mat_t *oo2 = o2->closed ? o2->closed : o2->m;
+	/*printf("INPUT\n");
+  elina_lincons0_array_t arr1 = opt_oct_to_lincons_array(man,o1);
+  elina_lincons0_array_fprint(stdout,&arr1,NULL);
+  elina_lincons0_array_clear(&arr1);
+  elina_lincons0_array_t arr2 = opt_oct_to_lincons_array(man,o2);
+  elina_lincons0_array_fprint(stdout,&arr2,NULL);
+  elina_lincons0_array_clear(&arr2);
+  fflush(stdout);*/
     bool res= is_lequal_half(oo1, oo2, o1->dim);
+	//printf("res: %d\n",res);
+	//fflush(stdout);
     //if(res){
 	//opt_oct_fprint(stdout,man,oo1,NULL);
     //}
@@ -90,7 +95,7 @@ bool opt_oct_is_leq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 bool opt_oct_is_eq(elina_manager_t* man, opt_oct_t* o1, opt_oct_t* o2)
 {
   opt_oct_internal_t* pr = opt_oct_init_from_manager(man,ELINA_FUNID_IS_EQ,0);
-   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim)){return false;}
+   if((o1->dim != o2->dim) || (o1->intdim != o2->intdim))return false;
   if (pr->funopt->algorithm>=0) {
     opt_oct_cache_closure(pr,o1);
     opt_oct_cache_closure(pr,o2);
@@ -141,7 +146,8 @@ elina_interval_t** opt_oct_to_box(elina_manager_t* man, opt_oct_t* o)
   elina_interval_t** in = elina_interval_array_alloc(o->dim);
   size_t i;
   if (pr->funopt->algorithm>=0) {
-	opt_oct_cache_closure(pr,o);
+
+		opt_oct_cache_closure(pr,o);
   }
   #if defined(TIMING)
 	start_timing();
@@ -387,56 +393,86 @@ bool opt_oct_is_dimension_unconstrained(elina_manager_t* man, opt_oct_t* o,
 {
   opt_oct_internal_t* pr =
     opt_oct_init_from_manager(man,ELINA_FUNID_IS_DIMENSION_UNCONSTRAINED,0);
-  if(dim<o->dim){
+  if(dim>=o->dim){
 	return false;
   }
   if (!o->closed && !o->m)
     /* definitively empty */
     return false;
   else {
+    #if defined(TIMING)
+	start_timing();
+    #endif
     opt_oct_mat_t * oo = o->closed ? o->closed : o->m;
     double * m = oo->mat;
     size_t i, d2=2*dim;
     if(!oo->is_dense){
 	array_comp_list_t *acl = oo->acl;
-	comp_list_t * cl = acl->head;
-	while(cl!=NULL){
-		unsigned short int *ca = to_sorted_array(cl,dim);
-		unsigned short int comp_size = cl->size;
-		unsigned short int j;
-		for(j=0; j< comp_size; j++){
-			unsigned short int j1 = ca[j];
-			if(j1==dim){
-				if(m[opt_matpos2(d2,d2+1)]!=INFINITY || m[opt_matpos2(d2+1,d2)]!=INFINITY){
-					return false;
-				}
-			}
-			else{
-				if(m[opt_matpos2(2*j1,d2)]!=INFINITY){
-					return false;
-				}
-				if(m[opt_matpos2(2*j1+1,d2)]!=INFINITY){
-					return false;
-				}
-				if(m[opt_matpos2(2*j1,d2+1)]!=INFINITY){
-					return false;
-				}
-				if(m[opt_matpos2(2*j1+1,d2+1)]!=INFINITY){
-					return false;
-				}
-			}
-		} 
-		free(ca);
-		cl = cl->next;
+	comp_list_t * cl = find(acl,dim);
+	if(cl==NULL){
+		return true;
 	}
+	unsigned short int *ca = to_sorted_array(cl,o->dim);
+	unsigned short int comp_size = cl->size;
+	unsigned short int j;
+	for(j=0; j< comp_size; j++){
+		unsigned short int j1 = ca[j];
+		if(j1==dim){
+			if(m[opt_matpos2(d2,d2+1)]!=INFINITY || m[opt_matpos2(d2+1,d2)]!=INFINITY){
+				#if defined(TIMING)
+					record_timing(oct_is_unconstrained_time);
+   				 #endif
+				return false;
+			}
+		}
+		else{
+			if(m[opt_matpos2(2*j1,d2)]!=INFINITY){
+				#if defined(TIMING)
+					record_timing(oct_is_unconstrained_time);
+   				 #endif
+				return false;
+			}
+			if(m[opt_matpos2(2*j1+1,d2)]!=INFINITY){
+				#if defined(TIMING)
+					record_timing(oct_is_unconstrained_time);
+   				 #endif
+				return false;
+			}
+			if(m[opt_matpos2(2*j1,d2+1)]!=INFINITY){
+				#if defined(TIMING)
+					record_timing(oct_is_unconstrained_time);
+   				 #endif
+				return false;
+			}
+			if(m[opt_matpos2(2*j1+1,d2+1)]!=INFINITY){
+				#if defined(TIMING)
+					record_timing(oct_is_unconstrained_time);
+   				 #endif
+				return false;
+			}
+		}
+	}
+	free(ca);
     }
     else{
 	for (i=0;i<2*o->dim;i++) {
-      		if ((m[opt_matpos2(i,d2)]!=INFINITY) && (i!=d2)) return false;
-      		if ((m[opt_matpos2(i,d2+1)]!=INFINITY) && (i!=d2+1)) return false;
+      		if ((m[opt_matpos2(i,d2)]!=INFINITY) && (i!=d2)){
+			#if defined(TIMING)
+				record_timing(oct_is_unconstrained_time);
+   			 #endif
+			 return false;
+		}
+      		if ((m[opt_matpos2(i,d2+1)]!=INFINITY) && (i!=d2+1)){
+			 #if defined(TIMING)
+				record_timing(oct_is_unconstrained_time);
+   			 #endif
+			 return false;
+		}
     	}
     }
-    
+    #if defined(TIMING)
+	record_timing(oct_is_unconstrained_time);
+    #endif
     return true;
   }
 }
@@ -609,4 +645,3 @@ bool opt_oct_sat_tcons(elina_manager_t* man, opt_oct_t* o,
 {
   return elina_generic_sat_tcons(man,o,cons,ELINA_SCALAR_DOUBLE,false);
 }
-

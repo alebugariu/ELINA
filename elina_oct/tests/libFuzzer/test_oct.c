@@ -13,17 +13,17 @@ elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
 	cst = &linexpr0->cst;
 
-	elina_scalar_set_to_int(cst->val.scalar, scalar_value, ELINA_SCALAR_DOUBLE);
+	elina_scalar_set_double(cst->val.scalar, scalar_value);
 
 	elina_linterm_t * linterm = &linexpr0->p.linterm[0];
 	linterm->dim = v1;
 	coeff = &linterm->coeff;
-	elina_scalar_set_to_int(coeff->val.scalar, coeff1, ELINA_SCALAR_DOUBLE);
+	elina_scalar_set_double(coeff->val.scalar, coeff1);
 
 	linterm = &linexpr0->p.linterm[1];
 	linterm->dim = v2;
 	coeff = &linterm->coeff;
-	elina_scalar_set_to_int(coeff->val.scalar, coeff2, ELINA_SCALAR_DOUBLE);
+	elina_scalar_set_double(coeff->val.scalar, coeff2);
 	return linexpr0;
 }
 
@@ -32,15 +32,14 @@ elina_linexpr0_t * create_assignment_linexpr0(int dim, long *values) {
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
 			dim);
 	cst = &linexpr0->cst;
-	elina_scalar_set_to_int(cst->val.scalar, values[dim], ELINA_SCALAR_DOUBLE);
+	elina_scalar_set_double(cst->val.scalar, values[dim]);
 
 	size_t i;
 	for (i = 0; i < dim; i++) {
 		elina_linterm_t * linterm = &linexpr0->p.linterm[i];
 		linterm->dim = i;
 		coeff = &linterm->coeff;
-		elina_scalar_set_to_int(coeff->val.scalar, values[i],
-				ELINA_SCALAR_DOUBLE);
+		elina_scalar_set_double(coeff->val.scalar, values[i]);
 	}
 	return linexpr0;
 }
@@ -177,7 +176,8 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
 
-	elina_linexpr0_t* expression = create_assignment_linexpr0(dim, fuzzableValues);
+	elina_linexpr0_t* expression = create_assignment_linexpr0(dim,
+			fuzzableValues);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
 
@@ -401,8 +401,8 @@ bool create_octagon_as_random_program(opt_oct_t** octagon, elina_manager_t* man,
 			return false;
 		}
 		if (!assume_fuzzable(
-				operator == ASSIGN || operator == MEET
-						|| operator == JOIN || operator == WIDENING)) {
+				operator == ASSIGN || operator == MEET || operator == JOIN
+						|| operator == WIDENING)) {
 			if (!opt_oct_is_top(man, *octagon)) {
 				opt_oct_free(man, *octagon);
 			}
@@ -434,6 +434,10 @@ bool create_octagon_as_random_program(opt_oct_t** octagon, elina_manager_t* man,
 			*octagon = opt_oct_assign_linexpr_array(man,
 			DESTRUCTIVE, *octagon, tdim, assignmentArray, 1,
 			NULL);
+			fprintf(fp, "Assignment result!\n");
+			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, *octagon);
+			elina_lincons0_array_fprint(fp, &a1, NULL);
+			fflush(fp);
 			free(assignmentArray);
 			free(tdim);
 			break;
