@@ -199,7 +199,7 @@ opt_oct_t* opt_oct_assign_linexpr_array(elina_manager_t* man, bool destructive,
 
 opt_oct_t* opt_oct_meet_lincons_array(elina_manager_t* man, bool destructive,
 		opt_oct_t* o, elina_lincons0_array_t* array) {
-	printf(".");
+	//printf(".");
 	fflush(stdout);
 	//printf("meet lincons INPUT\n");
 	//elina_lincons0_array_t arr1 = opt_oct_to_lincons_array(man,o);
