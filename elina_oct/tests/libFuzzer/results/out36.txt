@@ -1,5 +1,28 @@
-Dim: 4
+Dim: 7
 Number of operators: 5
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
+MEET
+Number of constraints: 7
+Type: s
+Values: 1, 5, 0, 1, 0
+Type: s
+Values: 1, 2, -1, 1, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: s
+Values: 2, 0, 1, 0, 0
+Type: e
+Values: 1, 4, 0, 1, 0
+Type: s
+Values: 0, 3, 1, 1, 0
+Type: e
+Values: 0, 1, 1, -1, -1
+MEET
+Number of constraints: 7
+Type: s
+Values: 1, 4, 0, 1, 0
+Type: s
+Values: 1, 2, -1, 1, 0
+Type: e
+Values: 0, 1, 0, 0, 0
+Type: e
+Values: 3, 0, 1, 0, 0

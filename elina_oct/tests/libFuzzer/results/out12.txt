@@ -1,14 +1,23 @@
 Dim: 4
-Number of operators: 2
+Number of operators: 5
 ASSIGN
 Assigned to variable: 0
-Assignment expression: 0, 1, 0, -1, -1
+Assignment expression: 0, 1, 0, 0, 0
+Assignment result!
+array of constraints of size 2
+ 0: -x0 + x1 >= 0
+ 1: x0 - x1 >= 0
 ASSIGN
 Assigned to variable: 2
-Assignment expression: 0, 1, 0, -1, -1
-Successfully created!
-Number of operators: 1
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 0, 1, 0
-Successfully created!
+Assignment expression: 0, 1, 0, 0, 0
+Assignment result!
+array of constraints of size 6
+ 0: -x0 + x1 >= 0
+ 1: x0 - x1 >= 0
+ 2: -x0 + x2 >= 0
+ 3: -x1 + x2 >= 0
+ 4: x0 - x2 >= 0
+ 5: x1 - x2 >= 0
+JOIN
+Number of constraints: 7
+Type: s

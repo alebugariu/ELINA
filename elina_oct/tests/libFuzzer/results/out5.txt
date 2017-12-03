@@ -1,18 +1,6 @@
-Dim: 4
-Number of operators: 5
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 1
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 1
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
-Successfully created!
+Dim: 15
+Number of operators: 1
+MEET
+Number of constraints: 23
+Type: s
+Values: 5, 0, -1, -1, -1

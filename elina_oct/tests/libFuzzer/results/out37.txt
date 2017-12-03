@@ -1,35 +1,69 @@
 Dim: 4
 Number of operators: 5
 ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
 Assigned to variable: 1
 Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+empty array of constraints
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 0, 0
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
+ASSIGN
+Assigned to variable: 3
+Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
 ASSIGN
 Assigned to variable: 0
 Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
 ASSIGN
 Assigned to variable: 1
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
+Assignment expression: -1, -1, -1, -1, -1
+Assignment result!
+empty array of constraints
 Successfully created!
 Number of operators: 5
 ASSIGN
 Assigned to variable: 1
 Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+empty array of constraints
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 0, 0
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
+ASSIGN
+Assigned to variable: 3
+Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
 ASSIGN
 Assigned to variable: 0
 Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 1
-Assignment expression: 0, 1, 1, -1, -1
-ASSIGN
-Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
 ASSIGN
 Assigned to variable: 0
-Assignment expression: 0, 1, 1, -1, -1
+Assignment expression: -1, -1, -1, -1, -1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 >= 0
+ 1: x1 - x2 >= 0
 Successfully created!

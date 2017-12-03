@@ -1,3 +1,0 @@
-Dim: 2
-Number of operators: 3
-MEET

@@ -1,0 +1,10 @@
+Dim: 3
+Number of operators: 1
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 1, 0, 0
+Assignment result!
+array of constraints of size 2
+ 0: -x0 + x1 >= 0
+ 1: x0 - x1 >= 0
+Successfully created!

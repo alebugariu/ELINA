@@ -1,5 +1,19 @@
-Dim: 4
-Number of operators: 5
+Dim: 3
+Number of operators: 1
 ASSIGN
-Assigned to variable: 3
-Assignment expression: 0, 1, 1, -1, -1
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 - 1 >= 0
+ 1: x1 - x2 + 1 >= 0
+Successfully created!
+Number of operators: 1
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 0, 1, 0, 1
+Assignment result!
+array of constraints of size 2
+ 0: -x1 + x2 - 1 >= 0
+ 1: x1 - x2 + 1 >= 0
+Successfully created!
