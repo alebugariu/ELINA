@@ -5,10 +5,11 @@
 #include "opt_oct_internal.h"
 #include "opt_oct_hmat.h"
 
-#define MIN_DIM 1
+#define MIN_DIM 2
 #define MAX_DIM 20
-#define MIN_NBCONS 1
-#define MAX_NBCONS 50
+
+#define MAX_POOL_SIZE 20000
+
 #define MIN_NBOPS 0
 #define MAX_NBOPS 5
 #define MIN_VALUE -9999
@@ -19,33 +20,26 @@
 
 #define DESTRUCTIVE false
 
-#define FROM_TOP 1
-#define WITH_ASSIGNMENT 2
-#define RANDOM_PROGRAM 3
-#define CONSTRUCTION_METHOD RANDOM_PROGRAM
-
-#define TOP 1
-#define BOTTOM 2
-
-#define ASSIGN 1
-#define PROJECT 2
-#define MEET 3
-#define JOIN 4
-#define WIDENING 5
+#define ASSIGN 0
+#define MEET 1
+#define JOIN 2
+#define WIDENING 3
 
 //for widening
 #define K 100
 #define R(i) i < K
 
-bool create_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
-		opt_oct_t * bottom, int dim, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp);
+bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
+		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
+		FILE *fp);
 
-bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
+void free_pool(elina_manager_t* man);
+
+bool get_octagon_from_pool(opt_oct_t** octagon, const long *data, size_t dataSize,
 		unsigned int *dataIndex);
-bool assume_fuzzable(bool condition);
 
-bool make_fuzzable_dimension(int * dim, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp);
+int create_dimension(FILE *fp);
+
+bool assume_fuzzable(bool condition);
 
 #endif /* TEST_OCT_H_ */
