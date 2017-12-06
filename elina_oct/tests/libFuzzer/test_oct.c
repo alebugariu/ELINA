@@ -27,7 +27,7 @@ elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 	return linexpr0;
 }
 
-elina_linexpr0_t * create_assignment_linexpr0(int dim, long *values) {
+elina_linexpr0_t * create_polyhedral_linexpr0(int dim, long *values) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE,
 			dim);
@@ -176,7 +176,7 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
 
-	elina_linexpr0_t* expression = create_assignment_linexpr0(dim,
+	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
 			fuzzableValues);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
