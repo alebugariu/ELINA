@@ -48,6 +48,9 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
+bool create_conditional(elina_lincons0_array_t *conditionalExpression, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp);
+
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 		unsigned int *dataIndex);
 bool assume_fuzzable(bool condition);
