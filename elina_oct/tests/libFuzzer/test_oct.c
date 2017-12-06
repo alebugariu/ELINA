@@ -217,13 +217,7 @@ bool create_variable(int *variable, bool assign, int dim, const long *data,
 bool increase_pool(elina_manager_t* man, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 
-	int nbops;
-	if (!make_fuzzable(&nbops, sizeof(int), data, dataSize, dataIndex)) {
-		return false;
-	}
-	if (!assume_fuzzable(nbops >= MIN_NBOPS + 1 && nbops <= MAX_NBOPS)) {
-		return false;
-	}
+	int nbops = NBOPS;
 
 	fprintf(fp, "Number of operators: %d\n", nbops);
 	fflush(fp);

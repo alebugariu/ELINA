@@ -10,8 +10,7 @@
 
 #define MAX_POOL_SIZE 20000
 
-#define MIN_NBOPS 0
-#define MAX_NBOPS 5
+#define NBOPS 32
 #define MIN_VALUE -9999
 #define MAX_VALUE 9999
 #define MIN_RANDOM_VARIABLE 0
