@@ -1,0 +1,44 @@
+Dim: 4
+Number of operators: 5
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 0, 0, 0, 0, -1
+Assignment result!
+array of constraints of size 2
+ 0: x0 + 1 >= 0
+ 1: -x0 - 1 >= 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 1024, 0, 0, 0, -1
+Assignment result!
+array of constraints of size 2
+ 0: x0 + 1025 >= 0
+ 1: -x0 - 1025 >= 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 4, 0, 0, 0, -1
+Assignment result!
+array of constraints of size 2
+ 0: x0 + 4101 >= 0
+ 1: -x0 - 4101 >= 0
+ASSIGN
+Assigned to variable: 0
+Assignment expression: 4, 0, 0, 0, -1
+Assignment result!
+array of constraints of size 2
+ 0: x0 + 16405 >= 0
+ 1: -x0 - 16405 >= 0
+ASSIGN
+Assigned to variable: 2
+Assignment expression: 1024, 0, 0, 0, 0
+Assignment result!
+array of constraints of size 6
+ 0: x0 + 16405 >= 0
+ 1: -x0 - 16405 >= 0
+ 2: -x0 + x2 + 16782315 >= 0
+ 3: x2 + 16798720 >= 0
+ 4: x0 - x2 - 16782315 >= 0
+ 5: -x2 - 16798720 >= 0
+Successfully created!
+Assigned to variable: 1
+Assignment expression: 255, 0, 0, 0, 97
