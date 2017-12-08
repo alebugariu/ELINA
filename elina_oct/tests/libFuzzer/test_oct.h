@@ -9,6 +9,7 @@
 #define MAX_DIM 20
 
 #define MAX_POOL_SIZE 20000
+#define SEED 12345678
 
 #define NBOPS 32
 #define MIN_VALUE -9999
@@ -20,9 +21,10 @@
 #define DESTRUCTIVE false
 
 #define ASSIGN 0
-#define MEET 1
-#define JOIN 2
-#define WIDENING 3
+#define PROJECT 1
+#define MEET 2
+#define JOIN 3
+#define WIDENING 4
 
 //for widening
 #define K 100
