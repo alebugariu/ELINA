@@ -12,7 +12,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	FILE *fp;
 	fp = fopen("out32.txt", "w+");
 
-	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dim, data, dataSize, &dataIndex, fpdataIndex, fp)) {
 
 		elina_manager_t * man = opt_oct_manager_alloc();
 		opt_oct_t * top = opt_oct_top(man, dim, 0);
@@ -21,13 +21,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, bottom, dim, data, dataSize,
+		if (get_octagon_from_pool(&octagon1, man, top, bottom, dim, data, dataSize,
 				&dataIndex, fp)) {
 			opt_oct_t* wideningResult;
 			int i = 0;
 			while (true) {
 				opt_oct_t* octagon2;
-				if (create_octagon(&octagon2, man, top, bottom, dim, data,
+				if (get_octagon_from_pool(&octagon2, man, top, bottom, dim, data,
 						dataSize, &dataIndex, fp)) {
 					wideningResult = opt_oct_widening(man, octagon1, octagon2);
 					if (opt_oct_is_leq(man, wideningResult, octagon1)) {

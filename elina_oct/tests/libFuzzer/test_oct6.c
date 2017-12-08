@@ -8,19 +8,20 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim;
 	FILE *fp;
 	fp = fopen("out6.txt", "w+");
 
-	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
+	int dim = create_dimension(fp);
 
-		elina_manager_t * man = opt_oct_manager_alloc();
-		opt_oct_t * top = opt_oct_top(man, dim, 0);
-		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+	elina_manager_t * man = opt_oct_manager_alloc();
+	opt_oct_t * top = opt_oct_top(man, dim, 0);
+	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, bottom, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (get_octagon_from_pool(&octagon1, man, top, bottom, dim, data,
+				dataSize, &dataIndex, fp)) {
 
 			//meet == glb, join == lub
 			//x join top == top

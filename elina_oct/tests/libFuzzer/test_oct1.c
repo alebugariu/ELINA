@@ -8,34 +8,35 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim;
 	FILE *fp;
 	fp = fopen("out1.txt", "w+");
 
-	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
-		elina_manager_t * man = opt_oct_manager_alloc();
-		opt_oct_t * top = opt_oct_top(man, dim, 0);
-		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+	int dim = create_dimension(fp);
+
+	elina_manager_t * man = opt_oct_manager_alloc();
+	opt_oct_t * top = opt_oct_top(man, dim, 0);
+	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
+
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		if (create_octagon(&octagon1, man, top, bottom, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
 
 			// x <= top
 			if (!opt_oct_is_leq(man, octagon1, top)) {
-				opt_oct_free(man, top);
-				opt_oct_free(man, bottom);
-				opt_oct_free(man, octagon1);
+				fprintf(fp, "found octagon: ");
+				elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
+						octagon1);
+				elina_lincons0_array_fprint(fp, &a, NULL);
+				fflush(fp);
+				free_pool(man);
 				elina_manager_free(man);
 				fclose(fp);
 				return 1;
 			}
-			opt_oct_free(man, octagon1);
 		}
-		opt_oct_free(man, top);
-		opt_oct_free(man, bottom);
-		elina_manager_free(man);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 

@@ -95,9 +95,7 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 
 								long constant;
 								if (i == 3) {
-									constant =
-											rand()
-													% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+									constant = rand() % (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
 								} else {
 									constant = constants[i];
 								}
