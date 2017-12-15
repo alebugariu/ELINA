@@ -8,6 +8,7 @@
 #include <math.h>
 
 int pool_size = -1;
+int initial_pool_size = -1;
 opt_oct_t** pool = NULL;
 int dim;
 
@@ -61,23 +62,15 @@ bool exists(elina_manager_t* man, opt_oct_t *octagon) {
 void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, FILE *fp) {
 
+	srand(SEED);
 	long coefficients[3] = { 0, -1, 1 };
-	long constants[4] = { 0, LONG_MIN, LONG_MAX, rand()
-			% (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE };
+	long constants[3] = { 0, LONG_MIN, LONG_MAX };
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
 
 	pool = (opt_oct_t **) malloc(MAX_POOL_SIZE * sizeof(opt_oct_t *));
 
 	pool[++pool_size] = top;
-	elina_lincons0_array_t a = opt_oct_to_lincons_array(man, pool[pool_size]);
-	fprintf(fp, "Initial pool:\n");
-	fprintf(fp, "octagon %d: ", pool_size);
-	elina_lincons0_array_fprint(fp, &a, NULL);
 	pool[++pool_size] = bottom;
-	a = opt_oct_to_lincons_array(man, pool[pool_size]);
-	fprintf(fp, "octagon %d: ", pool_size);
-	elina_lincons0_array_fprint(fp, &a, NULL);
-	fflush(fp);
 
 	int v1, v2;
 	int coeff1, coeff2;
@@ -91,7 +84,8 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 						for (j = 0; j < 2; j++) {
 							double probability = (double) rand()
 									/ (double) ((unsigned) RAND_MAX + 1);
-							if (probability <= (NBOPS - pool_size) / pow(dim, 3)) {
+							if (probability
+									<= (NBOPS - pool_size) / pow(dim, 3)) {
 
 								long constant;
 								if (i == 3) {
@@ -112,11 +106,8 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 										&& !opt_oct_is_top(man, octagon)
 										&& !exists(man, octagon)) {
 									pool[++pool_size] = octagon;
-									a = opt_oct_to_lincons_array(man,
-											pool[pool_size]);
-									fprintf(fp, "octagon %d: ", pool_size);
-									elina_lincons0_array_fprint(fp, &a, NULL);
-									fflush(fp);
+								} else {
+									opt_oct_free(man, octagon);
 								}
 							}
 						}
@@ -125,9 +116,10 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 			}
 		}
 	}
+	initial_pool_size = pool_size;
 	fprintf(fp, "Successfully initialized the pool!\n");
 	fflush(fp);
-	printf("Initial pool size: %d\n", pool_size);
+	printf("Initial pool size: %d\n", initial_pool_size);
 	fflush(stdout);
 }
 
@@ -156,7 +148,7 @@ void create_assignment(elina_linexpr0_t*** assignmentArray,
 	int j;
 	fprintf(fp, "Assignment expression: ");
 	fflush(fp);
-	for (j = 0; j <= dim; j++) {
+	for (j = 0; j < dim; j++) {
 		if (randomVariable <= VAR_THRESHOLD) {
 			fuzzableValues[j] =
 					rand() % (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE;
@@ -166,7 +158,8 @@ void create_assignment(elina_linexpr0_t*** assignmentArray,
 		fprintf(fp, "%ld, ", fuzzableValues[j]);
 		fflush(fp);
 	}
-
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
+	fflush(fp);
 	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
 			fuzzableValues);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
@@ -208,7 +201,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 	fprintf(fp, "Number of operators: %d\n", nbops);
 	fflush(fp);
-	size_t i;
+	int i;
 	for (i = 0; i < nbops; i++) {
 		int operator;
 		if (!make_fuzzable(&operator, sizeof(int), data, dataSize, dataIndex)) {
@@ -223,7 +216,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 		switch (operator) {
 		case ASSIGN: {
-			fprintf(fp, "ASSIGN\n");
+			fprintf(fp, "%d. ASSIGN\n", i);
 			fflush(fp);
 			int assignedToVariable;
 			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
@@ -242,11 +235,11 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			create_assignment(&assignmentArray, assignedToVariable, &tdim, fp);
 
 			opt_oct_t *octagon = pool[number];
-			elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
-					pool[pool_size]);
+			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
 			fprintf(fp, "octagon %d before assignment: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a);
 
 			opt_oct_t *result = opt_oct_assign_linexpr_array(man,
 			DESTRUCTIVE, octagon, tdim, assignmentArray, 1,
@@ -255,6 +248,8 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					&& !opt_oct_is_eq(man, result, octagon)
 					&& !exists(man, result)) {
 				pool[++pool_size] = result;
+			} else {
+				opt_oct_free(man, result);
 			}
 
 			free(assignmentArray);
@@ -262,7 +257,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			break;
 		}
 		case PROJECT: {
-			fprintf(fp, "PROJECT\n");
+			fprintf(fp, "%d. PROJECT\n", i);
 			fflush(fp);
 			int projectedVariable;
 			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
@@ -275,11 +270,11 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				return false;
 			}
 			opt_oct_t *octagon = pool[number];
-			elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
-					pool[pool_size]);
+			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
 			fprintf(fp, "octagon %d before project: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a);
 
 			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
 			tdim[0] = projectedVariable;
@@ -290,13 +285,15 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					&& !opt_oct_is_eq(man, result, octagon)
 					&& !exists(man, result)) {
 				pool[++pool_size] = result;
+			} else {
+				opt_oct_free(man, result);
 			}
 
 			free(tdim);
 			break;
 		}
 		case MEET: {
-			fprintf(fp, "MEET\n");
+			fprintf(fp, "%d. MEET\n", i);
 			fflush(fp);
 			int number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
@@ -308,16 +305,18 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				return false;
 			}
 			opt_oct_t *octagon1 = pool[number1];
-			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon1);
+			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 			fprintf(fp, "octagon %d: ", number1);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a1, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a1);
 
 			opt_oct_t *octagon2 = pool[number2];
-			a = opt_oct_to_lincons_array(man, octagon2);
+			elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man, octagon2);
 			fprintf(fp, "octagon %d: ", number2);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a2, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a2);
 
 			opt_oct_t *result = opt_oct_meet(man, DESTRUCTIVE, octagon1,
 					octagon2);
@@ -326,11 +325,13 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					&& !opt_oct_is_eq(man, result, octagon2)
 					&& !exists(man, result)) {
 				pool[++pool_size] = result;
+			} else {
+				opt_oct_free(man, result);
 			}
 			break;
 		}
 		case JOIN: {
-			fprintf(fp, "JOIN\n");
+			fprintf(fp, "%d. JOIN\n", i);
 			fflush(fp);
 			int number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
@@ -342,16 +343,18 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				return false;
 			}
 			opt_oct_t *octagon1 = pool[number1];
-			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon1);
+			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 			fprintf(fp, "octagon %d: ", number1);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a1, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a1);
 
 			opt_oct_t *octagon2 = pool[number2];
-			a = opt_oct_to_lincons_array(man, octagon2);
+			elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man, octagon2);
 			fprintf(fp, "octagon %d: ", number2);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a2, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a2);
 
 			opt_oct_t *result = opt_oct_join(man, DESTRUCTIVE, octagon1,
 					octagon2);
@@ -360,11 +363,13 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					&& !opt_oct_is_eq(man, result, octagon2)
 					&& !exists(man, result)) {
 				pool[++pool_size] = result;
+			} else {
+				opt_oct_free(man, result);
 			}
 			break;
 		}
 		case WIDENING: {
-			fprintf(fp, "WIDENING\n");
+			fprintf(fp, "%d. WIDENING\n", i);
 			fflush(fp);
 			int number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
@@ -386,15 +391,17 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				number2 = auxNumber;
 			}
 
-			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon1);
+			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 			fprintf(fp, "octagon %d: ", number1);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a1, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a1);
 
-			a = opt_oct_to_lincons_array(man, octagon2);
+			elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man, octagon2);
 			fprintf(fp, "octagon %d: ", number2);
-			elina_lincons0_array_fprint(fp, &a, NULL);
+			elina_lincons0_array_fprint(fp, &a2, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a2);
 
 			opt_oct_t *result = opt_oct_widening(man, octagon1, octagon2);
 			if (!opt_oct_is_bottom(man, result) && !opt_oct_is_top(man, result)
@@ -407,6 +414,9 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				fprintf(fp, "octagon %d: ", pool_size);
 				elina_lincons0_array_fprint(fp, &a, NULL);
 				fflush(fp);
+				elina_lincons0_array_clear(&a);
+			} else {
+				opt_oct_free(man, result);
 			}
 			break;
 		}
@@ -415,11 +425,21 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 	return true;
 }
 
+void remove_old_octagons(elina_manager_t* man) {
+	int index;
+	for (index = initial_pool_size + 1; index < pool_size; index++) {
+		opt_oct_free(man, pool[index]);
+	}
+	pool_size = initial_pool_size;
+}
+
 bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
 	if (pool_size == -1) {
 		initialize_pool(man, top, bottom, dim, fp);
+	} else {
+		remove_old_octagons(man);
 	}
 	return increase_pool(man, dim, data, dataSize, dataIndex, fp);
 }
@@ -440,7 +460,6 @@ bool assume_fuzzable(bool condition) {
 
 int create_dimension(FILE *fp) {
 	if (pool_size == -1) {
-		srand(SEED);
 		dim = rand() % (MAX_DIM + 1 - MIN_DIM) + MIN_DIM;
 	}
 	fprintf(fp, "Dim: %d\n", dim);
@@ -450,9 +469,9 @@ int create_dimension(FILE *fp) {
 }
 
 void free_pool(elina_manager_t* man) {
-	int i;
-	for (i = 0; i < pool_size; i++) {
-		opt_oct_free(man, pool[i]);
+	int index;
+	for (index = 0; index < pool_size; index++) {
+		opt_oct_free(man, pool[index]);
 	}
 	pool_size = -1;
 	free(pool);

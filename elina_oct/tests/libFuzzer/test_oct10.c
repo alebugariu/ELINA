@@ -21,8 +21,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
+
 			opt_oct_t* octagon2;
 			if (get_octagon_from_pool(&octagon2, data, dataSize, &dataIndex)) {
+
 				opt_oct_t* octagon3;
 				if (get_octagon_from_pool(&octagon3, data, dataSize,
 						&dataIndex)) {
@@ -37,17 +39,21 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 									opt_oct_join(man, DESTRUCTIVE, octagon2,
 											octagon3)))) {
 						fprintf(fp, "found octagon1: ");
-						elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
-								octagon1);
-						elina_lincons0_array_fprint(fp, &a, NULL);
+						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
+								man, octagon1);
+						elina_lincons0_array_fprint(fp, &a1, NULL);
 						fprintf(fp, "found octagon2: ");
-						a = opt_oct_to_lincons_array(man, octagon2);
-						elina_lincons0_array_fprint(fp, &a, NULL);
+						elina_lincons0_array_t a2 = opt_oct_to_lincons_array(
+								man, octagon2);
+						elina_lincons0_array_fprint(fp, &a2, NULL);
 						fprintf(fp, "found octagon3: ");
-						a = opt_oct_to_lincons_array(man,
-								octagon3);
-						elina_lincons0_array_fprint(fp, &a, NULL);
+						elina_lincons0_array_t a3 = opt_oct_to_lincons_array(
+								man, octagon3);
+						elina_lincons0_array_fprint(fp, &a3, NULL);
 						fflush(fp);
+						elina_lincons0_array_clear(&a1);
+						elina_lincons0_array_clear(&a2);
+						elina_lincons0_array_clear(&a3);
 						free_pool(man);
 						elina_manager_free(man);
 						fclose(fp);

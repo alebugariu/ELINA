@@ -32,6 +32,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						octagon1);
 				elina_lincons0_array_fprint(fp, &a, NULL);
 				fflush(fp);
+				elina_lincons0_array_clear(&a);
 				free_pool(man);
 				elina_manager_free(man);
 				fclose(fp);

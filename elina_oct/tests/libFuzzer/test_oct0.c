@@ -21,6 +21,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
+
 			// bottom <= x
 			if (!opt_oct_is_leq(man, bottom, octagon1)) {
 				elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
@@ -28,6 +29,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				fprintf(fp, "found octagon: ");
 				elina_lincons0_array_fprint(fp, &a, NULL);
 				fflush(fp);
+				elina_lincons0_array_clear(&a);
 				free_pool(man);
 				elina_manager_free(man);
 				fclose(fp);

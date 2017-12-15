@@ -8,7 +8,7 @@
 #define MIN_DIM 2
 #define MAX_DIM 20
 
-#define MAX_POOL_SIZE 20000
+#define MAX_POOL_SIZE 3*NBOPS
 #define SEED 12345678
 
 #define NBOPS 32

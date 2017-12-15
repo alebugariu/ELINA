@@ -12,7 +12,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	FILE *fp;
 	fp = fopen("out20.txt", "w+");
 
-	if (create_pool(man, top, bottom, dim, data, dataSize, &dim, data, dataSize, &dataIndex, fpdataIndex, fp)) {
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		elina_manager_t * man = opt_oct_manager_alloc();
 		opt_oct_t * top = opt_oct_top(man, dim, 0);
