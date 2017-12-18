@@ -36,10 +36,19 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 
 void free_pool(elina_manager_t* man);
 
-bool get_octagon_from_pool(opt_oct_t** octagon, const long *data, size_t dataSize,
-		unsigned int *dataIndex);
+bool get_octagon_from_pool(opt_oct_t** octagon, const long *data,
+		size_t dataSize, unsigned int *dataIndex);
 
 int create_dimension(FILE *fp);
+
+void create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t ** tdim, FILE *fp);
+
+void create_conditional(elina_lincons0_array_t *conditionalExpression,
+		FILE *fp);
+
+bool create_variable(int *variable, bool assign, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool assume_fuzzable(bool condition);
 

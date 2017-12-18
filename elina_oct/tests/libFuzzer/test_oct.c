@@ -89,7 +89,9 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 
 								long constant;
 								if (i == 3) {
-									constant = rand() % (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+									constant =
+											rand()
+													% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
 								} else {
 									constant = constants[i];
 								}
@@ -138,6 +140,50 @@ bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 	return true;
 }
 
+void create_conditional(elina_lincons0_array_t *conditionalExpression, FILE *fp) {
+	unsigned char randomVariable =
+			rand()
+					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
+
+	elina_constyp_t type =
+			randomVariable % 2 == ELINA_CONS_SUPEQ ?
+					ELINA_CONS_SUPEQ : ELINA_CONS_EQ;
+
+	fprintf(fp, "Conditional expression: ");
+	fflush(fp);
+	fprintf(fp, "Type: %c\n", type == ELINA_CONS_EQ ? 'e' : 's');
+	fflush(fp);
+
+	long fuzzableValues[MAX_DIM + 1];
+	fprintf(fp, "Values: ");
+	fflush(fp);
+
+	int j;
+	for (j = 0; j < dim; j++) {
+		if (randomVariable <= VAR_THRESHOLD) {
+			fuzzableValues[j] =
+					rand() % (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE;
+		} else {
+			fuzzableValues[j] = rand();
+		}
+		fprintf(fp, "%ld, ", fuzzableValues[j]);
+		fflush(fp);
+	}
+	if (randomVariable <= VAR_THRESHOLD) {
+		fuzzableValues[j] = rand() % (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE;
+	} else {
+		fuzzableValues[j] = rand();
+	}
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
+	fflush(fp);
+
+	*conditionalExpression = elina_lincons0_array_make(1);
+	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
+			fuzzableValues);
+	conditionalExpression->p[0].constyp = type;
+	conditionalExpression->p[0].linexpr0 = expression;
+}
+
 void create_assignment(elina_linexpr0_t*** assignmentArray,
 		int assignedToVariable, elina_dim_t ** tdim, FILE *fp) {
 	unsigned char randomVariable =
@@ -158,8 +204,14 @@ void create_assignment(elina_linexpr0_t*** assignmentArray,
 		fprintf(fp, "%ld, ", fuzzableValues[j]);
 		fflush(fp);
 	}
+	if (randomVariable <= VAR_THRESHOLD) {
+		fuzzableValues[j] = rand() % (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE;
+	} else {
+		fuzzableValues[j] = rand();
+	}
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
+
 	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
 			fuzzableValues);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
