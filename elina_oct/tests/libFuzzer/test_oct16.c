@@ -20,26 +20,26 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		if (get_octagon_from_pool(&octagon1, man, top, bottom, dim, data,
-				dataSize, &dataIndex, fp)) {
+		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
 
 			//meet == glb, join == lub
 			//top meet x == x
 			if (!opt_oct_is_eq(man,
 					opt_oct_meet(man, DESTRUCTIVE, top, octagon1), octagon1)) {
-				opt_oct_free(man, top);
-				opt_oct_free(man, bottom);
-				opt_oct_free(man, octagon1);
+				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
+						octagon1);
+				fprintf(fp, "found octagon1: ");
+				elina_lincons0_array_fprint(fp, &a1, NULL);
+				fflush(fp);
+				elina_lincons0_array_clear(&a1);
+				free_pool(man);
 				elina_manager_free(man);
 				fclose(fp);
 				return 1;
 			}
-			opt_oct_free(man, octagon1);
 		}
-		opt_oct_free(man, top);
-		opt_oct_free(man, bottom);
-		elina_manager_free(man);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }
