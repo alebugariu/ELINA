@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -292,8 +292,8 @@ int is_connected(array_comp_list_t *acl, unsigned short int i, unsigned short in
 	return 1;
 }
 
-char * create_array_map(array_comp_list_t * acl, unsigned short int n){
-	char * map = (char *)calloc(n,sizeof(char));
+unsigned short int * create_array_map(array_comp_list_t * acl, unsigned short int n){
+	unsigned short int * map = (unsigned short int *)calloc(n,sizeof(unsigned short int));
 	comp_list_t * cl = acl->head;
 	unsigned short int l = 1;
 	while(cl!=NULL){
@@ -306,6 +306,7 @@ char * create_array_map(array_comp_list_t * acl, unsigned short int n){
 		l++;
 		cl = cl->next;
 	}
+
 	return map;
 }
 

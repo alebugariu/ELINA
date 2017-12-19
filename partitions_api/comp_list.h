@@ -1,7 +1,7 @@
 /*
  *
  *  This source file is part of ELINA (ETH LIbrary for Numerical Analysis).
- *  ELINA is Copyright © 2017 Department of Computer Science, ETH Zurich
+ *  ELINA is Copyright �� 2017 Department of Computer Science, ETH Zurich
  *  This software is distributed under GNU Lesser General Public License Version 3.0.
  *  For more information, see the ELINA project website at:
  *  http://elina.ethz.ch
@@ -88,7 +88,7 @@ short int find_index(array_comp_list_t *acl,comp_list_t *cl);
 void remove_comp_list(array_comp_list_t *acl, comp_list_t *cl);
 void print_array_comp_list(array_comp_list_t *acl,unsigned short int n);
 void clear_array_comp_list(array_comp_list_t *acl);
-char * create_array_map(array_comp_list_t * acl, unsigned short int n);
+unsigned short int * create_array_map(array_comp_list_t * acl, unsigned short int n);
 comp_list_t * compute_diff(char *map, comp_list_t * cl, unsigned short int n);
 
 /*****

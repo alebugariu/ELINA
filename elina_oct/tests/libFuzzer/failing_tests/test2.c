@@ -54,67 +54,35 @@ opt_oct_t* assign(int dim, elina_manager_t* man, opt_oct_t* octagon,
 	tdim[0] = assignedToVariable;
 	opt_oct_t* assign_result = opt_oct_assign_linexpr_array(man, false, octagon,
 			tdim, expr_array, 1, NULL);
-	/*fprintf(stdout, "Assign result: ");
-	 elina_lincons0_array_t a = opt_oct_to_lincons_array(man, assign_result);
-	 elina_lincons0_array_print(&a, NULL);
-	 fflush(stdout);*/
+	fprintf(stdout, "Assign result: ");
+	elina_lincons0_array_t a = opt_oct_to_lincons_array(man, assign_result);
+	elina_lincons0_array_print(&a, NULL);
+	fflush(stdout);
 	return assign_result;
 }
 
 int main(int argc, char **argv) {
-	int dim = 4;
+	int dim = 3;
 
 	elina_manager_t * man = opt_oct_manager_alloc();
 	opt_oct_t * top = opt_oct_top(man, dim, 0);
 	opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
 	opt_oct_t* octagon1 = top;
-	opt_oct_t* octagon2 = top;
-	opt_oct_t* octagon3 = top;
 
-    long assignment_values0[5] = { 0, 1, 1, -1, -1 };
-	long assignment_values[5] = { 0, 1, 0, 0, 0 };
-	octagon1 = assign(dim, man, octagon1, assignment_values0, 1);
-	octagon1 = assign(dim, man, octagon1, assignment_values, 3);
-	octagon1 = assign(dim, man, octagon1, assignment_values, 2);
-	octagon1 = assign(dim, man, octagon1, assignment_values, 3);
-	octagon1 = assign(dim, man, octagon1, assignment_values, 2);
+	long assignment_values[4] = { 0, 1, 0, 0 };
+	octagon1 = assign(dim, man, octagon1, assignment_values, 0);
+
 	printf("Successfully created octagon1!\n");
 	elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 	elina_lincons0_array_print(&a1, NULL);
 	fflush(stdout);
 
-	octagon2 = assign(dim, man, octagon2, assignment_values, 3);
-	octagon2 = assign(dim, man, octagon2, assignment_values0, 0);
-	octagon2 = assign(dim, man, octagon2, assignment_values, 2);
-	octagon2 = assign(dim, man, octagon2, assignment_values, 3);
-	octagon2 = assign(dim, man, octagon2, assignment_values, 2);
-	printf("Successfully created octagon2!\n");
-	elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man, octagon2);
-	elina_lincons0_array_print(&a2, NULL);
+	// less equal reflexive
+	printf("x leq x: ");
+	printf("%d\n",
+			opt_oct_is_leq(man, octagon1,octagon1));
 	fflush(stdout);
-
-	octagon3 = assign(dim, man, octagon3, assignment_values, 3);
-	octagon3 = assign(dim, man, octagon3, assignment_values0, 1);
-	octagon3 = assign(dim, man, octagon3, assignment_values, 3);
-	octagon3 = assign(dim, man, octagon3, assignment_values, 2);
-	octagon3 = assign(dim, man, octagon3, assignment_values, 3);
-	printf("Successfully created octagon3!\n");
-	elina_lincons0_array_t a3 = opt_oct_to_lincons_array(man, octagon3);
-	elina_lincons0_array_print(&a3, NULL);
-	fflush(stdout);
-	printf("octagon1 <= octagon2: ");
-	printf("%d\n", opt_oct_is_leq(man, octagon1, octagon2));
-	printf("octagon2 <= octagon3: ");
-	printf("%d\n", opt_oct_is_leq(man, octagon2, octagon3));
-
-	if (opt_oct_is_leq(man, octagon1, octagon2)
-			&& opt_oct_is_leq(man, octagon2, octagon3)) {
-		// x<=y && y<=z => x <= z
-		printf("octagon1 <= octagon3: ");
-		printf("%d\n", opt_oct_is_leq(man, octagon1, octagon3));
-		fflush(stdout);
-	}
 	return 0;
 }
 

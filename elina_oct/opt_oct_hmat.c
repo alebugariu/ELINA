@@ -745,7 +745,6 @@ bool is_lequal_half(opt_oct_mat_t *oo1, opt_oct_mat_t *oo2, int dim) {
 #if defined(TIMING)
 							record_timing(is_lequal_time);
 #endif
-
 							return false;
 						}
 					}

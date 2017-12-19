@@ -47,3 +47,6 @@ encoding//elina_poly/opt_pk_vector.c=UTF-8
 encoding//elina_poly/opt_pk_vector.h=UTF-8
 encoding//elina_poly/opt_pk_widening.c=UTF-8
 encoding//elina_poly/tests/libFuzzer/test_poly.c=UTF-8
+encoding//partitions_api/array_comp_list.c=UTF-8
+encoding//partitions_api/comp_list.h=UTF-8
+encoding//partitions_api/intersection.c=UTF-8
