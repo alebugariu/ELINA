@@ -25,29 +25,31 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			elina_linexpr0_t** assignmentArray;
 			elina_dim_t * tdim;
 
-			create_assignment(&assignmentArray, assignedToVariable, &tdim, fp);
+			if (create_assignment(&assignmentArray, assignedToVariable, &tdim,
+					dim, data, dataSize, &dataIndex, fp)) {
 
-			opt_oct_t* assign_result1 = opt_oct_assign_linexpr_array(man,
-			DESTRUCTIVE, bottom, tdim, assignmentArray, 1,
-			NULL);
+				opt_oct_t* assign_result1 = opt_oct_assign_linexpr_array(man,
+				DESTRUCTIVE, bottom, tdim, assignmentArray, 1,
+				NULL);
 
-			if (opt_oct_is_bottom(man, assign_result1) == false) {
-				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
-						assign_result1);
-				fprintf(fp, "found non-bottom assignment result: ");
-				elina_lincons0_array_fprint(fp, &a1, NULL);
-				fflush(fp);
-				elina_lincons0_array_clear(&a1);
-				free_pool(man);
-				opt_oct_free(man, assign_result1);
+				if (opt_oct_is_bottom(man, assign_result1) == false) {
+					elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
+							assign_result1);
+					fprintf(fp, "found non-bottom assignment result: ");
+					elina_lincons0_array_fprint(fp, &a1, NULL);
+					fflush(fp);
+					elina_lincons0_array_clear(&a1);
+					free_pool(man);
+					opt_oct_free(man, assign_result1);
+					free(assignmentArray);
+					free(tdim);
+					elina_manager_free(man);
+					fclose(fp);
+					return 1;
+				}
 				free(assignmentArray);
 				free(tdim);
-				elina_manager_free(man);
-				fclose(fp);
-				return 1;
 			}
-			free(assignmentArray);
-			free(tdim);
 		}
 	}
 	elina_manager_free(man);

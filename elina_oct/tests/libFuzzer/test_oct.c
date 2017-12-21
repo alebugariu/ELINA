@@ -186,7 +186,7 @@ void create_conditional(elina_lincons0_array_t *conditionalExpression, FILE *fp)
 	conditionalExpression->p[0].linexpr0 = expression;
 }
 
-elina_linexpr0_t* create_polyhedral_assignment(int dim, FILE* fp) {
+elina_linexpr0_t* create_random_polyhedral_assignment(int dim, FILE* fp) {
 	unsigned char randomVariable =
 			rand()
 					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
@@ -216,14 +216,62 @@ elina_linexpr0_t* create_polyhedral_assignment(int dim, FILE* fp) {
 	return expression;
 }
 
-void create_assignment(elina_linexpr0_t*** assignmentArray,
-		int assignedToVariable, elina_dim_t ** tdim, FILE *fp) {
-	elina_linexpr0_t* expression = create_polyhedral_assignment(dim, fp);
+bool create_fuzzable_polyhedral_assignment(elina_linexpr0_t** expression,
+		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
+		FILE *fp) {
+	unsigned char randomVariable =
+			rand()
+					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
+
+	long fuzzableValues[MAX_DIM + 1];
+	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	int j;
+	fprintf(fp, "Assignment expression: ");
+	fflush(fp);
+	for (j = 0; j < dim; j++) {
+		if (!assume_fuzzable(
+				!(randomVariable <= VAR_THRESHOLD)
+						&& (fuzzableValues[j] >= MIN_VALUE
+								&& fuzzableValues[j] <= MAX_VALUE))) {
+			return false;
+		}
+		fprintf(fp, "%ld, ", fuzzableValues[j]);
+		fflush(fp);
+	}
+	if (!assume_fuzzable(
+			!(randomVariable <= VAR_THRESHOLD)
+					&& (fuzzableValues[j] >= MIN_VALUE
+							&& fuzzableValues[j] <= MAX_VALUE))) {
+		return false;
+	}
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
+	fflush(fp);
+
+	*expression = create_polyhedral_linexpr0(dim, fuzzableValues);
+	return true;
+}
+
+bool create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	elina_linexpr0_t* expression;
+	if (RANDOM_ASSIGNMENT) {
+		expression = create_random_polyhedral_assignment(dim, fp);
+	} else {
+		if (!create_fuzzable_polyhedral_assignment(&expression, dim, data,
+				dataSize, dataIndex, fp)) {
+			return false;
+		}
+	}
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
 
 	*tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
 	*tdim[0] = assignedToVariable;
+	return true;
 }
 
 bool create_number(int *number, int dimension, const long *data,
@@ -289,7 +337,10 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			elina_linexpr0_t** assignmentArray;
 			elina_dim_t * tdim;
 
-			create_assignment(&assignmentArray, assignedToVariable, &tdim, fp);
+			if (!create_assignment(&assignmentArray, assignedToVariable, &tdim,
+					dim, data, dataSize, dataIndex, fp)) {
+				return false;
+			}
 
 			opt_oct_t *octagon = pool[number];
 			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
@@ -326,6 +377,13 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			if (!create_number(&number, pool_size, data, dataSize, dataIndex)) {
 				return false;
 			}
+
+			long notUsedValues[MAX_DIM + 1];
+			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
+					dataSize, dataIndex)) {
+				return false;
+			}
+
 			opt_oct_t *octagon = pool[number];
 			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
 			fprintf(fp, "octagon %d before project: ", number);
@@ -361,6 +419,13 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					dataIndex)) {
 				return false;
 			}
+
+			long notUsedValues[MAX_DIM + 1];
+			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
+					dataSize, dataIndex)) {
+				return false;
+			}
+
 			opt_oct_t *octagon1 = pool[number1];
 			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 			fprintf(fp, "octagon %d: ", number1);
@@ -399,6 +464,12 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					dataIndex)) {
 				return false;
 			}
+			long notUsedValues[MAX_DIM + 1];
+			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
+					dataSize, dataIndex)) {
+				return false;
+			}
+
 			opt_oct_t *octagon1 = pool[number1];
 			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
 			fprintf(fp, "octagon %d: ", number1);
@@ -437,6 +508,13 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					dataIndex)) {
 				return false;
 			}
+
+			long notUsedValues[MAX_DIM + 1];
+			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
+					dataSize, dataIndex)) {
+				return false;
+			}
+
 			opt_oct_t *octagon1 = pool[number1];
 			opt_oct_t *octagon2 = pool[number2];
 			if (!opt_oct_is_leq(man, octagon1, octagon2)) {
@@ -501,7 +579,7 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	return increase_pool(man, dim, data, dataSize, dataIndex, fp);
 }
 
-bool pool_is_empty(){
+bool pool_is_empty() {
 	return pool_size == -1;
 }
 

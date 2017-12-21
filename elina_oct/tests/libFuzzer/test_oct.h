@@ -18,6 +18,7 @@
 #define VAR_THRESHOLD 12
 
 #define DESTRUCTIVE false
+#define RANDOM_ASSIGNMENT false
 
 #define ASSIGN 0
 #define PROJECT 1
@@ -40,8 +41,9 @@ bool get_octagon_from_pool(opt_oct_t** octagon, int *number, const long *data,
 
 int create_dimension(FILE *fp);
 
-void create_assignment(elina_linexpr0_t*** assignmentArray,
-		int assignedToVariable, elina_dim_t ** tdim, FILE *fp);
+bool create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
+		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 void create_conditional(elina_lincons0_array_t *conditionalExpression,
 		FILE *fp);

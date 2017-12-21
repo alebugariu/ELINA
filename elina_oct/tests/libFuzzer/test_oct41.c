@@ -22,7 +22,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		int number1;
-		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
+				&dataIndex)) {
 			if (opt_oct_is_bottom(man, octagon1) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
@@ -33,31 +34,32 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					elina_linexpr0_t** assignmentArray;
 					elina_dim_t * tdim;
 
-					create_assignment(&assignmentArray, assignedToVariable,
-							&tdim, fp);
+					if (create_assignment(&assignmentArray, assignedToVariable,
+							&tdim, dim, data, dataSize, &dataIndex, fp)) {
 
-					opt_oct_t* assign_result1 = opt_oct_assign_linexpr_array(
-							man, DESTRUCTIVE, octagon1, tdim, assignmentArray,
-							1,
-							NULL);
+						opt_oct_t* assign_result1 =
+								opt_oct_assign_linexpr_array(man, DESTRUCTIVE,
+										octagon1, tdim, assignmentArray, 1,
+										NULL);
 
-					if (opt_oct_is_bottom(man, assign_result1) == true) {
-						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
-								man, octagon1);
-						fprintf(fp, "found octagon%d: ", number1);
-						elina_lincons0_array_fprint(fp, &a1, NULL);
-						fflush(fp);
-						elina_lincons0_array_clear(&a1);
-						free_pool(man);
+						if (opt_oct_is_bottom(man, assign_result1) == true) {
+							elina_lincons0_array_t a1 =
+									opt_oct_to_lincons_array(man, octagon1);
+							fprintf(fp, "found octagon%d: ", number1);
+							elina_lincons0_array_fprint(fp, &a1, NULL);
+							fflush(fp);
+							elina_lincons0_array_clear(&a1);
+							free_pool(man);
+							free(assignmentArray);
+							free(tdim);
+							elina_manager_free(man);
+							fclose(fp);
+							return 1;
+						}
+						opt_oct_free(man, assign_result1);
 						free(assignmentArray);
 						free(tdim);
-						elina_manager_free(man);
-						fclose(fp);
-						return 1;
 					}
-					opt_oct_free(man, assign_result1);
-					free(assignmentArray);
-					free(tdim);
 				}
 			}
 		}

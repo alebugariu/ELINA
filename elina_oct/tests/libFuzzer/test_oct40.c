@@ -18,11 +18,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		int number1;
-		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
+				&dataIndex)) {
 
 			opt_oct_t* octagon2;
 			int number2;
-			if (get_octagon_from_pool(&octagon2, &number2, data, dataSize, &dataIndex)) {
+			if (get_octagon_from_pool(&octagon2, &number2, data, dataSize,
+					&dataIndex)) {
 
 				// assignment is monotone
 				if (assume_fuzzable(opt_oct_is_leq(man, octagon1, octagon2))) {
@@ -33,42 +35,46 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						elina_linexpr0_t** assignmentArray;
 						elina_dim_t * tdim;
 
-						create_assignment(&assignmentArray, assignedToVariable,
-								&tdim, fp);
+						if (create_assignment(&assignmentArray,
+								assignedToVariable, &tdim, dim, data, dataSize,
+								&dataIndex, fp)) {
 
-						opt_oct_t* assign_result1 =
-								opt_oct_assign_linexpr_array(man,
-								DESTRUCTIVE, octagon1, tdim, assignmentArray, 1,
-								NULL);
+							opt_oct_t* assign_result1 =
+									opt_oct_assign_linexpr_array(man,
+									DESTRUCTIVE, octagon1, tdim,
+											assignmentArray, 1,
+											NULL);
 
-						opt_oct_t* assign_result2 =
-								opt_oct_assign_linexpr_array(man,
-								DESTRUCTIVE, octagon2, tdim, assignmentArray, 1,
-								NULL);
+							opt_oct_t* assign_result2 =
+									opt_oct_assign_linexpr_array(man,
+									DESTRUCTIVE, octagon2, tdim,
+											assignmentArray, 1,
+											NULL);
 
-						if (opt_oct_is_leq(man, assign_result1, assign_result2)
-								== false) {
+							if (opt_oct_is_leq(man, assign_result1,
+									assign_result2) == false) {
 
-							elina_lincons0_array_t a1 =
-									opt_oct_to_lincons_array(man, octagon1);
-							fprintf(fp, "found octagon%d: ", number1);
-							elina_lincons0_array_fprint(fp, &a1, NULL);
-							elina_lincons0_array_t a2 =
-									opt_oct_to_lincons_array(man, octagon2);
-							fprintf(fp, "found octagon%d: ", number2);
-							elina_lincons0_array_fprint(fp, &a2, NULL);
-							fflush(fp);
-							elina_lincons0_array_clear(&a1);
-							elina_lincons0_array_clear(&a2);
-							free_pool(man);
+								elina_lincons0_array_t a1 =
+										opt_oct_to_lincons_array(man, octagon1);
+								fprintf(fp, "found octagon%d: ", number1);
+								elina_lincons0_array_fprint(fp, &a1, NULL);
+								elina_lincons0_array_t a2 =
+										opt_oct_to_lincons_array(man, octagon2);
+								fprintf(fp, "found octagon%d: ", number2);
+								elina_lincons0_array_fprint(fp, &a2, NULL);
+								fflush(fp);
+								elina_lincons0_array_clear(&a1);
+								elina_lincons0_array_clear(&a2);
+								free_pool(man);
+								free(assignmentArray);
+								free(tdim);
+								elina_manager_free(man);
+								fclose(fp);
+								return 1;
+							}
 							free(assignmentArray);
 							free(tdim);
-							elina_manager_free(man);
-							fclose(fp);
-							return 1;
 						}
-						free(assignmentArray);
-						free(tdim);
 					}
 				}
 			}
