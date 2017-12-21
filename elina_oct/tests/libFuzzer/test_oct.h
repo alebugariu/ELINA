@@ -9,7 +9,6 @@
 #define MAX_DIM 20
 
 #define MAX_POOL_SIZE 3*NBOPS
-#define SEED 12345678
 
 #define NBOPS 32
 #define MIN_VALUE -9999
@@ -36,7 +35,7 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 
 void free_pool(elina_manager_t* man);
 
-bool get_octagon_from_pool(opt_oct_t** octagon, const long *data,
+bool get_octagon_from_pool(opt_oct_t** octagon, int *number, const long *data,
 		size_t dataSize, unsigned int *dataIndex);
 
 int create_dimension(FILE *fp);

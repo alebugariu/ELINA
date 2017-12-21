@@ -20,7 +20,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
+		int number1;
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
 
 			//meet == glb, join == lub
 			//bottom join x == x

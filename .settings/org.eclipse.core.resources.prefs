@@ -23,6 +23,7 @@ encoding//elina_oct/opt_oct_representation.c=UTF-8
 encoding//elina_oct/opt_oct_resize.c=UTF-8
 encoding//elina_oct/opt_oct_transfer.c=UTF-8
 encoding//elina_oct/tests/klee/test_oct19.c=UTF-8
+encoding//elina_oct/tests/libFuzzer/failing_tests/test2.c=UTF-8
 encoding//elina_poly/Makefile=UTF-8
 encoding//elina_poly/elina_test_poly.c=UTF-8
 encoding//elina_poly/opt_pk.h=UTF-8

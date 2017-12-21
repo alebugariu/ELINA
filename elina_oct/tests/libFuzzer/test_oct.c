@@ -11,6 +11,7 @@ int pool_size = -1;
 int initial_pool_size = -1;
 opt_oct_t** pool = NULL;
 int dim;
+time_t seed;
 
 elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
 		long coeff2, long scalar_value) {
@@ -62,7 +63,8 @@ bool exists(elina_manager_t* man, opt_oct_t *octagon) {
 void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, FILE *fp) {
 
-	srand(SEED);
+	seed = time(NULL);
+	srand(seed);
 	long coefficients[3] = { 0, -1, 1 };
 	long constants[3] = { 0, LONG_MIN, LONG_MAX };
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
@@ -184,12 +186,10 @@ void create_conditional(elina_lincons0_array_t *conditionalExpression, FILE *fp)
 	conditionalExpression->p[0].linexpr0 = expression;
 }
 
-void create_assignment(elina_linexpr0_t*** assignmentArray,
-		int assignedToVariable, elina_dim_t ** tdim, FILE *fp) {
+elina_linexpr0_t* create_polyhedral_assignment(int dim, FILE* fp) {
 	unsigned char randomVariable =
 			rand()
 					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
-
 	long fuzzableValues[MAX_DIM + 1];
 	int j;
 	fprintf(fp, "Assignment expression: ");
@@ -211,9 +211,14 @@ void create_assignment(elina_linexpr0_t*** assignmentArray,
 	}
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
-
 	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
 			fuzzableValues);
+	return expression;
+}
+
+void create_assignment(elina_linexpr0_t*** assignmentArray,
+		int assignedToVariable, elina_dim_t ** tdim, FILE *fp) {
+	elina_linexpr0_t* expression = create_polyhedral_assignment(dim, fp);
 	*assignmentArray = (elina_linexpr0_t**) malloc(sizeof(elina_linexpr0_t*));
 	*assignmentArray[0] = expression;
 
@@ -496,13 +501,16 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	return increase_pool(man, dim, data, dataSize, dataIndex, fp);
 }
 
-bool get_octagon_from_pool(opt_oct_t** octagon, const long *data,
+bool pool_is_empty(){
+	return pool_size == -1;
+}
+
+bool get_octagon_from_pool(opt_oct_t** octagon, int *number, const long *data,
 		size_t dataSize, unsigned int *dataIndex) {
-	int number;
-	if (!create_number(&number, pool_size, data, dataSize, dataIndex)) {
+	if (!create_number(number, pool_size, data, dataSize, dataIndex)) {
 		return false;
 	}
-	*octagon = pool[number];
+	*octagon = pool[*number];
 	return true;
 }
 
@@ -511,10 +519,11 @@ bool assume_fuzzable(bool condition) {
 }
 
 int create_dimension(FILE *fp) {
-	if (pool_size == -1) {
+	if (pool_is_empty()) {
 		dim = rand() % (MAX_DIM + 1 - MIN_DIM) + MIN_DIM;
 	}
 	fprintf(fp, "Dim: %d\n", dim);
+	fprintf(fp, "Seed: %ld\n", seed);
 	fprintf(fp, "Initial pool size: %d\n", pool_size);
 	fflush(fp);
 	return dim;

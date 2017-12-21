@@ -17,12 +17,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		if (get_octagon_from_pool(&octagon1, data, dataSize, &dataIndex)) {
+		int number1;
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
 			// x == x
 			if (opt_oct_is_eq(man, octagon1, octagon1) == false) {
 				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
 						octagon1);
-				fprintf(fp, "found octagon1: ");
+				fprintf(fp, "found octagon%d: ", number1);
 				elina_lincons0_array_fprint(fp, &a1, NULL);
 				fflush(fp);
 				elina_lincons0_array_clear(&a1);
