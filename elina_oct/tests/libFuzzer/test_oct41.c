@@ -21,14 +21,14 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		opt_oct_t * bottom = opt_oct_bottom(man, dim, 0);
 
 		opt_oct_t* octagon1;
-		int number1;
+		unsigned char number1;
 		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
 				&dataIndex)) {
 			if (opt_oct_is_bottom(man, octagon1) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
 
-				int assignedToVariable;
+				unsigned char assignedToVariable;
 				if (create_variable(&assignedToVariable, true, dim, data,
 						dataSize, &dataIndex, fp)) {
 					elina_linexpr0_t** assignmentArray;
@@ -43,12 +43,9 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 										NULL);
 
 						if (opt_oct_is_bottom(man, assign_result1) == true) {
-							elina_lincons0_array_t a1 =
-									opt_oct_to_lincons_array(man, octagon1);
-							fprintf(fp, "found octagon%d: ", number1);
-							elina_lincons0_array_fprint(fp, &a1, NULL);
+							fprintf(fp, "found octagon %d!\n", number1);
+							print_history(man, number1, fp);
 							fflush(fp);
-							elina_lincons0_array_clear(&a1);
 							free_pool(man);
 							free(assignmentArray);
 							free(tdim);

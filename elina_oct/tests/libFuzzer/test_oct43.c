@@ -17,13 +17,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		int number1;
+		unsigned char number1;
 		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
 				&dataIndex)) {
 
 			// assign(x) less equal project(x)
 
-			int assignedToVariable;
+			unsigned char assignedToVariable;
 			if (create_variable(&assignedToVariable, true, dim, data, dataSize,
 					&dataIndex, fp)) {
 
@@ -43,12 +43,9 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 					if (opt_oct_is_leq(man, assign_result1, project_result1)
 							== false) {
-						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
-								man, octagon1);
-						fprintf(fp, "found octagon%d: ", number1);
-						elina_lincons0_array_fprint(fp, &a1, NULL);
+						fprintf(fp, "found octagon %d!\n", number1);
+						print_history(man, number1, fp);
 						fflush(fp);
-						elina_lincons0_array_clear(&a1);
 						free_pool(man);
 						free(assignmentArray);
 						free(tdim);

@@ -20,19 +20,22 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_oct_t* octagon1;
-		int number1;
-		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
+		unsigned char number1;
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
+				&dataIndex)) {
 
 			opt_oct_t* octagon2;
-			int number2;
-			if (get_octagon_from_pool(&octagon2, &number2, data, dataSize, &dataIndex)) {
+			unsigned char number2;
+			if (get_octagon_from_pool(&octagon2, &number2, data, dataSize,
+					&dataIndex)) {
 
 				opt_oct_t* glb = opt_oct_meet(man, DESTRUCTIVE, octagon1,
 						octagon2);
 
 				opt_oct_t* bound;
-				int number3;
-				if (get_octagon_from_pool(&bound, &number3, data, dataSize, &dataIndex)) {
+				unsigned char number3;
+				if (get_octagon_from_pool(&bound, &number3, data, dataSize,
+						&dataIndex)) {
 
 					//meet == glb, join == lub
 					//meet is the greatest lower bound
@@ -40,22 +43,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						if (assume_fuzzable(
 								opt_oct_is_leq(man, bound, octagon2))) {
 							if (!opt_oct_is_leq(man, bound, glb)) {
-								elina_lincons0_array_t a1 =
-										opt_oct_to_lincons_array(man, octagon1);
-								fprintf(fp, "found octagon%d: ", number1);
-								elina_lincons0_array_fprint(fp, &a1, NULL);
-								elina_lincons0_array_t a2 =
-										opt_oct_to_lincons_array(man, octagon2);
-								fprintf(fp, "found octagon%d: ", number2);
-								elina_lincons0_array_fprint(fp, &a2, NULL);
-								elina_lincons0_array_t a =
-										opt_oct_to_lincons_array(man, bound);
-								fprintf(fp, "found as bound octagon%d: ", number3);
-								elina_lincons0_array_fprint(fp, &a, NULL);
+								fprintf(fp, "found octagon %d!\n", number1);
+								print_history(man, number1, fp);
+								fprintf(fp, "found octagon %d!\n", number2);
+								print_history(man, number2, fp);
+								fprintf(fp, "found octagon %d!\n", number3);
+								print_history(man, number3, fp);
 								fflush(fp);
-								elina_lincons0_array_clear(&a1);
-								elina_lincons0_array_clear(&a2);
-								elina_lincons0_array_clear(&a);
 								free_pool(man);
 								elina_manager_free(man);
 								fclose(fp);

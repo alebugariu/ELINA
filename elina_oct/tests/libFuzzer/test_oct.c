@@ -7,9 +7,11 @@
 #include <stdio.h>
 #include <math.h>
 
-int pool_size = -1;
-int initial_pool_size = -1;
+int pool_size = 0;
+int initial_pool_size = 0;
 opt_oct_t** pool = NULL;
+unsigned char history[NBOPS][5];
+
 int dim;
 time_t seed;
 
@@ -52,7 +54,7 @@ elina_linexpr0_t * create_polyhedral_linexpr0(int dim, long *values) {
 
 bool exists(elina_manager_t* man, opt_oct_t *octagon) {
 	int i;
-	for (i = 2; i <= pool_size; i++) {
+	for (i = 0; i < pool_size; i++) {
 		if (opt_oct_is_eq(man, pool[i], octagon)) {
 			return true;
 		}
@@ -70,9 +72,6 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
 
 	pool = (opt_oct_t **) malloc(MAX_POOL_SIZE * sizeof(opt_oct_t *));
-
-	pool[++pool_size] = top;
-	pool[++pool_size] = bottom;
 
 	int v1, v2;
 	int coeff1, coeff2;
@@ -109,7 +108,15 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 								if (!opt_oct_is_bottom(man, octagon)
 										&& !opt_oct_is_top(man, octagon)
 										&& !exists(man, octagon)) {
-									pool[++pool_size] = octagon;
+									elina_lincons0_array_t a =
+											opt_oct_to_lincons_array(man,
+													octagon);
+									printf("octagon %d: ", pool_size);
+									elina_lincons0_array_fprint(stdout, &a,
+									NULL);
+									fflush(stdout);
+									elina_lincons0_array_clear(&a);
+									pool[pool_size++] = octagon;
 								} else {
 									opt_oct_free(man, octagon);
 								}
@@ -120,6 +127,20 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 			}
 		}
 	}
+	elina_lincons0_array_t a = opt_oct_to_lincons_array(man, top);
+	printf("octagon %d: ", pool_size);
+	elina_lincons0_array_fprint(stdout, &a, NULL);
+	fflush(stdout);
+	elina_lincons0_array_clear(&a);
+	pool[pool_size++] = top;
+
+	a = opt_oct_to_lincons_array(man, bottom);
+	printf("octagon %d: ", pool_size);
+	elina_lincons0_array_fprint(stdout, &a, NULL);
+	fflush(stdout);
+	elina_lincons0_array_clear(&a);
+	pool[pool_size++] = bottom;
+
 	initial_pool_size = pool_size;
 	fprintf(fp, "Successfully initialized the pool!\n");
 	fflush(fp);
@@ -216,6 +237,16 @@ elina_linexpr0_t* create_random_polyhedral_assignment(int dim, FILE* fp) {
 	return expression;
 }
 
+bool create_number(unsigned char *number, int dimension, const long *data,
+		size_t dataSize, unsigned int *dataIndex) {
+	if (!make_fuzzable(number, sizeof(unsigned char), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	*number = rand() % dimension;
+	return true;
+}
+
 bool create_fuzzable_polyhedral_assignment(elina_linexpr0_t** expression,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
@@ -274,19 +305,8 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 	return true;
 }
 
-bool create_number(int *number, int dimension, const long *data,
-		size_t dataSize, unsigned int *dataIndex) {
-	if (!make_fuzzable(number, sizeof(int), data, dataSize, dataIndex)) {
-		return false;
-	}
-	if (!assume_fuzzable(*number >= 0 && *number < dimension)) {
-		return false;
-	}
-	return true;
-}
-
-bool create_variable(int *variable, bool assign, int dim, const long *data,
-		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+bool create_variable(unsigned char *variable, bool assign, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	if (!create_number(variable, dim, data, dataSize, dataIndex)) {
 		return false;
 	}
@@ -299,20 +319,71 @@ bool create_variable(int *variable, bool assign, int dim, const long *data,
 	return true;
 }
 
+bool create_fuzzable_assignments(elina_linexpr0_t** assignments,
+		elina_manager_t* man, int dim, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
+
+	unsigned char overflowFlag;
+	if (!create_number(&overflowFlag, OVERFLOW + 1, data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+
+	fprintf(fp, "\n");
+	int i;
+	for (i = 0; i < NBASSIGNMENTS; i++) {
+
+		long fuzzableValues[MAX_DIM + 1];
+		if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data,
+				dataSize, dataIndex)) {
+			return false;
+		}
+		int j;
+		fprintf(fp, "%d. Assignment expression: ", i);
+		fflush(fp);
+		for (j = 0; j < dim; j++) {
+			if (overflowFlag != OVERFLOW) {
+				fuzzableValues[j] = fuzzableValues[j]
+						% (MAX_VALUE + 1 - MIN_VALUE) + MIN_VALUE;
+			}
+			fprintf(fp, "%ld, ", fuzzableValues[j]);
+			fflush(fp);
+		}
+		if (overflowFlag != OVERFLOW) {
+			fuzzableValues[j] = fuzzableValues[j]
+					% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+		}
+		fprintf(fp, "%ld\n", fuzzableValues[j]);
+		fflush(fp);
+
+		assignments[i] = create_polyhedral_linexpr0(dim, fuzzableValues);
+	}
+	return true;
+}
+
 bool increase_pool(elina_manager_t* man, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 
-	int nbops = NBOPS;
+	elina_linexpr0_t** assignments = (elina_linexpr0_t**) malloc(
+	NBASSIGNMENTS * sizeof(elina_linexpr0_t*));
 
-	fprintf(fp, "Number of operators: %d\n", nbops);
+	if (!create_fuzzable_assignments(assignments, man, dim, data, dataSize,
+			dataIndex, fp)) {
+		return false;
+	}
+	int currentAssignmentIndex = 0;
+	int resultOctagonIndex = 0;
+
+	fprintf(fp, "Number of operators: %d\n", NBOPS);
 	fflush(fp);
 	int i;
-	for (i = 0; i < nbops; i++) {
-		int operator;
-		if (!make_fuzzable(&operator, sizeof(int), data, dataSize, dataIndex)) {
+	for (i = 0; i < NBOPS; i++) {
+		unsigned char operator;
+		if (!make_fuzzable(&operator, sizeof(unsigned char), data, dataSize,
+				dataIndex)) {
 			return false;
 		}
-		operator = operator % 4;
+		operator = operator % 5;
 		if (!assume_fuzzable(
 				operator == ASSIGN || operator == PROJECT || operator == MEET
 						|| operator == JOIN || operator == WIDENING)) {
@@ -321,43 +392,58 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 		switch (operator) {
 		case ASSIGN: {
-			fprintf(fp, "%d. ASSIGN\n", i);
+			fprintf(fp, "\n%d. ASSIGN\n", i);
 			fflush(fp);
-			int assignedToVariable;
+
+			unsigned char assignedToVariable;
 			if (!create_variable(&assignedToVariable, true, dim, data, dataSize,
 					dataIndex, fp)) {
 				return false;
 			}
 
-			int number;
+			unsigned char number;
 			if (!create_number(&number, pool_size, data, dataSize, dataIndex)) {
 				return false;
 			}
 
-			elina_linexpr0_t** assignmentArray;
-			elina_dim_t * tdim;
+			elina_linexpr0_t** assignmentArray = (elina_linexpr0_t**) malloc(
+					sizeof(elina_linexpr0_t*));
+			elina_linexpr0_t* assignment_expression =
+					assignments[currentAssignmentIndex];
+			assignmentArray[0] = assignment_expression;
+			fprintf(fp, "Assignment expression: ");
+			elina_linexpr0_fprint(fp, assignment_expression, NULL);
+			fflush(fp);
 
-			if (!create_assignment(&assignmentArray, assignedToVariable, &tdim,
-					dim, data, dataSize, dataIndex, fp)) {
-				return false;
-			}
+			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
+			tdim[0] = assignedToVariable;
 
 			opt_oct_t *octagon = pool[number];
 			elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
-			fprintf(fp, "octagon %d before assignment: ", number);
+			fprintf(fp, "\noctagon %d before assignment: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
 			fflush(fp);
-			elina_lincons0_array_clear(&a);
 
 			opt_oct_t *result = opt_oct_assign_linexpr_array(man,
 			DESTRUCTIVE, octagon, tdim, assignmentArray, 1,
 			NULL);
+
 			if (!opt_oct_is_bottom(man, result) && !opt_oct_is_top(man, result)
 					&& !opt_oct_is_eq(man, result, octagon)
 					&& !exists(man, result)) {
-				pool[++pool_size] = result;
+				history[resultOctagonIndex][0] = pool_size;
+				history[resultOctagonIndex][1] = ASSIGN;
+				history[resultOctagonIndex][2] = assignedToVariable;
+				history[resultOctagonIndex][3] = number;
+				history[resultOctagonIndex++][4] = currentAssignmentIndex;
+				pool[pool_size++] = result;
 			} else {
 				opt_oct_free(man, result);
+			}
+
+			currentAssignmentIndex++;
+			if (currentAssignmentIndex == NBASSIGNMENTS) {
+				currentAssignmentIndex = 0;
 			}
 
 			free(assignmentArray);
@@ -365,22 +451,16 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			break;
 		}
 		case PROJECT: {
-			fprintf(fp, "%d. PROJECT\n", i);
+			fprintf(fp, "\n%d. PROJECT\n", i);
 			fflush(fp);
-			int projectedVariable;
+			unsigned char projectedVariable;
 			if (!create_variable(&projectedVariable, false, dim, data, dataSize,
 					dataIndex, fp)) {
 				return false;
 			}
 
-			int number;
+			unsigned char number;
 			if (!create_number(&number, pool_size, data, dataSize, dataIndex)) {
-				return false;
-			}
-
-			long notUsedValues[MAX_DIM + 1];
-			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
-					dataSize, dataIndex)) {
 				return false;
 			}
 
@@ -393,13 +473,19 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 			elina_dim_t * tdim = (elina_dim_t *) malloc(sizeof(elina_dim_t));
 			tdim[0] = projectedVariable;
+
+			bool top1 = opt_oct_is_top(man, octagon);
 			opt_oct_t *result = opt_oct_forget_array(man,
 			DESTRUCTIVE, octagon, tdim, 1, false);
 
 			if (!opt_oct_is_bottom(man, result) && !opt_oct_is_top(man, result)
 					&& !opt_oct_is_eq(man, result, octagon)
 					&& !exists(man, result)) {
-				pool[++pool_size] = result;
+				history[resultOctagonIndex][0] = pool_size;
+				history[resultOctagonIndex][1] = PROJECT;
+				history[resultOctagonIndex][2] = projectedVariable;
+				history[resultOctagonIndex++][3] = number;
+				pool[pool_size++] = result;
 			} else {
 				opt_oct_free(man, result);
 			}
@@ -408,21 +494,15 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			break;
 		}
 		case MEET: {
-			fprintf(fp, "%d. MEET\n", i);
+			fprintf(fp, "\n%d. MEET\n", i);
 			fflush(fp);
-			int number1, number2;
+			unsigned char number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
 					dataIndex)) {
 				return false;
 			}
 			if (!create_number(&number2, pool_size, data, dataSize,
 					dataIndex)) {
-				return false;
-			}
-
-			long notUsedValues[MAX_DIM + 1];
-			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
-					dataSize, dataIndex)) {
 				return false;
 			}
 
@@ -431,6 +511,10 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			fprintf(fp, "octagon %d: ", number1);
 			elina_lincons0_array_fprint(fp, &a1, NULL);
 			fflush(fp);
+			/*printf("\noctagon %d: ", number1);
+			 elina_lincons0_array_fprint(stdout, &a1, NULL);
+			 fflush(stdout);
+			 */
 			elina_lincons0_array_clear(&a1);
 
 			opt_oct_t *octagon2 = pool[number2];
@@ -438,35 +522,52 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			fprintf(fp, "octagon %d: ", number2);
 			elina_lincons0_array_fprint(fp, &a2, NULL);
 			fflush(fp);
+			/*printf("\noctagon %d: ", number2);
+			 elina_lincons0_array_fprint(stdout, &a2, NULL);
+			 fflush(stdout);
+			 */
 			elina_lincons0_array_clear(&a2);
+
+			bool top1 = opt_oct_is_top(man, octagon1);
+			bool top2 = opt_oct_is_top(man, octagon2);
 
 			opt_oct_t *result = opt_oct_meet(man, DESTRUCTIVE, octagon1,
 					octagon2);
+			/*if (opt_oct_is_top(man, octagon2) && !top2) {
+			 printf("***********************ERRROOOR at MEET octagon %d\n",
+			 number2);
+			 fflush(stdout);
+			 }
+			 if (opt_oct_is_top(man, octagon1) && !top1) {
+			 printf("***********************ERRROOOR at MEET octagon %d\n",
+			 number1);
+			 fflush(stdout);
+			 }*/
+
 			if (!opt_oct_is_bottom(man, result) && !opt_oct_is_top(man, result)
 					&& !opt_oct_is_eq(man, result, octagon1)
 					&& !opt_oct_is_eq(man, result, octagon2)
 					&& !exists(man, result)) {
-				pool[++pool_size] = result;
+				history[resultOctagonIndex][0] = pool_size;
+				history[resultOctagonIndex][1] = MEET;
+				history[resultOctagonIndex][2] = number1;
+				history[resultOctagonIndex++][3] = number2;
+				pool[pool_size++] = result;
 			} else {
 				opt_oct_free(man, result);
 			}
 			break;
 		}
 		case JOIN: {
-			fprintf(fp, "%d. JOIN\n", i);
+			fprintf(fp, "\n%d. JOIN\n", i);
 			fflush(fp);
-			int number1, number2;
+			unsigned char number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
 					dataIndex)) {
 				return false;
 			}
 			if (!create_number(&number2, pool_size, data, dataSize,
 					dataIndex)) {
-				return false;
-			}
-			long notUsedValues[MAX_DIM + 1];
-			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
-					dataSize, dataIndex)) {
 				return false;
 			}
 
@@ -490,16 +591,20 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 					&& !opt_oct_is_eq(man, result, octagon1)
 					&& !opt_oct_is_eq(man, result, octagon2)
 					&& !exists(man, result)) {
-				pool[++pool_size] = result;
+				history[resultOctagonIndex][0] = pool_size;
+				history[resultOctagonIndex][1] = JOIN;
+				history[resultOctagonIndex][2] = number1;
+				history[resultOctagonIndex++][3] = number2;
+				pool[pool_size++] = result;
 			} else {
 				opt_oct_free(man, result);
 			}
 			break;
 		}
 		case WIDENING: {
-			fprintf(fp, "%d. WIDENING\n", i);
+			fprintf(fp, "\n%d. WIDENING\n", i);
 			fflush(fp);
-			int number1, number2;
+			unsigned char number1, number2;
 			if (!create_number(&number1, pool_size, data, dataSize,
 					dataIndex)) {
 				return false;
@@ -509,43 +614,55 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				return false;
 			}
 
-			long notUsedValues[MAX_DIM + 1];
-			if (!make_fuzzable(notUsedValues, (dim + 1) * sizeof(long), data,
-					dataSize, dataIndex)) {
-				return false;
-			}
-
 			opt_oct_t *octagon1 = pool[number1];
 			opt_oct_t *octagon2 = pool[number2];
-			if (!opt_oct_is_leq(man, octagon1, octagon2)) {
-				opt_oct_t * aux = octagon1;
-				octagon1 = octagon2;
-				octagon2 = aux;
-				int auxNumber = number1;
-				number1 = number2;
-				number2 = auxNumber;
+
+			opt_oct_t *result;
+			if (opt_oct_is_leq(man, octagon1, octagon2)) {
+				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
+						octagon1);
+				fprintf(fp, "octagon %d: ", number1);
+				elina_lincons0_array_fprint(fp, &a1, NULL);
+				fflush(fp);
+				elina_lincons0_array_clear(&a1);
+
+				elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man,
+						octagon2);
+				fprintf(fp, "octagon %d: ", number2);
+				elina_lincons0_array_fprint(fp, &a2, NULL);
+				fflush(fp);
+				elina_lincons0_array_clear(&a2);
+
+				result = opt_oct_widening(man, octagon1, octagon2);
+			} else {
+				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
+						octagon2);
+				fprintf(fp, "octagon %d: ", number2);
+				elina_lincons0_array_fprint(fp, &a1, NULL);
+				fflush(fp);
+				elina_lincons0_array_clear(&a1);
+
+				elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man,
+						octagon1);
+				fprintf(fp, "octagon %d: ", number1);
+				elina_lincons0_array_fprint(fp, &a2, NULL);
+				fflush(fp);
+				elina_lincons0_array_clear(&a2);
+
+				result = opt_oct_widening(man, octagon2, octagon1);
 			}
 
-			elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man, octagon1);
-			fprintf(fp, "octagon %d: ", number1);
-			elina_lincons0_array_fprint(fp, &a1, NULL);
-			fflush(fp);
-			elina_lincons0_array_clear(&a1);
-
-			elina_lincons0_array_t a2 = opt_oct_to_lincons_array(man, octagon2);
-			fprintf(fp, "octagon %d: ", number2);
-			elina_lincons0_array_fprint(fp, &a2, NULL);
-			fflush(fp);
-			elina_lincons0_array_clear(&a2);
-
-			opt_oct_t *result = opt_oct_widening(man, octagon1, octagon2);
 			if (!opt_oct_is_bottom(man, result) && !opt_oct_is_top(man, result)
 					&& !opt_oct_is_eq(man, result, octagon1)
 					&& !opt_oct_is_eq(man, result, octagon2)
 					&& !exists(man, result)) {
-				pool[++pool_size] = result;
+				history[resultOctagonIndex][0] = pool_size;
+				history[resultOctagonIndex][1] = WIDENING;
+				history[resultOctagonIndex][2] = number1;
+				history[resultOctagonIndex++][3] = number2;
+				pool[pool_size++] = result;
 				elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
-						pool[pool_size]);
+						result);
 				fprintf(fp, "octagon %d: ", pool_size);
 				elina_lincons0_array_fprint(fp, &a, NULL);
 				fflush(fp);
@@ -557,21 +674,27 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 		}
 		}
 	}
+	fprintf(fp, "\n");
+	fflush(fp);
 	return true;
 }
 
 void remove_old_octagons(elina_manager_t* man) {
 	int index;
-	for (index = initial_pool_size + 1; index < pool_size; index++) {
+	for (index = initial_pool_size; index < pool_size; index++) {
 		opt_oct_free(man, pool[index]);
 	}
 	pool_size = initial_pool_size;
 }
 
+bool pool_is_empty() {
+	return pool_size == 0;
+}
+
 bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
-	if (pool_size == -1) {
+	if (pool_is_empty()) {
 		initialize_pool(man, top, bottom, dim, fp);
 	} else {
 		remove_old_octagons(man);
@@ -579,12 +702,66 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	return increase_pool(man, dim, data, dataSize, dataIndex, fp);
 }
 
-bool pool_is_empty() {
-	return pool_size == -1;
+void print_history(elina_manager_t* man, unsigned char number, FILE *fp) {
+	if (number < initial_pool_size) {
+		fprintf(fp, "Octagon %d is from the initial pool:\n", number);
+		opt_oct_t* octagon = pool[number];
+		elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
+		elina_lincons0_array_fprint(fp, &a,
+		NULL);
+		fflush(fp);
+		elina_lincons0_array_clear(&a);
+	} else {
+		fprintf(fp, "History for octagon %d: \n", number);
+		fflush(stdout);
+		int index;
+		for (index = 0; index < NBOPS; index++) {
+			if (history[index][0] == number) {
+				switch (history[index][1]) {
+				case ASSIGN:
+					fprintf(fp,
+							"ASSIGN [to variable x%d, assignment expression with index %d, octagon %d]\n",
+							history[index][2], history[index][4],
+							history[index][3]);
+					fflush(fp);
+					print_history(man, history[index][3], fp);
+					break;
+				case PROJECT:
+					fprintf(fp, "PROJECT [variable x%d, from octagon %d]\n",
+							history[index][2], history[index][3]);
+					fflush(fp);
+					print_history(man, history[index][3], fp);
+					break;
+				case MEET:
+					fprintf(fp, "MEET [octagon %d, octagon %d]\n",
+							history[index][2], history[index][3]);
+					fflush(fp);
+					print_history(man, history[index][2], fp);
+					print_history(man, history[index][3], fp);
+					break;
+				case JOIN:
+					fprintf(fp, "JOIN [octagon %d, octagon %d]\n",
+							history[index][2], history[index][3]);
+					fflush(fp);
+					print_history(man, history[index][2], fp);
+					print_history(man, history[index][3], fp);
+					break;
+				case WIDENING:
+					fprintf(fp, "WIDENING [octagon %d, octagon %d]\n",
+							history[index][2], history[index][3]);
+					print_history(man, history[index][2], fp);
+					print_history(man, history[index][3], fp);
+					fflush(fp);
+					break;
+				}
+				break;
+			}
+		}
+	}
 }
 
-bool get_octagon_from_pool(opt_oct_t** octagon, int *number, const long *data,
-		size_t dataSize, unsigned int *dataIndex) {
+bool get_octagon_from_pool(opt_oct_t** octagon, unsigned char *number,
+		const long *data, size_t dataSize, unsigned int *dataIndex) {
 	if (!create_number(number, pool_size, data, dataSize, dataIndex)) {
 		return false;
 	}
@@ -612,6 +789,6 @@ void free_pool(elina_manager_t* man) {
 	for (index = 0; index < pool_size; index++) {
 		opt_oct_free(man, pool[index]);
 	}
-	pool_size = -1;
+	pool_size = 0;
 	free(pool);
 }

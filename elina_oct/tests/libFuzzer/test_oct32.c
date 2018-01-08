@@ -22,14 +22,16 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_oct_t* octagon1;
-		int number1;
-		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize, &dataIndex)) {
+		unsigned char number1;
+		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
+				&dataIndex)) {
 			opt_oct_t* wideningResult;
 			int i = 0;
 			while (true) {
 				opt_oct_t* octagon2;
-				int number2;
-				if (get_octagon_from_pool(&octagon2, &number2, data, dataSize, &dataIndex)) {
+				unsigned char number2;
+				if (get_octagon_from_pool(&octagon2, &number2, data, dataSize,
+						&dataIndex)) {
 					wideningResult = opt_oct_widening(man, octagon1, octagon2);
 					if (opt_oct_is_leq(man, wideningResult, octagon1)) {
 						break; // we reached a fixed point
@@ -39,15 +41,11 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					if (!(R(i))) {
 						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
 								man, octagon1);
-						fprintf(fp, "found octagon%d: ", number1);
-						elina_lincons0_array_fprint(fp, &a1, NULL);
-						elina_lincons0_array_t a2 = opt_oct_to_lincons_array(
-								man, octagon2);
-						fprintf(fp, "found octagon%d: ", number2);
-						elina_lincons0_array_fprint(fp, &a2, NULL);
+						fprintf(fp, "found octagon %d!\n", number1);
+						print_history(man, number1, fp);
+						fprintf(fp, "found octagon %d!\n", number2);
+						print_history(man, number2, fp);
 						fflush(fp);
-						elina_lincons0_array_clear(&a1);
-						elina_lincons0_array_clear(&a2);
 						free_pool(man);
 						elina_manager_free(man);
 						fclose(fp);
