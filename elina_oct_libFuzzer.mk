@@ -8,6 +8,7 @@ compile:
 test:
 	cd elina_oct/tests/libFuzzer; \
     	number=$(start) ; while [ $${number} -le $(number) ] ; do \
+	rm MY_CORPUS/* ; \
 	clang -lstdc++ -fsanitize-coverage=trace-pc-guard -fPIC -O0 -DTHRESHOLD=0.75 -DNUM_DOUBLE \
 	-I /usr/local/include test_oct.c test_oct$${number}.c /home/libFuzzer.a -o test$${number} $(LIBS); \
         startTime=`date +%s` ; \
