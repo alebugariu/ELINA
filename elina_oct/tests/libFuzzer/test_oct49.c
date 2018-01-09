@@ -27,22 +27,24 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 			// conditional(x) less equal x
 
-			elina_lincons0_array_t conditionalExpression;
+			elina_lincons0_array_t conditionalArray;
 
-			create_conditional(&conditionalExpression, fp);
+			if (create_conditional(&conditionalArray, data, dataSize,
+					&dataIndex, fp)) {
 
-			opt_oct_t* cond_result1 = opt_oct_meet_lincons_array(man,
-			DESTRUCTIVE, bottom, &conditionalExpression);
+				opt_oct_t* cond_result1 = opt_oct_meet_lincons_array(man,
+				DESTRUCTIVE, bottom, &conditionalArray);
 
-			if (opt_oct_is_leq(man, cond_result1, octagon1) == false) {
-				fprintf(fp, "found octagon %d!\n", number1);
-				print_history(man, number1, fp);
-				fflush(fp);
-				free_pool(man);
-				opt_oct_free(man, cond_result1);
-				elina_manager_free(man);
-				fclose(fp);
-				return 1;
+				if (opt_oct_is_leq(man, cond_result1, octagon1) == false) {
+					fprintf(fp, "found octagon %d!\n", number1);
+					print_history(man, number1, fp);
+					fflush(fp);
+					free_pool(man);
+					opt_oct_free(man, cond_result1);
+					elina_manager_free(man);
+					fclose(fp);
+					return 1;
+				}
 			}
 		}
 	}

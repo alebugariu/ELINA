@@ -22,6 +22,7 @@
 
 #define DESTRUCTIVE false
 #define RANDOM_ASSIGNMENT false
+#define RANDOM_CONDITIONAL false
 
 #define ASSIGN 0
 #define PROJECT 1
@@ -48,8 +49,8 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 		int assignedToVariable, elina_dim_t ** tdim, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
-void create_conditional(elina_lincons0_array_t *conditionalExpression,
-		FILE *fp);
+bool create_conditional(elina_lincons0_array_t *conditionalArray,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool create_variable(unsigned char *variable, bool assign, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp);

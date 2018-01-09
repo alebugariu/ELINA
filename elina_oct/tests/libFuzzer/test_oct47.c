@@ -29,30 +29,34 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				// conditional is monotone
 				if (assume_fuzzable(opt_oct_is_leq(man, octagon1, octagon2))) {
 
-					elina_lincons0_array_t conditionalExpression;
+					elina_lincons0_array_t conditionalArray;
 
-					create_conditional(&conditionalExpression, fp);
+					if (create_conditional(&conditionalArray, data, dataSize,
+							&dataIndex, fp)) {
 
-					opt_oct_t* cond_result1 = opt_oct_meet_lincons_array(man,
-					DESTRUCTIVE, octagon1, &conditionalExpression);
+						opt_oct_t* cond_result1 = opt_oct_meet_lincons_array(
+								man,
+								DESTRUCTIVE, octagon1, &conditionalArray);
 
-					opt_oct_t* cond_result2 = opt_oct_meet_lincons_array(man,
-					DESTRUCTIVE, octagon2, &conditionalExpression);
+						opt_oct_t* cond_result2 = opt_oct_meet_lincons_array(
+								man,
+								DESTRUCTIVE, octagon2, &conditionalArray);
 
-					if (opt_oct_is_leq(man, cond_result1, cond_result2)
-							== false) {
-						fprintf(fp, "found octagon %d!\n", number1);
-						print_history(man, number1, fp);
-						fflush(fp);
-						fprintf(fp, "found octagon %d!\n", number2);
-						print_history(man, number2, fp);
-						fflush(fp);
-						free_pool(man);
-						opt_oct_free(man, cond_result1);
-						opt_oct_free(man, cond_result2);
-						elina_manager_free(man);
-						fclose(fp);
-						return 1;
+						if (opt_oct_is_leq(man, cond_result1, cond_result2)
+								== false) {
+							fprintf(fp, "found octagon %d!\n", number1);
+							print_history(man, number1, fp);
+							fflush(fp);
+							fprintf(fp, "found octagon %d!\n", number2);
+							print_history(man, number2, fp);
+							fflush(fp);
+							free_pool(man);
+							opt_oct_free(man, cond_result1);
+							opt_oct_free(man, cond_result2);
+							elina_manager_free(man);
+							fclose(fp);
+							return 1;
+						}
 					}
 				}
 			}

@@ -10,7 +10,7 @@
 int pool_size = 0;
 int initial_pool_size = 0;
 opt_oct_t** pool = NULL;
-unsigned char history[NBOPS][5];
+unsigned char history[NBOPS][5] = { 0 };
 
 int dim;
 time_t seed;
@@ -163,7 +163,18 @@ bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 	return true;
 }
 
-void create_conditional(elina_lincons0_array_t *conditionalExpression, FILE *fp) {
+bool create_number(unsigned char *number, int dimension, const long *data,
+		size_t dataSize, unsigned int *dataIndex) {
+	if (!make_fuzzable(number, sizeof(unsigned char), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	*number = rand() % dimension;
+	return true;
+}
+
+bool create_random_conditional(elina_lincons0_array_t *conditionalArray,
+		FILE *fp) {
 	unsigned char randomVariable =
 			rand()
 					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
@@ -200,11 +211,71 @@ void create_conditional(elina_lincons0_array_t *conditionalExpression, FILE *fp)
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
 
-	*conditionalExpression = elina_lincons0_array_make(1);
+	*conditionalArray = elina_lincons0_array_make(1);
 	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
 			fuzzableValues);
-	conditionalExpression->p[0].constyp = type;
-	conditionalExpression->p[0].linexpr0 = expression;
+	conditionalArray->p[0].constyp = type;
+	conditionalArray->p[0].linexpr0 = expression;
+	return true;
+}
+
+bool create_fuzzable_conditioanl(elina_lincons0_array_t *conditionalArray,
+		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
+		FILE *fp) {
+	unsigned char overflowFlag;
+	if (!create_number(&overflowFlag, OVERFLOW + 1, data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+
+	elina_constyp_t type =
+			overflowFlag % 2 == ELINA_CONS_SUPEQ ?
+					ELINA_CONS_SUPEQ : ELINA_CONS_EQ;
+
+	fprintf(fp, "Conditional expression: ");
+	fflush(fp);
+	fprintf(fp, "Type: %c\n", type == ELINA_CONS_EQ ? 'e' : 's');
+	fflush(fp);
+
+	long fuzzableValues[MAX_DIM + 1];
+	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+	fprintf(fp, "Values: ");
+	fflush(fp);
+
+	int j;
+	for (j = 0; j < dim; j++) {
+		if (overflowFlag != OVERFLOW) {
+			fuzzableValues[j] = fuzzableValues[j]
+					% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+		}
+		fprintf(fp, "%ld, ", fuzzableValues[j]);
+		fflush(fp);
+	}
+	if (overflowFlag != OVERFLOW) {
+		fuzzableValues[j] = fuzzableValues[j]
+				% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+	}
+	fprintf(fp, "%ld\n", fuzzableValues[j]);
+	fflush(fp);
+
+	*conditionalArray = elina_lincons0_array_make(1);
+	elina_linexpr0_t* expression = create_polyhedral_linexpr0(dim,
+			fuzzableValues);
+	conditionalArray->p[0].constyp = type;
+	conditionalArray->p[0].linexpr0 = expression;
+	return true;
+}
+
+bool create_conditional(elina_lincons0_array_t *conditionalArray,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	if (RANDOM_CONDITIONAL) {
+		return create_random_conditional(conditionalArray, fp);
+	}
+	return create_fuzzable_conditioanl(conditionalArray, dim, data, dataSize,
+			dataIndex, fp);
 }
 
 elina_linexpr0_t* create_random_polyhedral_assignment(int dim, FILE* fp) {
@@ -237,22 +308,14 @@ elina_linexpr0_t* create_random_polyhedral_assignment(int dim, FILE* fp) {
 	return expression;
 }
 
-bool create_number(unsigned char *number, int dimension, const long *data,
-		size_t dataSize, unsigned int *dataIndex) {
-	if (!make_fuzzable(number, sizeof(unsigned char), data, dataSize,
-			dataIndex)) {
-		return false;
-	}
-	*number = rand() % dimension;
-	return true;
-}
-
 bool create_fuzzable_polyhedral_assignment(elina_linexpr0_t** expression,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
-	unsigned char randomVariable =
-			rand()
-					% (MAX_RANDOM_VARIABLE + 1 - MIN_RANDOM_VARIABLE)+ MIN_RANDOM_VARIABLE;
+	unsigned char overflowFlag;
+	if (!create_number(&overflowFlag, OVERFLOW + 1, data, dataSize,
+			dataIndex)) {
+		return false;
+	}
 
 	long fuzzableValues[MAX_DIM + 1];
 	if (!make_fuzzable(fuzzableValues, (dim + 1) * sizeof(long), data, dataSize,
@@ -263,20 +326,16 @@ bool create_fuzzable_polyhedral_assignment(elina_linexpr0_t** expression,
 	fprintf(fp, "Assignment expression: ");
 	fflush(fp);
 	for (j = 0; j < dim; j++) {
-		if (!assume_fuzzable(
-				!(randomVariable <= VAR_THRESHOLD)
-						&& (fuzzableValues[j] >= MIN_VALUE
-								&& fuzzableValues[j] <= MAX_VALUE))) {
-			return false;
+		if (overflowFlag != OVERFLOW) {
+			fuzzableValues[j] = fuzzableValues[j]
+					% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
 		}
 		fprintf(fp, "%ld, ", fuzzableValues[j]);
 		fflush(fp);
 	}
-	if (!assume_fuzzable(
-			!(randomVariable <= VAR_THRESHOLD)
-					&& (fuzzableValues[j] >= MIN_VALUE
-							&& fuzzableValues[j] <= MAX_VALUE))) {
-		return false;
+	if (overflowFlag != OVERFLOW) {
+		fuzzableValues[j] = fuzzableValues[j]
+				% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
 	}
 	fprintf(fp, "%ld\n", fuzzableValues[j]);
 	fflush(fp);
@@ -679,12 +738,23 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 	return true;
 }
 
+void clear_history() {
+	int index1, index2;
+	for (index1 = 0; index1 < NBOPS; index1++) {
+		for (index2 = 0; index2 < 5; index2++) {
+			history[index1][index2] = 0;
+		}
+	}
+}
+
 void remove_old_octagons(elina_manager_t* man) {
 	int index;
 	for (index = initial_pool_size; index < pool_size; index++) {
 		opt_oct_free(man, pool[index]);
 	}
 	pool_size = initial_pool_size;
+
+	clear_history();
 }
 
 bool pool_is_empty() {
@@ -791,4 +861,6 @@ void free_pool(elina_manager_t* man) {
 	}
 	pool_size = 0;
 	free(pool);
+
+	clear_history();
 }
