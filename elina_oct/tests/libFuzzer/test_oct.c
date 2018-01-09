@@ -120,6 +120,7 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 								} else {
 									opt_oct_free(man, octagon);
 								}
+								elina_lincons0_array_clear(&a_constraint);
 							}
 						}
 					}
@@ -423,8 +424,7 @@ bool create_fuzzable_assignments(elina_linexpr0_t** assignments,
 bool increase_pool(elina_manager_t* man, int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 
-	elina_linexpr0_t** assignments = (elina_linexpr0_t**) malloc(
-	NBASSIGNMENTS * sizeof(elina_linexpr0_t*));
+	elina_linexpr0_t *assignments[NBASSIGNMENTS];
 
 	if (!create_fuzzable_assignments(assignments, man, dim, data, dataSize,
 			dataIndex, fp)) {
@@ -482,6 +482,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			fprintf(fp, "\noctagon %d before assignment: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
 			fflush(fp);
+			elina_lincons0_array_clear(&a);
 
 			opt_oct_t *result = opt_oct_assign_linexpr_array(man,
 			DESTRUCTIVE, octagon, tdim, assignmentArray, 1,
@@ -735,6 +736,10 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 	}
 	fprintf(fp, "\n");
 	fflush(fp);
+
+	for (i = 0; i < NBASSIGNMENTS; i++) {
+		free(assignments[i]);
+	}
 	return true;
 }
 
