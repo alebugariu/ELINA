@@ -22,8 +22,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		unsigned char number1;
-		if (get_octagon_from_pool(&octagon1, &number1, data, dataSize,
-				&dataIndex)) {
+		if (get_octagon(&octagon1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
 			if (opt_oct_is_bottom(man, octagon1) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
@@ -44,7 +43,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 						if (opt_oct_is_bottom(man, assign_result1) == true) {
 							fprintf(fp, "found octagon %d!\n", number1);
-							print_history(man, number1, fp);
+							print_octagon(man, octagon1, number1, fp);
 							fflush(fp);
 							free_pool(man);
 							free(assignmentArray);

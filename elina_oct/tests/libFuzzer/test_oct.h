@@ -7,6 +7,8 @@
 
 #define MIN_DIM 8
 #define MAX_DIM 8
+#define MIN_NBCONS 1
+#define MAX_NBCONS 50
 
 #define MAX_POOL_SIZE 3*NBOPS
 
@@ -20,6 +22,7 @@
 
 #define OVERFLOW 3
 
+#define FROM_POOL true
 #define DESTRUCTIVE false
 #define RANDOM_ASSIGNMENT false
 #define RANDOM_CONDITIONAL false
@@ -40,8 +43,9 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 
 void free_pool(elina_manager_t* man);
 
-bool get_octagon_from_pool(opt_oct_t** octagon, unsigned char *number, const long *data,
-		size_t dataSize, unsigned int *dataIndex);
+bool get_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
+		unsigned char *number, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp);
 
 int create_dimension(FILE *fp);
 
@@ -52,11 +56,11 @@ bool create_assignment(elina_linexpr0_t*** assignmentArray,
 bool create_conditional(elina_lincons0_array_t *conditionalArray,
 		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
-bool create_variable(unsigned char *variable, bool assign, int dim, const long *data,
-		size_t dataSize, unsigned int *dataIndex, FILE *fp);
+bool create_variable(unsigned char *variable, bool assign, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp);
 
 bool assume_fuzzable(bool condition);
 
-void print_history(elina_manager_t* man, unsigned char number, FILE *fp);
+void print_octagon(elina_manager_t* man, opt_oct_t* octagon, unsigned char number, FILE *fp);
 
 #endif /* TEST_OCT_H_ */

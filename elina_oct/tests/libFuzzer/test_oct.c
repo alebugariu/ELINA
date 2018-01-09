@@ -15,8 +15,8 @@ unsigned char history[NBOPS][5] = { 0 };
 int dim;
 time_t seed;
 
-elina_linexpr0_t * create_linexpr0(int dim, long v1, long v2, long coeff1,
-		long coeff2, long scalar_value) {
+elina_linexpr0_t * create_octogonal_linexpr0(int dim, long v1, long v2,
+		long coeff1, long coeff2, long scalar_value) {
 	elina_coeff_t *cst, *coeff;
 	elina_linexpr0_t * linexpr0 = elina_linexpr0_alloc(ELINA_LINEXPR_SPARSE, 2);
 	cst = &linexpr0->cst;
@@ -99,9 +99,11 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 								elina_lincons0_array_t a_constraint =
 										elina_lincons0_array_make(1);
 								a_constraint.p[0].constyp = type[j];
-								a_constraint.p[0].linexpr0 = create_linexpr0(
-										dim, v1, v2, coefficients[coeff1],
-										coefficients[coeff2], constants[i]);
+								a_constraint.p[0].linexpr0 =
+										create_octogonal_linexpr0(dim, v1, v2,
+												coefficients[coeff1],
+												coefficients[coeff2],
+												constants[i]);
 								opt_oct_t* octagon = opt_oct_meet_lincons_array(
 										man,
 										DESTRUCTIVE, top, &a_constraint);
@@ -769,6 +771,9 @@ bool pool_is_empty() {
 bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, const long *data, size_t dataSize, unsigned int *dataIndex,
 		FILE *fp) {
+	if (!FROM_POOL) {
+		return true;
+	}
 	if (pool_is_empty()) {
 		initialize_pool(man, top, bottom, dim, fp);
 	} else {
@@ -835,6 +840,131 @@ void print_history(elina_manager_t* man, unsigned char number, FILE *fp) {
 	}
 }
 
+void print_octagon(elina_manager_t* man, opt_oct_t* octagon,
+		unsigned char number, FILE *fp) {
+	if (FROM_POOL) {
+		print_history(man, number, fp);
+	} else {
+		elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
+		elina_lincons0_array_fprint(fp, &a,
+		NULL);
+		fflush(fp);
+		elina_lincons0_array_clear(&a);
+	}
+}
+
+bool create_number_of_constraints(unsigned long *nbcons, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	if (!make_fuzzable(nbcons, sizeof(nbcons), data, dataSize, dataIndex)) {
+		return false;
+	}
+	int max = dim > MIN_NBCONS ? dim : MIN_NBCONS;
+	*nbcons = *nbcons % (MAX_NBCONS + 1 - max) + max;
+
+	fprintf(fp, "Number of constraints: %ld\n", *nbcons);
+	fflush(fp);
+	return true;
+}
+
+bool create_octogonal_constraint(elina_linexpr0_t** constraint,
+		elina_constyp_t *type, int dim, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
+	unsigned char overflowFlag;
+	if (!create_number(&overflowFlag, OVERFLOW + 1, data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+
+	*type = overflowFlag % 2 == ELINA_CONS_SUPEQ ?
+			ELINA_CONS_SUPEQ : ELINA_CONS_EQ;
+
+	fprintf(fp, "Type: %c\n", type == ELINA_CONS_EQ ? 'e' : 's');
+	fflush(fp);
+
+	long fuzzableValues[5];
+	if (!make_fuzzable(fuzzableValues, (5) * sizeof(long), data, dataSize,
+			dataIndex)) {
+		return false;
+	}
+
+	fuzzableValues[0] = fuzzableValues[0] % dim;
+	fuzzableValues[1] = fuzzableValues[1] % dim;
+
+	if (!assume_fuzzable(fuzzableValues[0] != fuzzableValues[1])) {
+		return false;
+	}
+
+	int modulo1 = fuzzableValues[2] % 3;
+	if (modulo1 == 2) {
+		fuzzableValues[2] = -1;
+	} else {
+		fuzzableValues[2] = modulo1;
+	}
+
+	int modulo2 = fuzzableValues[3] % 3;
+	if (modulo2 == 2) {
+		fuzzableValues[3] = -1;
+	} else {
+		fuzzableValues[3] = modulo2;
+	}
+
+	if (overflowFlag != OVERFLOW) {
+		fuzzableValues[4] = fuzzableValues[4]
+				% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+	}
+
+	fprintf(fp, "Values: %ld, %ld, %ld, %ld, %ld\n", fuzzableValues[0],
+			fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
+			fuzzableValues[4]);
+	fflush(fp);
+	*constraint = create_octogonal_linexpr0(dim, fuzzableValues[0],
+			fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
+			fuzzableValues[4]);
+	return true;
+}
+
+bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
+		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
+	*lincons0 = elina_lincons0_array_make(nbcons);
+	elina_linexpr0_t* constraint;
+	elina_constyp_t type;
+
+	fprintf(fp, "\n");
+	int i;
+	for (i = 0; i < nbcons; i++) {
+		fprintf(fp, "%d. ", i);
+		fflush(fp);
+		if (!create_octogonal_constraint(&constraint, &type, dim, data,
+				dataSize, dataIndex, fp)) {
+			elina_lincons0_array_clear(lincons0);
+			return false;
+		}
+		lincons0->p[i].constyp = type;
+		lincons0->p[i].linexpr0 = constraint;
+	}
+	return true;
+}
+
+bool create_octagon_from_top(opt_oct_t** octagon, elina_manager_t* man,
+		opt_oct_t * top, int dim, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
+	unsigned long nbcons;
+	if (!create_number_of_constraints(&nbcons, dim, data, dataSize, dataIndex,
+			fp)) {
+		return false;
+	}
+
+	elina_lincons0_array_t constraints;
+	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
+			dataIndex, fp)) {
+		return false;
+	}
+
+	*octagon = opt_oct_meet_lincons_array(man, DESTRUCTIVE, top, &constraints);
+	elina_lincons0_array_clear(&constraints);
+	return true;
+}
+
 bool get_octagon_from_pool(opt_oct_t** octagon, unsigned char *number,
 		const long *data, size_t dataSize, unsigned int *dataIndex) {
 	if (!create_number(number, pool_size, data, dataSize, dataIndex)) {
@@ -842,6 +972,16 @@ bool get_octagon_from_pool(opt_oct_t** octagon, unsigned char *number,
 	}
 	*octagon = pool[*number];
 	return true;
+}
+
+bool get_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
+		unsigned char *number, const long *data, size_t dataSize,
+		unsigned int *dataIndex, FILE *fp) {
+	if (FROM_POOL) {
+		return get_octagon_from_pool(octagon, number, data, dataSize, dataIndex);
+	}
+	return create_octagon_from_top(octagon, man, top, dim, data, dataSize,
+			dataIndex, fp);
 }
 
 bool assume_fuzzable(bool condition) {
@@ -860,12 +1000,14 @@ int create_dimension(FILE *fp) {
 }
 
 void free_pool(elina_manager_t* man) {
-	int index;
-	for (index = 0; index < pool_size; index++) {
-		opt_oct_free(man, pool[index]);
-	}
-	pool_size = 0;
-	free(pool);
+	if (FROM_POOL) {
+		int index;
+		for (index = 0; index < pool_size; index++) {
+			opt_oct_free(man, pool[index]);
+		}
+		pool_size = 0;
+		free(pool);
 
-	clear_history();
+		clear_history();
+	}
 }
