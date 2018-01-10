@@ -590,8 +590,8 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			 */
 			elina_lincons0_array_clear(&a2);
 
-			bool top1 = opt_oct_is_top(man, octagon1);
-			bool top2 = opt_oct_is_top(man, octagon2);
+			//bool top1 = opt_oct_is_top(man, octagon1);
+			//bool top2 = opt_oct_is_top(man, octagon2);
 
 			opt_oct_t *result = opt_oct_meet(man, DESTRUCTIVE, octagon1,
 					octagon2);
@@ -867,7 +867,7 @@ bool create_number_of_constraints(unsigned long *nbcons, int dim,
 	return true;
 }
 
-bool create_octogonal_constraint(elina_linexpr0_t** constraint,
+bool create_octogonal_constraint(int index, elina_linexpr0_t** constraint,
 		elina_constyp_t *type, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
 	unsigned char overflowFlag;
@@ -879,30 +879,27 @@ bool create_octogonal_constraint(elina_linexpr0_t** constraint,
 	*type = overflowFlag % 2 == ELINA_CONS_SUPEQ ?
 			ELINA_CONS_SUPEQ : ELINA_CONS_EQ;
 
-	fprintf(fp, "Type: %c\n", type == ELINA_CONS_EQ ? 'e' : 's');
-	fflush(fp);
-
 	long fuzzableValues[5];
 	if (!make_fuzzable(fuzzableValues, (5) * sizeof(long), data, dataSize,
 			dataIndex)) {
 		return false;
 	}
 
-	fuzzableValues[0] = fuzzableValues[0] % dim;
-	fuzzableValues[1] = fuzzableValues[1] % dim;
+	fuzzableValues[0] = (fuzzableValues[0] % dim + dim) % dim;
+	fuzzableValues[1] = (fuzzableValues[1] % dim + dim) % dim;
 
 	if (!assume_fuzzable(fuzzableValues[0] != fuzzableValues[1])) {
 		return false;
 	}
 
-	int modulo1 = fuzzableValues[2] % 3;
+	int modulo1 = (fuzzableValues[2] % 3 + 3) % 3;
 	if (modulo1 == 2) {
 		fuzzableValues[2] = -1;
 	} else {
 		fuzzableValues[2] = modulo1;
 	}
 
-	int modulo2 = fuzzableValues[3] % 3;
+	int modulo2 = (fuzzableValues[3] % 3 + 3) % 3;
 	if (modulo2 == 2) {
 		fuzzableValues[3] = -1;
 	} else {
@@ -914,6 +911,7 @@ bool create_octogonal_constraint(elina_linexpr0_t** constraint,
 				% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
 	}
 
+	fprintf(fp, "%d. Type: %c\n", index, type == ELINA_CONS_EQ ? 'e' : 's');
 	fprintf(fp, "Values: %ld, %ld, %ld, %ld, %ld\n", fuzzableValues[0],
 			fuzzableValues[1], fuzzableValues[2], fuzzableValues[3],
 			fuzzableValues[4]);
@@ -933,9 +931,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
 	fprintf(fp, "\n");
 	int i;
 	for (i = 0; i < nbcons; i++) {
-		fprintf(fp, "%d. ", i);
-		fflush(fp);
-		if (!create_octogonal_constraint(&constraint, &type, dim, data,
+		if (!create_octogonal_constraint(i, &constraint, &type, dim, data,
 				dataSize, dataIndex, fp)) {
 			elina_lincons0_array_clear(lincons0);
 			return false;
@@ -943,6 +939,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
 		lincons0->p[i].constyp = type;
 		lincons0->p[i].linexpr0 = constraint;
 	}
+	fprintf(fp, "\n");
 	return true;
 }
 
@@ -958,6 +955,7 @@ bool create_octagon_from_top(opt_oct_t** octagon, elina_manager_t* man,
 	elina_lincons0_array_t constraints;
 	if (!create_constraints(&constraints, nbcons, dim, data, dataSize,
 			dataIndex, fp)) {
+		elina_lincons0_array_clear(&constraints);
 		return false;
 	}
 
