@@ -850,6 +850,7 @@ void print_octagon(elina_manager_t* man, opt_oct_t* octagon,
 		NULL);
 		fflush(fp);
 		elina_lincons0_array_clear(&a);
+		opt_oct_free(man, octagon);
 	}
 }
 
