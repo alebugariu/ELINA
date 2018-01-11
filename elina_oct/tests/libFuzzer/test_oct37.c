@@ -1,7 +1,4 @@
 #include <time.h>
-#include "opt_oct.h"
-#include "opt_oct_internal.h"
-#include "opt_oct_hmat.h"
 #include "test_oct.h"
 #include <string.h>
 #include <stdio.h>
@@ -9,7 +6,7 @@
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
 	FILE *fp;
-	fp = fopen("out37.txt", "w+");
+	fp = fopen("out47.txt", "w+");
 
 	int dim = create_dimension(fp);
 
@@ -27,20 +24,38 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			unsigned char number2;
 			if (get_octagon(&octagon2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
 
-				//meet == glb, join == lub
-				//narrowing approximates meet
-				if (!opt_oct_is_leq(man,
-						opt_oct_meet(man, DESTRUCTIVE, octagon1, octagon2),
-						opt_oct_narrowing(man, octagon1, octagon2))) {
-					fprintf(fp, "found octagon %d!\n", number1);
-					print_octagon(man, octagon1, number1, fp);
-					fprintf(fp, "found octagon %d!\n", number2);
-					print_octagon(man, octagon2, number2, fp);
-					fflush(fp);
-					free_pool(man);
-					elina_manager_free(man);
-					fclose(fp);
-					return 1;
+				// conditional is monotone
+				if (assume_fuzzable(opt_oct_is_leq(man, octagon1, octagon2))) {
+
+					elina_lincons0_array_t conditionalArray;
+
+					if (create_conditional(&conditionalArray, data, dataSize,
+							&dataIndex, fp)) {
+
+						opt_oct_t* cond_result1 = opt_oct_meet_lincons_array(
+								man,
+								DESTRUCTIVE, octagon1, &conditionalArray);
+
+						opt_oct_t* cond_result2 = opt_oct_meet_lincons_array(
+								man,
+								DESTRUCTIVE, octagon2, &conditionalArray);
+
+						if (opt_oct_is_leq(man, cond_result1, cond_result2)
+								== false) {
+							fprintf(fp, "found octagon %d!\n", number1);
+							print_octagon(man, octagon1, number1, fp);
+							fflush(fp);
+							fprintf(fp, "found octagon %d!\n", number2);
+							print_octagon(man, octagon2, number2, fp);
+							fflush(fp);
+							free_pool(man);
+							opt_oct_free(man, cond_result1);
+							opt_oct_free(man, cond_result2);
+							elina_manager_free(man);
+							fclose(fp);
+							return 1;
+						}
+					}
 				}
 			}
 		}
@@ -49,4 +64,3 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	fclose(fp);
 	return 0;
 }
-
