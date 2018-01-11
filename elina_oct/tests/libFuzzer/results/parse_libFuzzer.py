@@ -19,7 +19,7 @@ with open(output_file, 'w') as results_fp:
     columns = [
         'test case',
 	'seed',
-        'execution time (seconds)',
+        'execution time (miliseconds)',
         'execution time (minutes)',
         'initial coverage',
         'final coverage',
@@ -63,8 +63,8 @@ with open(output_file, 'w') as results_fp:
                 elif line.startswith('Execution time: '):
                    line = line.replace('Execution time: ', '').strip()
                    values = line.split(" ");
-                   results['execution time (seconds)'] = int(values[0])
-                   results['execution time (minutes)'] = float(values[0]) / 60
+                   results['execution time (miliseconds)'] = int(values[0])
+                   results['execution time (minutes)'] = float(values[0]) / 60000
                    results['test case'] = values[-1]
                    dump_result(writer, results)
                    results = {}
