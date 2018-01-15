@@ -62,94 +62,19 @@ bool exists(elina_manager_t* man, opt_oct_t *octagon) {
 	return false;
 }
 
-/*void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
- int dim, FILE *fp) {
+//uniformly distributed random number in the range [0, max)
+long random_with_max(long max) {
+	unsigned long num_bins = (unsigned long) max;
+	unsigned long num_rand = (unsigned long) RAND_MAX + 1;
+	unsigned long bin_size = num_rand / num_bins, defect = num_rand % num_bins;
 
- seed = time(NULL);
- srand(seed);
- long coefficients[3] = { 0, -1, 1 };
- long constants[3] = { 0, LONG_MIN, LONG_MAX };
- int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
+	long x;
+	do {
+		x = random();
+	} while (num_rand - defect <= (unsigned long) x);
 
- pool = (opt_oct_t **) malloc(MAX_POOL_SIZE * sizeof(opt_oct_t *));
-
- int v1, v2;
- int coeff1, coeff2;
- int i, j;
- int counter = 0;
- for (v1 = 0; v1 < dim - 1; v1++) {
- for (v2 = v1 + 1; v2 < dim; v2++) {
- for (coeff1 = 0; coeff1 < 3; coeff1++) {
- for (coeff2 = 0; coeff2 < 3; coeff2++) {
- for (i = 0; i < 4; i++) {
- for (j = 0; j < 2; j++) {
- double probability = (double) rand()
- / (double) ((unsigned) RAND_MAX + 1);
- if (probability
- <= (NBOPS - pool_size) / pow(dim, 3)) {
-
- long constant;
- if (i == 3) {
- constant =
- rand()
- % (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
- } else {
- constant = constants[i];
- }
- elina_lincons0_array_t a_constraint =
- elina_lincons0_array_make(1);
- a_constraint.p[0].constyp = type[j];
- a_constraint.p[0].linexpr0 =
- create_octogonal_linexpr0(dim, v1, v2,
- coefficients[coeff1],
- coefficients[coeff2],
- constant);
- opt_oct_t* octagon = opt_oct_meet_lincons_array(
- man,
- DESTRUCTIVE, top, &a_constraint);
- if (!opt_oct_is_bottom(man, octagon)
- && !opt_oct_is_top(man, octagon)
- && !exists(man, octagon)) {
- elina_lincons0_array_t a =
- opt_oct_to_lincons_array(man,
- octagon);
- printf("octagon %d: ", pool_size);
- elina_lincons0_array_fprint(stdout, &a,
- NULL);
- fflush(stdout);
- elina_lincons0_array_clear(&a);
- pool[pool_size++] = octagon;
- } else {
- opt_oct_free(man, octagon);
- }
- elina_lincons0_array_clear(&a_constraint);
- }
- }
- }
- }
- }
- }
- }
- elina_lincons0_array_t a = opt_oct_to_lincons_array(man, top);
- printf("octagon %d: ", pool_size);
- elina_lincons0_array_fprint(stdout, &a, NULL);
- fflush(stdout);
- elina_lincons0_array_clear(&a);
- pool[pool_size++] = top;
-
- a = opt_oct_to_lincons_array(man, bottom);
- printf("octagon %d: ", pool_size);
- elina_lincons0_array_fprint(stdout, &a, NULL);
- fflush(stdout);
- elina_lincons0_array_clear(&a);
- pool[pool_size++] = bottom;
-
- initial_pool_size = pool_size;
- fprintf(fp, "Successfully initialized the pool!\n");
- fflush(fp);
- printf("Initial pool size: %d\n", initial_pool_size);
- fflush(stdout);
- }*/
+	return x / bin_size;
+}
 
 void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, FILE *fp) {
@@ -160,50 +85,63 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	long constants[3] = { 0, LONG_MIN, LONG_MAX };
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
 
-	pool = (opt_oct_t **) malloc(MAX_POOL_SIZE * sizeof(opt_oct_t *));
+	pool = (opt_oct_t **) malloc((MAX_POOL_SIZE + NBOPS) * sizeof(opt_oct_t *));
 
-	unsigned v1, v2;
-	unsigned coeff1, coeff2;
+	int v1, v2;
+	int coeff1, coeff2;
 	int i, j;
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 2; j++) {
+	int counter = 0;
+
+	unsigned expectedNumber = MAX_POOL_SIZE - 2; // top and bottom
+	int totalNumber = 72 * (dim - 1) * dim / 2;
+	for (v1 = 0; v1 < dim - 1; v1++) {
+		for (v2 = v1 + 1; v2 < dim; v2++) {
 			for (coeff1 = 0; coeff1 < 3; coeff1++) {
-				for (coeff2 = coeff1; coeff2 < 3; coeff2++) {
-					long constant;
-					if (i == 3) {
-						constant = rand()
-								% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
-					} else {
-						constant = constants[i];
+				for (coeff2 = 0; coeff2 < 3; coeff2++) {
+					for (i = 0; i < 4; i++) {
+						for (j = 0; j < 2; j++) {
+							unsigned randomValue = random_with_max(
+									totalNumber - counter);
+							if (randomValue < expectedNumber) {
+								long constant;
+								if (i == 3) {
+									constant =
+											rand()
+													% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+								} else {
+									constant = constants[i];
+								}
+								elina_lincons0_array_t a_constraint =
+										elina_lincons0_array_make(1);
+								a_constraint.p[0].constyp = type[j];
+								a_constraint.p[0].linexpr0 =
+										create_octogonal_linexpr0(dim, v1, v2,
+												coefficients[coeff1],
+												coefficients[coeff2], constant);
+								opt_oct_t* octagon = opt_oct_meet_lincons_array(
+										man,
+										DESTRUCTIVE, top, &a_constraint);
+								if (!opt_oct_is_bottom(man, octagon)
+										&& !opt_oct_is_top(man, octagon)
+										&& !exists(man, octagon)) {
+									expectedNumber--;
+									elina_lincons0_array_t a =
+											opt_oct_to_lincons_array(man,
+													octagon);
+									printf("octagon %d: ", pool_size);
+									elina_lincons0_array_fprint(stdout, &a,
+									NULL);
+									fflush(stdout);
+									elina_lincons0_array_clear(&a);
+									pool[pool_size++] = octagon;
+								} else {
+									opt_oct_free(man, octagon);
+								}
+								elina_lincons0_array_clear(&a_constraint);
+							}
+							counter++;
+						}
 					}
-					v1 = rand() % dim;
-					v2 = rand() % dim;
-					while (v2 == v1) {
-						v2 = rand() % dim;
-					}
-					elina_lincons0_array_t a_constraint =
-							elina_lincons0_array_make(1);
-					a_constraint.p[0].constyp = type[j];
-					a_constraint.p[0].linexpr0 = create_octogonal_linexpr0(dim,
-							v1, v2, coefficients[coeff1], coefficients[coeff2],
-							constant);
-					opt_oct_t* octagon = opt_oct_meet_lincons_array(man,
-					DESTRUCTIVE, top, &a_constraint);
-					if (!opt_oct_is_bottom(man, octagon)
-							&& !opt_oct_is_top(man, octagon)
-							&& !exists(man, octagon)) {
-						elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
-								octagon);
-						printf("octagon %d: ", pool_size);
-						elina_lincons0_array_fprint(stdout, &a,
-						NULL);
-						fflush(stdout);
-						elina_lincons0_array_clear(&a);
-						pool[pool_size++] = octagon;
-					} else {
-						opt_oct_free(man, octagon);
-					}
-					elina_lincons0_array_clear(&a_constraint);
 				}
 			}
 		}
@@ -228,6 +166,84 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 	printf("Initial pool size: %d\n", initial_pool_size);
 	fflush(stdout);
 }
+
+/*void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
+ int dim, FILE *fp) {
+
+ seed = time(NULL);
+ srand(seed);
+ long coefficients[3] = { 0, -1, 1 };
+ long constants[3] = { 0, LONG_MIN, LONG_MAX };
+ int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
+
+ pool = (opt_oct_t **) malloc((MAX_POOL_SIZE + NBOPS) * sizeof(opt_oct_t *));
+
+ unsigned v1, v2;
+ unsigned coeff1, coeff2;
+ int i, j;
+ for (i = 0; i < 4; i++) {
+ for (j = 0; j < 2; j++) {
+ for (coeff1 = 0; coeff1 < 3; coeff1++) {
+ for (coeff2 = coeff1; coeff2 < 3; coeff2++) {
+ long constant;
+ if (i == 3) {
+ constant = rand()
+ % (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+ } else {
+ constant = constants[i];
+ }
+ v1 = rand() % dim;
+ v2 = rand() % dim;
+ while (v2 == v1) {
+ v2 = rand() % dim;
+ }
+ elina_lincons0_array_t a_constraint =
+ elina_lincons0_array_make(1);
+ a_constraint.p[0].constyp = type[j];
+ a_constraint.p[0].linexpr0 = create_octogonal_linexpr0(dim,
+ v1, v2, coefficients[coeff1], coefficients[coeff2],
+ constant);
+ opt_oct_t* octagon = opt_oct_meet_lincons_array(man,
+ DESTRUCTIVE, top, &a_constraint);
+ if (!opt_oct_is_bottom(man, octagon)
+ && !opt_oct_is_top(man, octagon)
+ && !exists(man, octagon)) {
+ elina_lincons0_array_t a = opt_oct_to_lincons_array(man,
+ octagon);
+ printf("octagon %d: ", pool_size);
+ elina_lincons0_array_fprint(stdout, &a,
+ NULL);
+ fflush(stdout);
+ elina_lincons0_array_clear(&a);
+ pool[pool_size++] = octagon;
+ } else {
+ opt_oct_free(man, octagon);
+ }
+ elina_lincons0_array_clear(&a_constraint);
+ }
+ }
+ }
+ }
+ elina_lincons0_array_t a = opt_oct_to_lincons_array(man, top);
+ printf("octagon %d: ", pool_size);
+ elina_lincons0_array_fprint(stdout, &a, NULL);
+ fflush(stdout);
+ elina_lincons0_array_clear(&a);
+ pool[pool_size++] = top;
+
+ a = opt_oct_to_lincons_array(man, bottom);
+ printf("octagon %d: ", pool_size);
+ elina_lincons0_array_fprint(stdout, &a, NULL);
+ fflush(stdout);
+ elina_lincons0_array_clear(&a);
+ pool[pool_size++] = bottom;
+
+ initial_pool_size = pool_size;
+ fprintf(fp, "Successfully initialized the pool!\n");
+ fflush(fp);
+ printf("Initial pool size: %d\n", initial_pool_size);
+ fflush(stdout);
+ }*/
 
 bool make_fuzzable(void *array, size_t size, const long *data, size_t dataSize,
 		unsigned int *dataIndex) {
