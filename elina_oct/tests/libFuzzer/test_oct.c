@@ -13,7 +13,6 @@ opt_oct_t** pool = NULL;
 unsigned char history[NBOPS][5] = { 0 };
 
 int dim;
-time_t seed;
 
 elina_linexpr0_t * create_octogonal_linexpr0(int dim, long v1, long v2,
 		long coeff1, long coeff2, long scalar_value) {
@@ -79,8 +78,6 @@ long random_with_max(long max) {
 void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		int dim, FILE *fp) {
 
-	seed = time(NULL);
-	srand(seed);
 	long coefficients[3] = { 0, -1, 1 };
 	long constants[3] = { 0, LONG_MIN, LONG_MAX };
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
@@ -170,8 +167,6 @@ void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 /*void initialize_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
  int dim, FILE *fp) {
 
- seed = time(NULL);
- srand(seed);
  long coefficients[3] = { 0, -1, 1 };
  long constants[3] = { 0, LONG_MIN, LONG_MAX };
  int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
@@ -1084,10 +1079,11 @@ bool assume_fuzzable(bool condition) {
 
 int create_dimension(FILE *fp) {
 	if (pool_is_empty()) {
+		srand(SEED);
 		dim = rand() % (MAX_DIM + 1 - MIN_DIM) + MIN_DIM;
 	}
 	fprintf(fp, "Dim: %d\n", dim);
-	fprintf(fp, "Seed: %ld\n", seed);
+	fprintf(fp, "Seed: %d\n", SEED);
 	fprintf(fp, "Initial pool size: %d\n", initial_pool_size);
 	fflush(fp);
 	return dim;
