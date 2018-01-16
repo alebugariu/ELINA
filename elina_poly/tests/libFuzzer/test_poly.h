@@ -20,6 +20,7 @@
 #define VAR_THRESHOLD 12
 
 #define OVERFLOW 3
+#define SEED 1046527
 
 #define FROM_POOL true
 #define DESTRUCTIVE false

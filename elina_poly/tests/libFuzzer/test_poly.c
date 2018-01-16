@@ -10,7 +10,6 @@ opt_pk_array_t ** pool = NULL;
 unsigned char history[NBOPS][5] = { 0 };
 
 int dim;
-time_t seed;
 
 elina_linexpr0_t * create_polyhedral_linexpr0(int dim, long *values) {
 	elina_coeff_t *cst, *coeff;
@@ -42,15 +41,13 @@ bool exists(elina_manager_t* man, opt_pk_array_t *polyhedron) {
 void initialize_pool(elina_manager_t* man, opt_pk_array_t * top,
 		opt_pk_array_t * bottom, int dim, FILE *fp) {
 
-	seed = time(NULL);
-	srand(seed);
 	long coefficients[3] = { 0, -1, 1 };
 	long constants[3] = { 0, LONG_MIN, LONG_MAX };
 	int type[2] = { ELINA_CONS_SUPEQ, ELINA_CONS_EQ };
 
 	pool = (opt_pk_array_t **) malloc(MAX_POOL_SIZE * sizeof(opt_pk_array_t *));
 
-	unsigned v1, v2;
+	/*unsigned v1, v2;
 	unsigned coeff1, coeff2;
 	int i, j;
 	for (i = 0; i < 4; i++) {
@@ -81,7 +78,7 @@ void initialize_pool(elina_manager_t* man, opt_pk_array_t * top,
 							&& !opt_pk_is_top(man, polyhedron)
 							&& !exists(man, polyhedron)) {
 						elina_lincons0_array_t a =
-								opt_pk_array_to_lincons_array(man, polyhedron);
+								opt_pk_to_lincons_array(man, polyhedron);
 						printf("polyhedron %d: ", pool_size);
 						elina_lincons0_array_fprint(stdout, &a,
 						NULL);
@@ -95,15 +92,15 @@ void initialize_pool(elina_manager_t* man, opt_pk_array_t * top,
 				}
 			}
 		}
-	}
-	elina_lincons0_array_t a = opt_pk_array_to_lincons_array(man, top);
+	}*/
+	elina_lincons0_array_t a = opt_pk_to_lincons_array(man, top);
 	printf("polyhedron %d: ", pool_size);
 	elina_lincons0_array_fprint(stdout, &a, NULL);
 	fflush(stdout);
 	elina_lincons0_array_clear(&a);
 	pool[pool_size++] = top;
 
-	a = opt_pk_array_to_lincons_array(man, bottom);
+	a = opt_pk_to_lincons_array(man, bottom);
 	printf("polyhedron %d: ", pool_size);
 	elina_lincons0_array_fprint(stdout, &a, NULL);
 	fflush(stdout);
@@ -247,8 +244,8 @@ bool create_conditional(elina_lincons0_array_t *conditionalArray,
 			dataIndex, fp);
 }
 
-bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
-		int dim, unsigned char randomVariable, const long *data,
+bool create_a_constraint(int index, elina_linexpr0_t** constraint, elina_constyp_t *type,
+		int dim, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp) {
 	size_t i;
 	if (!make_fuzzable(type, sizeof(*type), data, dataSize, dataIndex)) {
@@ -257,7 +254,7 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 	if (!assume_fuzzable(*type == ELINA_CONS_SUPEQ || *type == ELINA_CONS_EQ)) {
 		return false;
 	}
-	fprintf(fp, "Type: %c\n", *type == ELINA_CONS_EQ ? 'e' : 's');
+	fprintf(fp, "%d. Type: %c\n", index, *type == ELINA_CONS_EQ ? 'e' : 's');
 	fflush(fp);
 
 	long fuzzableValues[MAX_DIM + 1];
@@ -267,56 +264,23 @@ bool create_a_constraint(elina_linexpr0_t** constraint, elina_constyp_t *type,
 	}
 	fprintf(fp, "Values: ");
 	for (i = 0; i < dim; i++) {
-		if (!assume_fuzzable(
+		/*if (!assume_fuzzable(
 				!(randomVariable <= VAR_THRESHOLD)
 						&& (fuzzableValues[i] >= MIN_VALUE
 								&& fuzzableValues[i] <= MAX_VALUE))) {
 			return false;
-		}
+		}*/
 		fprintf(fp, "%ld, ", fuzzableValues[i]);
 	}
-	if (!assume_fuzzable(
+	/*if (!assume_fuzzable(
 			!(randomVariable <= VAR_THRESHOLD)
 					&& (fuzzableValues[i] >= MIN_VALUE
 							&& fuzzableValues[i] <= MAX_VALUE))) {
 		return false;
-	}
+	}*/
 	fprintf(fp, "%ld\n", fuzzableValues[i]);
 	fflush(fp);
-	*constraint = create_linexpr0(dim, fuzzableValues);
-	return true;
-}
-
-bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
-		unsigned char randomVariable, const long *data, size_t dataSize,
-		unsigned int *dataIndex, FILE *fp) {
-	*lincons0 = elina_lincons0_array_make(nbcons);
-	elina_linexpr0_t* constraint;
-	elina_constyp_t type;
-	size_t i;
-	for (i = 0; i < nbcons; i++) {
-		if (!create_a_constraint(&constraint, &type, dim, randomVariable, data,
-				dataSize, dataIndex, fp)) {
-			elina_lincons0_array_clear(lincons0);
-			return false;
-		}
-		lincons0->p[i].constyp = type;
-		lincons0->p[i].linexpr0 = constraint;
-	}
-	return true;
-}
-
-bool create_random_variable(unsigned char *randomVariable, int dim,
-		const long *data, size_t dataSize, unsigned int *dataIndex, FILE *fp) {
-	if (!make_fuzzable(randomVariable, sizeof(unsigned char), data, dataSize,
-			dataIndex)) {
-		return false;
-	}
-	if (!assume_fuzzable(
-			*randomVariable >= MIN_RANDOM_VARIABLE
-					&& *randomVariable <= MAX_RANDOM_VARIABLE)) {
-		return false;
-	}
+	*constraint = create_polyhedral_linexpr0(dim, fuzzableValues);
 	return true;
 }
 
@@ -519,7 +483,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			tdim[0] = assignedToVariable;
 
 			opt_pk_array_t *polyhedron = pool[number];
-			elina_lincons0_array_t a = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a = opt_pk_to_lincons_array(man,
 					polyhedron);
 			fprintf(fp, "\npolyhedron %d before assignment: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
@@ -567,7 +531,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			}
 
 			opt_pk_array_t *polyhedron = pool[number];
-			elina_lincons0_array_t a = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a = opt_pk_to_lincons_array(man,
 					polyhedron);
 			fprintf(fp, "polyhedron %d before project: ", number);
 			elina_lincons0_array_fprint(fp, &a, NULL);
@@ -610,44 +574,23 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			}
 
 			opt_pk_array_t *polyhedron1 = pool[number1];
-			elina_lincons0_array_t a1 = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a1 = opt_pk_to_lincons_array(man,
 					polyhedron1);
 			fprintf(fp, "polyhedron %d: ", number1);
 			elina_lincons0_array_fprint(fp, &a1, NULL);
 			fflush(fp);
-			/*printf("\npolyhedron %d: ", number1);
-			 elina_lincons0_array_fprint(stdout, &a1, NULL);
-			 fflush(stdout);
-			 */
 			elina_lincons0_array_clear(&a1);
 
 			opt_pk_array_t *polyhedron2 = pool[number2];
-			elina_lincons0_array_t a2 = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a2 = opt_pk_to_lincons_array(man,
 					polyhedron2);
 			fprintf(fp, "polyhedron %d: ", number2);
 			elina_lincons0_array_fprint(fp, &a2, NULL);
 			fflush(fp);
-			/*printf("\npolyhedron %d: ", number2);
-			 elina_lincons0_array_fprint(stdout, &a2, NULL);
-			 fflush(stdout);
-			 */
 			elina_lincons0_array_clear(&a2);
-
-//bool top1 = opt_pk_is_top(man, polyhedron1);
-//bool top2 = opt_pk_is_top(man, polyhedron2);
 
 			opt_pk_array_t *result = opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
 					polyhedron2);
-			/*if (opt_pk_is_top(man, polyhedron2) && !top2) {
-			 printf("***********************ERRROOOR at MEET polyhedron %d\n",
-			 number2);
-			 fflush(stdout);
-			 }
-			 if (opt_pk_is_top(man, polyhedron1) && !top1) {
-			 printf("***********************ERRROOOR at MEET polyhedron %d\n",
-			 number1);
-			 fflush(stdout);
-			 }*/
 
 			if (!opt_pk_is_bottom(man, result) && !opt_pk_is_top(man, result)
 					&& !opt_pk_is_eq(man, result, polyhedron1)
@@ -677,7 +620,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			}
 
 			opt_pk_array_t *polyhedron1 = pool[number1];
-			elina_lincons0_array_t a1 = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a1 = opt_pk_to_lincons_array(man,
 					polyhedron1);
 			fprintf(fp, "polyhedron %d: ", number1);
 			elina_lincons0_array_fprint(fp, &a1, NULL);
@@ -685,7 +628,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			elina_lincons0_array_clear(&a1);
 
 			opt_pk_array_t *polyhedron2 = pool[number2];
-			elina_lincons0_array_t a2 = opt_pk_array_to_lincons_array(man,
+			elina_lincons0_array_t a2 = opt_pk_to_lincons_array(man,
 					polyhedron2);
 			fprintf(fp, "polyhedron %d: ", number2);
 			elina_lincons0_array_fprint(fp, &a2, NULL);
@@ -726,14 +669,14 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 			opt_pk_array_t *result;
 			if (opt_pk_is_leq(man, polyhedron1, polyhedron2)) {
-				elina_lincons0_array_t a1 = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a1 = opt_pk_to_lincons_array(man,
 						polyhedron1);
 				fprintf(fp, "polyhedron %d: ", number1);
 				elina_lincons0_array_fprint(fp, &a1, NULL);
 				fflush(fp);
 				elina_lincons0_array_clear(&a1);
 
-				elina_lincons0_array_t a2 = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a2 = opt_pk_to_lincons_array(man,
 						polyhedron2);
 				fprintf(fp, "polyhedron %d: ", number2);
 				elina_lincons0_array_fprint(fp, &a2, NULL);
@@ -742,14 +685,14 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 
 				result = opt_pk_widening(man, polyhedron1, polyhedron2);
 			} else {
-				elina_lincons0_array_t a1 = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a1 = opt_pk_to_lincons_array(man,
 						polyhedron2);
 				fprintf(fp, "polyhedron %d: ", number2);
 				elina_lincons0_array_fprint(fp, &a1, NULL);
 				fflush(fp);
 				elina_lincons0_array_clear(&a1);
 
-				elina_lincons0_array_t a2 = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a2 = opt_pk_to_lincons_array(man,
 						polyhedron1);
 				fprintf(fp, "polyhedron %d: ", number1);
 				elina_lincons0_array_fprint(fp, &a2, NULL);
@@ -768,7 +711,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 				history[resultPolyhedronIndex][2] = number1;
 				history[resultPolyhedronIndex++][3] = number2;
 				pool[pool_size++] = result;
-				elina_lincons0_array_t a = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a = opt_pk_to_lincons_array(man,
 						result);
 				fprintf(fp, "polyhedron %d: ", pool_size);
 				elina_lincons0_array_fprint(fp, &a, NULL);
@@ -891,7 +834,7 @@ void print_polyhedron(elina_manager_t* man, opt_pk_array_t* polyhedron,
 	if (FROM_POOL) {
 		print_history(man, number, fp);
 	} else {
-		elina_lincons0_array_t a = opt_pk_array_to_lincons_array(man,
+		elina_lincons0_array_t a = opt_pk_to_lincons_array(man,
 				polyhedron);
 		elina_lincons0_array_fprint(fp, &a,
 		NULL);
@@ -923,7 +866,7 @@ bool create_constraints(elina_lincons0_array_t *lincons0, long nbcons, int dim,
 	fprintf(fp, "\n");
 	int i;
 	for (i = 0; i < nbcons; i++) {
-		if (!create_pkogonal_constraint(i, &constraint, &type, dim, data,
+		if (!create_a_constraint(i, &constraint, &type, dim, data,
 				dataSize, dataIndex, fp)) {
 			elina_lincons0_array_clear(lincons0);
 			return false;
@@ -960,7 +903,7 @@ bool create_polyhedron_from_top(opt_pk_array_t** polyhedron,
 	if (internal_pk->exn != ELINA_EXC_OVERFLOW) {
 		return true;
 	}
-	opt_pk_free(man, polyhedron);
+	opt_pk_free(man, *polyhedron);
 	return false;
 }
 
@@ -991,10 +934,11 @@ bool assume_fuzzable(bool condition) {
 
 int create_dimension(FILE *fp) {
 	if (pool_is_empty()) {
+		srand(SEED);
 		dim = rand() % (MAX_DIM + 1 - MIN_DIM) + MIN_DIM;
 	}
 	fprintf(fp, "Dim: %d\n", dim);
-	fprintf(fp, "Seed: %ld\n", seed);
+	fprintf(fp, "Seed: %ld\n", SEED);
 	fprintf(fp, "Initial pool size: %d\n", initial_pool_size);
 	fflush(fp);
 	return dim;

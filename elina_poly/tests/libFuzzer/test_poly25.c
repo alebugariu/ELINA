@@ -9,7 +9,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	FILE *fp;
 	fp = fopen("out25.txt", "w+");
 
-	if (make_fuzzable_dimension(&dim, data, dataSize, &dataIndex, fp)) {
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		elina_manager_t * man = opt_pk_manager_alloc(false);
 		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
