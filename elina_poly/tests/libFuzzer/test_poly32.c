@@ -9,23 +9,23 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	FILE *fp;
 	fp = fopen("out32.txt", "w+");
 
-	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
+	elina_manager_t * man = opt_pk_manager_alloc(false);
+	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
+	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
-		elina_manager_t * man = opt_pk_manager_alloc(false);
-		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
-		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
+	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, bottom,dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (create_polyhedron(&polyhedron1, man, top, bottom,dim, data, dataSize, &dataIndex, fp)) {
+
 			opt_pk_array_t* wideningResult;
 			int i = 0;
 			while (true) {
 				opt_pk_array_t* polyhedron2;
-				if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data,
-						dataSize, &dataIndex, fp)) {
+				if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+
 					wideningResult = opt_pk_widening(man, polyhedron1,
 							opt_pk_join(man, DESTRUCTIVE, polyhedron1, polyhedron2));
 					if (opt_pk_is_leq(man, wideningResult, polyhedron1) == true) {

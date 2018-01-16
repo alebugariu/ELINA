@@ -938,7 +938,7 @@ int create_dimension(FILE *fp) {
 		dim = rand() % (MAX_DIM + 1 - MIN_DIM) + MIN_DIM;
 	}
 	fprintf(fp, "Dim: %d\n", dim);
-	fprintf(fp, "Seed: %ld\n", SEED);
+	fprintf(fp, "Seed: %d\n", SEED);
 	fprintf(fp, "Initial pool size: %d\n", initial_pool_size);
 	fflush(fp);
 	return dim;

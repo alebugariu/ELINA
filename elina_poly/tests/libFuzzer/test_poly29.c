@@ -9,15 +9,15 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	FILE *fp;
 	fp = fopen("out29.txt", "w+");
 
+	elina_manager_t * man = opt_pk_manager_alloc(false);
+	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
+	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
+
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
-		elina_manager_t * man = opt_pk_manager_alloc(false);
-		opt_pk_array_t * top = opt_pk_top(man, dim, 0);
-		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
-
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+
 			if (assume_fuzzable(opt_pk_is_leq(man, polyhedron1, bottom))) {
 				//meet == glb, join == lub
 				//x widening bottom == x

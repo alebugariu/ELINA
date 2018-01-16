@@ -16,8 +16,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data,
-				dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
 			// x == x
 			if (opt_pk_is_eq(man, polyhedron1, polyhedron1) == false) {
 				opt_pk_free(man, top);

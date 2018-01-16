@@ -16,11 +16,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, bottom, dim, data, dataSize,
-				&dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+
 			opt_pk_array_t* polyhedron2;
-			if (create_polyhedron(&polyhedron2, man, top, bottom, dim, data, dataSize,
-					&dataIndex, fp)) {
+			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
 
 				opt_pk_array_t* join12 = opt_pk_join(man, DESTRUCTIVE,
 						polyhedron1, polyhedron2);
