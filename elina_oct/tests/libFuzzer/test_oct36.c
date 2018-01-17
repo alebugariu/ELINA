@@ -6,7 +6,7 @@
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
 	FILE *fp;
-	fp = fopen("out43.txt", "w+");
+	fp = fopen("out36.txt", "w+");
 
 	int dim = create_dimension(fp);
 
