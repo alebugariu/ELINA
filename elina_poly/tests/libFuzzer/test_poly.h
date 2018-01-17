@@ -43,6 +43,8 @@ bool create_pool(elina_manager_t* man, opt_pk_array_t * top,
 
 void free_pool(elina_manager_t* man);
 
+void free_polyhedron(elina_manager_t* man, opt_pk_array_t** polyhedron);
+
 bool get_polyhedron(opt_pk_array_t** polyhedron, elina_manager_t* man,
 		opt_pk_array_t * top, unsigned char *number, const long *data,
 		size_t dataSize, unsigned int *dataIndex, FILE *fp);

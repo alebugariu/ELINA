@@ -1101,3 +1101,9 @@ void free_pool(elina_manager_t* man) {
 		clear_history();
 	}
 }
+
+void free_octagon(elina_manager_t* man, opt_oct_t** octagon) {
+	if (!FROM_POOL) {
+		opt_oct_free(man, *octagon);
+	}
+}

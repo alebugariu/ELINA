@@ -22,17 +22,17 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				dataSize, &dataIndex, fp)) {
 			// bottom <= x
 			if (opt_pk_is_leq(man, bottom, polyhedron1) == false) {
-				opt_pk_free(man, top);
-				opt_pk_free(man, bottom);
-				opt_pk_free(man, polyhedron1);
+				free_polyhedron(man, top);
+				free_polyhedron(man, bottom);
+				free_polyhedron(man, polyhedron1);
 				elina_manager_free(man);
 				fclose(fp);
 				return 1;
 			}
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
+		free_polyhedron(man, top);
+		free_polyhedron(man, bottom);
 		elina_manager_free(man);
 	}
 	fclose(fp);

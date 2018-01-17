@@ -23,7 +23,7 @@
 #define OVERFLOW 3
 #define SEED 1046527
 
-#define FROM_POOL true
+#define FROM_POOL false
 #define DESTRUCTIVE false
 #define RANDOM_ASSIGNMENT false
 #define RANDOM_CONDITIONAL false
@@ -43,6 +43,8 @@ bool create_pool(elina_manager_t* man, opt_oct_t * top, opt_oct_t * bottom,
 		FILE *fp);
 
 void free_pool(elina_manager_t* man);
+
+void free_octagon(elina_manager_t* man, opt_oct_t** octagon);
 
 bool get_octagon(opt_oct_t** octagon, elina_manager_t* man, opt_oct_t * top,
 		unsigned char *number, const long *data, size_t dataSize,

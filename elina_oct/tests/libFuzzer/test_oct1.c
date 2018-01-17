@@ -33,6 +33,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				fclose(fp);
 				return 1;
 			}
+			free_octagon(man, &octagon1);
 		}
 	}
 	elina_manager_free(man);

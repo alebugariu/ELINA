@@ -957,3 +957,9 @@ void free_pool(elina_manager_t* man) {
 	}
 }
 
+void free_polyhedron(elina_manager_t* man, opt_pk_array_t** polyhedron) {
+	if (!FROM_POOL) {
+		opt_pk_free(man, *polyhedron);
+	}
+}
+
