@@ -5,9 +5,10 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim;
 	FILE *fp;
 	fp = fopen("out26.txt", "w+");
+
+	int dim = create_dimension(fp);
 
 	elina_manager_t * man = opt_pk_manager_alloc(false);
 	opt_pk_array_t * top = opt_pk_top(man, dim, 0);

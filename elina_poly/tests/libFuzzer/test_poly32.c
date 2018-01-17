@@ -5,9 +5,10 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim;
 	FILE *fp;
 	fp = fopen("out32.txt", "w+");
+
+	int dim = create_dimension(fp);
 
 	elina_manager_t * man = opt_pk_manager_alloc(false);
 	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
@@ -18,12 +19,14 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		//meet == glb, join == lub
 		//widening reaches a fixed point
 		opt_pk_array_t* polyhedron1;
-		if (create_polyhedron(&polyhedron1, man, top, bottom,dim, data, dataSize, &dataIndex, fp)) {
+		unsigned char number1;
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
 
 			opt_pk_array_t* wideningResult;
 			int i = 0;
 			while (true) {
 				opt_pk_array_t* polyhedron2;
+				unsigned char number2;
 				if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
 
 					wideningResult = opt_pk_widening(man, polyhedron1,

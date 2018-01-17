@@ -5,9 +5,10 @@
 
 extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	unsigned int dataIndex = 0;
-	int dim;
 	FILE *fp;
 	fp = fopen("out6.txt", "w+");
+
+	int dim = create_dimension(fp);
 
 	elina_manager_t * man = opt_pk_manager_alloc(false);
 	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
@@ -16,6 +17,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
 
 		opt_pk_array_t* polyhedron1;
+		unsigned char number1;
 		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
 
 			opt_pk_array_t* jointop1 = opt_pk_join(man, DESTRUCTIVE, top,
