@@ -9,7 +9,7 @@
 #define MIN_NBCONS 1
 #define MAX_NBCONS 50
 
-#define MAX_POOL_SIZE 3*NBOPS
+#define MAX_POOL_SIZE 32
 
 #define NBOPS 32
 #define NBASSIGNMENTS 4

@@ -577,8 +577,8 @@ void opt_vector_combine(opt_pk_internal_t* opk,
 
     ov3[k] = 0;
     if(flag){
-             printf("exception \n");
-             fflush(stdout);
+             //printf("exception \n");
+             //fflush(stdout);
              opk->exn = ELINA_EXC_OVERFLOW;
              return ;
     }
