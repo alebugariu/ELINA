@@ -21,23 +21,28 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		unsigned char number1;
-		if (get_octagon(&octagon1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_octagon(&octagon1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			//meet == glb, join == lub
 			//bottom meet x == bottom
 			if (!opt_oct_is_eq(man,
 					opt_oct_meet(man, DESTRUCTIVE, bottom, octagon1), bottom)) {
-				elina_lincons0_array_t a1 = opt_oct_to_lincons_array(man,
-						octagon1);
 				fprintf(fp, "found octagon %d!\n", number1);
 				print_octagon(man, octagon1, number1, fp);
 				fflush(fp);
 				free_pool(man);
+				free_octagon(man, &top);
+				free_octagon(man, &bottom);
+				free_octagon(man, &octagon1);
 				elina_manager_free(man);
 				fclose(fp);
 				return 1;
 			}
+			free_octagon(man, &octagon1);
 		}
+		free_octagon(man, &top);
+		free_octagon(man, &bottom);
 	}
 	elina_manager_free(man);
 	fclose(fp);

@@ -18,11 +18,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			opt_pk_array_t* polyhedron2;
 			unsigned char number2;
-			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize,
+					&dataIndex, fp)) {
 
 				opt_pk_array_t* glb = opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
 						polyhedron2);
@@ -32,7 +34,9 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				if (glb_internal->exn != ELINA_EXC_OVERFLOW) {
 
 					opt_pk_array_t* bound;
-					if (create_polyhedron(&bound, man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
+					unsigned char number3;
+					if (get_polyhedron(&bound, man, top, &number3, data,
+							dataSize, &dataIndex, fp)) {
 
 						//meet == glb, join == lub
 						//meet is the greatest lower bound
@@ -41,11 +45,19 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							if (assume_fuzzable(
 									opt_pk_is_leq(man, bound, polyhedron2))) {
 								if (opt_pk_is_leq(man, bound, glb) == false) {
-									opt_pk_free(man, top);
-									opt_pk_free(man, bottom);
-									opt_pk_free(man, polyhedron1);
-									opt_pk_free(man, polyhedron2);
-									opt_pk_free(man, bound);
+									fprintf(fp, "found polyhedron %d!\n", number1);
+									print_polyhedron(man, polyhedron1, number1, fp);
+									fprintf(fp, "found polyhedron %d!\n", number2);
+									print_polyhedron(man, polyhedron2, number2, fp);
+									fprintf(fp, "found bound %d!\n", number3);
+									print_polyhedron(man, bound, number3, fp);
+									fflush(fp);
+									free_pool(man);
+									free_polyhedron(man, &top);
+									free_polyhedron(man, &bottom);
+									free_polyhedron(man, &polyhedron1);
+									free_polyhedron(man, &polyhedron2);
+									free_polyhedron(man, &bound);
 									opt_pk_free(man, glb);
 									elina_manager_free(man);
 									fclose(fp);
@@ -53,18 +65,18 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 								}
 							}
 						}
-						opt_pk_free(man, bound);
+						free_polyhedron(man, &bound);
 					}
 				}
-				opt_pk_free(man, polyhedron2);
+				free_polyhedron(man, &polyhedron2);
 				opt_pk_free(man, glb);
 			}
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, &polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

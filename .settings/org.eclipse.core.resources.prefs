@@ -46,4 +46,3 @@ encoding//elina_poly/opt_pk_user.c=UTF-8
 encoding//elina_poly/opt_pk_vector.c=UTF-8
 encoding//elina_poly/opt_pk_vector.h=UTF-8
 encoding//elina_poly/opt_pk_widening.c=UTF-8
-encoding//elina_poly/tests/libFuzzer/test_poly.c=UTF-8

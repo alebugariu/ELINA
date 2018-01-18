@@ -18,7 +18,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			opt_pk_array_t* meet11 = opt_pk_meet(man, DESTRUCTIVE, polyhedron1,
 					polyhedron1);
@@ -29,9 +30,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				//meet == glb, join == lub
 				//meet is idempotent
 				if (opt_pk_is_eq(man, meet11, polyhedron1) == false) {
-					opt_pk_free(man, top);
-					opt_pk_free(man, bottom);
-					opt_pk_free(man, polyhedron1);
+					fprintf(fp, "found polyhedron %d!\n", number1);
+					print_polyhedron(man, polyhedron1, number1, fp);
+					fflush(fp);
+					free_pool(man);
+					free_polyhedron(man, &top);
+					free_polyhedron(man, &bottom);
+					free_polyhedron(man, &polyhedron1);
 					opt_pk_free(man, meet11);
 					elina_manager_free(man);
 					fclose(fp);
@@ -39,12 +44,12 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				}
 			}
 			opt_pk_free(man, meet11);
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, &polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

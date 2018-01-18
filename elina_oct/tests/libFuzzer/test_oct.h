@@ -23,7 +23,7 @@
 #define OVERFLOW 3
 #define SEED 1046527
 
-#define FROM_POOL false
+#define FROM_POOL true
 #define DESTRUCTIVE false
 #define RANDOM_ASSIGNMENT false
 #define RANDOM_CONDITIONAL false

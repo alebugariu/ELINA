@@ -40,6 +40,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					fflush(fp);
 					elina_lincons0_array_clear(&a1);
 					free_pool(man);
+					free_octagon(man, &top);
+					free_octagon(man, &bottom);
 					opt_oct_free(man, assign_result1);
 					free(assignmentArray);
 					free(tdim);
@@ -47,10 +49,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					fclose(fp);
 					return 1;
 				}
+				opt_oct_free(man, assign_result1);
 				free(assignmentArray);
 				free(tdim);
 			}
 		}
+		free_octagon(man, &top);
+		free_octagon(man, &bottom);
 	}
 	elina_manager_free(man);
 	fclose(fp);

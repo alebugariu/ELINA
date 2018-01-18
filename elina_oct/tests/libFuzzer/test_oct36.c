@@ -18,7 +18,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_oct_t* octagon1;
 		unsigned char number1;
-		if (get_octagon(&octagon1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_octagon(&octagon1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			// assign(x) less equal project(x)
 
@@ -46,6 +47,11 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						print_octagon(man, octagon1, number1, fp);
 						fflush(fp);
 						free_pool(man);
+						free_octagon(man, &top);
+						free_octagon(man, &bottom);
+						free_octagon(man, &octagon1);
+						opt_oct_free(man, assign_result1);
+						opt_oct_free(man, project_result1);
 						free(assignmentArray);
 						free(tdim);
 						elina_manager_free(man);
@@ -58,7 +64,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					free(tdim);
 				}
 			}
+			free_octagon(man, &octagon1);
 		}
+		free_octagon(man, &top);
+		free_octagon(man, &bottom);
 	}
 	elina_manager_free(man);
 	fclose(fp);

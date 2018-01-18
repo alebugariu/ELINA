@@ -19,7 +19,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		// assignment should return bottom if the current set of constraints is bottom
 
 		int assignedToVariable;
-		if (create_variable(&assignedToVariable, true, dim, data, dataSize, &dataIndex, fp)) {
+		if (create_variable(&assignedToVariable, true, dim, data, dataSize,
+				&dataIndex, fp)) {
 
 			elina_linexpr0_t** assignmentArray;
 			elina_dim_t * tdim;
@@ -37,8 +38,15 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				if (assign1_internal->exn != ELINA_EXC_OVERFLOW) {
 
 					if (opt_pk_is_bottom(man, assign_result1) == false) {
-						opt_pk_free(man, top);
-						opt_pk_free(man, bottom);
+						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
+								man, assign_result1);
+						fprintf(fp, "found non-bottom assignment result: ");
+						elina_lincons0_array_fprint(fp, &a1, NULL);
+						fflush(fp);
+						elina_lincons0_array_clear(&a1);
+						free_pool(man);
+						free_polyhedron(man, &top);
+						free_polyhedron(man, &bottom);
 						opt_pk_free(man, assign_result1);
 						free(assignmentArray);
 						free(tdim);
@@ -52,10 +60,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				free(tdim);
 			}
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

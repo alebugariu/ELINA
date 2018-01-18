@@ -18,14 +18,17 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			opt_pk_array_t* polyhedron2;
 			unsigned char number2;
-			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize,
+					&dataIndex, fp)) {
 
 				opt_pk_array_t* polyhedron3;
-				if (create_polyhedron(&polyhedron3, man, top, bottom, dim, data,
+				unsigned char number3;
+				if (get_polyhedron(&polyhedron3, man, top, &number3, data,
 						dataSize, &dataIndex, fp)) {
 
 					opt_pk_array_t* meet12 = opt_pk_meet(man, DESTRUCTIVE,
@@ -56,11 +59,19 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						//meet == glb, join == lub
 						//meet is associative
 						if (opt_pk_is_eq(man, meet12_3, meet1_23) == false) {
-							opt_pk_free(man, top);
-							opt_pk_free(man, bottom);
-							opt_pk_free(man, polyhedron1);
-							opt_pk_free(man, polyhedron2);
-							opt_pk_free(man, polyhedron3);
+							fprintf(fp, "found polyhedron %d!\n", number1);
+							print_polyhedron(man, polyhedron1, number1, fp);
+							fprintf(fp, "found polyhedron %d!\n", number2);
+							print_polyhedron(man, polyhedron2, number2, fp);
+							fprintf(fp, "found polyhedron %d!\n", number3);
+							print_polyhedron(man, polyhedron3, number3, fp);
+							fflush(fp);
+							free_pool(man);
+							free_polyhedron(man, &top);
+							free_polyhedron(man, &bottom);
+							free_polyhedron(man, &polyhedron1);
+							free_polyhedron(man, &polyhedron2);
+							free_polyhedron(man, &polyhedron3);
 							opt_pk_free(man, meet12);
 							opt_pk_free(man, meet12_3);
 							opt_pk_free(man, meet23);
@@ -70,20 +81,20 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 							return 1;
 						}
 					}
-					opt_pk_free(man, polyhedron3);
+					free_polyhedron(man, &polyhedron3);
 					opt_pk_free(man, meet12);
 					opt_pk_free(man, meet12_3);
 					opt_pk_free(man, meet23);
 					opt_pk_free(man, meet1_23);
 				}
-				opt_pk_free(man, polyhedron2);
+				free_polyhedron(man, &polyhedron2);
 			}
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, &polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

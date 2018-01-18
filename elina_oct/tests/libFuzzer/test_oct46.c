@@ -23,13 +23,15 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 		//narrowing reaches a fixed point
 		opt_oct_t* octagon1;
 		unsigned char number1;
-		if (get_octagon(&octagon1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_octagon(&octagon1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 			opt_oct_t* narrowingResult;
 			int i = 0;
 			while (true) {
 				opt_oct_t* octagon2;
 				unsigned char number2;
-				if (get_octagon(&octagon2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+				if (get_octagon(&octagon2, man, top, &number2, data, dataSize,
+						&dataIndex, fp)) {
 					narrowingResult = opt_oct_narrowing(man, octagon1,
 							octagon2);
 					if (opt_oct_is_leq(man, octagon1, narrowingResult)) {
@@ -44,6 +46,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						print_octagon(man, octagon2, number2, fp);
 						fflush(fp);
 						free_pool(man);
+						free_octagon(man, &top);
+						free_octagon(man, &bottom);
+						free_octagon(man, &octagon1);
+						free_octagon(man, &octagon2);
 						elina_manager_free(man);
 						fclose(fp);
 						return 1;
@@ -52,7 +58,10 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					break;
 				}
 			}
+			free_octagon(man, &octagon1);
 		}
+		free_octagon(man, &top);
+		free_octagon(man, &bottom);
 	}
 	elina_manager_free(man);
 	fclose(fp);

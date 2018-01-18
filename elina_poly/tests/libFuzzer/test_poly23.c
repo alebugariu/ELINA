@@ -18,11 +18,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			opt_pk_array_t* polyhedron2;
 			unsigned char number2;
-			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize,
+					&dataIndex, fp)) {
 
 				opt_pk_array_t* meet12 = opt_pk_meet(man, DESTRUCTIVE,
 						polyhedron1, polyhedron2);
@@ -34,11 +36,18 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					//meet is compatible (reciprocal)
 					if (assume_fuzzable(
 							opt_pk_is_eq(man, meet12, polyhedron1))) {
-						if (opt_pk_is_leq(man, polyhedron1, polyhedron2) == false) {
-							opt_pk_free(man, top);
-							opt_pk_free(man, bottom);
-							opt_pk_free(man, polyhedron1);
-							opt_pk_free(man, polyhedron2);
+						if (opt_pk_is_leq(man, polyhedron1, polyhedron2)
+								== false) {
+							fprintf(fp, "found polyhedron %d!\n", number1);
+							print_polyhedron(man, polyhedron1, number1, fp);
+							fprintf(fp, "found polyhedron %d!\n", number2);
+							print_polyhedron(man, polyhedron2, number2, fp);
+							fflush(fp);
+							free_pool(man);
+							free_polyhedron(man, &top);
+							free_polyhedron(man, &bottom);
+							free_polyhedron(man, &polyhedron1);
+							free_polyhedron(man, &polyhedron2);
 							opt_pk_free(man, meet12);
 							elina_manager_free(man);
 							fclose(fp);
@@ -46,15 +55,15 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						}
 					}
 				}
-				opt_pk_free(man, polyhedron2);
+				free_polyhedron(man, &polyhedron2);
 				opt_pk_free(man, meet12);
 			}
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, &polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

@@ -18,7 +18,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			// assign(x) less equal project(x)
 
@@ -47,9 +48,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 						if (opt_pk_is_leq(man, assign_result1, project_result1)
 								== false) {
-							opt_pk_free(man, top);
-							opt_pk_free(man, bottom);
-							opt_pk_free(man, polyhedron1);
+							fprintf(fp, "found polyhedron %d!\n", number1);
+							print_polyhedron(man, polyhedron1, number1, fp);
+							fflush(fp);
+							free_pool(man);
+							free_polyhedron(man, &top);
+							free_polyhedron(man, &bottom);
+							free_polyhedron(man, &polyhedron1);
 							opt_pk_free(man, assign_result1);
 							opt_pk_free(man, project_result1);
 							free(assignmentArray);
@@ -65,12 +70,12 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 					free(tdim);
 				}
 			}
-			opt_pk_free(man, polyhedron1);
+			free_polyhedron(man, &polyhedron1);
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }

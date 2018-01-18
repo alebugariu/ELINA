@@ -18,15 +18,16 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			if (opt_pk_is_bottom(man, polyhedron1) == false) {
 
 				// assignment cannot return bottom if the current set of constraints is not bottom
 
 				int assignedToVariable;
-				if (create_variable(&assignedToVariable, true, dim, data, dataSize,
-						&dataIndex, fp)) {
+				if (create_variable(&assignedToVariable, true, dim, data,
+						dataSize, &dataIndex, fp)) {
 					elina_linexpr0_t** assignmentArray;
 					elina_dim_t * tdim;
 
@@ -43,11 +44,14 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 						if (assign1_internal->exn != ELINA_EXC_OVERFLOW) {
 
-							if (opt_pk_is_bottom(man, assign_result1)
-									== true) {
-								opt_pk_free(man, top);
-								opt_pk_free(man, bottom);
-								opt_pk_free(man, polyhedron1);
+							if (opt_pk_is_bottom(man, assign_result1) == true) {
+								fprintf(fp, "found polyhedron %d!\n", number1);
+								print_polyhedron(man, polyhedron1, number1, fp);
+								fflush(fp);
+								free_pool(man);
+								free_polyhedron(man, &top);
+								free_polyhedron(man, &bottom);
+								free_polyhedron(man, &polyhedron1);
 								opt_pk_free(man, assign_result1);
 								free(assignmentArray);
 								free(tdim);
@@ -61,13 +65,13 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 						free(tdim);
 					}
 				}
-				opt_pk_free(man, polyhedron1);
+				free_polyhedron(man, &polyhedron1);
 			}
 		}
-		opt_pk_free(man, top);
-		opt_pk_free(man, bottom);
-		elina_manager_free(man);
+		free_polyhedron(man, &top);
+		free_polyhedron(man, &bottom);
 	}
+	elina_manager_free(man);
 	fclose(fp);
 	return 0;
 }
