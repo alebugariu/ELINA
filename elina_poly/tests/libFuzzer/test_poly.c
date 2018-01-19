@@ -899,7 +899,6 @@ void print_polyhedron(elina_manager_t* man, opt_pk_array_t* polyhedron,
 		NULL);
 		fflush(fp);
 		elina_lincons0_array_clear(&a);
-		opt_pk_free(man, polyhedron);
 	}
 }
 

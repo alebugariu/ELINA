@@ -10,7 +10,11 @@
 int pool_size = 0;
 int initial_pool_size = 0;
 opt_oct_t** pool = NULL;
+#if NBOPS
 unsigned char history[NBOPS][5] = { 0 };
+#else
+unsigned char history[NBOPS][5];
+#endif
 
 int dim;
 
@@ -940,7 +944,6 @@ void print_octagon(elina_manager_t* man, opt_oct_t* octagon,
 		NULL);
 		fflush(fp);
 		elina_lincons0_array_clear(&a);
-		opt_oct_free(man, octagon);
 	}
 }
 

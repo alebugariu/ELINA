@@ -538,15 +538,15 @@ void opt_vector_combine(opt_pk_internal_t* opk,
 
     bool flag = false;
     if(ov1[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
-	 printf("exception division\n");
-         fflush(stdout);
+	// printf("exception division\n");
+      //   fflush(stdout);
          opk->exn = ELINA_EXC_OVERFLOW;
          return ;
     }
     opk->vector_tmp[1] = opt_numint_abs(ov1[k]/opk->vector_tmp[0]);
     if(ov2[k]==ELINA_INT_MIN && opk->vector_tmp[0]==-1){
-	 printf("exception division\n");
-         fflush(stdout);
+	 //printf("exception division\n");
+       //  fflush(stdout);
          opk->exn = ELINA_EXC_OVERFLOW;
          return ;
     }
