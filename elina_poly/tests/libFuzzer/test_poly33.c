@@ -18,17 +18,19 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;
-		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize, &dataIndex, fp)) {
+		if (get_polyhedron(&polyhedron1, man, top, &number1, data, dataSize,
+				&dataIndex, fp)) {
 
 			opt_pk_array_t* polyhedron2;
 			unsigned char number2;
-			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize, &dataIndex, fp)) {
+			if (get_polyhedron(&polyhedron2, man, top, &number2, data, dataSize,
+					&dataIndex, fp)) {
 
 				// assignment is monotone
 				if (assume_fuzzable(
 						opt_pk_is_leq(man, polyhedron1, polyhedron2))) {
 
-					int assignedToVariable;
+					unsigned char assignedToVariable;
 					if (create_variable(&assignedToVariable, true, dim, data,
 							dataSize, &dataIndex, fp)) {
 						elina_linexpr0_t** assignmentArray;
@@ -62,12 +64,16 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 								if (opt_pk_is_leq(man, assign_result1,
 										assign_result2) == false) {
-									fprintf(fp, "found polyhedron %d!\n", number1);
-																	print_polyhedron(man, polyhedron1, number1, fp);
-																	fprintf(fp, "found polyhedron %d!\n", number2);
-																	print_polyhedron(man, polyhedron2, number2, fp);
-																	fflush(fp);
-																	free_pool(man);
+									fprintf(fp, "found polyhedron %d!\n",
+											number1);
+									print_polyhedron(man, polyhedron1, number1,
+											fp);
+									fprintf(fp, "found polyhedron %d!\n",
+											number2);
+									print_polyhedron(man, polyhedron2, number2,
+											fp);
+									fflush(fp);
+									free_pool(man);
 									free_polyhedron(man, &top);
 									free_polyhedron(man, &bottom);
 									free_polyhedron(man, &polyhedron1);

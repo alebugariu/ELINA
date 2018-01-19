@@ -7,7 +7,11 @@
 int pool_size = 0;
 int initial_pool_size = 0;
 opt_pk_array_t ** pool = NULL;
+#if NBOPS
 unsigned char history[NBOPS][5] = { 0 };
+#else
+unsigned char history[NBOPS][5];
+#endif
 
 int dim;
 
@@ -61,9 +65,8 @@ void choose(elina_manager_t* man, opt_pk_array_t * top, long coefficients[3],
 		if (!got) {
 			return;
 		}
-		// do we want to add this polyhedron in the pool?
+		// do we want to add this polyhedron to the pool?
 		unsigned randomValue = random_with_max(totalNumber - *counter);
-		fflush(stdout);
 		if (randomValue < *expectedNumber) {
 			long initialValues[MAX_DIM + 1];
 			for (i = 0; i < len; i++) {
@@ -147,7 +150,7 @@ void initialize_pool(elina_manager_t* man, opt_pk_array_t * top,
 	int counter = 0;
 	int j;
 	for (j = 0; j < 2; j++) {
-		int indexes[MAX_DIM + 1];
+		int indexes[MAX_DIM + 1] = {0};
 		choose(man, top, coefficients, constants, type[j], totalNumber,
 				&expectedNumber, indexes, 0, dim + 1, 0, 4, &counter);
 	}
@@ -547,6 +550,7 @@ bool increase_pool(elina_manager_t* man, int dim, const long *data,
 			elina_lincons0_array_fprint(fp, &a, NULL);
 			fflush(fp);
 			elina_lincons0_array_clear(&a);
+			print_polyhedron(man, polyhedron, number, fp);
 
 			opt_pk_array_t *result = opt_pk_assign_linexpr_array(man,
 			DESTRUCTIVE, polyhedron, tdim, assignmentArray, 1,

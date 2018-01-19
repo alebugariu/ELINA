@@ -1,5 +1,5 @@
 #include <time.h>
-#include "test_oct.h"
+#include "test_poly.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -10,15 +10,11 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 	int dim = create_dimension(fp);
 
-	elina_manager_t * man = opt_pk_manager_alloc();
-	opt_pk_array_t * top = opt_pk_array_top(man, dim, 0);
+	elina_manager_t * man = opt_pk_manager_alloc(false);
+	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
 	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
-
-		elina_manager_t * man = opt_pk_manager_alloc();
-		opt_pk_array_t * top = opt_pk_array_top(man, dim, 0);
-		opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 		opt_pk_array_t* polyhedron1;
 		unsigned char number1;

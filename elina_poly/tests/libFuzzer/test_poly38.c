@@ -1,5 +1,5 @@
 #include <time.h>
-#include "test_oct.h"
+#include "test_poly.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -10,8 +10,8 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 	int dim = create_dimension(fp);
 
-	elina_manager_t * man = opt_pk_manager_alloc();
-	opt_pk_array_t * top = opt_pk_array_top(man, dim, 0);
+	elina_manager_t * man = opt_pk_manager_alloc(false);
+	opt_pk_array_t * top = opt_pk_top(man, dim, 0);
 	opt_pk_array_t * bottom = opt_pk_bottom(man, dim, 0);
 
 	if (create_pool(man, top, bottom, dim, data, dataSize, &dataIndex, fp)) {
@@ -27,7 +27,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 			DESTRUCTIVE, bottom, &conditionalArray);
 
 			if (opt_pk_is_bottom(man, cond_result1) == false) {
-				elina_lincons0_array_t a1 = opt_pk_array_to_lincons_array(man,
+				elina_lincons0_array_t a1 = opt_pk_to_lincons_array(man,
 						cond_result1);
 				fprintf(fp, "found non bottom conditional result: ");
 				elina_lincons0_array_fprint(fp, &a1, NULL);

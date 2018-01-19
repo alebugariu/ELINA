@@ -23,7 +23,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 			// assign(x) less equal project(x)
 
-			int assignedToVariable;
+			unsigned char assignedToVariable;
 			if (create_variable(&assignedToVariable, true, dim, data, dataSize,
 					&dataIndex, fp)) {
 

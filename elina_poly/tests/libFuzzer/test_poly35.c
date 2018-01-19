@@ -18,7 +18,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 
 		// assignment should return bottom if the current set of constraints is bottom
 
-		int assignedToVariable;
+		unsigned char assignedToVariable;
 		if (create_variable(&assignedToVariable, true, dim, data, dataSize,
 				&dataIndex, fp)) {
 
@@ -38,7 +38,7 @@ extern int LLVMFuzzerTestOneInput(const long *data, size_t dataSize) {
 				if (assign1_internal->exn != ELINA_EXC_OVERFLOW) {
 
 					if (opt_pk_is_bottom(man, assign_result1) == false) {
-						elina_lincons0_array_t a1 = opt_oct_to_lincons_array(
+						elina_lincons0_array_t a1 = opt_pk_to_lincons_array(
 								man, assign_result1);
 						fprintf(fp, "found non-bottom assignment result: ");
 						elina_lincons0_array_fprint(fp, &a1, NULL);
