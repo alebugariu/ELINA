@@ -936,14 +936,13 @@ void print_history(elina_manager_t* man, unsigned char number, FILE *fp) {
 
 void print_octagon(elina_manager_t* man, opt_oct_t* octagon,
 		unsigned char number, FILE *fp) {
+	elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
+	elina_lincons0_array_fprint(fp, &a,
+	NULL);
+	fflush(fp);
+	elina_lincons0_array_clear(&a);
 	if (FROM_POOL) {
 		print_history(man, number, fp);
-	} else {
-		elina_lincons0_array_t a = opt_oct_to_lincons_array(man, octagon);
-		elina_lincons0_array_fprint(fp, &a,
-		NULL);
-		fflush(fp);
-		elina_lincons0_array_clear(&a);
 	}
 }
 

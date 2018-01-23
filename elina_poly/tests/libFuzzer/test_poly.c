@@ -150,7 +150,7 @@ void initialize_pool(elina_manager_t* man, opt_pk_array_t * top,
 	int counter = 0;
 	int j;
 	for (j = 0; j < 2; j++) {
-		int indexes[MAX_DIM + 1] = {0};
+		int indexes[MAX_DIM + 1] = { 0 };
 		choose(man, top, coefficients, constants, type[j], totalNumber,
 				&expectedNumber, indexes, 0, dim + 1, 0, 4, &counter);
 	}
@@ -309,13 +309,14 @@ bool create_conditional(elina_lincons0_array_t *conditionalArray,
 bool create_a_constraint(int index, elina_linexpr0_t** constraint,
 		elina_constyp_t *type, int dim, const long *data, size_t dataSize,
 		unsigned int *dataIndex, FILE *fp) {
-	size_t i;
-	if (!make_fuzzable(type, sizeof(*type), data, dataSize, dataIndex)) {
+	unsigned char overflowFlag;
+	if (!create_number(&overflowFlag, OVERFLOW + 1, data, dataSize,
+			dataIndex)) {
 		return false;
 	}
-	if (!assume_fuzzable(*type == ELINA_CONS_SUPEQ || *type == ELINA_CONS_EQ)) {
-		return false;
-	}
+
+	*type = overflowFlag % 2 == ELINA_CONS_SUPEQ ?
+			ELINA_CONS_SUPEQ : ELINA_CONS_EQ;
 	fprintf(fp, "%d. Type: %c\n", index, *type == ELINA_CONS_EQ ? 'e' : 's');
 	fflush(fp);
 
@@ -325,21 +326,19 @@ bool create_a_constraint(int index, elina_linexpr0_t** constraint,
 		return false;
 	}
 	fprintf(fp, "Values: ");
+	int i;
 	for (i = 0; i < dim; i++) {
-		/*if (!assume_fuzzable(
-		 !(randomVariable <= VAR_THRESHOLD)
-		 && (fuzzableValues[i] >= MIN_VALUE
-		 && fuzzableValues[i] <= MAX_VALUE))) {
-		 return false;
-		 }*/
+		if (overflowFlag != OVERFLOW) {
+			fuzzableValues[i] = fuzzableValues[i]
+					% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+		}
 		fprintf(fp, "%ld, ", fuzzableValues[i]);
+		fflush(fp);
 	}
-	/*if (!assume_fuzzable(
-	 !(randomVariable <= VAR_THRESHOLD)
-	 && (fuzzableValues[i] >= MIN_VALUE
-	 && fuzzableValues[i] <= MAX_VALUE))) {
-	 return false;
-	 }*/
+	if (overflowFlag != OVERFLOW) {
+		fuzzableValues[i] = fuzzableValues[i]
+				% (MAX_VALUE + 1 - MIN_VALUE)+ MIN_VALUE;
+	}
 	fprintf(fp, "%ld\n", fuzzableValues[i]);
 	fflush(fp);
 	*constraint = create_polyhedral_linexpr0(dim, fuzzableValues);
@@ -891,14 +890,13 @@ void print_history(elina_manager_t* man, unsigned char number, FILE *fp) {
 
 void print_polyhedron(elina_manager_t* man, opt_pk_array_t* polyhedron,
 		unsigned char number, FILE *fp) {
+	elina_lincons0_array_t a = opt_pk_to_lincons_array(man, polyhedron);
+	elina_lincons0_array_fprint(fp, &a,
+	NULL);
+	fflush(fp);
+	elina_lincons0_array_clear(&a);
 	if (FROM_POOL) {
 		print_history(man, number, fp);
-	} else {
-		elina_lincons0_array_t a = opt_pk_to_lincons_array(man, polyhedron);
-		elina_lincons0_array_fprint(fp, &a,
-		NULL);
-		fflush(fp);
-		elina_lincons0_array_clear(&a);
 	}
 }
 
